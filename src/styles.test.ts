@@ -20,7 +20,7 @@
  * Durchsetzung gegen Staffbases eigene Textregeln.
  */
 
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const read = (file: string): string => readFileSync(join(__dirname, "styles", file), "utf8");
@@ -98,6 +98,45 @@ describe("Stylesheets", () => {
       );
       expect(css).toContain('content: "\\e953"');
       expect(css).toContain('content: "\\e939"');
+    });
+    it("hält die Knöpfe des Dialogs kompakt", () => {
+      // Staffbase gibt den Knöpfen im Konfigurationsdialog `margin: auto`.
+      // Live gemessen lagen dadurch 219px Luft neben "Abbrechen", und die
+      // Fussleiste riss auf die ganzen 1440px auseinander.
+      expect(read("slide-editor.scss")).toMatch(
+        /\.man-se__button\s*\{[\s\S]*?@include tokens\.man-outshine-host\s*\{[^}]*margin:\s*0/,
+      );
+    });
+  });
+
+  describe("Regeln ohne Gegenstück", () => {
+    it("gestaltet nur Klassen, die es im Markup wirklich gibt", () => {
+      // `.man-se__form` gab es im Stylesheet, aber nicht im TSX: die Regel
+      // begrenzte die Lesebreite nie, und niemand sah es, weil jsdom keine
+      // Kaskade rechnet. Eine tote Regel ist schlimmer als eine fehlende —
+      // sie sieht nach Absicht aus.
+      const markup = readdirSync(__dirname)
+        .filter((file) => /\.tsx?$/.test(file) && !file.endsWith(".test.ts") && !file.endsWith(".test.tsx"))
+        .map((file) => readFileSync(join(__dirname, file), "utf8"))
+        .join("\n");
+
+      const names = (source: string, prefix: string): Set<string> =>
+        new Set([...source.matchAll(new RegExp(`${prefix}(man-(?:hero|se)__[a-z0-9-]+)`, "g"))].map(
+          ([, name]) => name,
+        ));
+
+      // Exakte Namen, kein `includes`: `man-se__form` steckt als Teilstring in
+      // `man-se__form-pane` und käme sonst auch dann davon, wenn es die Klasse
+      // im Markup gar nicht gibt.
+      const rendered = names(markup, "");
+      const styled = new Set<string>();
+      for (const css of ["hero-slider.scss", "slide-editor.scss"].map(read)) {
+        for (const name of names(css, "\\.")) styled.add(name);
+      }
+
+      const orphans = [...styled].filter((name) => !rendered.has(name)).sort();
+
+      expect(orphans).toEqual([]);
     });
   });
 });

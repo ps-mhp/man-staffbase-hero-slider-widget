@@ -15,6 +15,7 @@
 // einfügen statt daneben MAN-Rot zu behaupten.
 
 @use "@shared/stylings/editor-chrome" as chrome;
+@use "@shared/stylings/man-tokens" as tokens;
 
 .man-se {
   display: flex;
@@ -24,6 +25,13 @@
   // "Übernehmen" immer sichtbar bleibt.
   height: 100%;
   min-height: 0;
+  // Und die Breite genauso. Der Dialog ist ein Flex-Container in Zeilenrichtung
+  // und gibt dem Editor `flex: 0 1 auto`: ohne diese beiden Zeilen nimmt er
+  // seine Inhaltsbreite an und blieb auf einem 1440px breiten Dialog bei 929px
+  // stehen — die Fusszeile sass dann sichtbar schmaler als der Dialog, mit
+  // einer leeren weissen Fläche daneben. Live gemessen am 01.09.2026.
+  flex: 1 1 auto;
+  width: 100%;
   font-family: inherit;
   color: chrome.$text;
 }
@@ -127,6 +135,13 @@
   overflow-y: auto;
   padding: 16px;
   background: chrome.$surface;
+}
+
+// Ein Eingabefeld über die volle Breite eines 1440px-Dialogs ist nicht zu
+// lesen — der Blick verliert beim Zurückspringen die Zeile. Der Inhalt bleibt
+// deshalb auf einer ruhigen Lesebreite, auch wenn der Dialog breiter wird.
+.man-se__form {
+  max-width: 720px;
 }
 
 .man-se__toolbar {
@@ -246,7 +261,20 @@
 }
 
 // --- Schaltflächen und Fußzeile ----------------------------------------------
+// Staffbase gestaltet die Knöpfe im Konfigurationsdialog selbst mit. Live
+// gemessen: `display` kommt als `flex` an statt als unser `inline-flex`, und
+// die Knöpfe tragen `margin: auto` — in der 1440px breiten Fussleiste ergab
+// das 219px Luft auf jeder Seite und zwei weit auseinandergerissene Knöpfe.
+// Die Wirtsregel steht in einem fremden Stylesheet und ist nicht auslesbar;
+// sie lässt sich nur überstimmen.
 .man-se__button {
+  @include tokens.man-outshine-host {
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: auto;
+    margin: 0;
+  }
+
   display: inline-flex;
   align-items: center;
   justify-content: center;

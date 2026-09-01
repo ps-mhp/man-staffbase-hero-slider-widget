@@ -280,7 +280,7 @@ export function SlideEditor({
           {slide === undefined ? (
             <p className="man-se__empty">Wähle links eine Folie oder lege eine neue an.</p>
           ) : (
-            <>
+            <div className="man-se__form">
               <div className="man-se__toolbar">
                 <button
                   type="button"
@@ -408,7 +408,7 @@ export function SlideEditor({
                   In neuem Tab öffnen
                 </label>
               </fieldset>
-            </>
+            </div>
           )}
         </div>
       </div>
