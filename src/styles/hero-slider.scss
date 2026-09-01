@@ -348,7 +348,7 @@
   // Ohne diese Zeile zöge `align-items: stretch` der Flex-Spalte die Leiste
   // über die volle Breite; die unsichtbare Fläche läge dann über dem Bild.
   align-self: flex-start;
-  gap: man("space-4");
+  gap: man("space-2");
   padding-bottom: man("space-6");
 }
 
@@ -366,7 +366,9 @@
   align-items: center;
   justify-content: center;
   padding: 0 !important;
-  color: man("white") !important;
+  // Dieselbe Farbe wie die Striche: Pfeile und Striche sind eine Leiste und
+  // sollen als eine gelesen werden. Auf man.eu tragen beide `slate-200`.
+  color: man("slate-200") !important;
   // Kein Flächenhintergrund: man.eu zeigt den blossen Linienpfeil. Der Kasten
   // davor stammte von hier, nicht vom Vorbild. Die Trefferfläche bleibt, sie
   // ist nur nicht mehr zu sehen.
@@ -422,36 +424,49 @@
 }
 
 .man-hero__dot {
-  width: 28px;
-  height: 3px;
-  padding: 0;
-  padding-block: man("space-2");
-  box-sizing: content-box;
-  border: 0;
-  border-radius: man("radius");
-  // Deutlich sichtbar, nicht nur angedeutet: der Strich steht auf einem Bild
-  // beliebiger Helligkeit und ist das einzige Zeichen dafür, wie viele Folien
-  // es gibt.
-  background: man-alpha("white", 0.6);
-  background-clip: content-box;
-  cursor: pointer;
-  transition: background-color man("duration") man("ease");
+  // Die Innenabstände mit Nachdruck und erhöhter Spezifität: die Wirtsseite
+  // gibt jedem `button` im Inhaltsbereich `padding: 10px 24px` mit zwei
+  // Klassen Spezifität. Der Strich wurde davon 88px statt 40px breit — und
+  // damit stimmte kein Abstand mehr, weder von Strich zu Strich noch zum
+  // Pfeil. Live gemessen am 01.09.2026.
+  @include man-outshine-host {
+    width: 28px;
+    height: 3px;
+    padding: 0 !important;
+    // Die Trefferfläche ist höher als der sichtbare Strich: 28 x 3px liessen
+    // sich mit dem Finger nicht treffen. `content-box` hält den Innenabstand
+    // farblos, damit nur der Strich selbst zu sehen ist.
+    padding-block: man("space-2") !important;
+    box-sizing: content-box !important;
+    border: 0;
+    border-radius: man("radius");
+    background: man("slate-200");
+    background-clip: content-box;
+    cursor: pointer;
+    transition: background-color man("duration") man("ease");
+  }
 
   // 40px auf dem Schreibtisch — dieselbe Strichlänge wie die Bühne auf man.eu
   // (`--dash-w` in `onetruck-css/src/03-elements/news-stage/_app.scss`).
   @media (min-width: 768px) {
-    width: 40px;
+    @include man-outshine-host {
+      width: 40px;
+    }
   }
 }
 
 .man-hero__dot:hover {
-  background: man("white");
-  background-clip: content-box;
+  @include man-outshine-host {
+    background: man("white");
+    background-clip: content-box;
+  }
 }
 
 .man-hero__dot--active {
-  background: man("red");
-  background-clip: content-box;
+  @include man-outshine-host {
+    background: man("red");
+    background-clip: content-box;
+  }
 }
 
 // Ein sichtbarer Fokus auf allen Bedienelementen. Der Ring der MAN-Tokens ist

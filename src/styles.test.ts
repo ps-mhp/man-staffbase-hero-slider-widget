@@ -78,6 +78,15 @@ describe("Stylesheets", () => {
       );
     });
 
+    it("setzt die Masse der Striche mit erhöhter Spezifität", () => {
+      // Die Wirtsseite gibt jedem `button` im Inhaltsbereich `padding:
+      // 10px 24px` mit zwei Klassen Spezifität. Ohne Gegenwehr wurde der
+      // Strich 88px statt 40px breit und riss jeden Abstand der Leiste auf.
+      expect(read("hero-slider.scss")).toMatch(
+        /\.man-hero__dot\s*\{[\s\S]*?@include man-outshine-host[\s\S]*?padding:\s*0\s*!important/,
+      );
+    });
+
     it("zeichnet die Pfeile mit der Symbolschrift der Marke", () => {
       // Der Pfeil ist das Zeichen von man.eu (\e953/\e939 aus `man-icon`),
       // nicht Staffbases Chevron. Ohne Nachdruck auf der Familie gewinnt die
