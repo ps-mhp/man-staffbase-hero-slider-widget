@@ -1,0 +1,11 @@
+{
+  "name": "@man/hero-slider-widget",
+  "version": "0.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "staffbase": {
+    "element": "hero-slider-widget",
+    "bundle": "dist/hero-slider-widget.js"
+  }
+}
