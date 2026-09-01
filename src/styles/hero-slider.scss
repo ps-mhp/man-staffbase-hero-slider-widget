@@ -178,8 +178,8 @@
   pointer-events: none;
   background: linear-gradient(
     0deg,
-    rgba(18, 23, 28, 0.88) 0%,
-    rgba(18, 23, 28, 0.45) 42%,
+    man-alpha("surface-invers", 0.88) 0%,
+    man-alpha("surface-invers", 0.45) 42%,
     transparent 72%
   );
 }
@@ -192,14 +192,14 @@
     background:
       linear-gradient(
         90deg,
-        rgba(18, 23, 28, 0.72) 0%,
-        rgba(18, 23, 28, 0.35) 38%,
+        man-alpha("surface-invers", 0.72) 0%,
+        man-alpha("surface-invers", 0.35) 38%,
         transparent 62%
       ),
       linear-gradient(
         0deg,
-        rgba(18, 23, 28, 0.88) 0%,
-        rgba(18, 23, 28, 0.45) 42%,
+        man-alpha("surface-invers", 0.88) 0%,
+        man-alpha("surface-invers", 0.45) 42%,
         transparent 72%
       );
   }
@@ -276,9 +276,15 @@
   @include man-type("body-l", $important: true);
 
   margin: man("space-3") 0 0;
-  // Nicht reines Weiss: die Unterzeile soll hinter der Überschrift zurücktreten.
-  color: rgba(255, 255, 255, 0.88) !important;
   max-width: 60ch;
+
+  // Staffbase setzt die Schriftfarbe für jedes `p` im Inhaltsbereich mit
+  // `!important` und vier Klassen Spezifität. Gegen dunkles Grau auf einem
+  // Bild ist nichts zu lesen, und eine einzelne Klasse verliert dagegen —
+  // auch mit `!important`.
+  @include man-outshine-host {
+    color: man("white") !important;
+  }
 }
 
 // Die Schaltfläche — die weisse Kontur, die MAN auf Bildern verwendet
@@ -329,16 +335,20 @@
 
 .man-hero__arrow {
   // 44 x 44px ist zugleich die kleinste Trefferfläche, die sich auf einem
-  // Touchscreen zuverlässig treffen lässt.
-  width: 44px;
-  height: 44px;
+  // Touchscreen zuverlässig treffen lässt. Mit Nachdruck und `border-box`,
+  // weil die Wirtsseite jedem `button` eigene Innenabstände gibt — sonst
+  // gerät die Schaltfläche breiter als hoch und wirkt wie ein Fehler.
+  box-sizing: border-box !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 0 !important;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 0 !important;
   color: man("white");
-  background: rgba(18, 23, 28, 0.6);
+  background: man("overlay");
   border: 0;
   border-radius: man("radius");
   cursor: pointer;
@@ -356,9 +366,13 @@
   background: man("red");
 }
 
+// Die Grösse steht zusätzlich als Attribut am `<svg>` — siehe `IconChevron`.
+// Hier mit Nachdruck, weil die Wirtsseite eigene Regeln für Bilder und
+// Vektorgrafiken in Inhaltsbereichen mitbringt.
 .man-hero__arrow svg {
-  width: 24px;
-  height: 24px;
+  width: 24px !important;
+  height: 24px !important;
+  flex: 0 0 auto;
 }
 
 // Striche statt Punkte — die Vorgabe der CI-Spec 3.10. Die Trefferfläche ist
@@ -379,7 +393,10 @@
   box-sizing: content-box;
   border: 0;
   border-radius: man("radius");
-  background: rgba(255, 255, 255, 0.45);
+  // Deutlich sichtbar, nicht nur angedeutet: der Strich steht auf einem Bild
+  // beliebiger Helligkeit und ist das einzige Zeichen dafür, wie viele Folien
+  // es gibt.
+  background: man-alpha("white", 0.6);
   background-clip: content-box;
   cursor: pointer;
   transition: background-color man("duration") man("ease");

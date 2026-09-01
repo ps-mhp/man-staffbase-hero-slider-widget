@@ -49,7 +49,21 @@ const IconChevron = ({ direction }: { direction: "left" | "right" }): ReactEleme
   // Inline statt Icon-Font: auf `man-icon` kann sich ein eingebettetes Widget
   // nicht verlassen — er wird vom Tenant geladen und liegt laut CI-Spec bis
   // heute nur als `.eot` vor.
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+  //
+  // `width`/`height` stehen als Attribute, nicht nur im Stylesheet: ohne sie
+  // hat ein SVG keine eigene Grösse, und eine Regel der Wirtsseite drückt es
+  // auf null zusammen. Der Pfeil verschwindet dann, und zurück bleibt eine
+  // dunkle Fläche, die auf einem dunklen Bild niemand als Schaltfläche
+  // erkennt.
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    aria-hidden="true"
+  >
     <path
       d={direction === "left" ? "M15 4l-8 8 8 8" : "M9 4l8 8-8 8"}
       strokeLinecap="round"
