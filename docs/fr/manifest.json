@@ -1,0 +1,51 @@
+{
+  "title": "Hero-Slider",
+  "summary": "Images occupant toute la largeur de l'écran, surmontées de texte — la partie supérieure d'une page, pouvant éventuellement prendre la forme d'un diaporama de plusieurs diapositives.",
+  "icon": "🖼️",
+  "pages": [
+    {
+      "id": "overview",
+      "title": "Aperçu",
+      "file": "overview.md"
+    },
+    {
+      "id": "usage",
+      "title": "Étape par étape",
+      "file": "usage.md"
+    },
+    {
+      "id": "settings",
+      "title": "Paramètres",
+      "file": "settings.md"
+    },
+    {
+      "id": "faq",
+      "title": "FAQ",
+      "file": "faq.md"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Une seule image sur toute la largeur",
+      "attributes": {
+        "height": "medium",
+        "full-bleed": true,
+        "autoplay-delay": 0
+      },
+      "resolve": [
+        "slides"
+      ]
+    },
+    {
+      "title": "Images changeantes, sur toute la hauteur de l'écran",
+      "attributes": {
+        "height": "viewport",
+        "full-bleed": true,
+        "autoplay-delay": 5
+      },
+      "resolve": [
+        "slides"
+      ]
+    }
+  ]
+}

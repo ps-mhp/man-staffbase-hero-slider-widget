@@ -1,0 +1,51 @@
+{
+  "title": "Hero-Slider",
+  "summary": "Imagens que ocupam toda a largura do ecrã com texto por cima — a área no topo da página, que pode ser apresentada como uma sequência de vários slides.",
+  "icon": "🖼️",
+  "pages": [
+    {
+      "id": "overview",
+      "title": "Visão geral",
+      "file": "overview.md"
+    },
+    {
+      "id": "usage",
+      "title": "Passo a passo",
+      "file": "usage.md"
+    },
+    {
+      "id": "settings",
+      "title": "Definições",
+      "file": "settings.md"
+    },
+    {
+      "id": "faq",
+      "title": "Perguntas frequentes",
+      "file": "faq.md"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Imagem única a ocupar toda a largura",
+      "attributes": {
+        "height": "medium",
+        "full-bleed": true,
+        "autoplay-delay": 0
+      },
+      "resolve": [
+        "slides"
+      ]
+    },
+    {
+      "title": "Imagens em alternância, ocupando toda a altura do ecrã",
+      "attributes": {
+        "height": "viewport",
+        "full-bleed": true,
+        "autoplay-delay": 5
+      },
+      "resolve": [
+        "slides"
+      ]
+    }
+  ]
+}

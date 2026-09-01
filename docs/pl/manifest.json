@@ -1,0 +1,51 @@
+{
+  "title": "Hero-Slider",
+  "summary": "Obrazy o szerokości ekranu z tekstem nad nimi — sekcja u góry strony, opcjonalnie w formie sekwencji kilku slajdów.",
+  "icon": "🖼️",
+  "pages": [
+    {
+      "id": "overview",
+      "title": "Przegląd",
+      "file": "overview.md"
+    },
+    {
+      "id": "usage",
+      "title": "Krok po kroku",
+      "file": "usage.md"
+    },
+    {
+      "id": "settings",
+      "title": "Ustawienia",
+      "file": "settings.md"
+    },
+    {
+      "id": "faq",
+      "title": "Najczęściej zadawane pytania",
+      "file": "faq.md"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Pojedyncze zdjęcie na całej szerokości",
+      "attributes": {
+        "height": "medium",
+        "full-bleed": true,
+        "autoplay-delay": 0
+      },
+      "resolve": [
+        "slides"
+      ]
+    },
+    {
+      "title": "Zmieniające się folie, na całej wysokości ekranu",
+      "attributes": {
+        "height": "viewport",
+        "full-bleed": true,
+        "autoplay-delay": 5
+      },
+      "resolve": [
+        "slides"
+      ]
+    }
+  ]
+}

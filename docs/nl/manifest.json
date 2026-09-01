@@ -1,0 +1,51 @@
+{
+  "title": "Hero-slider",
+  "summary": "Afbeeldingen over de volledige breedte van het scherm met tekst erboven — het gedeelte bovenaan een pagina, naar keuze als een reeks wisselende dia’s.",
+  "icon": "🖼️",
+  "pages": [
+    {
+      "id": "overview",
+      "title": "Overzicht",
+      "file": "overview.md"
+    },
+    {
+      "id": "usage",
+      "title": "Stap voor stap",
+      "file": "usage.md"
+    },
+    {
+      "id": "settings",
+      "title": "Instellingen",
+      "file": "settings.md"
+    },
+    {
+      "id": "faq",
+      "title": "Veelgestelde vragen",
+      "file": "faq.md"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Een enkele afbeelding over de volledige breedte",
+      "attributes": {
+        "height": "medium",
+        "full-bleed": true,
+        "autoplay-delay": 0
+      },
+      "resolve": [
+        "slides"
+      ]
+    },
+    {
+      "title": "Wisselende afbeeldingen, over de volledige hoogte van het scherm",
+      "attributes": {
+        "height": "viewport",
+        "full-bleed": true,
+        "autoplay-delay": 5
+      },
+      "resolve": [
+        "slides"
+      ]
+    }
+  ]
+}

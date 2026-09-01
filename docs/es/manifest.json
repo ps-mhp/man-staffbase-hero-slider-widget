@@ -1,0 +1,51 @@
+{
+  "title": "Hero-Slider",
+  "summary": "Imágenes que ocupan todo el ancho de la pantalla con texto encima: el escenario en la parte superior de la página, opcionalmente como una sucesión de varias diapositivas.",
+  "icon": "🖼️",
+  "pages": [
+    {
+      "id": "overview",
+      "title": "Resumen",
+      "file": "overview.md"
+    },
+    {
+      "id": "usage",
+      "title": "Paso a paso",
+      "file": "usage.md"
+    },
+    {
+      "id": "settings",
+      "title": "Configuración",
+      "file": "settings.md"
+    },
+    {
+      "id": "faq",
+      "title": "Preguntas frecuentes",
+      "file": "faq.md"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Una sola imagen a todo lo ancho",
+      "attributes": {
+        "height": "medium",
+        "full-bleed": true,
+        "autoplay-delay": 0
+      },
+      "resolve": [
+        "slides"
+      ]
+    },
+    {
+      "title": "Imágenes en cambio, a lo alto de la pantalla",
+      "attributes": {
+        "height": "viewport",
+        "full-bleed": true,
+        "autoplay-delay": 5
+      },
+      "resolve": [
+        "slides"
+      ]
+    }
+  ]
+}
