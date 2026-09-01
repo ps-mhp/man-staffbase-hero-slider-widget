@@ -28,6 +28,21 @@
   display: block;
 }
 
+// Die Bühne rückt näher an die Kopfzeile. Staffbase hält den Seitenrahmen je
+// nach Zustand auf 136 bis 180px Kopfabstand (gemessen am 01.09.2026:
+// `.desktop.with-contextual-toolbar.wow-header-activated.with-mega-menu
+// #wrapper` gewinnt mit `calc(136px + 44px)`) — unter einer Bühne, die bis an
+// den Bildschirmrand läuft, steht damit ein Streifen Weissraum, den es auf
+// man.eu nicht gibt.
+//
+// Die Regel steht bewusst hier und nicht im Stylesheet des Mandanten: sie
+// gilt nur, solange eine Bühne auf der Seite liegt, und verschwindet mit ihr.
+// `!important` ist nötig, aber unstrittig — der Gegner steht bei vier Klassen
+// und einer Kennung, führt seinen Wert aber ohne Nachdruck.
+#wrapper:has(hero-slider-widget) {
+  padding-top: 155px !important;
+}
+
 .man-hero {
   position: relative;
   overflow: hidden;
