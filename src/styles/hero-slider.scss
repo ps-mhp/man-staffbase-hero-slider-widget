@@ -1,0 +1,371 @@
+// Copyright 2026, MHP Management und IT-Beratung GmbH and contributors.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//     http://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Die Bühne. Vorbild ist die Hero-Section auf man.eu; die Werte stammen aus
+// dem dort erfassten CSS (`onetruck-css/analysis/ci/specs/stage.json`) und aus
+// der MAN-CI-Spec 3.9, nicht aus dem Augenmass.
+//
+// Zwei Dinge tragen die ganze Datei:
+//
+// 1. Der AUSBRUCH. Das Widget rendert in einer Inhaltsspalte, das Bild soll
+//    aber über die volle Fensterbreite laufen.
+// 2. Die FLUCHTLINIE. Der Text darf deshalb gerade NICHT der Bildkante
+//    folgen, sondern muss auf derselben Linie stehen wie Kopfzeile,
+//    Menuezeile und Seiteninhalt. Beides zusammen ist der eigentliche Trick
+//    der Vorlage: bildschirmbreites Bild, Text im Raster.
+
+@use "@shared/stylings/man-tokens" as *;
+
+.man-hero {
+  position: relative;
+  overflow: hidden;
+  // Der Wirtsseite ist nicht zu trauen: sie bringt eigene Regeln für `p`,
+  // `h1` und `a` mit. Was hier gesetzt wird, wird ausdrücklich gesetzt.
+  color: man("white");
+  background: man("surface-invers");
+  isolation: isolate;
+}
+
+// --- 1. Ausbruch aus der Inhaltsspalte ---------------------------------------
+// `100vw` schliesst die Scrollbar mit ein und erzeugt damit genau den
+// horizontalen Überlauf, den der Ausbruch vermeiden soll. Die Komponente misst
+// deshalb `document.documentElement.clientWidth` (ohne Scrollbar) und legt das
+// Ergebnis als `--man-hero-vw` an. Die Regel funktioniert auch ohne den
+// Beobachter — dann eben mit der Scrollbar-Ungenauigkeit, was immer noch
+// besser ist als gar kein Ausbruch.
+.man-hero--bleed {
+  width: var(--man-hero-vw, 100vw);
+  margin-inline: calc(50% - var(--man-hero-vw, 100vw) / 2);
+}
+
+// --- Höhe --------------------------------------------------------------------
+// Über `aspect-ratio` mit Klemmung: das Seitenverhältnis bestimmt die Höhe,
+// solange sie in den Grenzen bleibt. Eine feste Höhe würde auf breiten
+// Schirmen einen Streifen und auf schmalen einen Turm ergeben.
+.man-hero__frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+
+  @media (min-width: 768px) {
+    aspect-ratio: 21 / 9;
+  }
+}
+
+.man-hero--height-small .man-hero__frame {
+  min-height: 320px;
+  max-height: 420px;
+}
+
+// Die Vorgabe — die Masse der CI-Spec 3.9 für die Bühne.
+.man-hero--height-medium .man-hero__frame {
+  min-height: 420px;
+  max-height: 560px;
+}
+
+.man-hero--height-large .man-hero__frame {
+  min-height: 560px;
+  max-height: 720px;
+}
+
+// `svh` statt `vh`: auf Mobilgeräten wächst und schrumpft die Adressleiste,
+// und `vh` rechnet mit dem grossen Zustand — die Bühne wäre bei sichtbarer
+// Leiste zu hoch und schöbe alles Weitere unter die Falz.
+.man-hero--height-viewport .man-hero__frame {
+  aspect-ratio: auto;
+  height: calc(100svh - var(--man-hero-header, 95px));
+  min-height: 420px;
+}
+
+// --- Slides ------------------------------------------------------------------
+.man-hero__slides {
+  position: absolute;
+  inset: 0;
+}
+
+// Überblenden statt Schieben, wie `.swiper-fade` auf man.eu. Alle Slides
+// liegen übereinander; nur der aktive ist sichtbar und bedienbar.
+.man-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity man("duration-slow") man("ease"),
+    visibility 0s linear man("duration-slow");
+}
+
+.man-hero__slide--active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity man("duration-slow") man("ease"),
+    visibility 0s;
+}
+
+// Wer weniger Bewegung möchte, bekommt einen harten Schnitt statt einer
+// Blende. Der Automat schaltet dann ohnehin nicht mehr von selbst weiter,
+// aber die Pfeile bleiben bedienbar.
+@media (prefers-reduced-motion: reduce) {
+  .man-hero__slide {
+    transition: none;
+  }
+}
+
+// --- Bild --------------------------------------------------------------------
+.man-hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.man-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  // Ohne diese Zeile setzt ein Host-Theme mit `img { display: inline }` einen
+  // Grundlinien-Spalt unter das Bild.
+  display: block;
+}
+
+// Der Verlauf. Wörtlich aus CI-Spec 3.9 und identisch zu dem, was
+// `onetruck-css` der News-Bühne gibt: nur unten dunkel, kein Vollflächen-Grau
+// über dem ganzen Foto.
+.man-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    0deg,
+    rgba(18, 23, 28, 0.88) 0%,
+    rgba(18, 23, 28, 0.45) 42%,
+    transparent 72%
+  );
+}
+
+// Auf breiten Schirmen steht der Text links neben dem Motiv statt darunter.
+// Dort trägt der Verlauf von unten allein nicht mehr — man.eu legt deshalb
+// zusätzlich `gradient-xl-left-to-right` auf.
+@media (min-width: 1200px) {
+  .man-hero__media::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(18, 23, 28, 0.72) 0%,
+        rgba(18, 23, 28, 0.35) 38%,
+        transparent 62%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(18, 23, 28, 0.88) 0%,
+        rgba(18, 23, 28, 0.45) 42%,
+        transparent 72%
+      );
+  }
+}
+
+// --- 2. Die Fluchtlinie ------------------------------------------------------
+// Dieselbe Rechnung, mit der `onetruck-css` Kopf, Menuezeile und Inhalt auf
+// EINE Linie zieht (`src/04-shell/header/_app.scss`): Restbreite halbieren,
+// nie unter den Seitenrand des schmalen Fensters.
+//
+// Sie trägt beide Fälle ohne Verzweigung. Bricht die Bühne aus, ist `100%` die
+// Fensterbreite und die Kante liegt auf der der Kopfzeile. Bricht sie nicht
+// aus, ist die Differenz negativ und `max()` fällt auf die 32px zurück.
+//
+// `--sb-content-width` ist Staffbases eigene Inhaltsbreite; über die Variable
+// folgt die Linie einer Änderung im Studio, der MAN-Token ist nur der
+// Rückfall. Der Name muss genau so geschrieben sein, sonst wird für immer nur
+// der Rückfall sichtbar.
+.man-hero__inner {
+  position: absolute;
+  inset: 0;
+  padding-inline: max(#{man("space-6")}, calc((100% - var(--sb-content-width, #{man("container")})) / 2));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  // Der Container selbst fängt keine Klicks — sonst läge eine unsichtbare
+  // Fläche über dem ganzen Bild. Nur seine Kinder tun es.
+  pointer-events: none;
+}
+
+// --- Textblock ---------------------------------------------------------------
+// Links unten, nicht vertikal mittig: so steht es auf man.eu
+// (`.man-stage-item__body { bottom: 24px }`), und so lässt der Verlauf von
+// unten den Text tragen.
+.man-hero__body {
+  pointer-events: auto;
+  max-width: 640px;
+  padding-bottom: man("space-5");
+
+  @media (min-width: 768px) {
+    padding-bottom: man("space-6");
+  }
+}
+
+.man-hero__headline {
+  @include man-type("display-xl", $important: true);
+
+  margin: 0;
+  color: man("white") !important;
+  letter-spacing: man("track-tight") !important;
+  // Überschriften bis 24ch, immer ausgeglichen umbrochen (CI-Spec 1.2) —
+  // sonst bleibt auf der Bühne ein einzelnes Wort in der letzten Zeile stehen.
+  text-wrap: balance;
+
+  @media (max-width: 767px) {
+    font-size: 36px !important;
+    line-height: 40px !important;
+  }
+}
+
+.man-hero__subline {
+  @include man-type("body-l", $important: true);
+
+  margin: man("space-3") 0 0;
+  // Nicht reines Weiss: die Unterzeile soll hinter der Überschrift zurücktreten.
+  color: rgba(255, 255, 255, 0.88) !important;
+  max-width: 60ch;
+}
+
+// Die Schaltfläche — die weisse Kontur, die MAN auf Bildern verwendet
+// (`button--secondary` auf man.eu). Als `a` gerendert, weil sie navigiert;
+// die Regeln stehen ausdrücklich gegen die `a`-Regeln der Wirtsseite.
+.man-hero__cta {
+  @include man-type("label", $important: true);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: man("space-5");
+  padding: man("space-3") man("space-5");
+  min-height: 48px;
+  color: man("white") !important;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  letter-spacing: man("track-label");
+  background: transparent;
+  border: man("cta-border-width") solid man("white");
+  border-radius: man("radius");
+  transition:
+    background-color man("duration") man("ease"),
+    color man("duration") man("ease");
+}
+
+.man-hero__cta:hover,
+.man-hero__cta:focus-visible {
+  color: man("white") !important;
+  background: man("red");
+  border-color: man("red");
+}
+
+// --- Bedienelemente ----------------------------------------------------------
+// Auf derselben Fluchtlinie wie der Text: man.eu setzt sie mit
+// `margin-inline-start: 7.5vw` genau auf die Kante des Inhalts, nicht an den
+// Bildrand. Sie hängen deshalb im selben `__inner`, nicht daneben.
+.man-hero__controls {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: man("space-4");
+  padding-bottom: man("space-6");
+}
+
+.man-hero__arrow {
+  // 44 x 44px ist zugleich die kleinste Trefferfläche, die sich auf einem
+  // Touchscreen zuverlässig treffen lässt.
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: man("white");
+  background: rgba(18, 23, 28, 0.6);
+  border: 0;
+  border-radius: man("radius");
+  cursor: pointer;
+  transition: background-color man("duration") man("ease");
+
+  // Mobil führt die Wischgeste; zwei Schaltflächen über dem Bild wären dort
+  // nur im Weg (CI-Spec 3.11).
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.man-hero__arrow:hover,
+.man-hero__arrow:focus-visible {
+  background: man("red");
+}
+
+.man-hero__arrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+// Striche statt Punkte — die Vorgabe der CI-Spec 3.10. Die Trefferfläche ist
+// höher als der sichtbare Strich: 28 x 3px liessen sich mit dem Finger nicht
+// treffen. `background-clip: content-box` sorgt dafür, dass der Innenabstand
+// unsichtbar bleibt und nur der Strich selbst Farbe zeigt.
+.man-hero__dots {
+  display: flex;
+  align-items: center;
+  gap: man("space-2");
+}
+
+.man-hero__dot {
+  width: 28px;
+  height: 3px;
+  padding: 0;
+  padding-block: man("space-2");
+  box-sizing: content-box;
+  border: 0;
+  border-radius: man("radius");
+  background: rgba(255, 255, 255, 0.45);
+  background-clip: content-box;
+  cursor: pointer;
+  transition: background-color man("duration") man("ease");
+}
+
+.man-hero__dot:hover {
+  background: man("white");
+  background-clip: content-box;
+}
+
+.man-hero__dot--active {
+  background: man("red");
+  background-clip: content-box;
+}
+
+// Ein sichtbarer Fokus auf allen Bedienelementen. Der Ring der MAN-Tokens ist
+// dunkel und verschwände auf dem Foto — hier steht er deshalb in Weiss.
+.man-hero__arrow:focus-visible,
+.man-hero__dot:focus-visible,
+.man-hero__cta:focus-visible {
+  outline: 2px solid man("white");
+  outline-offset: man("focus-offset");
+}
+
+// Nur für Hilfsmittel: die Ansage, welcher Slide gerade vorn liegt.
+.man-hero__live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip-path: inset(50%);
+}

@@ -1,7 +1,7 @@
 {
   "name": "@man/hero-slider-widget",
   "version": "0.0.0",
-  "description": "",
+  "description": "Staffbase-Widget für eine bildschirmbreite Bühne mit Text auf der Fluchtlinie",
   "author": "",
   "license": "ISC",
   "staffbase": {

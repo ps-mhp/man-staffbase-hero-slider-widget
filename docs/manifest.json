@@ -1,11 +1,31 @@
 {
-  "title": "hero-slider-widget",
-  "summary": "TODO: Ein Satz, was dieses Widget für Redakteure tut.",
-  "icon": "🧩",
+  "title": "Hero-Slider",
+  "summary": "Bildschirmbreite Bilder mit Text darüber — die Bühne am Kopf einer Seite, wahlweise als Wechsel mehrerer Folien.",
+  "icon": "🖼️",
   "pages": [
     { "id": "overview", "title": "Übersicht", "file": "overview.md" },
     { "id": "usage", "title": "Schritt für Schritt", "file": "usage.md" },
     { "id": "settings", "title": "Einstellungen", "file": "settings.md" },
     { "id": "faq", "title": "FAQ", "file": "faq.md" }
+  ],
+  "examples": [
+    {
+      "title": "Einzelnes Bild über die volle Breite",
+      "attributes": {
+        "height": "medium",
+        "full-bleed": true,
+        "autoplay-delay": 0
+      },
+      "resolve": ["slides"]
+    },
+    {
+      "title": "Wechselnde Folien, bildschirmhoch",
+      "attributes": {
+        "height": "viewport",
+        "full-bleed": true,
+        "autoplay-delay": 5
+      },
+      "resolve": ["slides"]
+    }
   ]
 }

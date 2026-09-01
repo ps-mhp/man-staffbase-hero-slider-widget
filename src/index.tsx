@@ -1,5 +1,5 @@
 /*!
- * Copyright 2026, Staffbase SE and contributors.
+ * Copyright 2026, MHP Management und IT-Beratung GmbH and contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,27 +13,103 @@
 
 import { setPublicPathFromBundle } from "@shared/public-path";
 
-// Must run before any dynamic `import()`, so that lazily loaded chunks come
-// from the CDN the bundle was served from and not from the hosting page.
+// Muss vor jedem dynamischen `import()` laufen, damit nachgeladene Teile von
+// dem CDN kommen, von dem das Bundle stammt, und nicht von der Wirtsseite.
 setPublicPathFromBundle("hero-slider-widget.js");
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 
 import { BlockFactory, BlockDefinition, ExternalBlockDefinition, BaseBlock } from "widget-sdk";
-import { configurationSchema, uiSchema } from "./configuration-schema";
+import {
+  AUTOPLAY_DELAY_ATTRIBUTE,
+  FULL_BLEED_ATTRIBUTE,
+  HEIGHT_ATTRIBUTE,
+  SLIDES_ATTRIBUTE,
+  configurationSchema,
+  uiSchema,
+} from "./configuration-schema";
+import { HERO_HEIGHTS, HeroHeight, HeroSlider } from "./hero-slider";
+import { startSlideEditorInjector } from "./slide-editor-injector";
+import { DEFAULT_AUTOPLAY_DELAY_MS } from "./use-slider";
+import { parseSlides } from "./slides-model";
 import icon from "../resources/hero-slider-widget.svg";
 import pkg from "../package.json";
 
-/** Attributes handled by the widget; mirrored in the configuration schema. */
-const widgetAttributes: string[] = [];
+/** Die Attribute des Widgets; gespiegelt im Konfigurationsschema. */
+const widgetAttributes: string[] = [
+  SLIDES_ATTRIBUTE,
+  HEIGHT_ATTRIBUTE,
+  FULL_BLEED_ATTRIBUTE,
+  AUTOPLAY_DELAY_ATTRIBUTE,
+];
+
+/**
+ * Beginnt, das Dokument nach dem `slides`-Feld des Konfigurationsdialogs zu
+ * beobachten, um an seiner Stelle den Folien-Editor einzuhängen.
+ *
+ * Es gibt im Staffbase-SDK keinen Einstiegspunkt für den Konfigurationsdialog;
+ * das Laden dieses Bundles ist die einzige Stelle, an der sich der Beobachter
+ * anbringen lässt. Bedenkenlos immer auszuführen: auf einer Leseseite, auf der
+ * der Dialog nie erscheint, kostet er nichts außer dem `MutationObserver`.
+ *
+ * Nur offengelegt, damit Tests ihn beim Aufräumen wieder abbauen können —
+ * jsdom baut sein `window` zwischen Testdateien ab, und ein danach noch
+ * feuernder Beobachter würde werfen.
+ */
+export const stopSlideEditorInjector = startSlideEditorInjector();
+
+/** Alles außer den bekannten Stufen bedeutet die Vorgabe — auch ein leeres oder veraltetes Attribut. */
+function readHeight(raw: unknown): HeroHeight {
+  return typeof raw === "string" && (HERO_HEIGHTS as readonly string[]).includes(raw)
+    ? (raw as HeroHeight)
+    : "medium";
+}
+
+/**
+ * Der Ausbruch ist an, solange ihn niemand ausdrücklich abschaltet. Staffbase
+ * liefert Wahrheitswerte je nach Weg als `boolean` oder als Zeichenkette; nur
+ * ein echtes „aus" zählt, damit ein fehlendes Attribut die Vorgabe nicht kippt.
+ */
+function readFullBleed(raw: unknown): boolean {
+  if (raw === false || raw === "false") return false;
+  return true;
+}
+
+/** Sekunden aus dem Dialog in Millisekunden; alles Unbrauchbare fällt auf die Vorgabe zurück. */
+function readAutoplayDelayMs(raw: unknown): number {
+  const seconds = typeof raw === "number" ? raw : Number.parseFloat(String(raw ?? ""));
+  if (!Number.isFinite(seconds) || seconds < 0) return DEFAULT_AUTOPLAY_DELAY_MS;
+  return seconds * 1000;
+}
 
 const factory: BlockFactory = (BaseBlockClass, _widgetApi) => {
+  /**
+   * <hero-slider-widget slides='[{"id":"a","image":{"url":"…","alt":"…"},"headline":"…"}]'></hero-slider-widget>
+   */
   return class HeroSliderWidgetBlock extends BaseBlockClass implements BaseBlock {
     private _root: ReactDOM.Root | null = null;
 
     public renderBlock(container: HTMLElement): void {
+      const attrs = this.parseAttributes<Record<string, unknown>>();
+      const slides = parseSlides(
+        typeof attrs[SLIDES_ATTRIBUTE] === "string" ? (attrs[SLIDES_ATTRIBUTE] as string) : "",
+      );
+
       this._root ??= ReactDOM.createRoot(container);
-      this._root.render(<div />);
+      this._root.render(
+        <HeroSlider
+          slides={slides}
+          height={readHeight(attrs[HEIGHT_ATTRIBUTE])}
+          fullBleed={readFullBleed(attrs[FULL_BLEED_ATTRIBUTE])}
+          autoplayDelayMs={readAutoplayDelayMs(attrs[AUTOPLAY_DELAY_ATTRIBUTE])}
+        />,
+      );
+    }
+
+    public unmountBlock(_container: HTMLElement): void {
+      this._root?.unmount();
+      this._root = null;
     }
 
     public static get observedAttributes(): string[] {
@@ -53,7 +129,7 @@ const blockDefinition: BlockDefinition = {
   blockLevel: "block",
   configurationSchema: configurationSchema,
   uiSchema: uiSchema,
-  label: "HeroSliderWidget",
+  label: "Hero-Slider",
   iconUrl: icon,
 };
 

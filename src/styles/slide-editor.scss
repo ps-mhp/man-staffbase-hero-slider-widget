@@ -1,0 +1,322 @@
+// Copyright 2026, MHP Management und IT-Beratung GmbH and contributors.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//     http://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Der Redaktionsdialog. Bewusst in der Palette des Staffbase-Studios
+// (`@shared/stylings/editor-chrome`) und nicht in der Marke: diese Flächen
+// sehen nur Redakteur:innen, und sie sollen sich in den umgebenden Dialog
+// einfügen statt daneben MAN-Rot zu behaupten.
+
+@use "@shared/stylings/editor-chrome" as chrome;
+
+.man-se {
+  display: flex;
+  flex-direction: column;
+  // Der Dialog von `@shared/config-modal` gibt die Höhe vor; der Editor füllt
+  // sie und lässt nur seine Listen scrollen, damit die Fußzeile mit
+  // "Übernehmen" immer sichtbar bleibt.
+  height: 100%;
+  min-height: 0;
+  font-family: inherit;
+  color: chrome.$text;
+}
+
+.man-se__body {
+  display: grid;
+  // Feste Spalte für die Liste: sie ist eine Übersicht, kein Inhalt, und soll
+  // nicht mitwachsen, wenn die Formularseite länger wird.
+  grid-template-columns: 260px minmax(0, 1fr);
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+// --- Liste der Folien --------------------------------------------------------
+.man-se__list-pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: chrome.$surface-panel;
+  border-right: 1px solid chrome.$border;
+}
+
+.man-se__list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.man-se__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 8px;
+  text-align: start;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: chrome.$radius-control;
+  cursor: pointer;
+  transition: background-color chrome.$transition;
+}
+
+.man-se__item:hover {
+  background: chrome.$surface-hover;
+}
+
+.man-se__item--active {
+  background: chrome.$accent-selection;
+  border-color: chrome.$accent-border;
+}
+
+.man-se__item-index {
+  flex: 0 0 auto;
+  width: 18px;
+  color: chrome.$text-muted;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.man-se__item-thumb {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 30px;
+  object-fit: cover;
+  border: 1px solid chrome.$border-tile;
+  border-radius: chrome.$radius-small;
+  background: chrome.$surface-handle;
+}
+
+.man-se__item-thumb--empty {
+  display: block;
+}
+
+.man-se__item-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  color: chrome.$text-strong;
+}
+
+.man-se__list-actions {
+  flex: 0 0 auto;
+  padding: 8px;
+  border-top: 1px solid chrome.$border;
+}
+
+.man-se__empty {
+  margin: 12px 8px;
+  color: chrome.$text-muted;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+// --- Formular ----------------------------------------------------------------
+.man-se__form-pane {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px;
+  background: chrome.$surface;
+}
+
+.man-se__toolbar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.man-se__field {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.man-se__fieldset {
+  padding: 0;
+  border: 0;
+  margin-inline: 0;
+}
+
+.man-se__sub {
+  display: block;
+  margin-top: 10px;
+}
+
+.man-se__label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: chrome.$text-strong;
+}
+
+.man-se__hint {
+  margin: 0 0 8px;
+  font-size: 12px;
+  line-height: 18px;
+  color: chrome.$text-muted;
+}
+
+.man-se__input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: chrome.$control-height;
+  margin-bottom: 8px;
+  padding: 5px 8px;
+  font: inherit;
+  font-size: 13px;
+  color: chrome.$text-body;
+  background: chrome.$surface;
+  border: 1px solid chrome.$border-input;
+  border-radius: chrome.$radius-input;
+}
+
+.man-se__input--area {
+  min-height: 56px;
+  resize: vertical;
+}
+
+.man-se__input:focus-visible {
+  outline: none;
+  border-color: chrome.$focus-border;
+  box-shadow: chrome.$focus-ring;
+}
+
+.man-se__check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: chrome.$text;
+}
+
+// --- Bildkachel --------------------------------------------------------------
+.man-se__thumb-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.man-se__thumb {
+  width: 160px;
+  height: 90px;
+  object-fit: cover;
+  border: 1px solid chrome.$border-tile;
+  border-radius: chrome.$radius-small;
+  background: chrome.$surface-handle;
+}
+
+.man-se__thumb-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+// Die leere Bildfläche ist gestrichelt: sie sieht damit wie eine Lücke aus,
+// die gefüllt werden will, und nicht wie eine Schaltfläche, die man übersehen
+// darf — ohne Bild wird die Folie nicht gezeigt.
+.man-se__pick {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 90px;
+  font: inherit;
+  font-size: 13px;
+  color: chrome.$accent-text;
+  background: chrome.$accent-surface-soft;
+  border: 1px dashed chrome.$accent-border;
+  border-radius: chrome.$radius-small;
+  cursor: pointer;
+  transition: background-color chrome.$transition;
+}
+
+.man-se__pick:hover {
+  background: chrome.$accent-surface;
+}
+
+// --- Schaltflächen und Fußzeile ----------------------------------------------
+.man-se__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: chrome.$control-height-sm;
+  padding: 4px 10px;
+  font: inherit;
+  font-size: 13px;
+  color: chrome.$text;
+  background: chrome.$surface;
+  border: 1px solid chrome.$border;
+  border-radius: chrome.$radius-control;
+  cursor: pointer;
+  transition:
+    background-color chrome.$transition,
+    border-color chrome.$transition;
+}
+
+.man-se__button:hover:not(:disabled) {
+  background: chrome.$surface-hover;
+  border-color: chrome.$border-hover;
+}
+
+.man-se__button:disabled {
+  color: chrome.$text-state;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.man-se__button--primary {
+  color: #fff;
+  background: chrome.$accent;
+  border-color: chrome.$accent-strong;
+}
+
+.man-se__button--primary:hover:not(:disabled) {
+  background: chrome.$accent-strong;
+  border-color: chrome.$accent-stronger;
+}
+
+.man-se__button--quiet {
+  background: transparent;
+  border-color: transparent;
+  color: chrome.$text-muted;
+}
+
+.man-se__button--danger:hover:not(:disabled) {
+  color: chrome.$text-warning;
+}
+
+.man-se__button:focus-visible,
+.man-se__pick:focus-visible,
+.man-se__item:focus-visible {
+  outline: none;
+  border-color: chrome.$focus-border;
+  box-shadow: chrome.$focus-ring;
+}
+
+.man-se__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 0 0 auto;
+  padding: 10px 16px;
+  background: chrome.$surface-header;
+  border-top: 1px solid chrome.$border;
+}
+
+.man-se__footer-note {
+  margin-right: auto;
+  font-size: 12px;
+  color: chrome.$text-state;
+}
