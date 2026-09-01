@@ -42,15 +42,15 @@ describe("openClippingAncestors", () => {
     clipper.appendChild(child);
     document.body.appendChild(clipper);
 
-    const restore = openClippingAncestors(child);
+    const opening = openClippingAncestors(child);
 
-    expect(restore).not.toBeNull();
+    expect(opening.limit).toBeNull();
     expect(clipper.style.overflowX).toBe("visible");
     // Beide Achsen, sonst dreht der Browser `overflow-x` wieder auf `auto`.
     expect(clipper.style.overflowY).toBe("visible");
   });
 
-  it("bricht ab, wenn ein Vorfahr wirklich scrollt", () => {
+  it("hält bei einem Vorfahren an, der wirklich scrollt", () => {
     const scroller = document.createElement("div");
     scroller.style.overflowX = "auto";
     setScrollSize(scroller, 2000, 800);
@@ -58,13 +58,13 @@ describe("openClippingAncestors", () => {
     scroller.appendChild(child);
     document.body.appendChild(scroller);
 
-    // Eine an beiden Rändern angeschnittene Bühne wäre schlimmer als gar kein
-    // Ausbruch — und ein echter Scroll-Container darf nicht entkernt werden.
-    expect(openClippingAncestors(child)).toBeNull();
+    // Ein echter Scroll-Container darf nicht entkernt werden. Er hebt den
+    // Ausbruch aber nicht auf, sondern gibt ihm seine Kante als Grenze.
+    expect(openClippingAncestors(child).limit).toBe(scroller);
     expect(scroller.style.overflowX).toBe("auto");
   });
 
-  it("nimmt bereits geöffnete Vorfahren zurück, wenn weiter oben einer scrollt", () => {
+  it("lässt die Vorfahren unterhalb eines Scrollers geöffnet", () => {
     const scroller = document.createElement("div");
     scroller.style.overflowX = "hidden";
     setScrollSize(scroller, 2000, 800);
@@ -77,8 +77,10 @@ describe("openClippingAncestors", () => {
     scroller.appendChild(clipper);
     document.body.appendChild(scroller);
 
-    expect(openClippingAncestors(child)).toBeNull();
-    expect(clipper.style.overflowX).toBe("hidden");
+    // Ohne sie bliebe die Bühne in ihrer Spalte stehen, obwohl bis zur Kante
+    // des Scrollers Platz ist.
+    expect(openClippingAncestors(child).limit).toBe(scroller);
+    expect(clipper.style.overflowX).toBe("visible");
   });
 
   it("stellt beim Zurücknehmen den vorherigen Inline-Wert her", () => {
@@ -89,8 +91,7 @@ describe("openClippingAncestors", () => {
     clipper.appendChild(child);
     document.body.appendChild(clipper);
 
-    const restore = openClippingAncestors(child);
-    restore?.();
+    openClippingAncestors(child).undo();
 
     // Das Widget wird in fremde Seiten eingebettet und darf beim Verschwinden
     // nichts an ihnen zurücklassen.
@@ -103,7 +104,7 @@ describe("openClippingAncestors", () => {
     plain.appendChild(child);
     document.body.appendChild(plain);
 
-    expect(openClippingAncestors(child)).not.toBeNull();
+    expect(openClippingAncestors(child).limit).toBeNull();
     expect(plain.style.overflowX).toBe("");
   });
 });
@@ -117,6 +118,44 @@ describe("measureBleed", () => {
     // Kein `calc(50% - 50vw)`: die Spalte liegt links auf 150 und rechts auf
     // 160, ist also nicht zentriert.
     expect(measureBleed(anchor).pull).toBe(-150);
+  });
+
+  it("bricht nur bis zur Kante eines scrollenden Vorfahren aus", () => {
+    // Auf schmalen Schirmen scrollt `div.page-content` die Seite. Er ist aber
+    // selbst bildschirmbreit — die Bühne darf also bis zu seiner Innenkante
+    // ausbrechen, statt in ihrer Spalte stehen zu bleiben.
+    Object.defineProperty(document.documentElement, "clientWidth", {
+      value: 390,
+      configurable: true,
+    });
+    const limit = document.createElement("div");
+    document.body.appendChild(limit);
+    setRect(limit, { left: 0, width: 390 });
+    Object.defineProperty(limit, "clientWidth", { value: 390, configurable: true });
+    Object.defineProperty(limit, "clientLeft", { value: 0, configurable: true });
+
+    const anchor = document.createElement("div");
+    limit.appendChild(anchor);
+    setRect(anchor, { left: 36, top: 0 });
+
+    expect(measureBleed(anchor, limit)).toMatchObject({ pull: -36, width: 390 });
+  });
+
+  it("wird nie breiter als das Fenster", () => {
+    // Ein waagerecht scrollender Vorfahr kann breiter sein als der Schirm.
+    // Die Bühne folgt ihm nicht — sonst erzeugt sie den Überlauf, den der
+    // Ausbruch gerade vermeiden soll.
+    const limit = document.createElement("div");
+    document.body.appendChild(limit);
+    setRect(limit, { left: 0, width: 2000 });
+    Object.defineProperty(limit, "clientWidth", { value: 2000, configurable: true });
+    Object.defineProperty(limit, "clientLeft", { value: 0, configurable: true });
+
+    const anchor = document.createElement("div");
+    limit.appendChild(anchor);
+    setRect(anchor, { left: 0, top: 0 });
+
+    expect(measureBleed(anchor, limit).width).toBe(document.documentElement.clientWidth);
   });
 
   it("nimmt die Fensterbreite ohne Scrollbar", () => {

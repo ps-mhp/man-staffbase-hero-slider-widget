@@ -78,6 +78,12 @@
 // Schirmen einen Streifen und auf schmalen einen Turm ergeben.
 .man-hero__frame {
   position: relative;
+  // Die Breite kommt von der Bühne, nie aus dem Seitenverhältnis. Ohne diese
+  // Zeile rechnet `aspect-ratio` sie aus der Höhe zurück, sobald `min-height`
+  // greift — auf einem 390px schmalen Schirm wurde der Rahmen so 747px breit
+  // (560 × 4/3). Das Bild stand dann links und war rechts abgeschnitten,
+  // statt mittig im Ausschnitt zu sitzen. Live gemessen am 01.09.2026.
+  width: 100%;
   aspect-ratio: 4 / 3;
 
   @media (min-width: 768px) {
@@ -178,6 +184,11 @@
   max-width: none !important;
   max-height: none !important;
   object-fit: cover !important;
+  // Der Ausschnitt sitzt mittig: bei einem Querformat auf einem schmalen
+  // Schirm bleibt sonst der Zufall, welcher Bildrand verschwindet. Ausdrücklich
+  // gesetzt, weil ein Host-Theme mit eigener `object-position` sonst darüber
+  // entscheidet.
+  object-position: center !important;
   // Ohne diese Zeile setzt ein Host-Theme mit `img { display: inline }` einen
   // Grundlinien-Spalt unter das Bild.
   display: block !important;

@@ -66,21 +66,36 @@ const MAX_PLAUSIBLE_HEADER = 320;
 /** Der Rückfallwert: die Kopfzeilenhöhe von man.eu (`man-stage--desktop-header`). */
 export const FALLBACK_HEADER_HEIGHT = 95;
 
+/** Das Ergebnis von `openClippingAncestors`. */
+export interface ClipOpening {
+  /** Nimmt alle Eingriffe zurück. */
+  undo: () => void;
+  /**
+   * Der engste Vorfahr, der **nicht** geöffnet werden durfte, weil er wirklich
+   * scrollt — oder `null`, wenn der Weg bis zum Fenster frei ist. Er bildet
+   * die Kante, bis zu der die Bühne ausbrechen darf.
+   */
+  limit: HTMLElement | null;
+}
+
 /**
  * Räumt die clippenden Vorfahren zwischen `element` und `<body>` aus dem Weg.
  *
  * Ein Container wird nur geöffnet, wenn er **nicht selbst scrollt**: dann ist
  * sein `overflow` eine reine Sicherung gegen Überläufe und keine
  * Bedienfunktion, und das Öffnen ist für die Seite folgenlos. Scrollt er
- * wirklich, wird nichts angefasst und der ganze Versuch abgebrochen —
- * `overflow` lässt sich in einer Achse gar nicht auf `visible` setzen, solange
- * die andere scrollt (der Browser macht daraus wieder `auto`).
+ * wirklich, bleibt er unangetastet — `overflow` lässt sich in einer Achse gar
+ * nicht auf `visible` setzen, solange die andere scrollt (der Browser macht
+ * daraus wieder `auto`).
  *
- * @returns eine Funktion, die alle Eingriffe zurücknimmt, oder `null`, wenn
- * mindestens ein Vorfahr nicht zu öffnen war. Im `null`-Fall ist bereits
- * alles zurückgenommen.
+ * Ein solcher Scroller beendet die Suche, hebt den Ausbruch aber nicht auf:
+ * die Bühne bricht dann bis zu **seiner** Kante aus. Auf schmalen Schirmen ist
+ * genau das der Fall — `div.page-content` scrollt die Seite, ist aber selbst
+ * bildschirmbreit (am 01.09.2026 auf onetruck gemessen: 390px bei 390px
+ * Fenster). Wer hier ganz aufgibt, verschenkt den Ausbruch an einer Kante,
+ * die gar keine ist.
  */
-export function openClippingAncestors(element: HTMLElement): (() => void) | null {
+export function openClippingAncestors(element: HTMLElement): ClipOpening {
   const undos: Array<() => void> = [];
   const undoAll = (): void => {
     for (const undo of undos) undo();
@@ -94,10 +109,7 @@ export function openClippingAncestors(element: HTMLElement): (() => void) | null
       // `+1` gegen die Rundung, die eine Unterpixel-Höhe sonst als Scrollen
       // ausweist.
       const scrolls = node.scrollHeight > node.clientHeight + 1;
-      if (scrolls) {
-        undoAll();
-        return null;
-      }
+      if (scrolls) return { undo: undoAll, limit: node };
 
       const target = node;
       const previousX = target.style.overflowX;
@@ -116,25 +128,36 @@ export function openClippingAncestors(element: HTMLElement): (() => void) | null
     node = node.parentElement;
   }
 
-  return undoAll;
+  return { undo: undoAll, limit: null };
 }
 
 /**
  * Misst Kante, Breite und Kopfzeilenhöhe an einem Anker, der selbst **nicht**
  * ausbricht — sonst misst man die eigene Verschiebung mit.
  */
-export function measureBleed(anchor: HTMLElement): BleedMetrics {
+export function measureBleed(anchor: HTMLElement, limit: HTMLElement | null = null): BleedMetrics {
   const rect = anchor.getBoundingClientRect();
   const scroller = document.scrollingElement ?? document.documentElement;
 
   const headerHeight = rect.top + scroller.scrollTop;
+  // `clientWidth` statt `100vw`: die Einheit schließt die Scrollbar ein und
+  // erzeugt damit genau den waagerechten Überlauf, den der Ausbruch vermeiden
+  // soll.
+  const viewport = document.documentElement.clientWidth;
+
+  // Gibt es einen Scroller über der Bühne, ist seine Innenkante die Grenze —
+  // weiter hinaus wäre die Bühne nur abgeschnitten. `clientLeft` blendet einen
+  // etwaigen Rahmen aus, beide Rechtecke stehen im selben Bezug, ein
+  // Scroll-Ausgleich entfällt deshalb.
+  const bounded = limit !== null;
+  const limitRect = bounded ? limit.getBoundingClientRect() : null;
 
   return {
-    // `clientWidth` statt `100vw`: die Einheit schließt die Scrollbar ein und
-    // erzeugt damit genau den waagerechten Überlauf, den der Ausbruch
-    // vermeiden soll.
-    width: document.documentElement.clientWidth,
-    pull: -(rect.left + scroller.scrollLeft),
+    width: bounded ? Math.min(limit.clientWidth, viewport) : viewport,
+    pull:
+      limitRect !== null && limit !== null
+        ? limitRect.left + limit.clientLeft - rect.left
+        : -(rect.left + scroller.scrollLeft),
     headerHeight:
       headerHeight >= 0 && headerHeight <= MAX_PLAUSIBLE_HEADER
         ? headerHeight
@@ -162,15 +185,15 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
 
     // Erst räumen, dann messen: ein noch clippender Vorfahr verfälscht die
     // Breite nicht, aber ein bereits ausgebrochenes Element täte es.
-    const restore = openClippingAncestors(anchor);
-    if (restore === null) {
-      setMetrics(null);
-      return;
-    }
+    const opening = openClippingAncestors(anchor);
 
     const update = (): void =>
       setMetrics((previous) => {
-        const next = measureBleed(anchor);
+        const next = measureBleed(anchor, opening.limit);
+        // Nichts zu gewinnen: steht die Bühne ohnehin schon so breit wie ihre
+        // Grenze, bleibt der Ausbruch aus. Eine Verschiebung nach rechts wäre
+        // sonst denkbar, wenn ein Vorfahr schmaler ist als die Bühne selbst.
+        if (next.width <= anchor.getBoundingClientRect().width) return null;
         // Nur bei echter Änderung ein neues Objekt: der Beobachter sieht auch
         // die Höhenänderung, die die Bühne selbst auslöst, und ein bei jedem
         // Durchlauf neues Objekt liesse den Rendervorgang unnötig kreisen.
@@ -190,7 +213,7 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
       window.addEventListener("resize", update);
       return () => {
         window.removeEventListener("resize", update);
-        restore();
+        opening.undo();
       };
     }
 
@@ -199,7 +222,7 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
     observer.observe(anchor);
     return () => {
       observer.disconnect();
-      restore();
+      opening.undo();
     };
   }, [anchor, enabled]);
 
