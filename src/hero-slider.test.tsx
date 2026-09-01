@@ -122,17 +122,27 @@ describe("HeroSlider", () => {
   });
 
   describe("Ausbruch", () => {
-    it("bricht nach Vorgabe aus und misst die Fensterbreite ohne Scrollbar", () => {
+    it("bricht nach Vorgabe aus und misst Kante und Fensterbreite ohne Scrollbar", () => {
       Object.defineProperty(document.documentElement, "clientWidth", {
         value: 1234,
         configurable: true,
       });
 
       const { container } = render(<HeroSlider slides={[slide("a")]} />);
-      const root = container.querySelector(".man-hero") as HTMLElement;
+      const host = container.querySelector(".man-hero-host") as HTMLElement;
+      host.getBoundingClientRect = () =>
+        ({ left: 150, top: 175, right: 0, bottom: 0, width: 0, height: 0, x: 0, y: 0 }) as DOMRect;
+      // Der Effekt misst beim Einhängen; jsdom kennt zu dem Zeitpunkt noch
+      // keine Masse, deshalb wird die Messung nach dem Setzen wiederholt.
+      act(() => {
+        window.dispatchEvent(new Event("resize"));
+      });
 
+      const root = container.querySelector(".man-hero") as HTMLElement;
       expect(root).toHaveClass("man-hero--bleed");
       expect(root.style.getPropertyValue("--man-hero-vw")).toBe("1234px");
+      expect(root.style.getPropertyValue("--man-hero-pull")).toBe("-150px");
+      expect(root.style.getPropertyValue("--man-hero-header")).toBe("175px");
     });
 
     it("lässt die Breite in Ruhe, wenn der Ausbruch abgeschaltet ist", () => {
@@ -142,10 +152,36 @@ describe("HeroSlider", () => {
       expect(root).not.toHaveClass("man-hero--bleed");
       expect(root.style.getPropertyValue("--man-hero-vw")).toBe("");
     });
+
+    it("bricht nicht aus, wenn ein Vorfahr wirklich scrollt", () => {
+      const scroller = document.createElement("div");
+      scroller.style.overflowX = "hidden";
+      Object.defineProperty(scroller, "scrollHeight", { value: 4000, configurable: true });
+      Object.defineProperty(scroller, "clientHeight", { value: 800, configurable: true });
+      document.body.appendChild(scroller);
+
+      // Eine an beiden Rändern angeschnittene Bühne ist kaputt; eine in
+      // Spaltenbreite ist bloss schmaler.
+      const { container } = render(<HeroSlider slides={[slide("a")]} />, { container: scroller });
+      expect(container.querySelector(".man-hero")).not.toHaveClass("man-hero--bleed");
+    });
   });
 
-  describe("Höhe", () => {
-    it("verwendet ohne Angabe die Stufe der CI-Spec", () => {
+  describe("Mehrere Folien", () => {
+    it("kennzeichnet die Bühne, damit der Text der Bedienleiste ausweicht", () => {
+      // Text und Bedienleiste liegen in getrennten absoluten Ebenen und
+      // wüssten sonst nichts voneinander — sie lägen beide unten links.
+      const { container } = render(<HeroSlider slides={[slide("a"), slide("b")]} />);
+      expect(container.querySelector(".man-hero")).toHaveClass("man-hero--many");
+    });
+
+    it("verzichtet bei einer einzigen Folie darauf", () => {
+      const { container } = render(<HeroSlider slides={[slide("a")]} />);
+      expect(container.querySelector(".man-hero")).not.toHaveClass("man-hero--many");
+    });
+  });
+
+  describe("Höhe", () => {    it("verwendet ohne Angabe die Stufe der CI-Spec", () => {
       const { container } = render(<HeroSlider slides={[slide("a")]} />);
       expect(container.querySelector(".man-hero")).toHaveClass("man-hero--height-medium");
     });

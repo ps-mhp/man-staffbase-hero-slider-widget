@@ -21,8 +21,9 @@
  */
 
 import * as React from "react";
-import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
+import { ReactElement, useCallback, useRef, useState } from "react";
 import { useHotStyle } from "@shared/hot-style";
+import { useFullBleed } from "./full-bleed";
 import { Slide } from "./slides-model";
 import { DEFAULT_AUTOPLAY_DELAY_MS, useSlider } from "./use-slider";
 import heroSliderCss from "./styles/hero-slider.scss";
@@ -57,34 +58,6 @@ const IconChevron = ({ direction }: { direction: "left" | "right" }): ReactEleme
   </svg>
 );
 
-/**
- * Legt `--man-hero-vw` auf die Fensterbreite **ohne** Scrollbar.
- *
- * `100vw` schliesst die Scrollbar ein; ein damit gebauter Ausbruch ist auf
- * jeder scrollenden Seite um deren Breite zu breit und erzeugt einen
- * waagerechten Balken. `clientWidth` des Wurzelelements kennt den Unterschied.
- * Ohne `ResizeObserver` (sehr alte Browser) bleibt es beim CSS-Rückfall.
- */
-function useViewportWidth(element: HTMLElement | null, enabled: boolean): void {
-  useEffect(() => {
-    if (element === null || !enabled) return;
-
-    const apply = (): void => {
-      element.style.setProperty("--man-hero-vw", `${document.documentElement.clientWidth}px`);
-    };
-    apply();
-
-    if (typeof ResizeObserver === "undefined") {
-      window.addEventListener("resize", apply);
-      return () => window.removeEventListener("resize", apply);
-    }
-
-    const observer = new ResizeObserver(apply);
-    observer.observe(document.documentElement);
-    return () => observer.disconnect();
-  }, [element, enabled]);
-}
-
 /** Das `<picture>` eines Slides samt Hochkant-Zuschnitt und Ladepriorität. */
 function SlideImage({ slide, eager }: { slide: Slide; eager: boolean }): ReactElement {
   return (
@@ -115,7 +88,10 @@ export function HeroSlider({
   autoplayDelayMs = DEFAULT_AUTOPLAY_DELAY_MS,
 }: HeroSliderProps): ReactElement | null {
   const hotCss = useHotStyle(heroSliderCss, "hero-slider-widget", "styles/hero-slider.scss");
-  const [root, setRoot] = useState<HTMLElement | null>(null);
+  // Der Anker bricht selbst nie aus — an ihm wird die ungestörte Kante der
+  // Inhaltsspalte gemessen. Läge die Messung an der Bühne, misse sie ihre
+  // eigene Verschiebung mit.
+  const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const touchStartX = useRef<number | null>(null);
 
   const { index, playing, goTo, next, previous, setPaused, swipe } = useSlider({
@@ -123,7 +99,7 @@ export function HeroSlider({
     delayMs: autoplayDelayMs,
   });
 
-  useViewportWidth(root, fullBleed);
+  const bleed = useFullBleed(anchor, fullBleed);
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -146,34 +122,51 @@ export function HeroSlider({
 
   const many = slides.length > 1;
 
+  // Die Variablen tragen alles, was nur gemessen werden kann. `--man-hero-vw`
+  // fehlt bewusst, solange kein Ausbruch zustande kam: dann greift die Klasse
+  // `--bleed` gar nicht erst, und die Bühne bleibt in der Spalte statt an
+  // beiden Rändern angeschnitten zu werden.
+  const vars: React.CSSProperties & Record<string, string> = {} as React.CSSProperties &
+    Record<string, string>;
+  if (bleed !== null) {
+    vars["--man-hero-vw"] = `${bleed.width}px`;
+    vars["--man-hero-pull"] = `${bleed.pull}px`;
+    vars["--man-hero-header"] = `${bleed.headerHeight}px`;
+  }
+
   return (
-    <div
-      ref={setRoot}
-      className={[
-        "man-hero",
-        `man-hero--height-${height}`,
-        fullBleed ? "man-hero--bleed" : "",
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      data-testid="hero-slider"
-      aria-roledescription={many ? "carousel" : undefined}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-      onKeyDown={onKeyDown}
-      onTouchStart={(event) => {
-        touchStartX.current = event.touches[0]?.clientX ?? null;
-      }}
-      onTouchEnd={(event) => {
-        const start = touchStartX.current;
-        touchStartX.current = null;
-        if (start === null) return;
-        const end = event.changedTouches[0]?.clientX;
-        if (end !== undefined) swipe(end - start);
-      }}
-    >
+    // Der äussere Kasten bleibt immer in der Inhaltsspalte; nur der innere
+    // bricht aus. Ohne diese Trennung gäbe es keinen festen Punkt, an dem sich
+    // die Kante der Spalte messen liesse.
+    <div className="man-hero-host" ref={setAnchor}>
+      <div
+        className={[
+          "man-hero",
+          `man-hero--height-${height}`,
+          many ? "man-hero--many" : "",
+          bleed !== null ? "man-hero--bleed" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        style={vars}
+        data-testid="hero-slider"
+        aria-roledescription={many ? "carousel" : undefined}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
+        onKeyDown={onKeyDown}
+        onTouchStart={(event) => {
+          touchStartX.current = event.touches[0]?.clientX ?? null;
+        }}
+        onTouchEnd={(event) => {
+          const start = touchStartX.current;
+          touchStartX.current = null;
+          if (start === null) return;
+          const end = event.changedTouches[0]?.clientX;
+          if (end !== undefined) swipe(end - start);
+        }}
+      >
       {/* Das Stylesheet kommt und geht mit der Komponente: die Bundles werden
           in fremde Seiten eingebettet und sollen dort nichts zurücklassen. */}
       <style>{hotCss}</style>
@@ -281,6 +274,7 @@ export function HeroSlider({
           {playing ? "" : `Folie ${index + 1} von ${slides.length}`}
         </div>
       )}
+      </div>
     </div>
   );
 }

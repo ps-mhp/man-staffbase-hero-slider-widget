@@ -24,6 +24,10 @@
 
 @use "@shared/stylings/man-tokens" as *;
 
+.man-hero-host {
+  display: block;
+}
+
 .man-hero {
   position: relative;
   overflow: hidden;
@@ -35,15 +39,22 @@
 }
 
 // --- 1. Ausbruch aus der Inhaltsspalte ---------------------------------------
-// `100vw` schliesst die Scrollbar mit ein und erzeugt damit genau den
-// horizontalen Überlauf, den der Ausbruch vermeiden soll. Die Komponente misst
-// deshalb `document.documentElement.clientWidth` (ohne Scrollbar) und legt das
-// Ergebnis als `--man-hero-vw` an. Die Regel funktioniert auch ohne den
-// Beobachter — dann eben mit der Scrollbar-Ungenauigkeit, was immer noch
-// besser ist als gar kein Ausbruch.
+// Beide Werte sind gemessen, nicht gerechnet (siehe `full-bleed.ts`): die
+// verbreitete Formel `calc(50% - 50vw)` unterstellt eine im Fenster
+// zentrierte Inhaltsspalte, und genau das ist die Staffbase-Spalte nicht —
+// sie liegt auf onetruck 150px von links und 160px von rechts, weil rechts
+// die Scrollbar reserviert ist. Der Ausbruch wäre um 5px verschoben und der
+// Text damit neben der Fluchtlinie.
+//
+// Die Klasse wird erst gesetzt, wenn die Messung vorliegt; ohne sie bleibt
+// die Bühne in der Spalte. Deshalb stehen hier keine Rückfallwerte: sie
+// könnten nur falsch sein.
 .man-hero--bleed {
-  width: var(--man-hero-vw, 100vw);
-  margin-inline: calc(50% - var(--man-hero-vw, 100vw) / 2);
+  width: var(--man-hero-vw);
+  margin-left: var(--man-hero-pull);
+  // Nicht `0`: mit fester Breite und festem linken Rand wäre der Kasten
+  // überbestimmt, und der Browser korrigierte in RTL den falschen Rand.
+  margin-right: auto;
 }
 
 // --- Höhe --------------------------------------------------------------------
@@ -78,6 +89,10 @@
 // `svh` statt `vh`: auf Mobilgeräten wächst und schrumpft die Adressleiste,
 // und `vh` rechnet mit dem grossen Zustand — die Bühne wäre bei sichtbarer
 // Leiste zu hoch und schöbe alles Weitere unter die Falz.
+//
+// Die Kopfzeilenhöhe ist gemessen (`--man-hero-header`, siehe `full-bleed.ts`)
+// und nicht geraten: sie ist auf onetruck 175px und nicht die 95px, die
+// man.eu für seine eigene Kopfzeile ansetzt.
 .man-hero--height-viewport .man-hero__frame {
   aspect-ratio: auto;
   height: calc(100svh - var(--man-hero-header, 95px));
@@ -127,13 +142,30 @@
   inset: 0;
 }
 
+// Ohne diese Regel bliebe `height: 100%` am Bild wirkungslos: `<picture>` ist
+// standardmässig inline und hat keine eigene Höhe, und ein Prozentwert braucht
+// einen Elternteil mit einer. Das Bild nähme dann seine eigene Grösse an — auf
+// breiten Schirmen fällt das nicht auf, weil es ohnehin über die Bühne
+// hinausragt, auf schmalen bleibt darunter eine schwarze Fläche stehen.
+.man-hero__media picture {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+// Jede Angabe ausdrücklich: Staffbase legt über Rich-Text-Bereiche eine Regel
+// `.css-…RichText :not(…) > img { height: auto }`, deren Spezifität diese
+// Klasse schlägt. Ohne den Nachdruck nimmt das Bild seine eigene Höhe an und
+// lässt auf schmalen Schirmen eine schwarze Fläche unter sich stehen.
 .man-hero__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
   // Ohne diese Zeile setzt ein Host-Theme mit `img { display: inline }` einen
   // Grundlinien-Spalt unter das Bild.
-  display: block;
+  display: block !important;
 }
 
 // Der Verlauf. Wörtlich aus CI-Spec 3.9 und identisch zu dem, was
@@ -212,6 +244,18 @@
   }
 }
 
+// Bei mehreren Folien liegt die Bedienleiste in einer eigenen absoluten Ebene
+// unten links — also genau dort, wo sonst der Text endet. Beide Ebenen wissen
+// nichts voneinander, deshalb muss der Text ihr ausweichen. man.eu löst es
+// gleich: Text auf 24px, Bedienung auf 120px vom unteren Rand.
+.man-hero--many .man-hero__body {
+  padding-bottom: 96px;
+
+  @media (min-width: 768px) {
+    padding-bottom: 120px;
+  }
+}
+
 .man-hero__headline {
   @include man-type("display-xl", $important: true);
 
@@ -276,6 +320,9 @@
   pointer-events: auto;
   display: flex;
   align-items: center;
+  // Ohne diese Zeile zöge `align-items: stretch` der Flex-Spalte die Leiste
+  // über die volle Breite; die unsichtbare Fläche läge dann über dem Bild.
+  align-self: flex-start;
   gap: man("space-4");
   padding-bottom: man("space-6");
 }
