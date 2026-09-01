@@ -257,18 +257,27 @@
 }
 
 .man-hero__headline {
-  @include man-type("display-xl", $important: true);
-
   margin: 0;
-  color: man("white") !important;
-  letter-spacing: man("track-tight") !important;
   // Überschriften bis 24ch, immer ausgeglichen umbrochen (CI-Spec 1.2) —
   // sonst bleibt auf der Bühne ein einzelnes Wort in der letzten Zeile stehen.
   text-wrap: balance;
 
+  // Dieselbe Falle wie bei der Unterzeile: Staffbase setzt `.page h2` mit
+  // `!important` und vier Klassen Spezifität auf 26px. Bei gleichem Nachdruck
+  // entscheidet die Spezifität, und eine einzelne Klasse verliert — live
+  // gemessen kamen 26px statt der 56px der Bühnenschrift an.
+  @include man-outshine-host {
+    @include man-type("display-xl", $important: true);
+
+    color: man("white") !important;
+    letter-spacing: man("track-tight") !important;
+  }
+
   @media (max-width: 767px) {
-    font-size: 36px !important;
-    line-height: 40px !important;
+    @include man-outshine-host {
+      font-size: 36px !important;
+      line-height: 40px !important;
+    }
   }
 }
 
@@ -287,35 +296,45 @@
   }
 }
 
-// Die Schaltfläche — die weisse Kontur, die MAN auf Bildern verwendet
-// (`button--secondary` auf man.eu). Als `a` gerendert, weil sie navigiert;
-// die Regeln stehen ausdrücklich gegen die `a`-Regeln der Wirtsseite.
+// Die Schaltfläche — der Primärknopf der Marke: MAN-Rot gefüllt, weisse
+// Versalien, wie ihn man.eu auf der Bühne zeigt. Der Grundriss (10/24er
+// Polsterung, 16/18er Label) stammt aus `onetruck-css/src/03-elements/button/
+// _app.scss`; die weisse Kontur davor war eine Erfindung und stand gegen das
+// Vorbild. Als `a` gerendert, weil sie navigiert — und genau deshalb gegen die
+// `a`- und `button`-Regeln der Wirtsseite durchgesetzt: deren Themenblock
+// färbt Fläche und Schrift gleich dunkelgrau ein.
 .man-hero__cta {
-  @include man-type("label", $important: true);
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-top: man("space-5");
-  padding: man("space-3") man("space-5");
-  min-height: 48px;
-  color: man("white") !important;
-  text-decoration: none !important;
-  text-transform: uppercase;
-  letter-spacing: man("track-label");
-  background: transparent;
-  border: man("cta-border-width") solid man("white");
-  border-radius: man("radius");
-  transition:
-    background-color man("duration") man("ease"),
-    color man("duration") man("ease");
+
+  @include man-outshine-host {
+    @include man-type("label", $important: true);
+
+    padding: 10px 24px !important;
+    min-height: 44px;
+    // Der Knopf der Marke steht auf 16/18, nicht auf den 13px des Labels —
+    // `man-type` liefert Schnitt und Familie, die Grösse kommt vom Grundriss.
+    font-size: 16px !important;
+    line-height: 18px !important;
+    color: man("white") !important;
+    text-decoration: none !important;
+    text-transform: uppercase !important;
+    letter-spacing: man("track-label") !important;
+    background: man("red") !important;
+    border: 0 !important;
+    border-radius: man("radius") !important;
+    transition: background-color man("duration") man("ease");
+  }
 }
 
 .man-hero__cta:hover,
 .man-hero__cta:focus-visible {
-  color: man("white") !important;
-  background: man("red");
-  border-color: man("red");
+  @include man-outshine-host {
+    color: man("white") !important;
+    background: man("red-hover") !important;
+  }
 }
 
 // --- Bedienelemente ----------------------------------------------------------
@@ -347,12 +366,15 @@
   align-items: center;
   justify-content: center;
   padding: 0 !important;
-  color: man("white");
-  background: man("overlay");
-  border: 0;
-  border-radius: man("radius");
+  color: man("white") !important;
+  // Kein Flächenhintergrund: man.eu zeigt den blossen Linienpfeil. Der Kasten
+  // davor stammte von hier, nicht vom Vorbild. Die Trefferfläche bleibt, sie
+  // ist nur nicht mehr zu sehen.
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
   cursor: pointer;
-  transition: background-color man("duration") man("ease");
+  transition: color man("duration") man("ease");
 
   // Mobil führt die Wischgeste; zwei Schaltflächen über dem Bild wären dort
   // nur im Weg (CI-Spec 3.11).
@@ -361,18 +383,32 @@
   }
 }
 
-.man-hero__arrow:hover,
-.man-hero__arrow:focus-visible {
-  background: man("red");
+// Der Pfeil selbst: dasselbe Zeichen wie auf man.eu, aus der Symbolschrift
+// `man-icon`. Sie liegt in `onetruck-css/src/01-foundation/_icons-app.scss`
+// als eingebettetes WOFF2 und ist damit überall geladen, wo das
+// Tenant-Stylesheet gilt (am 01.09.2026 auf onetruck nachgemessen:
+// `document.fonts.check('16px "man-icon"')` → true). Die Codepoints stehen in
+// `11-icons.scss`: \e953 = arrow-line-thin-left, \e939 = arrow-line-thin.
+.man-hero__arrow::after {
+  font-family: man("font-icon") !important;
+  font-size: 24px !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  color: inherit;
+  speak: never;
 }
 
-// Die Grösse steht zusätzlich als Attribut am `<svg>` — siehe `IconChevron`.
-// Hier mit Nachdruck, weil die Wirtsseite eigene Regeln für Bilder und
-// Vektorgrafiken in Inhaltsbereichen mitbringt.
-.man-hero__arrow svg {
-  width: 24px !important;
-  height: 24px !important;
-  flex: 0 0 auto;
+.man-hero__arrow--prev::after {
+  content: "\e953";
+}
+
+.man-hero__arrow--next::after {
+  content: "\e939";
+}
+
+.man-hero__arrow:hover,
+.man-hero__arrow:focus-visible {
+  color: man("red") !important;
 }
 
 // Striche statt Punkte — die Vorgabe der CI-Spec 3.10. Die Trefferfläche ist
@@ -400,6 +436,12 @@
   background-clip: content-box;
   cursor: pointer;
   transition: background-color man("duration") man("ease");
+
+  // 40px auf dem Schreibtisch — dieselbe Strichlänge wie die Bühne auf man.eu
+  // (`--dash-w` in `onetruck-css/src/03-elements/news-stage/_app.scss`).
+  @media (min-width: 768px) {
+    width: 40px;
+  }
 }
 
 .man-hero__dot:hover {

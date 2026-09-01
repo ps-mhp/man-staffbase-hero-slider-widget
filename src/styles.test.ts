@@ -61,13 +61,34 @@ describe("Stylesheets", () => {
       );
     });
 
-    it("setzt die Grösse des Pfeil-Symbols mit Nachdruck", () => {
-      // Ohne Nachdruck drückt eine Regel der Wirtsseite das SVG auf null
-      // Breite zusammen; zurück bleibt eine dunkle Fläche, die auf einem
-      // dunklen Bild niemand als Schaltfläche erkennt.
+    it("setzt die Bühnenschrift der Überschrift mit erhöhter Spezifität", () => {
+      // Dieselbe Falle wie bei der Unterzeile: `.page h2` der Wirtsseite steht
+      // mit `!important` auf 26px. Ohne `man-outshine-host` kam von den 56px
+      // der Bühnenschrift nichts an.
       expect(read("hero-slider.scss")).toMatch(
-        /\.man-hero__arrow svg\s*\{[^}]*width:\s*24px\s*!important/,
+        /\.man-hero__headline\s*\{[\s\S]*?@include man-outshine-host[\s\S]*?display-xl/,
       );
+    });
+
+    it("setzt die Schaltfläche mit erhöhter Spezifität in MAN-Rot", () => {
+      // Der Themenblock von Staffbase färbt Fläche und Schrift jedes `a.button`
+      // im selben Dunkelgrau — der Knopf wäre unlesbar.
+      expect(read("hero-slider.scss")).toMatch(
+        /\.man-hero__cta\s*\{[\s\S]*?@include man-outshine-host[\s\S]*?background:\s*man\("red"\)\s*!important/,
+      );
+    });
+
+    it("zeichnet die Pfeile mit der Symbolschrift der Marke", () => {
+      // Der Pfeil ist das Zeichen von man.eu (\e953/\e939 aus `man-icon`),
+      // nicht Staffbases Chevron. Ohne Nachdruck auf der Familie gewinnt die
+      // Schriftregel der Wirtsseite und es erscheint ein leeres Kästchen.
+      const css = read("hero-slider.scss");
+
+      expect(css).toMatch(
+        /\.man-hero__arrow::after\s*\{[^}]*font-family:\s*man\("font-icon"\)\s*!important/,
+      );
+      expect(css).toContain('content: "\\e953"');
+      expect(css).toContain('content: "\\e939"');
     });
   });
 });

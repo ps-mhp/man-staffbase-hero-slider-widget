@@ -45,33 +45,6 @@ export interface HeroSliderProps {
   autoplayDelayMs?: number;
 }
 
-const IconChevron = ({ direction }: { direction: "left" | "right" }): ReactElement => (
-  // Inline statt Icon-Font: auf `man-icon` kann sich ein eingebettetes Widget
-  // nicht verlassen — er wird vom Tenant geladen und liegt laut CI-Spec bis
-  // heute nur als `.eot` vor.
-  //
-  // `width`/`height` stehen als Attribute, nicht nur im Stylesheet: ohne sie
-  // hat ein SVG keine eigene Grösse, und eine Regel der Wirtsseite drückt es
-  // auf null zusammen. Der Pfeil verschwindet dann, und zurück bleibt eine
-  // dunkle Fläche, die auf einem dunklen Bild niemand als Schaltfläche
-  // erkennt.
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    aria-hidden="true"
-  >
-    <path
-      d={direction === "left" ? "M15 4l-8 8 8 8" : "M9 4l8 8-8 8"}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 /** Das `<picture>` eines Slides samt Hochkant-Zuschnitt und Ladepriorität. */
 function SlideImage({ slide, eager }: { slide: Slide; eager: boolean }): ReactElement {
   return (
@@ -241,13 +214,11 @@ export function HeroSlider({
             <div className="man-hero__controls" role="tablist" aria-label="Folien der Bühne">
               <button
                 type="button"
-                className="man-hero__arrow"
+                className="man-hero__arrow man-hero__arrow--prev"
                 data-testid="hero-prev"
                 aria-label="Vorige Folie"
                 onClick={previous}
-              >
-                <IconChevron direction="left" />
-              </button>
+              />
 
               <div className="man-hero__dots">
                 {slides.map((slide, position) => (
@@ -267,13 +238,11 @@ export function HeroSlider({
 
               <button
                 type="button"
-                className="man-hero__arrow"
+                className="man-hero__arrow man-hero__arrow--next"
                 data-testid="hero-next"
                 aria-label="Nächste Folie"
                 onClick={next}
-              >
-                <IconChevron direction="right" />
-              </button>
+              />
             </div>
           </div>
         )}
