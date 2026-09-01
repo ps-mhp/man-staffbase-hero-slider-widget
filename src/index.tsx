@@ -12,7 +12,6 @@
  */
 
 import { setPublicPathFromBundle } from "@shared/public-path";
-
 // Muss vor jedem dynamischen `import()` laufen, damit nachgeladene Teile von
 // dem CDN kommen, von dem das Bundle stammt, und nicht von der Wirtsseite.
 setPublicPathFromBundle("hero-slider-widget.js");
@@ -21,6 +20,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import { BlockFactory, BlockDefinition, ExternalBlockDefinition, BaseBlock } from "widget-sdk";
+import { startWidget } from "@shared/dev-mode/start-widget";
 import {
   AUTOPLAY_DELAY_ATTRIBUTE,
   FULL_BLEED_ATTRIBUTE,
@@ -139,4 +139,18 @@ const externalBlockDefinition: ExternalBlockDefinition = {
   version: pkg.version,
 };
 
-window.defineBlock(externalBlockDefinition);
+/**
+ * Meldet den Baustein bei der Wirtsseite an.
+ *
+ * Der Weg über `startWidget` fragt zuerst, ob ein lokaler
+ * Entwicklungsserver dieses Widget ausliefert. In fast jedem Browser lautet
+ * die Antwort nein, und es wird sofort angemeldet; auf dem Rechner der
+ * Entwicklung übernimmt das lokale Bundle und meldet an seiner Stelle an.
+ * Immer nur eines von beiden — ein Bausteinname lässt sich nicht zweimal
+ * belegen.
+ */
+void startWidget({
+  name: "hero-slider-widget",
+  version: pkg.version,
+  register: () => window.defineBlock(externalBlockDefinition),
+});
