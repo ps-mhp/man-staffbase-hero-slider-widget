@@ -87,3 +87,20 @@ seltsam angeschnitten?
 Antwort: Beitragsbilder sind für das Feed-Format geschnitten, nicht für eine
 bildschirmhohe Bühne. Hinterlegen Sie im Eintrag unter **Bühnenbild
 überschreiben** ein eigenes, quer und mindestens 1920 px breit.
+
+**Frage:** Was passiert mit der Bühne bei der automatischen Übersetzung der
+Seite?
+
+Antwort: Übersetzt werden alle selbst geschriebenen Texte: Überschrift,
+Unterzeile, Beschriftung der Schaltfläche und Bildbeschreibung einer Folie
+sowie der überschriebene Titel und die Beschriftung eines News-Eintrags.
+Bilder, Verweisziele, Kanäle, Filter und die Reihenfolge bleiben unverändert.
+
+**Frage:** Ein News-Eintrag zeigt in der übersetzten Seite andere Texte als in
+der Ausgangssprache — ist das ein Fehler?
+
+Antwort: Nein. Titel und Anrisstext eines News-Beitrags kommen aus dem Beitrag
+selbst, und der wird in der Sprache gezeigt, die der Leser in der App
+eingestellt hat. Übersetzt wird nur, was Sie im Eintrag selbst geschrieben
+haben. Fehlt eine Sprachfassung des Beitrags, erscheint die vorhandene, statt
+die Folie leer zu lassen.
