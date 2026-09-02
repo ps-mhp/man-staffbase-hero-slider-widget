@@ -10,7 +10,7 @@
    Inhalten, kann es nicht sinnvoll über die volle Breite laufen.
 3. Öffnen Sie die Einstellungen des Widgets. Der Editor öffnet sich von
    selbst.
-4. Klicken Sie auf **Folie hinzufügen**.
+4. Klicken Sie über der Liste auf **Neu +** und wählen Sie **Folie**.
 5. Klicken Sie unter **Bild** auf die gestrichelte Fläche **Bild wählen** und
    wählen Sie das Bild aus der Mediathek. Ohne Bild wird die Folie nicht
    gezeigt.
@@ -29,8 +29,8 @@
 ## Mehrere Folien anlegen
 
 1. Öffnen Sie die Einstellungen und damit den Editor.
-2. Klicken Sie für jede weitere Folie auf **Folie hinzufügen** und füllen Sie
-   sie wie oben aus. Mehr als acht Folien sind nicht möglich — so weit blättert
+2. Wählen Sie für jede weitere Folie unter **Neu +** den Eintrag **Folie** und
+   füllen Sie sie wie oben aus. Mehr als acht Folien sind nicht möglich — so weit blättert
    niemand.
 3. Sortieren Sie über die Pfeile **↑** und **↓** oben rechts. Die erste Folie
    ist die, die beim Laden der Seite zu sehen ist.
@@ -40,8 +40,8 @@
 ## Einen einzelnen News-Beitrag auf die Bühne holen
 
 1. Öffnen Sie die Einstellungen und damit den Editor.
-2. Klicken Sie auf **News-Beitrag hinzufügen**. Links erscheint ein Eintrag
-   mit der Marke **Post**.
+2. Klicken Sie über der Liste auf **Neu +** und wählen Sie **News-Beitrag**.
+   Links erscheint ein Eintrag mit der Marke **Post**.
 3. Wählen Sie unter **Kanal** den News-Kanal. Erst danach lässt sich der
    Beitrag wählen.
 4. Wählen Sie unter **Beitrag** den gewünschten Beitrag. Zur Auswahl stehen
@@ -58,8 +58,8 @@
 ## Alle Beiträge eines Kanals zeigen
 
 1. Öffnen Sie die Einstellungen und damit den Editor.
-2. Klicken Sie auf **News-Kanal hinzufügen**. Links erscheint ein Eintrag mit
-   der Marke **Kanal**.
+2. Klicken Sie über der Liste auf **Neu +** und wählen Sie **News-Kanal**.
+   Links erscheint ein Eintrag mit der Marke **Kanal**.
 3. Wählen Sie unter **Kanal** den News-Kanal.
 4. Stellen Sie **Anzahl der Folien** ein (Voreinstellung `3`, höchstens acht).
 5. Wählen Sie die **Reihenfolge**: `Neueste zuerst` oder `Älteste zuerst`.

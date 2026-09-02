@@ -108,6 +108,12 @@ interface Harness {
   latestSlides: () => Slide[];
 }
 
+/** Öffnet das Menü hinter „Neu" und wählt eine Sorte. */
+const addVia = (testId: string): void => {
+  fireEvent.click(screen.getByTestId("item-add"));
+  fireEvent.click(screen.getByTestId(testId));
+};
+
 const setup = (value: HeroItem[], dirty = false, newsSource = stubNewsSource()): Harness => {
   const onChange = jest.fn<void, [HeroItem[]]>();
   const onSave = jest.fn();
@@ -156,7 +162,7 @@ describe("SlideEditor", () => {
 
     it("fügt eine leere Folie hinzu", () => {
       const h = setup([slide("a")]);
-      fireEvent.click(screen.getByTestId("slide-add"));
+      addVia("slide-add");
 
       const slides = h.latestSlides();
       expect(slides).toHaveLength(2);
@@ -167,7 +173,7 @@ describe("SlideEditor", () => {
       const many = Array.from({ length: MAX_ITEMS }, (_, i) => slide(`s${i}`));
       setup(many);
 
-      expect(screen.getByTestId("slide-add")).toBeDisabled();
+      expect(screen.getByTestId("item-add")).toBeDisabled();
       expect(screen.getByTestId("slide-duplicate")).toBeDisabled();
     });
 
@@ -317,7 +323,7 @@ describe("SlideEditor", () => {
   describe("News-Einträge anlegen", () => {
     it("legt einen Beitrags-Eintrag an und wählt ihn aus", () => {
       const h = setup([]);
-      fireEvent.click(screen.getByTestId("news-post-add"));
+      addVia("news-post-add");
 
       const items = h.latest();
       expect(items).toHaveLength(1);
@@ -326,7 +332,7 @@ describe("SlideEditor", () => {
 
     it("legt einen Kanal-Eintrag mit brauchbaren Vorgaben an", () => {
       const h = setup([]);
-      fireEvent.click(screen.getByTestId("news-channel-add"));
+      addVia("news-channel-add");
 
       expect(h.latest()[0]).toMatchObject({
         type: "news-channel",
@@ -335,12 +341,35 @@ describe("SlideEditor", () => {
       });
     });
 
-    it("sperrt alle drei Knöpfe, wenn die Bühne voll ist", () => {
+    it("bietet die drei Sorten erst an, wenn das Menü offen ist", () => {
+      setup([]);
+      expect(screen.queryByTestId("item-add-menu")).not.toBeInTheDocument();
+
+      fireEvent.click(screen.getByTestId("item-add"));
+      expect(screen.getByTestId("slide-add")).toBeInTheDocument();
+      expect(screen.getByTestId("news-post-add")).toBeInTheDocument();
+      expect(screen.getByTestId("news-channel-add")).toBeInTheDocument();
+    });
+
+    it("schließt das Menü nach der Wahl", () => {
+      setup([]);
+      addVia("slide-add");
+      expect(screen.queryByTestId("item-add-menu")).not.toBeInTheDocument();
+    });
+
+    it("schließt das Menü mit Escape", () => {
+      setup([]);
+      fireEvent.click(screen.getByTestId("item-add"));
+      fireEvent.keyDown(screen.getByTestId("item-add-menu"), { key: "Escape" });
+
+      expect(screen.queryByTestId("item-add-menu")).not.toBeInTheDocument();
+    });
+
+    it("sperrt das Anlegen, wenn die Bühne voll ist", () => {
       setup(Array.from({ length: MAX_ITEMS }, (_, i) => slide(`s${i}`)));
 
-      expect(screen.getByTestId("slide-add")).toBeDisabled();
-      expect(screen.getByTestId("news-post-add")).toBeDisabled();
-      expect(screen.getByTestId("news-channel-add")).toBeDisabled();
+      expect(screen.getByTestId("item-add")).toBeDisabled();
+      expect(screen.queryByTestId("item-add-menu")).not.toBeInTheDocument();
     });
 
     it("zeigt je Eintrag seine Sorte an", async () => {

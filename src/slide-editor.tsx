@@ -91,6 +91,7 @@ export function SlideEditor({
 
   const [selected, setSelected] = useState(0);
   const [pickerTarget, setPickerTarget] = useState<PickerTarget | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Nach dem Löschen des letzten Eintrags zeigt der Index ins Leere. Klemmen
   // statt beim Löschen nachzuführen: so kann kein Pfad ihn ungültig lassen.
@@ -105,6 +106,7 @@ export function SlideEditor({
   };
 
   const add = (fresh: HeroItem): void => {
+    setMenuOpen(false);
     if (full) return;
     onChange([...value, fresh]);
     setSelected(value.length);
@@ -158,6 +160,70 @@ export function SlideEditor({
 
       <div className="man-se__body">
         <div className="man-se__list-pane">
+          <div className="man-se__list-head">
+            {/* Der Blur des ganzen Blocks schließt das Menü: ein Klick daneben
+                nimmt ihm den Fokus. Ein Lauscher am Dokument wäre die zweite
+                Stelle, an der aufgeräumt werden muss. */}
+            <div
+              className="man-se__menu"
+              onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Escape") setMenuOpen(false);
+              }}
+            >
+              <button
+                type="button"
+                className="man-se__button man-se__button--primary"
+                data-testid="item-add"
+                aria-haspopup="menu"
+                aria-expanded={menuOpen}
+                disabled={full}
+                onClick={() => setMenuOpen((open) => !open)}
+              >
+                Neu<span className="man-se__add-plus" aria-hidden="true">+</span>
+              </button>
+
+              {menuOpen && (
+                <div className="man-se__menu-list" role="menu" data-testid="item-add-menu">
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="man-se__menu-item"
+                    data-testid="slide-add"
+                    onClick={() => add(emptySlide())}
+                  >
+                    Folie
+                    <span className="man-se__menu-note">Bild und Text selbst pflegen</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="man-se__menu-item"
+                    data-testid="news-post-add"
+                    onClick={() => add(emptyNewsPostItem())}
+                  >
+                    News-Beitrag
+                    <span className="man-se__menu-note">Ein bestimmter Beitrag</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="man-se__menu-item"
+                    data-testid="news-channel-add"
+                    onClick={() => add(emptyNewsChannelItem())}
+                  >
+                    News-Kanal
+                    <span className="man-se__menu-note">Eine Folie je Beitrag</span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {full && <p className="man-se__hint">Mehr als {MAX_ITEMS} Einträge sieht niemand.</p>}
+          </div>
+
           <div className="man-se__list" role="list" data-testid="slide-list">
             {value.map((entry, position) => {
               const label = labels[position];
@@ -190,40 +256,10 @@ export function SlideEditor({
 
             {value.length === 0 && (
               <p className="man-se__empty">
-                Noch kein Eintrag. Lege eine eigene Folie an oder hole einen Beitrag aus den News.
+                Noch kein Eintrag. Lege über <strong>Neu</strong> eine eigene Folie an oder hole
+                einen Beitrag aus den News.
               </p>
             )}
-          </div>
-
-          <div className="man-se__list-actions">
-            <button
-              type="button"
-              className="man-se__button"
-              data-testid="slide-add"
-              onClick={() => add(emptySlide())}
-              disabled={full}
-            >
-              Folie hinzufügen
-            </button>
-            <button
-              type="button"
-              className="man-se__button"
-              data-testid="news-post-add"
-              onClick={() => add(emptyNewsPostItem())}
-              disabled={full}
-            >
-              News-Beitrag hinzufügen
-            </button>
-            <button
-              type="button"
-              className="man-se__button"
-              data-testid="news-channel-add"
-              onClick={() => add(emptyNewsChannelItem())}
-              disabled={full}
-            >
-              News-Kanal hinzufügen
-            </button>
-            {full && <p className="man-se__hint">Mehr als {MAX_ITEMS} Einträge sieht niemand.</p>}
           </div>
         </div>
 

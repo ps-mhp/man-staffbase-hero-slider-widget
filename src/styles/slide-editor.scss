@@ -129,13 +129,68 @@
   color: chrome.$text-strong;
 }
 
-.man-se__list-actions {
+// Der Knopf sitzt ueber der Liste, nicht darunter: er legt vorn an, und dort
+// beginnt auch das Lesen der Liste.
+.man-se__list-head {
   flex: 0 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
   padding: 8px;
-  border-top: 1px solid chrome.$border;
+  border-bottom: 1px solid chrome.$border;
+}
+
+.man-se__menu {
+  position: relative;
+}
+
+// Das Plus steht am Knopf, nicht im Wort: ein Leerzeichen im Markup fiele
+// beim Umbrechen weg, dieser Abstand nicht.
+.man-se__add-plus {
+  margin-inline-start: 6px;
+}
+
+.man-se__menu-list {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 4px);
+  inset-inline-start: 0;
+  min-width: 220px;
+  padding: 4px;
+  background: chrome.$surface;
+  border: 1px solid chrome.$border-menu;
+  border-radius: chrome.$radius-menu;
+  box-shadow: chrome.$shadow-menu;
+}
+
+.man-se__menu-item {
+  display: block;
+  width: 100%;
+  padding: 6px 8px;
+  text-align: start;
+  font: inherit;
+  font-size: 13px;
+  color: chrome.$text-strong;
+  background: transparent;
+  border: 0;
+  border-radius: chrome.$radius-small;
+  cursor: pointer;
+}
+
+.man-se__menu-item:hover {
+  background: chrome.$surface-hover;
+}
+
+.man-se__menu-item:focus-visible {
+  outline: none;
+  background: chrome.$accent-selection;
+  box-shadow: chrome.$focus-ring;
+}
+
+// Der Nachsatz sagt, wofuer die Sorte gut ist. Ohne ihn muesste man drei
+// Eintraege anlegen, um den Unterschied zu sehen.
+.man-se__menu-note {
+  display: block;
+  font-size: 11px;
+  line-height: 15px;
+  color: chrome.$text-muted;
 }
 
 .man-se__empty {
@@ -175,6 +230,15 @@
   padding: 0;
   border: 0;
   margin-inline: 0;
+}
+
+// Die Legende ist eine Überschrift über einer Gruppe, kein Etikett direkt an
+// der ersten Zeile — sie braucht mehr Luft als eine gewöhnliche Beschriftung.
+// `padding: 0` nimmt ihr die Einrückung, die Browser einer `legend` mitgeben:
+// sonst stünde „Filter“ zwei Pixel neben allen anderen Beschriftungen.
+.man-se__fieldset > .man-se__label {
+  padding: 0;
+  margin-bottom: 8px;
 }
 
 .man-se__sub {
@@ -219,9 +283,8 @@
 
 // Der Hinweis in der Knopfleiste bekommt eine eigene Zeile: zwischen den
 // Knöpfen stehend würde er die Leiste auseinanderziehen.
-.man-se__list-actions .man-se__hint {
-  flex: 1 0 100%;
-  margin: 4px 0 0;
+.man-se__list-head .man-se__hint {
+  margin: 6px 0 0;
 }
 
 // Auswahlfelder tragen dieselbe Hülle wie Eingabefelder, brauchen aber das
@@ -297,12 +360,37 @@
   box-shadow: chrome.$focus-ring;
 }
 
+// Ein Haken ist ein Feld wie jedes andere und braucht denselben Abstand nach
+// unten: ohne ihn klebte die naechste Beschriftung an seiner Zeile.
 .man-se__check {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  margin-bottom: 20px;
   font-size: 13px;
+  line-height: 20px;
   color: chrome.$text;
+}
+
+// Die Browservorgabe gibt der Box eigene Aussenabstaende; zusammen mit `gap`
+// stuende die Beschriftung schief und die Zeile zu eng.
+.man-se__check input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+}
+
+// Innerhalb einer Gruppe stehen die Haken enger beieinander als getrennte
+// Felder — sie gehoeren sichtbar zusammen.
+.man-se__fieldset .man-se__check {
+  margin-bottom: 10px;
+}
+
+// Ein Hinweis gehoert zum Haken darueber und rueckt unter dessen Beschriftung
+// ein, damit er nicht wie ein neuer Absatz aussieht.
+.man-se__check + .man-se__hint {
+  margin: -4px 0 16px 22px;
 }
 
 // --- Bildkachel --------------------------------------------------------------
