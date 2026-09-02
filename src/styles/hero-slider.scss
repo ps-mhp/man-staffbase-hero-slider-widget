@@ -26,6 +26,20 @@
 
 .man-hero-host {
   display: block;
+
+  // Luft nach unten. Die Bühne läuft bis an den Bildschirmrand, der Inhalt
+  // darunter steht wieder in der Spalte — ohne Abstand klebt die nächste
+  // Überschrift an der Bildkante. `man("space-6")` liefert
+  // `var(--man-space-6, 32px)`; die Stufe setzt der Wirt selbst (gemessen auf
+  // onetruck: 32px), verschiebt er sie, geht die Bühne mit.
+  //
+  // Verstärkt, weil eine Wirtsregel den Abstand sonst auf null zieht: die
+  // einfache Klasse setzte sich nicht durch (gemessen 0px, obwohl die Regel
+  // im Baum stand), ein Inline-Wert dagegen schon — der Gegner gewinnt also
+  // über Spezifität, nicht über `!important`.
+  @include man-outshine-host {
+    margin-bottom: man("space-6");
+  }
 }
 
 // Die Bühne rückt näher an die Kopfzeile. Staffbase hält den Seitenrahmen je

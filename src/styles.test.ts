@@ -99,6 +99,15 @@ describe("Stylesheets", () => {
       expect(css).toContain('content: "\\e953"');
       expect(css).toContain('content: "\\e939"');
     });
+    it("lässt der Bühne Luft nach unten", () => {
+      // Ohne Abstand klebt der Seiteninhalt an der Unterkante des Bildes. Der
+      // Wert kommt aus der Tokenstufe, damit der Mandant ihn verschieben kann.
+      // Verstärkt: eine Wirtsregel zieht den Abstand sonst auf null.
+      expect(read("hero-slider.scss")).toMatch(
+        /\.man-hero-host\s*\{[\s\S]*?man-outshine-host\s*\{\s*margin-bottom:\s*man\("space-6"\)/,
+      );
+    });
+
     it("hält die Knöpfe des Dialogs kompakt", () => {
       // Staffbase gibt den Knöpfen im Konfigurationsdialog `margin: auto`.
       // Live gemessen lagen dadurch 219px Luft neben "Abbrechen", und die
