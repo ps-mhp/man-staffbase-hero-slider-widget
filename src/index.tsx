@@ -21,6 +21,7 @@ import ReactDOM from "react-dom/client";
 
 import { BlockFactory, BlockDefinition, ExternalBlockDefinition, BaseBlock } from "widget-sdk";
 import { startWidget } from "@shared/dev-mode/start-widget";
+import { getTranslationRegistry } from "@shared/translation/registry";
 import {
   AUTOPLAY_DELAY_ATTRIBUTE,
   FULL_BLEED_ATTRIBUTE,
@@ -34,6 +35,7 @@ import { HeroSliderLoader } from "./hero-slider-loader";
 import { startSlideEditorInjector } from "./slide-editor-injector";
 import { DEFAULT_AUTOPLAY_DELAY_MS } from "./use-slider";
 import { isSlideItem, parseHeroItems } from "./hero-items";
+import { heroSliderTranslationProvider } from "./translation-provider";
 import icon from "../resources/hero-slider-widget.svg";
 import pkg from "../package.json";
 
@@ -139,6 +141,16 @@ const blockDefinition: BlockDefinition = {
   label: "Hero-Slider",
   iconUrl: icon,
 };
+
+/**
+ * Wird beim Laden des Moduls angemeldet, nicht erst beim Anmelden des
+ * Bausteins: auf einer fertigen Inhaltsseite wird die Übersetzung nie
+ * aufgerufen, dort kostet es also nichts. Exportiert, damit Tests es wieder
+ * abmelden können.
+ */
+export const stopTranslationProvider = getTranslationRegistry().register(
+  heroSliderTranslationProvider,
+);
 
 const externalBlockDefinition: ExternalBlockDefinition = {
   blockDefinition,
