@@ -1,6 +1,6 @@
 {
   "title": "Hero-Slider",
-  "summary": "Immagini a tutta larghezza dello schermo con testo sovrapposto — la sezione nella parte superiore della pagina, a scelta sotto forma di sequenza di più diapositive.",
+  "summary": "Immagini a tutta larghezza dello schermo con testo sovrapposto — l’area nella parte superiore della pagina, a scelta come sequenza di diverse diapositive, create dall’utente o direttamente dalle notizie.",
   "icon": "🖼️",
   "pages": [
     {
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Immagini in sequenza, a tutta altezza dello schermo",
+      "title": "Pellicole intercambiabili, a tutta altezza dello schermo",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,

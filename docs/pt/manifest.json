@@ -1,6 +1,6 @@
 {
   "title": "Hero-Slider",
-  "summary": "Imagens que ocupam toda a largura do ecrã com texto por cima — a área no topo da página, que pode ser apresentada como uma sequência de vários slides.",
+  "summary": "Imagens que ocupam toda a largura do ecrã com texto por cima — a área no topo da página, podendo ser apresentada como uma sequência de vários slides, criados pelo próprio ou diretamente a partir das notícias.",
   "icon": "🖼️",
   "pages": [
     {
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Imagens em alternância, ocupando toda a altura do ecrã",
+      "title": "Imagens alternadas, ocupando toda a altura do ecrã",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,

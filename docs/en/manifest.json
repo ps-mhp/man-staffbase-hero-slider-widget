@@ -1,6 +1,6 @@
 {
   "title": "Hero Slider",
-  "summary": "Full-width images with text overlaid—the header section at the top of a page, optionally displayed as a slideshow of multiple slides.",
+  "summary": "Full-width images with text overlaid—the header section at the top of a page, either as a carousel of multiple slides, custom content, or directly from the news feed.",
   "icon": "🖼️",
   "pages": [
     {
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Changing images, full screen",
+      "title": "Changing slides, full screen",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,

@@ -1,6 +1,6 @@
 {
   "title": "Hero-Slider",
-  "summary": "Imágenes que ocupan todo el ancho de la pantalla con texto encima: el escenario en la parte superior de la página, opcionalmente como una sucesión de varias diapositivas.",
+  "summary": "Imágenes a lo ancho de la pantalla con texto superpuesto: la sección superior de la página, que puede mostrarse como una sucesión de varias diapositivas, propias o directamente extraídas de las noticias.",
   "icon": "🖼️",
   "pages": [
     {
