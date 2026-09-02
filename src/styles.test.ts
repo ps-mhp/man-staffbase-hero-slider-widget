@@ -99,6 +99,16 @@ describe("Stylesheets", () => {
       expect(css).toContain('content: "\\e953"');
       expect(css).toContain('content: "\\e939"');
     });
+
+    it("rueckt den Pfeil auf die Fluchtlinie der Striche", () => {
+      // Die Tinte des Glyphen sitzt in ihrer Zeile 2.5px zu hoch (am
+      // 02.09.2026 auf onetruck mit `measureText` gemessen). Die Kaesten von
+      // Pfeil und Strichleiste sind mittig, der Pfeil darin war es nicht — die
+      // Striche wirkten dadurch abgesackt.
+      expect(read("hero-slider.scss")).toMatch(
+        /\.man-hero__arrow::after\s*\{[\s\S]*?transform:\s*translateY\(2\.5px\)\s*!important/,
+      );
+    });
     it("lässt der Bühne Luft nach unten", () => {
       // Ohne Abstand klebt der Seiteninhalt an der Unterkante des Bildes. Der
       // Wert kommt aus der Tokenstufe, damit der Mandant ihn verschieben kann.

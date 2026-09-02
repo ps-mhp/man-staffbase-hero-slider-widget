@@ -438,6 +438,15 @@
   line-height: 1 !important;
   color: inherit;
   speak: never;
+  // Der Glyph steht in seiner Zeile nicht mittig: am 02.09.2026 auf onetruck
+  // gemessen (`measureText` mit `400 24px man-icon`) reicht seine Tinte von
+  // 17.79px über bis 3.21px über der Grundlinie, ihre Mitte liegt also 10.5px
+  // über der Grundlinie. Die sitzt bei `line-height: 1` 20px unter der
+  // Zeilenoberkante, die Tinte also bei 9.5px statt bei 12px. Die Schaltfläche
+  // selbst ist mittig — nachgemessen fallen die Mitten von Pfeil und
+  // Strichleiste exakt zusammen —, nur der Pfeil darin stand zu hoch und die
+  // Striche wirkten dadurch abgesackt.
+  transform: translateY(2.5px) !important;
 }
 
 .man-hero__arrow--prev::after {
