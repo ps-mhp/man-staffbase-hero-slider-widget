@@ -1,88 +1,106 @@
 # FAQ
 
-**Question:** I created a slide, but the stage remains blank.
+**Question:** I have created a slide, but the stage remains empty. 
 
-Answer: The slide is missing an image. Slides without an image are not displayed—an
-empty dark area would be indistinguishable from an error on the page.
-Open the editor and select an image under **Image**.
+Answer: The slide is missing the image. Slides without an image are not shown — a
+empty dark area would be indistinguishable from a mistake on the page. 
+Open the editor and select an image under **Image**. 
 
-**Question:** I entered a label for the button, but
-it doesn’t appear.
+**Question:** I have entered a label for the button, but
+she does not appear. 
 
-Answer: The button needs **both**—a label and a destination. As long as
-one of the fields is empty, it won’t be displayed.
+Answer: The button needs **both** — label and target. As long as
+one of the fields is empty, it is not displayed. 
 
-**Question:** The image doesn’t span the full width of the window.
+**Question:** The image does not run over the full width of the window. 
 
-Answer: There are two possible causes. Either **Show Full Width**
-is turned off, or the widget is in a column next to other content.
-Place it on its own line at the top of the page.
+Answer: Two possible causes. Either is **Show full width** 
+or the widget is in a column next to other content. 
+Put it on its own line at the top of the page. 
 
-**Question:** The text isn’t where the rest of the page content begins.
+**Question:** The text is not where the rest of the page content begins. 
 
-Answer: The stage adjusts to the content width reported by the page.
-If it differs, please report the issue along with the page URL.
+Answer: The stage is based on the content width that the page reports. 
+If it deviates, report the case with the page address. 
 
-**Question:** Instead of the editor, I see a text field labeled “Entries” with curly
-braces inside it.
+**Question:** Instead of the editor, I see a text field "Entries" with curly
+Brackets in it. 
 
-Answer: The editor was unable to integrate into the dialog. Close
-the settings and open them again. The text in the field is the
-raw version of the entries; do not edit it manually—a typo
-in it will cause all slides to disappear.
+Answer: The editor could not hook into the dialog. Close
+Settings and open them again. The text in the field is the
+rough version of the entries; do not edit it by hand — a typo
+in it makes all the foils disappear. 
 
-**Question:** The stage doesn’t change on its own.
+**Question:** The stage does not change by itself. 
 
-Answer: There are three possible causes: There is only one slide; **Seconds per Slide**
-is set to `0`; or “Reduce motion” is enabled in the operating system.
-In the latter case, this is by design—you can still navigate using arrows
-and lines.
+Answer: Three possible causes: There is only one slide; **seconds per slide** 
+is set to '0'; or in the operating system, "Reduce Motion" is turned on. 
+In the latter case, this is intentional — scrolling can still be done via arrows
+and dashes. 
 
-**Question:** I don’t see any arrows on my phone.
+**Question:** I don't see any arrows on the phone. 
 
-Answer: That’s by design. On narrow screens, you swipe; the
-lines below the text still indicate which slide is currently on top.
+Answer: That's how it's intended. On narrow screens, you swipe; the
+Lines below the text continue to indicate which slide is currently in front. 
 
-**Question:** My image is cropped at the edges.
+**Question:** My image is cropped at the edge. 
 
-Answer: Depending on the window width, the stage crops the image to 21:9 or 4:3. Choose
-an image with some space around the subject, or upload your own portrait-oriented crop under **Image for
-Portrait Orientation**.
+Answer: The stage crops to 21:9 or 4:3 depending on the width of the window. Select
+Create an image with air around the subject, or enter **Image for
+portrait format** has its own cut-out cut out on edge. 
 
-**Question:** Can I create more than eight slides?
+**Question:** Can I create more than eight slides? 
 
-Answer: No. At five seconds per slide, a full cycle takes forty seconds even with
-just eight slides—no one stays on a stage that long.
-The limit of eight applies to all slides combined: A channel entry with five posts
-allows for only three additional slides alongside it.
+Answer: No. At five seconds per slide, a full run takes even at
+eight slides forty seconds — no one stays on a stage for that long. 
+The eight applies to all slides together: One channel entry with five posts
+only allows three other slides next to it. 
 
-**Question:** Do I have to update the stage when a new post
-appears in the News?
+**Question:** Do I have to maintain the stage when a new post is published in the news.
+? 
 
-Answer: Not for a **News Channel** entry—it always displays the latest
-posts from the channel based on the set filters. A **News Post**
-entry, on the other hand, stays with the post you selected.
+Answer: Not with a **News channel** entry — it always shows the current
+posts of the channel according to the filters set. A **news post**- 
+The entry, on the other hand, remains with the post you have chosen. 
 
-**Question:** A slide from the News section has suddenly disappeared.
+**Question:** A slide from the news has suddenly disappeared. 
 
-Answer: The post was deleted, moved, or is not visible to the reader. Only this one slide is missing; the rest remain.
+Answer: The post has been deleted, moved, or is available to the person reading
+not visible. Only this one foil falls away; the others remain standing. 
 
-**Question:** My channel entry shows fewer slides than I’ve set.
+**Question:** My channel entry shows fewer slides than set. 
 
-Answer: Most likely, the filters are too restrictive. **Only posts with images** is
-the default setting—so a channel without images won’t display anything. Check the
-preview in the editor: it shows exactly what will appear on the stage.
+Answer: Most of the time the filters are too narrow. **Only posts with image** is
+preset — a channel without images will not provide anything. Check the
+Preview in the editor: it shows exactly what will appear on stage. 
 
-**Question:** There isn’t a single channel listed in the channel selection; instead, there’s a
-text field for an ID.
+**Question:** There is not a single channel in the channel selection, instead a
+Text field for an identifier. 
 
-Answer: The list of news channels was unavailable. Reload the dialog
-box. If that doesn’t help, enter the channel ID manually; you’ll find it
-in the channel’s URL in the CMS.
+Answer: The list of news channels was not available. Load the dialog
+new. If that doesn't help, enter the channel identifier by hand; it stands
+in the address of the channel in the CMS. 
 
-**Question:** Why is the image of a news post on the stage blurry or
-strangely cropped?
+**Question:** Why is the image of a news report blurred on stage or
+strangely cut? 
 
-Answer: Article images are cropped for the feed format, not for a
-full-screen stage. In the entry, under **Override stage image**,
-upload your own image—landscape orientation and at least 1920 px wide.
+Answer: Featured images are cut for the feed format, not for a
+screen-high stage. In the entry under **Stage design
+overwrite** a separate, transverse and at least 1920 px wide. 
+
+**Question:** What happens to the stage during the automatic translation of the
+Side? 
+
+Answer: All self-written texts are translated: headline, 
+Subline, button caption, and image description of a slide
+as well as the headed title and caption of a news entry. 
+Images, referral targets, channels, filters, and the order remain unchanged. 
+
+**Question:** A news entry shows different texts in the translated page than in
+of the source language — is that a mistake? 
+
+Answer: No. The title and outline text of a news article come from the article
+and it is shown in the language that the reader uses in the app
+. Only what you wrote in the entry itself will be translated
+. If a language version of the article is missing, the existing one appears instead of
+to leave the foil blank.

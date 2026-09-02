@@ -1,6 +1,6 @@
 {
   "title": "Hero Slider",
-  "summary": "Full-width images with text overlaid—the header section at the top of a page, either as a carousel of multiple slides, custom content, or directly from the news feed.",
+  "summary": "Screen-wide images with text above them — the stage at the top of a page, optionally as an alternation of several slides, your own or directly from the news.",
   "icon": "🖼️",
   "pages": [
     {
@@ -26,7 +26,7 @@
   ],
   "examples": [
     {
-      "title": "A single image spanning the full width",
+      "title": "Single image across the full width",
       "attributes": {
         "height": "medium",
         "full-bleed": true,
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Changing slides, full screen",
+      "title": "Changing slides, screen-high",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,

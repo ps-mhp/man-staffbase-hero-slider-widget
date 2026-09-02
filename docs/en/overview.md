@@ -1,47 +1,48 @@
 # Hero Slider
 
-The Hero Slider is the **stage** at the top of a page: a large image spanning the
-full width of the window, with a headline above it, optionally a subheading, and
-a button. It is modeled after the stage on man.eu.
+The hero slider is the **stage** at the head of one page: a large image over the
+full window width, above it a heading, optionally a subline and
+a button. The model is the stage on man.eu. 
 
-If you create multiple slides, you’ll get a carousel: the slides fade
-into one another, and you can navigate using the arrows and the dots in the lower left corner.
+If you create several slides, you get a changer: dazzle the slides
+merge into each other, scrolling is done via arrows and the dashes at the bottom left. 
 
-You don’t have to maintain a slide manually. In addition to your own slides, the
-stage can also display **posts from the news**:
+A film does not have to be maintained by hand. In addition to your own films, the
+stage also show **articles from the news**: 
 
-- **News post** — a specific post as a slide. The image, headline,
-  and teaser come from the post, and the button links to it.
-- **News channel** — an entire channel, with one slide per article. The number of slides,
-  their order, and the filters applied can be customized. When a new article appears in
-  the channel, it automatically appears on the stage without any further action.
+- **News post** — a specific post as a slide. Image, headline
+  and teasers come from the post, the button leads to him. 
+- **News channel** — one whole channel, one slide per post. How many, in
+  in which order and according to which filters, can be adjusted. Appears in the
+  channel, he is on stage without any further action. 
 
-The three types appear in the same list and can be freely mixed and
-sorted—for example, a separate slide as the lead story, followed by the three most recent
-articles from a channel.
+The three varieties are in the same list and can be freely mixed and
+— for example, a separate slide as a lead, followed by the three most recent
+Posts from a channel. 
 
-## What Readers See
+## What readers see
 
-- The image spans the full width of the window—even if the page
-  itself has a narrower content column.
-- The **text stays aligned with the page’s baseline**: it begins on the same
-  vertical line as the header, menu, and the text below the stage. It
-  is explicitly not aligned with the edge of the image.
-- The text is positioned at the bottom left, on a dark gradient that fades from bottom to
-  top. On wide screens, a second gradient is added from the left
-  to ensure that light-colored text remains readable against a light background.
-- For multiple slides: arrows on the left and right, with a line between them for each slide.
-  The line for the current slide is red.
-- The transition continues as long as the mouse hovers over the stage or the focus is
-  on it. On a phone, you swipe; the arrows are hidden there.
-- Users who have “Reduce Motion” enabled in their operating system will not see
-  the transition automatically or any fade effect—only the controls.
-- Slides from the News section look like any other slide. It’s not apparent from the outside
-  that the content comes from a news article.
+- The image runs across the full width of the window — even if the page is
+  itself has a narrower content column. 
+- The **text remains on the vanishing line of the page**: it starts at the same
+  vertical line such as header, menu and the text below the stage. He
+  expressly does not stick to the edge of the picture. 
+- The text is in the bottom left, on a dark gradient that runs from bottom to bottom
+  at the top. On wide screens, a second gradient comes from the left
+  so that light text remains legible on a light subject. 
+- If there are several slides: Arrows left and right, one line per slide in between. 
+  The line of the current slide is red. 
+- The switch lasts as long as the mouse is over the stage or the focus is in
+  you are lying. There is swiping on the phone; the arrows are hidden there. 
+- If you have set "Reduce Motion" in the operating system, you won't see any
+  Change by itself and no panel — only the controls. 
+- Slides from the news look like any other slide. That the content from
+  is not recognizable from the outside. 
 
-## What You See in the CMS Editor
+## What you see in the CMS editor
 
-The editor displays the stage within the content column, meaning it’s **narrower than on
-the published page**. You can only assess how far the image actually extends and where the text
-is positioned in the preview or on the published page. Always check there at least once at a narrow
-window width—that’s where the portrait-orientation cropping takes effect.
+The editor shows the stage within the content column, i.e. **narrower than on
+of the published page**. How far the image really runs and where the text
+is only available in the preview or on the published page.
+. Always check there at least once in a narrow
+Window width — this is where the portrait cropping applies.

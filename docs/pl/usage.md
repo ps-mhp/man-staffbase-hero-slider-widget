@@ -1,127 +1,127 @@
 # Krok po kroku
 
-## Konfiguracja sceny z obrazem
+## Przygotować scenę z obrazkiem
 
-1. Najpierw umieść obraz w bibliotece multimediów Staffbase. W formacie poziomym, o szerokości co najmniej
-   1920 px; w zależności od szerokości okna scena przycina go do proporcji 21:9 lub
-   4:3 — dlatego motyw nie powinien sięgać aż do krawędzi.
-2. Umieść widżet **Hero-Slider** na górze strony, w wierszu
-   bez innych widżetów obok. Jeśli znajduje się w kolumnie obok innych
-   treści, nie będzie można go sensownie wyświetlić na całej szerokości.
-3. Otwórz ustawienia widżetu. Edytor otworzy się
-   automatycznie.
-4. Kliknij nad listą **Nowy +** i wybierz **Slajd**.
-5. Pod pozycją **Obraz** kliknij przerywaną powierzchnię **Wybierz obraz** i
-   wybierz obraz z biblioteki multimediów. Bez obrazu slajd nie zostanie
-   wyświetlony.
-6. W polu **Opis obrazu** wpisz, co jest na nim widoczne. Pozostaw to
-   pole puste tylko wtedy, gdy obraz ma charakter wyłącznie dekoracyjny.
-7. Wpisz **nagłówek**. Zostanie on wyświetlony wielkimi literami; do około
-   24 znaków pozostaje w jednym wierszu.
-8. Opcjonalnie: **podtytuł** i **przycisk**. Przycisk pojawi się
-   tylko wtedy, gdy wypełnione są pola **etykieta** **i** **miejsce docelowe**.
-9. Kliknij **Zastosuj**.
-10. Ustaw **sekundy na slajd** na `0` — w przypadku pojedynczego slajdu
-    nie ma co zmieniać.
-11. Zapisz stronę i sprawdź ją w podglądzie, raz w trybie pełnoekranowym
-    i raz w wąskim oknie.
+1. Umieść obraz wcześniej w bibliotece mediów Staffbase. Przynajmniej pejzaż
+   1920 px szerokości; scena zmniejsza ją do 21:9 w zależności od szerokości okna lub
+   4:3 — motyw nie powinien więc sięgać krawędzi. 
+2. Umieść widget **Hero Slider** na górze strony, w jednym rzędzie
+   bez innych widgetów obok. Czy jest w jednej kolumnie obok innych
+   nie może przebiegać znacząco na całej szerokości. 
+3. Otwórz ustawienia widżetu. Edytor otwiera się od
+   siebie. 
+4. Kliknij **Nowy + ** nad listą i wybierz **Slajd**. 
+5. W sekcji **Obraz** kliknij na przerywany obszar **Wybierz Obraz** oraz
+   Wybierz obraz z biblioteki multimedialnej. Bez obrazu slajd nie będzie dostępny
+   pokazano. 
+6. W sekcji **Opis obrazu** wpisz to, co można zobaczyć. Opuszczaj
+   Pole puste tylko wtedy, gdy obraz jest czysto dekoracyjny. 
+7. Wprowadź **nagłówek**. Jest zapisany wielkimi literami; aż do około
+   Pozostaje to pojedyncza linia przez 24 znaki. 
+8. Opcjonalnie: **Podlinia** i **Przycisk**. Przycisk pojawi się
+   tylko jeśli etykieta **i** cel zostanie wypełniona. 
+9. Kliknij **Aplikuj**. 
+10. Ustaw **sekundy na slajd** na '0' — dla jednego slajdu istnieje
+    Nie ma nic do zmiany. 
+11. Zapisz stronę i podgląd, gdy jest szeroko rozszerzona
+    i raz w wąskim oknie. 
 
-## Tworzenie wielu slajdów
+## Stwórz wiele slajdów
 
-1. Otwórz ustawienia, a tym samym edytor.
-2. Dla każdego kolejnego slajdu wybierz w menu **Nowy +** opcję **Slajd** i
-   wypełnij go tak jak powyżej. Nie można utworzyć więcej niż osiem slajdów — nikt nie przewija
-   aż tak daleko.
+1. Otwórz ustawienia, a tym samym edytor. 
+2. Dla każdego dodatkowego slajdu, w sekcji **Nowy +**, wybierz **Slajd** i
+   wypełnij je jak wyżej. Nie można wykonać więcej niż osiem slajdów — jeśli chodzi o zwóje
+   Nikt. 
 3. Sortuj za pomocą strzałek **↑** i **↓** w prawym górnym rogu. Pierwszy slajd
-   to ten, który jest widoczny po załadowaniu strony.
-4. Sprawdź, czy wartość **Sekund na slajd** wynosi `5` (ustawienie domyślne).
-5. **Zastosuj**, zapisz i sprawdź w podglądzie.
+   jest tą, którą można zobaczyć podczas ładowania strony. 
+4. Sprawdź, czy **sekundy na jeden slajd** są ustawione na '5' (domyślnie). 
+5. **Zastosuj**, zapisz, sprawdź w podglądzie. 
 
-## Wyświetlenie pojedynczego wpisu z aktualności na scenie
+## Przynieś na scenę jeden post informacyjny
 
-1. Otwórz ustawienia, a tym samym edytor.
-2. Kliknij nad listą **Nowy +** i wybierz **Wpis z aktualności**.
-   Po lewej stronie pojawi się wpis oznaczony symbolem **Post**.
-3. W sekcji **Kanał** wybierz kanał wiadomości. Dopiero wtedy będzie można
-   wybrać wpis.
-4. W sekcji **Wpis** wybierz żądany wpis. Do wyboru jest
-   pięćdziesiąt najnowszych wpisów z kanału, z najnowszym na początku.
-5. Sprawdź **podgląd** poniżej: pokazuje on zdjęcie, nagłówek i
-   fragment artykułu dokładnie tak, jak będzie wyglądał później.
-6. Opcjonalnie: **zmień nagłówek**, **wyświetl fragment jako podtytuł**
-   lub zmień **napis na przycisku**. Celem
-   przycisku jest zawsze sam wpis.
-7. Opcjonalnie: **Zmień zdjęcie w tle**. Zdjęcie wpisu jest przycięte na potrzeby kanału
-   i nie zawsze zawiera widoczną górną część.
-8. **Zastosuj**, zapisz, sprawdź w podglądzie.
+1. Otwórz ustawienia, a tym samym edytor. 
+2. Kliknij **Nowe +** nad listą i wybierz **Post z wiadomościami**. 
+   Po lewej stronie pojawia się wpis z marką **Post**. 
+3. W sekcji **Kanał** wybierz kanał informacyjny. Dopiero wtedy można
+   Wybierz post. 
+4. W sekcji **Post** wybierz wybrany post. Możesz wybrać spośród
+   Pięćdziesiąt najnowszych wpisów kanału, najnowsze pierwsze. 
+5. Sprawdź **Zapowiedź** poniżej: pokazuje obraz, nagłówek i
+   Później zapowiedź dokładnie tak, jak wygląda folia. 
+6. Opcjonalnie: **Nadpisz nagłówek**, **Pokaż teaser jako podtytuł** 
+   lub zmienić **etykietę przycisku**. Cel
+   Przycisk to zawsze sam post. 
+7. Opcjonalnie: **Nadpisz projekt etapów**. Ilustrowany obraz jest do kanału
+   Cięta i nie zawsze ma wysoką scenę. 
+8. **Aplikuj**, zapisz, sprawdź w podglądzie. 
 
-## Wyświetlanie wszystkich wpisów z kanału
+## Pokaż wszystkie posty kanału
 
-1. Otwórz ustawienia, a tym samym edytor.
-2. Kliknij **Nowa +** nad listą i wybierz **Kanał wiadomości**.
-   Po lewej stronie pojawi się wpis oznaczony etykietą **Kanał**.
-3. W sekcji **Kanał** wybierz kanał wiadomości.
-4. Ustaw **liczbę slajdów** (domyślnie `3`, maksymalnie osiem).
-5. Wybierz **kolejność**: `Najnowsze najpierw` lub `Najstarsze najpierw`.
-6. W razie potrzeby ustaw **filtry**:
-   - **Tylko wyróżnione wpisy** — ogranicza wyświetlanie do wpisów
-     przypiętych w aktualnościach.
-   - **Tylko posty ze zdjęciem** — domyślnie włączone. Bez zdjęcia na
-     slajdzie pozostałaby tylko ciemna powierzchnia z tekstem.
-   - **Słowa kluczowe** — rozdzielaj kilka przecinkami; wystarczy jeden post, jeśli
-     zawiera jedno z nich.
-7. Sprawdź **podgląd**: pokazuje on dokładnie te wpisy, które pozostały po zastosowaniu filtrów.
-   Jeśli podgląd jest pusty, filtry są zbyt wąskie.
-8. **Zastosuj**, zapisz, sprawdź w podglądzie.
+1. Otwórz ustawienia, a tym samym edytor. 
+2. Kliknij **Nowy +** nad listą i wybierz **Kanał informacyjny**. 
+   Po lewej stronie pojawia się wpis z marką **Channel**. 
+3. W sekcji **Kanał** wybierz kanał informacyjny. 
+4. Ustaw **Liczbę slajdów** (domyślnie '3', maksymalnie osiem). 
+5. Wybierz **kolejność**: 'Najnowsze pierwsze' lub 'Najstarsze pierwsze'. 
+6. Ustaw **Filtr**, jeśli to konieczne: 
+   - **Tylko wyróżnione wpisy** — ograniczone do informacji w wiadomościach
+     jest przypięty. 
+   - **Tylko posty z obrazem** — domyślnie włączone. Bez obrazu pozostaną
+     na folii tylko ciemny obszar z tekstem. 
+   - **Słowa kluczowe** — oddziel kilka przecinkami; jeden wkład wystarczy, jeśli
+     Jednym z nich. 
+7. Sprawdź **Podgląd**: pokazuje dokładnie te posty, które mają filtry
+   . Jeśli pozostanie pusty, filtry są zbyt wąskie. 
+8. **Aplikuj**, zapisz, sprawdź w podglądzie. 
 
-Wpis ten liczy się na liście jako **jeden**, ale obejmuje kilka slajdów.
-W sumie scena nigdy nie wyświetla więcej niż osiem slajdów; wszystko, co wykracza poza ten limit,
-zostaje pominięte.
+Wpis liczy się jako **jeden** na liście, ale zawiera kilka slajdów. 
+Łącznie scena nigdy nie pokazuje więcej niż osiem slajdów; wszystko poza tym 
+opada z tyłu. 
 
-## Dodaj obraz w orientacji pionowej
+## Zapisz obraz w formacie portretowym
 
-1. Umieść w bibliotece fragment tego samego motywu przycięty w orientacji pionowej.
-  
-2. W edytorze wybierz odpowiedni slajd.
-3. W sekcji **Obraz w orientacji pionowej** kliknij **Wybierz obraz**.
-4. Kliknij **Zastosuj**, zapisz i sprawdź w wąskim oknie lub na
-   telefonie.
+1. Umieść pionowo przycięty fragment tego samego motywu w
+   Biblioteka mediów. 
+2. W edytorze wybierz dotknięty slajd. 
+3. W sekcji **Obraz w formacie portretowym** kliknij **Wybierz obraz**. 
+4. **Zastosowaj**, zapisz i zapisz w wąskim oknie lub na
+   Sprawdź telefon. 
 
-## Zmiana po utworzeniu
+## Zmiana po tym
 
 1. Otwórz ustawienia widżetu; edytor otworzy się z
-   istniejącymi wpisami.
-2. Po lewej stronie wybierz pozycję, którą chcesz zmienić. Symbol nad tytułem wskazuje,
-   o jaki rodzaj chodzi: **slajd**, **post** lub **kanał**.
-3. Zmień pola po prawej stronie. Przycisk **Duplikuj** tworzy kopię
-   wybranego wpisu bezpośrednio za nim, a przycisk **Usuń** powoduje jego usunięcie. Strzałki,
-   opcje **Duplikuj** i **Usuń** działają tak samo dla wszystkich trzech rodzajów.
-4. Przycisk **Zastosuj** zapisuje zmiany w widżecie — dopiero po tym
-   nastąpi zapisanie strony.
+   istniejące zgłoszenia. 
+2. Wybierz wpis, który chcesz zmienić po lewej. Znacznik nad tytułem mówi: 
+   jaki to typ: **Folia**, **Post** lub **Kanał**. 
+3. Zmień pola po prawej stronie. **Duplikat** tworzy kopię
+   wybrany wpis bezpośrednio za nim, przez **Usuń** znika. Strzałki, 
+   Powielanie i usuwanie mają równo zastosowanie we wszystkich trzech typach. 
+4. **Apply** zapisuje zmiany w widżecie — dopiero wtedy
+   Zapisuję stronę. 
 
-## Jeśli coś nie działa
+## Gdy coś nie działa
 
-1. **Scena pozostaje pusta.** Brakuje co najmniej jednego obrazu: slajdy bez obrazu
-   nie są wyświetlane. Otwórz edytor i sprawdź, czy każdy wpis zawiera
-   obraz — w przypadku wpisów z kategorii „Aktualności” sprawdź to w podglądzie.
-2. **Obraz nie zajmuje całej szerokości.** Czy widget znajduje się w
-   kolumnie obok innych treści? W takim razie umieść go w osobnym wierszu.
-   W przeciwnym razie sprawdź, czy opcja **Wyświetlaj na całej szerokości** jest włączona
-  .
-3. **Tekst nie jest wyrównany do linii bazowej.** Może to wynikać z
-   odmiennej szerokości treści strony. Zgłoś ten przypadek, podając
-   adres strony — widżet dostosowuje się do szerokości, którą sama strona
-   podaje.
-4. **Zamiast edytora widzisz pole tekstowe „Wpisy” z kodem JSON.** Edytor
-   nie mógł się podłączyć. Odśwież okno dialogowe. Nie edytuj
-   tekstu ręcznie.
-5. **Lista kanałów pozostaje pusta i pojawia się pole tekstowe na
-   identyfikator.** Lista kanałów wiadomości była niedostępna. Odśwież
-   okno dialogowe; jeśli to nie pomoże, wprowadź identyfikator kanału. Znajdziesz
-   go w adresie kanału w CMS.
-6. **Na stronie brakuje slajdu z wiadomością.** Artykuł został usunięty,
-  przeniesiony lub jest niewidoczny dla czytelnika. Pozostałe slajdy
-  pozostają nienaruszone. Sprawdź wpis w podglądzie edytora.
-7. **Wpis w kanale zawiera mniej slajdów niż ustawiono.** Filtry są
-   zbyt wąskie — najczęściej **Tylko wpisy ze zdjęciami** w kanale bez zdjęć — lub
-   scena jest już zapełniona ośmioma slajdami.
+1. **Scena pozostaje pusta.** Brakuje co najmniej jednego zdjęcia: slajdy bez obrazu
+   nie są wyświetlane. Otwórz edytor i sprawdź każdy wpis dla
+   Obraz — w przypadku wpisów w zapowiedzi. 
+2. **Obraz nie przebiega na całej szerokości.** Jeśli widżet znajduje się w
+   Kolumna obok innych treści? Potem umieść ją w osobnym wierszu. 
+   W przeciwnym razie sprawdź, czy **Pokaz nad pełną szerokością** jest włączony
+   . 
+3. **Tekst nie znajduje się na linii znikającej.** Może to wynikać z
+   Różnica szerokości treści strony. Zgłoś sprawę za pomocą
+   Adres strony — etap zależy od szerokości samej strony
+   raporty. 
+4. **Zamiast edytora zobaczysz pole tekstowe "Wpisy" z JSON.**
+   Edytor nie mógł zamontować. Przeładuj dialog ponownie. Edytuj
+   Nie tekst ręcznie. 
+5. **Selektor kanału pozostanie pusty, a pojawi się pole tekstowe dla
+   Identyfikator.** Lista kanałów informacyjnych nie była dostępna. Pobierz
+   dialog nowy; to nie pomaga, wpisz identyfikator kanału. Ty
+   znajduje się w adresie kanału w CMS. 
+6. **Na stronie brakuje slajdu z wiadomości.** Post zostaje usunięty, 
+   przesunięta lub niewidoczna dla osoby czytającej. Pozostałe slajdy
+   Pozostań niezmieniony. Sprawdź wpis w podglądzie edytora. 
+7. **Wejście kanału przynosi mniej folii niż ustawione.** Filtry są
+   zbyt ciasne — zwykle **Tylko posty ze zdjęciem** na kanale bez zdjęć — lub
+   scena jest już pełna ośmiu zjeżdżalni.

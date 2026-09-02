@@ -1,77 +1,77 @@
-# Paramètres
+# Décors
 
-| Paramètre | Description |
+| Cadre | Description |
 | --- | --- |
-| Entrées | Contenu de la scène : diapositives personnalisées, articles d'actualité individuels et chaînes d'actualité complètes. Géré via l'éditeur qui s'affiche automatiquement à l'ouverture des paramètres. Le champ de texte situé en dessous correspond au brouillon et ne doit pas être modifié. |
-| Hauteur | `Standard (420–560 px)` est l'option par défaut. À côté : `Faible (320–420 px)`, `Élevée (560–720 px)` et `Hauteur de l'écran`. |
-| Afficher sur toute la largeur | Lorsque cette option est activée (par défaut), l’image s’étend sur toute la largeur de la fenêtre, tandis que le texte reste aligné sur la marge de la page. Lorsqu’elle est désactivée, la scène reste dans la colonne de contenu. |
-| Secondes par diapositive | La valeur par défaut est `5`. La valeur `0` met la scène en pause ; le défilement s’effectue alors uniquement à l’aide des flèches et des traits. Maximum 30. |
+| Entrées | Le contenu de la scène : ses propres diapositives, articles d’actualité individuels et chaînes d’information entières. Maintenu via l’éditeur, qui s’affiche lors de l’ouverture des paramètres. Le champ texte ci-dessous est la version approximative et n’a pas besoin d’être touché. |
+| Hauteur | « Par défaut (420-560 px) » est prédéfini. À côté « Faible (320-420 px) », « Haut (560-720 px) » et « Haut écran ». |
+| Afficher la largeur complète | Lorsqu’elle est activée (par défaut), l’image traverse toute la largeur de la fenêtre, tandis que le texte reste sur la ligne nulle de la page. Lorsqu’elle est désactivée, la Phase reste dans la colonne de contenu. |
+| Secondes par diapositive | « 5 » est la valeur par défaut. « 0 » arrête la scène ; alors seules les flèches et les tirets sont défilés. Maximum 30. |
 
 ## Types d’entrées
 
-| Type | Description |
+| Variété | Description |
 | --- | --- |
-| Diapositive | Une diapositive gérée manuellement : image, titre, sous-titre, bouton. |
-| Article d’actualité | Un article spécifique sous forme de diapositive. Le contenu et la destination proviennent de l’article. |
-| Chaîne d’actualités | Une chaîne entière, une diapositive par article. Les nouveaux articles s’affichent automatiquement. |
+| Diapositive | Une diapositive maintenue à la main : image, titre, sous-ligne, bouton. |
+| Article d’actualité | Un article spécifique sous forme de diapositive. Le contenu et l’objectif proviennent de l’article. |
+| Chaîne d’information | Une chaîne entière, une diapositive par publication. De nouvelles publications apparaissent sans action supplémentaire. |
 
-Ces trois types d’entrées figurent dans la même liste ; elles peuvent être mélangées et triées à l’aide des boutons **↑** et
-**↓**. Au total, la scène affiche au maximum huit diapositives — une
-entrée de chaîne compte alors pour toutes les diapositives qu’elle apporte.
+Les trois sont dans la même liste, peuvent être mélangés via **↑** et
+**↓** . Au total, la scène présente un maximum de huit diapositives — une seule
+Les entrées sur la chaîne comptent avec toutes les diapositives qu’il contribue. 
 
-## Champs d’une diapositive
+## Champs d’un toboggan
 
 | Champ | Description |
 | --- | --- |
-| Image | Obligatoire. Format paysage, largeur minimale de 1 920 px. Sans image, la diapositive n’est pas affichée. |
-| Description de l’image | Ce que l’on voit sur l’image. Ne laisser ce champ vide que pour les images purement décoratives — les lecteurs d’écran lisent ce champ à voix haute. |
-| Image pour format portrait | Facultatif. S’affiche sur les écrans étroits en mode portrait. En l’absence de cette image, le recadrage en mode paysage est utilisé partout. |
-| Titre | S'affiche en majuscules. Jusqu'à environ 24 caractères, il tient sur une seule ligne. |
-| Sous-titre | Facultatif, une à deux lignes. |
-| Bouton | Facultatif. N'apparaît que si le libellé et la destination sont renseignés. Un seul par diapositive au maximum. |
-| Ouvrir dans un nouvel onglet | Ouvre la destination du bouton dans un nouvel onglet. Couramment utilisé pour les destinations externes. |
+| Image | Obligatoire. Paysage, au moins 1920 px de large. Sans image, la diapositive ne sera pas montrée. |
+| Description de l’image | Ce que l’on peut voir sur l’image. Ne laissez vide que pour les images purement décoratives — les lecteurs d’écran lisent ce champ. |
+| Image pour format portrait | Optionnel. Affichée sur des écrans étroits et fixes. Si elle manque, le recadrage paysage est utilisé partout. |
+| En-tête | Est écrit en majuscules. Jusqu’à environ 24 caractères, il reste à interligne simple. |
+| Sous-ligne | Optionnel, une ou deux lignes. |
+| Bouton | Optionnel. N’apparaît que si la légende et la destination sont remplies. Au plus une par diapositive. |
+| Ouvrir dans un nouvel onglet | Ouvre la cible du bouton dans un nouvel onglet. Courant pour les cibles externes. |
 
-## Champs d'un article d'actualité
-
-| Champ | Description |
-| --- | --- |
-| Chaîne | Obligatoire. Détermine les articles disponibles. |
-| Article | Obligatoire. Les cinquante articles les plus récents de la chaîne, les plus récents en premier. |
-| Remplacer le titre | Facultatif. Laisser vide pour reprendre le titre de l'article. |
-| Afficher le teaser en sous-titre | Activé par défaut. Le teaser est raccourci à 240 caractères. |
-| Libellé du bouton | `En savoir plus` par défaut. Laisser vide pour ne pas afficher le bouton ; la destination est toujours l’article. |
-| Remplacer l’image de fond | Facultatif. Utile si l’image de l’article est trop recadrée pour servir d’image de fond. |
-| Image pour le format portrait | Facultatif. Affichée sur les écrans étroits en mode portrait. |
-
-## Champs d’un canal d’actualités
+## Champs d’un article de presse
 
 | Champ | Description |
 | --- | --- |
-| Chaîne | Obligatoire. Toutes les diapositives de cette entrée proviennent de cette chaîne. |
-| Nombre de diapositives | `3` par défaut, huit au maximum. |
-| Ordre | `Les plus récentes en premier` (par défaut) ou `Les plus anciennes en premier`. |
-| Uniquement les publications mises en avant | Désactivé par défaut. Limité à ce qui est épinglé dans les actualités. |
-| Uniquement les publications avec image | Activé par défaut. Sans image, la diapositive ne serait qu’une surface sombre avec du texte. |
-| Mots-clés | Facultatif, plusieurs séparés par des virgules. Une publication suffit si elle en comporte un. |
-| Afficher le teaser en sous-titre | Activé par défaut. |
-| Libellé du bouton | S'applique à toutes les diapositives de la chaîne. Laisser vide pour ne pas afficher le bouton. |
+| Canal | Obligatoire. Détermine quels postes sont disponibles au choix. |
+| Publication | Devoir. Les cinquante articles les plus récents de la chaîne, le plus récent en premier. |
+| Écraser le titre | Optionnel. Laissez le bouton vide pour reprendre le titre du post. |
+| Afficher le teaser en sous-ligne | Activé par défaut. Le teaser sera raccourci à 240 caractères. |
+| Étiquette de bouton | « En savoir plus » par défaut. Laissez vide pour omettre le bouton ; le but est toujours le post. |
+| Écraser la conception de la scène | Optionnel. Utile si l’image présentée est trop serrée pour la scène. |
+| Image portrait | Optionnel. Affiché sur des écrans étroits et fixes. |
 
-## Remarques
+## Champs d’une chaîne d’information
 
-- **Hauteur** sert de limite, et non de hauteur fixe : la scène s'adapte aux
-  et sur les écrans étroits 4:3, et n’est verrouillée qu’aux limites du
-  niveau sélectionné.
-- `Hauteur de l’écran` remplit la partie visible de l’écran, hors en-tête,
-  avec un minimum de 420 px.
-- **Secondes par diapositive** ne s’applique qu’à partir de la deuxième diapositive.
-- Les utilisateurs ayant activé l’option « Réduire les animations » dans leur système d’exploitation ne verront pas
-  les changements s’afficher automatiquement, quel que soit ce paramètre.
-- Les éléments de commande n’apparaissent qu’à partir de la deuxième diapositive. Sur les
-  écrans étroits, les flèches sont masquées ; il faut alors faire glisser le doigt.
-- Un article supprimé ou non visible par le lecteur
-  n’emporte avec lui que sa propre diapositive. Les autres diapositives restent en place.
-- Les diapositives d’actualités suivent la langue du lecteur, dans la mesure où la contribution
-  est traduite ; sinon, elles suivent la première version disponible.
-- L’**aperçu** dans l’éditeur applique les mêmes règles que la
-  page publiée. Ce qui n’y figure pas n’apparaîtra pas non plus sur la scène
-  .
+| Champ | Description |
+| --- | --- |
+| Canal | Obligatoire. Toutes les diapositives de cette entrée proviennent de ce canal. |
+| Nombre de diapositives | '3' par défaut, maximum huit. |
+| Ordre | « Le plus récent en premier » (par défaut) ou « Le plus ancien en premier ». |
+| Articles en vedette uniquement | Désactivé par défaut. Limité à ce qui est épinglé dans les actualités. |
+| Seuls les posts avec image | Activé par défaut. Sans image, tout ce qui resterait de la diapositive serait une zone sombre avec du texte. |
+| Tags | Optionnel, plusieurs séparés par virgule. Un poteau suffit s’il en porte un. |
+| Afficher le teaser comme sous-ligne | Activé par défaut. |
+| Étiquette de bouton | S’applique à toutes les diapositives du canal. Laissez vide pour omettre le bouton. |
+
+## Notes
+
+- **Hauteur** agit comme une limite, pas comme une hauteur fixe : la scène est en largeur
+  écrans 21:9 et sur étroit 4:3 et n’est utilisé qu’aux limites de la
+  étape sélectionnée. 
+- « Screen-up » remplit la page visible à l’exception de l’en-tête, 
+  Mais au moins 420 px. 
+- **Secondes par diapositive** ne prend effet qu’à partir de la deuxième diapositive. 
+- Si vous avez défini « Réduire le mouvement » dans le système d’exploitation, vous n’en verrez pas
+  Le changement par lui-même — quel que soit ce contexte. 
+- Les commandes n’apparaissent qu’à partir de la deuxième diapositive. Sur la version étroite
+  écrans, les flèches sont cachées ; il y a du balayage. 
+- Un post supprimé ou non visible pour la personne qui lit
+  n’emporte que son propre fleuret avec lui. Les autres foils restent en place. 
+- Les diapositives d’actualité suivent le langage de la personne qui lit, tant que l’article est présent
+  est traduit ; sinon, la première version disponible. 
+- L'**aperçu** dans l’éditeur calcule selon les mêmes règles que le
+  page publiée. Ce qui n’est pas là apparaît aussi sur scène
+  Non.

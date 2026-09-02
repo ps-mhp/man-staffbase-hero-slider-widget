@@ -1,6 +1,6 @@
 {
-  "title": "Hero-Slider",
-  "summary": "Obrazy o szerokości ekranu z tekstem nad nimi — sekcja u góry strony, opcjonalnie w formie sekwencji kilku slajdów, własnych lub pochodzących bezpośrednio z aktualności.",
+  "title": "Hero Slider",
+  "summary": "Obrazy na całym ekranie z tekstem nad nimi — scena na górze strony, opcjonalnie jako naprzemienność kilku slajdów, własnych lub bezpośrednio z wiadomości.",
   "icon": "🖼️",
   "pages": [
     {
@@ -20,7 +20,7 @@
     },
     {
       "id": "faq",
-      "title": "Najczęściej zadawane pytania",
+      "title": "FAQ",
       "file": "faq.md"
     }
   ],
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Zmieniające się grafiki, na całej wysokości ekranu",
+      "title": "Zmieniające się slajdy, ekran na wysokości",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,

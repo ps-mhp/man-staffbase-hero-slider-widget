@@ -1,48 +1,48 @@
-# Hero-Slider
+# Hero Slider
 
-L'Hero-Slider è il **palcoscenico** nella parte superiore di una pagina: un'immagine di grandi dimensioni che occupa l'
-intera larghezza della finestra, con sopra un titolo, eventualmente un sottotitolo e
-un pulsante. Il modello di riferimento è il palcoscenico su man.eu.
+Il cursore eroico è il **palco** in cima a una pagina: un'immagine grande sopra il
+larghezza completa della finestra, sopra di essa un titolo, opzionalmente una sottolinea e
+Un bottone. Il modello è il palco su man.eu. 
 
-Se si creano più diapositive, si ottiene un carrello: le diapositive si
-succedono in dissolvenza, mentre la navigazione avviene tramite le frecce e le linee in basso a sinistra.
+Se crei diverse slide, ottieni un cambiatore: sbuffa the slide
+si fondono tra loro, lo scorrimento avviene tramite frecce e trattini in basso a sinistra. 
 
-Non è necessario aggiornare manualmente una diapositiva. Oltre alle diapositive personalizzate, la
-pagina iniziale può mostrare anche **articoli dalle notizie**:
+Un film non deve essere mantenuto a mano. Oltre ai tuoi film, il
+Stage mostra anche **articoli dalle notizie**: 
 
-- **Articolo** — un articolo specifico come diapositiva. Immagine, titolo
-  e anteprima provengono dall’articolo, il pulsante rimanda ad esso.
-- **Canale di notizie** — un intero canale, una diapositiva per ogni articolo. È possibile impostare il numero,
-  l’ordine e i filtri. Se nel
-  canale viene pubblicato un nuovo articolo, questo appare automaticamente sul palco senza alcun intervento.
+- **Post di notizie** — un post specifico come diapositiva. Immagine, titolo
+  E i teaser arrivano dal post, il pulsante porta a lui. 
+- **Canale di notizie** — un intero canale, una diapositiva per ogni post. Quanti, in
+  in quale ordine e secondo quali filtri, può essere regolato. Appare nel
+  Channel, è sul palco senza ulteriori azioni. 
 
-I tre tipi figurano nella stessa lista e possono essere combinati e
-ordinati liberamente — ad esempio, una diapositiva dedicata come articolo di apertura, seguita dai tre articoli più recenti
-di un canale.
+Le tre varietà sono nella stessa lista e possono essere liberamente miscelate e
+— ad esempio, una diapositiva separata come lead, seguita dalle tre più recenti
+Post da un canale. 
 
 ## Cosa vedono i lettori
 
-- L’immagine occupa l’intera larghezza della finestra — anche se la pagina
-  stessa ha una colonna di contenuto più stretta.
-- Il **testo rimane sulla linea di fuga della pagina**: inizia sulla stessa
-  linea verticale dell’intestazione, del menu e del testo sotto la scena. Esso
-  non aderisce espressamente al bordo dell’immagine.
-- Il testo si trova in basso a sinistra, su una sfumatura scura che si estende dal basso verso
-  l’alto. Sugli schermi larghi si aggiunge una seconda sfumatura da sinistra
-  , affinché il testo chiaro rimanga leggibile su uno sfondo chiaro.
-- In caso di più diapositive: frecce a sinistra e a destra, con una linea tra di esse per ogni diapositiva.
-  La linea della diapositiva corrente è rossa.
-- Il cambio di diapositiva continua finché il mouse si trova sopra il palco o il focus è
-  su di esso. Sul telefono si scorre con il dito; in questo caso le frecce sono nascoste.
-- Chi ha impostato «Riduci animazioni» nel sistema operativo non vede né
-  il cambio automatico né la dissolvenza: solo i comandi.
-- Le diapositive delle notizie hanno lo stesso aspetto di qualsiasi altra diapositiva. Il fatto che il contenuto provenga
-  da un articolo non è riconoscibile dall’esterno.
+- L'immagine attraversa tutta la larghezza della finestra — anche se la pagina è
+  essa stessa ha una colonna di contenuti più ristretta. 
+- Il **testo rimane sulla riga che si annulla della pagina**: inizia dalla stessa
+  linea verticale come header, menu e il testo sotto il palco. Lui
+  espressamente non si attacca al bordo dell'immagine. 
+- Il testo è in basso a sinistra, su un gradiente scuro che va dal basso al basso
+  in alto. Sugli schermi wide, un secondo gradiente viene da sinistra
+  così quel testo leggero rimane leggibile su un soggetto leggero. 
+- Se ci sono più slide: frecce a sinistra e a destra, una linea per ogni slide nel mezzo. 
+  La linea della slide attuale è rossa. 
+- L'interruttore dura finché il mouse è sopra il palco o la messa a fuoco è inserita
+  stai mentendo. C'è uno swipe sul telefono; le frecce sono nascoste lì. 
+- Se hai impostato "Riduce Movimento" nel sistema operativo, non ne vedrai nessuna
+  Cambia da solo e niente pannello — solo i comandi. 
+- Le diapositive delle notizie sembrano come qualsiasi altra diapositiva. Che il contenuto da
+  non è riconoscibile dall'esterno. 
 
-## Cosa vedete nell’editor del CMS
+## Quello che vedi nell'editor CMS
 
-L’editor mostra l’area di visualizzazione all’interno della colonna dei contenuti, quindi **più stretta rispetto alla
-pagina pubblicata**. È possibile valutare fino a dove si estende realmente l’immagine e dove si trova il testo
-solo nell’anteprima o sulla pagina pubblicata
-. Controllate sempre almeno una volta con una larghezza della finestra ridotta
-— è lì che entra in gioco il ritaglio in formato verticale.
+L'editor mostra la fase all'interno della colonna dei contenuti, cioè **più stretta che su
+della pagina pubblicata**. Quanto si estende davvero l'immagine e dove si trova il testo
+è disponibile solo nell'anteprima o nella pagina pubblicata.
+. Controlla sempre almeno una volta in un gruppo stretto
+Larghezza delle finestre — qui si applica il ritaglio del ritratto.

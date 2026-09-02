@@ -1,88 +1,106 @@
-# Perguntas Frequentes
+# FAQ
 
-**Pergunta:** Criei um slide, mas o palco permanece vazio.
+**Pergunta:** Criei um toboágua, mas o palco continua vazio. 
 
-Resposta: Falta a imagem no slide. Os slides sem imagem não são apresentados — uma
-área escura e vazia não seria distinguível de um erro na página.
-Abra o editor e selecione uma imagem em **Imagem**.
+Resposta: O slide está sem a imagem. Slides sem imagem não são mostrados — um
+uma área escura e vazia seria indistinguível de um erro na página. 
+Abra o editor e selecione uma imagem em **Imagem**. 
 
-**Pergunta:** Inseri um texto para o botão, mas
-este não aparece.
+**Pergunta:** Eu coloquei uma etiqueta para o botão, mas
+ela não aparece. 
 
-Resposta: O botão precisa de **ambos** — texto e destino. Enquanto
-um dos campos estiver vazio, não será exibido.
+Resposta: O botão precisa de **ambos** — rótulo e alvo. Desde que
+Um dos campos está vazio, não é exibido. 
 
-**Pergunta:** A imagem não ocupa toda a largura da janela.
+**Pergunta:** A imagem não cobre toda a largura da janela. 
 
-Resposta: Duas causas possíveis. Ou a opção **Mostrar em toda a largura**
-está desativada, ou o widget está numa coluna ao lado de outros conteúdos.
-Coloque-o numa linha própria no topo da página.
+Resposta: Duas possíveis causas. Qualquer uma é **Mostrar largura total** 
+ou o widget está em uma coluna ao lado de outro conteúdo. 
+Coloque em uma linha separada no topo da página. 
 
-**Pergunta:** O texto não está onde o resto do conteúdo da página começa.
+**Pergunta:** O texto não é onde o restante do conteúdo da página começa. 
 
-Resposta: A área de trabalho adapta-se à largura do conteúdo indicada pela página.
-Se houver alguma discrepância, comunique o caso indicando o endereço da página.
+Resposta: A etapa é baseada na largura do conteúdo que a página reporta. 
+Se desviar, reporte o caso com o endereço da página. 
 
-**Pergunta:** Em vez do editor, vejo um campo de texto «Entradas» com
-chaves no seu interior.
+**Pergunta:** Em vez do editor, vejo um campo de texto "Entradas" com enrolado
+Coloque parênteses nela. 
 
-Resposta: O editor não conseguiu integrar-se na caixa de diálogo. Feche
-as definições e volte a abri-las. O texto no campo é a
-versão bruta das entradas; não o edite manualmente — um erro de digitação
-nesse texto faz com que todos os slides desapareçam.
+Resposta: O editor não conseguiu se conectar ao diálogo. Fechar
+Configurações e abri-los novamente. O texto no campo é o
+versão aproximada das entradas; não edite manualmente — um erro de digitação
+Dentro disso, todos os foils desaparecem. 
 
-**Pergunta:** O palco não muda automaticamente.
+**Pergunta:** O palco não muda sozinho. 
 
-Resposta: Três causas possíveis: existe apenas um slide; **Segundos por slide**
-está definido em `0`; ou a opção «Reduzir movimento» está ativada no sistema operativo.
-Neste último caso, isso é intencional — continua a ser possível percorrer as diapositivas através das setas
-e das linhas.
+Resposta: Três possíveis causas: Há apenas um slide; **segundos por slide** 
+está definido como '0'; ou, no sistema operacional, "Reduzir Movimento" está ativado. 
+No último caso, isso é intencional — a rolagem ainda pode ser feita por meio de setas
+e traços. 
 
-**Pergunta:** Não vejo setas no telemóvel.
+**Pergunta:** Não vejo nenhuma flecha no telefone. 
 
-Resposta: É assim que deve ser. Em ecrãs estreitos, utiliza-se o gesto de deslizar; as
-linhas por baixo do texto continuam a indicar qual o slide que está atualmente em destaque.
+Resposta: É assim que é pensado. Em telas estreitas, você desliza; o
+Linhas abaixo do texto continuam indicando qual slide está na frente. 
 
-**Pergunta:** O meu motivo está cortado na margem.
+**Pergunta:** Minha imagem está cortada na borda. 
 
-Resposta: A área de apresentação recorta para 21:9 ou 4:3, dependendo da largura da janela. Escolha
-uma imagem com margem à volta do motivo ou defina, em **Imagem para
-formato vertical**, um recorte próprio, cortado na vertical.
+Resposta: O palco corta para 21:9 ou 4:3, dependendo da largura da janela. Selecionar
+Crie uma imagem com ar ao redor do sujeito, ou insira **Imagem para
+O formato retrato** tem seu próprio recorte recortado na borda. 
 
-**Pergunta:** Posso criar mais de oito diapositivos?
+**Pergunta:** Posso criar mais de oito slides? 
 
-Resposta: Não. A cinco segundos por diapositivo, um ciclo completo demora, já com
-oito diapositivos, quarenta segundos — ninguém fica tanto tempo num palco.
-O número oito aplica-se a todos os diapositivos em conjunto: uma entrada de canal com cinco publicações
-só permite mais três diapositivos adicionais.
+Resposta: Não. A cinco segundos por slide, uma corrida completa leva até em
+Oito slides e quarenta segundos — ninguém fica tanto tempo no palco. 
+O oito se aplica a todos os slides juntos: Uma entrada de canal com cinco posts
+Só permite mais três slides ao lado. 
 
-**Pergunta:** Tenho de atualizar o palco quando surge uma nova publicação
-nas Notícias?
+**Pergunta:** Preciso manter o palco quando uma nova postagem é publicada nas notícias?
+? 
 
-Resposta: No caso de uma entrada do **Canal de Notícias**, não — esta mostra sempre as
-publicações atuais do canal de acordo com os filtros definidos. Uma entrada de **publicação das notícias**,
-por outro lado, permanece na publicação que selecionou.
+Resposta: Não com uma entrada de **canal de notícias** — ela sempre mostra a atualidade
+postagens do canal de acordo com os filtros definidos. Um **post de notícias**- 
+A entrada, por outro lado, permanece com o cargo que você escolheu. 
 
-**Pergunta:** Um slide das notícias desapareceu de repente.
+**Pergunta:** Um slide das notícias desapareceu de repente. 
 
-Resposta: A publicação foi apagada, movida ou não está visível para o leitor. Apenas este slide desapareceu; os restantes permanecem visíveis.
+Resposta: A postagem foi deletada, movida ou está disponível para a pessoa que está lendo
+não visível. Só este único florete cai; os outros permanecem de pé. 
 
-**Pergunta:** A minha entrada do canal mostra menos slides do que os configurados.
+**Pergunta:** Minha entrada no canal mostra menos slides do que o set. 
 
-Resposta: Na maioria das vezes, os filtros estão demasiado restritos. **Apenas artigos com imagem** é
-a predefinição — um canal sem imagens não apresenta, portanto, nenhum conteúdo. Verifique a
-pré-visualização no editor: mostra exatamente o que irá aparecer no palco.
+Resposta: Na maioria das vezes os filtros são muito estreitos. **Só postagens com imagem**
+preset — um canal sem imagens não fornecerá nada. Verifique o
+Prévia no editor: mostra exatamente o que aparecerá no palco. 
 
-**Pergunta:** Na seleção de canais não aparece nenhum canal, mas sim um
-campo de texto para um identificador.
+**Pergunta:** Não há um único canal na seleção de canais, em vez disso um
+Campo de texto para um identificador. 
 
-Resposta: A lista de canais de notícias não estava acessível. Atualize a janela de diálogo.
-Se isso não resolver, introduza manualmente o identificador do canal; este encontra-se
-no endereço do canal no CMS.
+Resposta: A lista de canais de notícias não estava disponível. Carregar o diálogo
+novo. Se isso não ajudar, insira o identificador do canal manualmente; ele permanece
+no endereço do canal no CMS. 
 
-**Pergunta:** Por que razão a imagem de uma notícia aparece desfocada ou
-estranhamente recortada no palco?
+**Pergunta:** Por que a imagem de uma reportagem de notícias está borrada no palco ou
+cortado de forma estranha? 
 
-Resposta: As imagens das notícias são recortadas para o formato de feed, não para um
-palco com a altura do ecrã. Defina na entrada, em **Substituir imagem do palco
-**, uma imagem própria, em formato horizontal e com pelo menos 1920 px de largura.
+Resposta: As imagens em destaque são cortadas para o formato feed, não para um
+palco alto na tela. Na entrada sob **Design de palco
+Sobrescreva** um separado, transversal e com pelo menos 1920 px de largura. 
+
+**Pergunta:** O que acontece com o palco durante a tradução automática do
+Side? 
+
+Resposta: Todos os textos escritos por elas mesmas são traduzidos: manchete, 
+Sublinha, legenda de botão e descrição da imagem de um slide
+assim como o título e a legenda de uma notícia. 
+Imagens, alvos de indicação, canais, filtros e o pedido permanecem inalterados. 
+
+**Pergunta:** Uma notícia mostra textos diferentes na página traduzida do que em
+da língua de origem — isso é um erro? 
+
+Resposta: Não. O título e o texto do esboço de uma matéria vêm do artigo
+e é mostrado no idioma que o leitor usa no aplicativo
+. Apenas o que você escreveu na própria entrada será traduzido
+. Se uma versão linguística do artigo estiver faltando, a existente aparece em vez de
+para deixar o papel alumínio em branco.

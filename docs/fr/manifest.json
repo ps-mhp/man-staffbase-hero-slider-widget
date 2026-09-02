@@ -1,6 +1,6 @@
 {
-  "title": "Hero-Slider",
-  "summary": "Images occupant toute la largeur de l'écran avec du texte par-dessus — la zone en haut de la page, sous forme, au choix, d'une succession de plusieurs diapositives, de votre propre contenu ou directement issue de l'actualité.",
+  "title": "Slider de Héros",
+  "summary": "Des images à l’échelle de l’écran avec du texte au-dessus — la scène en haut d’une page, optionnellement en alternance de plusieurs diapositives, les vôtres ou directement tirées des actualités.",
   "icon": "🖼️",
   "pages": [
     {
@@ -15,7 +15,7 @@
     },
     {
       "id": "settings",
-      "title": "Paramètres",
+      "title": "Décors",
       "file": "settings.md"
     },
     {
@@ -26,7 +26,7 @@
   ],
   "examples": [
     {
-      "title": "Une seule image sur toute la largeur",
+      "title": "Image unique sur toute la largeur",
       "attributes": {
         "height": "medium",
         "full-bleed": true,
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Images changeantes, sur toute la hauteur de l'écran",
+      "title": "Changement de diapositive, hauteur d’écran",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,

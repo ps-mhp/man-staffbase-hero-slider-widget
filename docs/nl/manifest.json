@@ -1,6 +1,6 @@
 {
-  "title": "Hero-slider",
-  "summary": "Afbeeldingen over de volledige breedte van het scherm met tekst eroverheen — het gedeelte bovenaan een pagina, naar keuze als een reeks wisselende dia’s, eigen afbeeldingen of rechtstreeks uit het nieuws.",
+  "title": "Hero Slider",
+  "summary": "Schermbrede afbeeldingen met tekst erboven — het podium bovenaan een pagina, optioneel als afwisseling van meerdere dia's, van jezelf of rechtstreeks uit het nieuws.",
   "icon": "🖼️",
   "pages": [
     {
@@ -20,13 +20,13 @@
     },
     {
       "id": "faq",
-      "title": "Veelgestelde vragen",
+      "title": "FAQ",
       "file": "faq.md"
     }
   ],
   "examples": [
     {
-      "title": "Een enkele afbeelding over de volledige breedte",
+      "title": "Enkele afbeelding over de volledige breedte",
       "attributes": {
         "height": "medium",
         "full-bleed": true,
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Wisselende afbeeldingen, over de volledige hoogte van het scherm",
+      "title": "Dia's wisselen, schermhoogte",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,

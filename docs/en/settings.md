@@ -2,76 +2,76 @@
 
 | Setting | Description |
 | --- | --- |
-| Entries | The content of the stage: custom slides, individual news articles, and entire news channels. Managed via the editor, which appears automatically when you open the settings. The text field below is the draft and does not need to be edited. |
-| Height | `Standard (420–560 px)` is the default. Other options include `Low (320–420 px)`, `High (560–720 px)`, and `Full Screen`. |
-| Display full width | When enabled (default), the image spans the full width of the window, while the text remains aligned with the page’s margin. When disabled, the stage remains within the content column. |
-| Seconds per Slide | `5` is the default. `0` pauses the stage; in this case, you can only navigate using arrows and lines. Maximum of 30. |
+| Entries | The content of the stage: own slides, individual news articles and entire news channels. Maintained via the editor, which shows itself when the settings are opened. The text field below is the rough version and does not have to be touched. |
+| Height | 'Default (420-560 px)' is preset. Next to it 'Low (320-420 px)', 'High (560-720 px)' and 'Screen High'. |
+| Show Full Width | When turned on (default), the image runs across the full width of the window, while the text remains on the vanishing line of the page. When turned off, the Stage remains in the content column. |
+| seconds per slide | '5' is the default. '0' stops the stage; then only arrows and dashes are scrolled. Maximum 30. |
 
-## Types of Entries
+## Types of entries
 
-| Type | Description |
+| Variety | Description |
 | --- | --- |
-| Slide | A manually maintained slide: image, headline, subheading, button. |
-| News Post | A specific post as a slide. Content and link are taken from the post. |
-| News Channel | An entire channel, one slide per post. New posts appear automatically. |
+| Slide | A slide maintained by hand: image, headline, subline, button. |
+| News Post | A specific post as a slide. Content and goal come from the post. |
+| News Channel | One whole channel, one slide per post. New posts appear without any further action. |
 
-All three appear in the same list, can be mixed, and sorted using **↑** and
-**↓**. In total, the stage displays a maximum of eight slides—a
-channel entry counts as one, including all the slides it contributes.
+All three are in the same list, can be mixed and matched via **↑** and
+**↓** . In total, the stage shows a maximum of eight slides — one
+Channel entry counts with all slides he contributes. 
 
-## Fields on a Slide
+## Fields of a slide
 
 | Field | Description |
 | --- | --- |
-| Image | Required. Landscape orientation, at least 1920 px wide. The slide will not be displayed without an image. |
-| Image Description | What is shown in the image. Leave blank only for purely decorative images—screen readers will read this field aloud. |
-| Portrait Image | Optional. Displayed on narrow, portrait-oriented screens. If missing, the landscape version is used everywhere. |
-| Title | Displayed in all caps. Remains on a single line up to about 24 characters. |
-| Subtitle | Optional, one to two lines. |
-| Button | Optional. Appears only if the label and destination are filled in. At most one per slide. |
-| Open in a new tab | Opens the button’s destination in a new tab. Common for external destinations. |
+| Image | Mandatory. Landscape, at least 1920 px wide. Without a picture, the slide will not be shown. |
+| Image description | What can be seen in the picture. Only leave blank for purely decorative images — screen readers read this field. |
+| Image for portrait format | Optional. Shown on narrow, stationary screens. If it is missing, the landscape crop is used everywhere. |
+| Heading | Is set in capital letters. Up to about 24 characters, it remains single-spaced. |
+| Subline | Optional, one or two lines. |
+| Button | Optional. Appears only if the caption and destination are filled. At most one per slide. |
+| Open in New Tab | Opens the target of the button in a new tab. Common for external targets. |
 
-## Fields of a News Post
-
-| Field | Description |
-| --- | --- |
-| Channel | Required. Determines which posts are available for selection. |
-| Post | Required. The channel’s fifty most recent posts, newest first. |
-| Override headline | Optional. Leave blank to use the post’s title. |
-| Show teaser as subheading | Enabled by default. The teaser is truncated to 240 characters. |
-| Button label | Default is `Learn more`. Leave blank to omit the button; the destination is always the post. |
-| Override stage image | Optional. Useful if the post image is cropped too tightly for the stage. |
-| Image for portrait orientation | Optional. Displayed on narrow, portrait-oriented screens. |
-
-## Fields of a News Channel
+## Fields of a news article
 
 | Field | Description |
 | --- | --- |
-| Channel | Required. All slides in this entry come from this channel. |
-| Number of Slides | Default is `3`, maximum of eight. |
-| Order | `Newest First` (default) or `Oldest First`. |
-| Featured posts only | Disabled by default. Limited to what is pinned in the News section. |
-| Posts with images only | Enabled by default. Without an image, the slide would be nothing more than a dark area with text. |
-| Tags | Optional; separate multiple tags with commas. A post counts as matching if it contains any one of them. |
-| Show teaser as subtitle | Enabled by default. |
+| Channel | Mandatory. Determines which posts are available to choose from. |
+| Post | Duty. The channel's fifty most recent posts, most recent first. |
+| Overwrite Headline | Optional. Leave blank to take over the title of the post. |
+| Show teaser as subline | Switched on by default. The teaser will be shortened to 240 characters. |
+| Button label | 'Learn more' by default. Leave blank to omit the button; the goal is always the post. |
+| Overwrite Stage Design | Optional. Useful if the featured image is cut too tightly for the stage. |
+| Portrait Image | Optional. Shown on narrow, stationary screens. |
+
+## Fields of a news channel
+
+| Field | Description |
+| --- | --- |
+| Channel | Mandatory. All slides in this entry are from this channel. |
+| Number of slides | '3' default, maximum eight. |
+| Order | 'Newest first' (default) or 'Oldest first'. |
+| Featured posts only | Off by default. Limited to what's pinned in the news. |
+| Only posts with image | Switched on by default. Without an image, all that would remain of the slide would be a dark area with text. |
+| Tags | Optional, several separated by comma. One post is sufficient if it bears one of them. |
+| Show teaser as subline | Switched on by default. |
 | Button Label | Applies to all slides in the channel. Leave blank to omit the button. |
 
 ## Notes
 
-- **Height** acts as a limit, not a fixed height: the stage is optimized for wide
-  21:9 screens and on narrow 4:3 screens and is only constrained to the boundaries of the
-  selected level.
-- `Screen height` fills the visible area minus the header,
-  but at least 420 px.
-- **Seconds per slide** takes effect only starting with the second slide.
-- Users who have “Reduce Motion” enabled in their operating system will not see
-  any changes automatically—regardless of this setting.
-- The controls do not appear until the second slide. On narrow
-  screens, the arrows are hidden; on those screens, you swipe instead.
-- A post that is deleted or is not visible to the reader
-  only takes its own slide with it. The remaining slides stay in place.
-- News slides follow the reader’s language, provided the post
-  has been translated; otherwise, they follow the first available version.
-- The **preview** in the editor follows the same rules as the
-  published page. Anything not shown there will not appear on the stage
-  either.
+- **Height** acts as a limit, not as a fixed height: the stage is on wide
+  screens 21:9 and on narrow 4:3 and is only used at the limits of the
+  selected step. 
+- 'Screen-up' fills the visible page minus the header, 
+  but at least 420 px. 
+- **Seconds per slide** only takes effect from the second slide. 
+- If you have set "Reduce Motion" in the operating system, you won't see any
+  Change by itself — regardless of this setting. 
+- The controls only appear from the second slide. On narrow
+  screens, the arrows are hidden; there is swiping. 
+- A post that is deleted or not visible to the person reading
+  takes only his own foil with him. The remaining foils remain in place. 
+- News slides follow the language of the person reading, as long as the article
+  is translated; otherwise the first available version. 
+- The **preview** in the editor calculates with the same rules as the
+  published page. What is not there also appears on stage
+  not.

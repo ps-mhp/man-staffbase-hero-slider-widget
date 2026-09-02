@@ -1,89 +1,106 @@
-# Veelgestelde vragen
+# FAQ
 
-**Vraag:** Ik heb een dia aangemaakt, maar het podium blijft leeg.
+**Vraag:** Ik heb een dia gemaakt, maar het podium blijft leeg. 
 
-Antwoord: De dia mist de afbeelding. Dia’s zonder afbeelding worden niet getoond — een
-leeg, donker vlak zou op de pagina niet te onderscheiden zijn van een fout.
-Open de editor en selecteer onder **Afbeelding** een afbeelding.
+Antwoord: De dia mist de afbeelding. Dia's zonder afbeelding worden niet getoond — een
+Een leeg donker gebied zou niet te onderscheiden zijn van een fout op de pagina. 
+Open de editor en selecteer een afbeelding onder **Afbeelding**. 
 
-**Vraag:** Ik heb een tekst voor de knop ingevoerd, maar
-deze verschijnt niet.
+**Vraag:** Ik heb een label voor de knop ingevoerd, maar
+ze verschijnt niet. 
 
-Antwoord: De knop heeft **beide** nodig — tekst en bestemming. Zolang
-een van de velden leeg is, wordt de knop niet weergegeven.
+Antwoord: De knop heeft **beide** nodig — label en target. Zolang als
+Een van de velden is leeg, het wordt niet weergegeven. 
 
-**Vraag:** De afbeelding beslaat niet de volledige breedte van het venster.
+**Vraag:** De afbeelding loopt niet over de volledige breedte van het raam. 
 
-Antwoord: Er zijn twee mogelijke oorzaken. Ofwel is **Over de volledige breedte weergeven**
-uitgeschakeld, ofwel staat de widget in een kolom naast andere inhoud.
-Plaats hem in een aparte regel bovenaan de pagina.
+Antwoord: Twee mogelijke oorzaken. Beide is **Toon volledige breedte** 
+of de widget staat in een kolom naast andere content. 
+Zet het op een eigen regel bovenaan de pagina. 
 
-**Vraag:** De tekst staat niet op de plek waar de rest van de pagina-inhoud begint.
+**Vraag:** De tekst is niet waar de rest van de pagina-inhoud begint. 
 
-Antwoord: Het weergavegebied past zich aan aan de inhoudsbreedte die de pagina aangeeft.
-Als deze afwijkt, meld dit dan samen met het pagina-adres.
+Antwoord: Het stadium is gebaseerd op de inhoudsbreedte die de pagina rapporteert. 
+Als het afwijkt, meld dan de zaak met het paginaadres. 
 
-**Vraag:** In plaats van de editor zie ik een tekstveld „Invoer“ met accolades
-erin.
+**Vraag:** In plaats van de editor zie ik een tekstveld "Invoeren" met curly
+Haakjes erin. 
 
-Antwoord: De editor kon geen verbinding maken met het dialoogvenster. Sluit
-de instellingen en open ze opnieuw. De tekst in het veld is de
-ruwe versie van de invoer; bewerk deze niet handmatig — één typefout
-daarin zorgt ervoor dat alle dia’s verdwijnen.
+Antwoord: De editor kon niet in de dialoog komen. Close
+Instellingen en open ze opnieuw. De tekst in het veld is de
+ruwe versie van de vermeldingen; bewerk het niet met de hand — een typefout
+Daarin verdwijnen alle folies. 
 
-**Vraag:** Het podium wisselt niet vanzelf.
+**Vraag:** Het level verandert niet vanzelf. 
 
-Antwoord: Drie mogelijke oorzaken: er is slechts één dia; **seconden per dia**
-staat op `0`; of in het besturingssysteem is „Beweging verminderen“ ingeschakeld.
-In het laatste geval is dit de bedoeling — je kunt nog steeds bladeren met pijltjes
-en streepjes.
+Antwoord: Drie mogelijke oorzaken: Er is slechts één dia; **seconden per dia** 
+is ingesteld op '0'; of in het besturingssysteem is "Verminder Beweging" ingeschakeld. 
+In het laatste geval is dit opzettelijk — scrollen kan nog steeds via pijltjes worden gedaan
+en streepjes. 
 
-**Vraag:** Op mijn telefoon zie ik geen pijltjes.
+**Vraag:** Ik zie geen pijlen op de telefoon. 
 
-Antwoord: Dat is zo bedoeld. Op smalle schermen veeg je; de
-streepjes onder de tekst geven nog steeds aan welke dia momenteel op de voorgrond staat.
+Antwoord: Zo is het bedoeld. Op smalle schermen veeg je; de
+Lijnen onder de tekst geven nog steeds aan welke dia momenteel vooraan staat. 
 
-**Vraag:** Mijn afbeelding is aan de rand afgesneden.
+**Vraag:** Mijn afbeelding is aan de rand bijgesneden. 
 
-Antwoord: Het podium snijdt, afhankelijk van de vensterbreedte, bij tot 21:9 of 4:3. Kies
-een afbeelding met wat ruimte rondom het motief, of voeg onder **Afbeelding voor
-staand formaat** een eigen, staand bijgesneden uitsnede toe.
+Antwoord: Het level snijdt naar 21:9 of 4:3, afhankelijk van de breedte van het raam. Selecteer
+Maak een afbeelding met lucht rond het onderwerp, of voer **Afbeelding voor in
+Portretformaat** heeft een eigen uitknipte uitknipsel op de rand. 
 
-**Vraag:** Kan ik meer dan acht dia’s aanmaken?
+**Vraag:** Mag ik meer dan acht dia's maken? 
 
-Antwoord: Nee. Bij vijf seconden per dia duurt een volledige doorloop bij
-acht dia’s al veertig seconden — zo lang blijft niemand op een podium staan.
-Het aantal acht geldt voor alle dia’s samen: een kanaalvermelding met vijf berichten
-laat naast zichzelf slechts drie extra dia’s toe.
+Antwoord: Nee. Bij vijf seconden per slide duurt een volledige run zelfs bij
+acht schuift veertig seconden — niemand blijft zo lang op een podium. 
+De acht geldt voor alle dia's samen: één kanaalvermelding met vijf posts
+Er zijn alleen drie andere glijbanen toegestaan ernaast. 
 
-**Vraag:** Moet ik het podium bijwerken als er een nieuw bericht
-in het nieuws verschijnt?
+**Vraag:** Moet ik het podium behouden wanneer er een nieuw bericht in het nieuws wordt gepubliceerd?
+? 
 
-Antwoord: Bij een **nieuwskanaal**-vermelding niet — deze toont altijd de actuele
-berichten van het kanaal volgens de ingestelde filters. Een **nieuwsbericht**-
-vermelding blijft daarentegen bij het bericht dat u hebt gekozen.
+Antwoord: Niet met een **Nieuwskanaal**-vermelding — het toont altijd de huidige
+Berichten van het kanaal volgens de filters die zijn ingesteld. Een **nieuwsbericht**- 
+De inschrijving daarentegen blijft bij de post die je hebt gekozen. 
 
-**Vraag:** Een dia uit het nieuws is plotseling verdwenen.
+**Vraag:** Een slide uit het nieuws is plotseling verdwenen. 
 
-Antwoord: Het bericht is verwijderd, verplaatst of is voor de lezer
-niet zichtbaar. Alleen deze ene dia is verdwenen; de overige blijven staan.
+Antwoord: Het bericht is verwijderd, verplaatst of beschikbaar voor de lezer
+niet zichtbaar. Alleen deze ene folie valt weg; de andere blijven staan. 
 
-**Vraag:** Mijn kanaalvermelding toont minder dia’s dan is ingesteld.
+**Vraag:** Mijn kanaalinvoer toont minder dia's dan ingesteld. 
 
-Antwoord: Meestal zijn de filters te streng ingesteld. **Alleen berichten met afbeelding** is
-de standaardinstelling — een kanaal zonder afbeeldingen levert dus niets op. Controleer het
-voorbeeld in de editor: dit toont precies wat er op het podium zal verschijnen.
+Antwoord: Meestal zijn de filters te smal. **Alleen berichten met afbeelding**
+Vooraf ingesteld — een kanaal zonder afbeeldingen levert niets. Controleer de
+Preview in de editor: het toont precies wat er op het podium zal verschijnen. 
 
-**Vraag:** In de kanaalkeuze staat geen enkel kanaal, maar in plaats daarvan een
-tekstveld voor een identificatiecode.
+**Vraag:** Er is niet één enkel kanaal in de kanaalselectie, maar een
+Tekstveld voor een identificatie. 
 
-Antwoord: De lijst met nieuwskanalen was niet bereikbaar. Laad het dialoogvenster
-opnieuw. Als dat niet helpt, voer dan de ID van het kanaal handmatig in; deze staat
-in het adres van het kanaal in het CMS.
+Antwoord: De lijst met nieuwszenders was niet beschikbaar. Laad de dialoogkaart
+nieuw. Als dat niet helpt, voer dan de kanaalidentificatie met de hand in; hij staat
+in het adres van het kanaal in het CMS. 
 
-**Vraag:** Waarom is de afbeelding van een nieuwsbericht op het podium onscherp of
-vreemd bijgesneden?
+**Vraag:** Waarom is het beeld van een nieuwsbericht op het podium wazig of
+vreemd gesneden? 
 
-Antwoord: Afbeeldingen bij berichten zijn bijgesneden voor het feed-formaat, niet voor een
-podium dat de volledige schermhoogte beslaat. Stel in het item onder **Podiumafbeelding
-overschrijven** een eigen afbeelding in, in liggend formaat en minimaal 1920 px breed.
+Antwoord: Uitgelichte afbeeldingen worden weggelaten voor het feedformaat, niet voor een
+schermhoogte podium. In de vermelding onder **Podiumontwerp
+Overschrijf** een aparte, dwars en minstens 1920 px breed. 
+
+**Vraag:** Wat gebeurt er met het podium tijdens de automatische overgang van de
+Zij? 
+
+Antwoord: Alle zelfgeschreven teksten worden vertaald: kop, 
+Subregel, knopbijschrift en afbeeldingsbeschrijving van een dia
+evenals de titel en onderschrift van een nieuwsbericht. 
+Afbeeldingen, verwijzingsdoelen, kanalen, filters en de volgorde blijven ongewijzigd. 
+
+**Vraag:** Een nieuwsbericht toont andere teksten op de vertaalde pagina dan op
+van de brontaal — is dat een vergissing? 
+
+Antwoord: Nee. De titel en de overzichtstekst van een nieuwsartikel komen uit het artikel
+en het wordt weergegeven in de taal die de lezer in de app gebruikt
+. Alleen wat je in de tekst zelf hebt geschreven, wordt vertaald
+. Als een taalversie van het artikel ontbreekt, verschijnt de bestaande in plaats van
+om de folie blanco te laten.

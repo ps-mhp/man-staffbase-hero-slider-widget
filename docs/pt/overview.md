@@ -1,47 +1,48 @@
-# Hero-Slider
+# Hero Slider
 
-O Hero-Slider é o **palco** na parte superior de uma página: uma imagem grande que ocupa toda a
-largura da janela, com um título por cima, opcionalmente uma linha de subtítulo e
-um botão. O modelo a seguir é o palco em man.eu.
+O controle deslizante do herói é o **palco** no topo de uma página: uma imagem grande sobre o
+largura total da janela, acima dela um título, opcionalmente uma sublinha e
+Um botão. O modelo é o palco em man.eu. 
 
-Quem criar vários slides terá um alternador: os slides
-transitam uns para os outros, e a navegação é feita através das setas e das linhas no canto inferior esquerdo.
+Se você criar vários slides, obtém um changer: deslumbre os slides
+se fundem uns nos outros, a rolagem é feita por setas e os traços no canto inferior esquerdo. 
 
-Não é necessário atualizar manualmente um slide. Além dos próprios slides, o
-palco também pode mostrar **artigos das notícias**:
+Um filme não precisa ser mantido manualmente. Além dos seus próprios filmes, o
+O palco também exibe **Artigos do News**: 
 
-- **Artigo de notícias** — um artigo específico como um slide. A imagem, o título
-  e o teaser provêm do artigo, e o botão redireciona para ele.
-- **Canal de notícias** — um canal inteiro, um slide por artigo. É possível definir quantos, em
-  que ordem e de acordo com que filtros. Se surgir um novo artigo no
-  canal, este aparece automaticamente no palco.
+- **Post de notícia** — um post específico como slide. Imagem, manchete
+  E os teasers vêm do correio, o botão leva até ele. 
+- **Canal de notícias** — um canal inteiro, um slide por postagem. Quantos, em
+  em que ordem e segundo quais filtros, podem ser ajustados. Aparece no
+  Channel, ele está no palco sem mais ação. 
 
-Os três tipos constam na mesma lista e podem ser livremente combinados e
-ordenados — por exemplo, um slide próprio como destaque, seguido das três últimas
-notícias de um canal.
+As três variedades estão na mesma lista e podem ser misturadas livremente e
+— por exemplo, um slide separado como lead, seguido pelos três mais recentes
+Postagens de um canal. 
 
 ## O que os leitores veem
 
-- A imagem ocupa toda a largura da janela — mesmo que a própria página
-  tenha uma coluna de conteúdo mais estreita.
-- O **texto mantém-se na linha de alinhamento da página**: começa na mesma
-  linha vertical que o cabeçalho, o menu e o texto abaixo do palco. Este
-  não fica, de forma alguma, colado à margem da imagem.
-- O texto encontra-se no canto inferior esquerdo, sobre um gradiente escuro que se estende de baixo para
-  cima. Em ecrãs largos, é adicionado um segundo gradiente a partir da esquerda
-  , para que o texto claro permaneça legível sobre um fundo claro.
-- No caso de vários slides: setas à esquerda e à direita, com uma linha entre elas por cada slide.
-  A linha do slide atual é vermelha.
-- A transição mantém-se enquanto o rato estiver sobre o palco ou o foco estiver
-  nele. No telemóvel, desliza-se o dedo; as setas ficam ocultas nesse caso.
-- Quem tiver a opção «Reduzir movimento» ativada no sistema operativo não vê
-  a mudança por si só nem qualquer efeito de transição — apenas os elementos de controlo.
-- Os slides das notícias têm o mesmo aspeto que qualquer outro slide. Não é possível perceber,
-  externamente, que o conteúdo provém de uma notícia.
+- A imagem percorre toda a largura da janela — mesmo que a página seja
+  ele próprio possui uma coluna de conteúdo mais restrita. 
+- O **texto permanece na linha nula da página**: começa na mesma
+  linha vertical como cabeçalho, menu e o texto abaixo do palco. Ele
+  expressamente não gruda na borda da imagem. 
+- O texto está no canto inferior esquerdo, em um gradiente escuro que vai de baixo para baixo
+  no topo. Em telas largas, um segundo gradiente vem da esquerda
+  Assim, esse texto leve permanece legível em um sujeito leve. 
+- Se houver vários slides: setas para a esquerda e para a direita, uma linha por slide entre eles. 
+  A linha do slide atual é vermelha. 
+- O interruptor dura enquanto o mouse está sobre o palco ou o foco está em
+  Você está mentindo. Há deslizar no telefone; as flechas estão escondidas lá. 
+- Se você definiu "Reduzir Movimento" no sistema operacional, não verá nenhuma
+  Muda sozinha e sem painel — apenas os controles. 
+- Slides das notícias parecem qualquer outro slide. Que o conteúdo de
+  não é reconhecível por fora. 
 
-## O que vê no editor do CMS
+## O que você vê no editor CMS
 
-O editor apresenta a área de exibição dentro da coluna de conteúdo, ou seja, **mais estreita do que na
-página publicada**. A extensão real da imagem e a localização do texto
-só podem ser avaliadas na pré-visualização ou na página publicada. Verifique sempre, pelo menos uma vez, com a largura da janela reduzida
-— é aí que a recorte em formato vertical se aplica.
+O editor mostra a etapa dentro da coluna de conteúdo, ou seja, **mais estreita do que em
+da página publicada**. Até onde a imagem realmente vai e onde o texto está
+está disponível apenas na prévia ou na página publicada.
+. Sempre verifique lá pelo menos uma vez em um estreito
+Largura da janela — é aí que o recorte do retrato se aplica.

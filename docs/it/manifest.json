@@ -1,6 +1,6 @@
 {
-  "title": "Hero-Slider",
-  "summary": "Immagini a tutta larghezza dello schermo con testo sovrapposto — l’area nella parte superiore della pagina, a scelta come sequenza di diverse diapositive, create dall’utente o direttamente dalle notizie.",
+  "title": "Hero Slider",
+  "summary": "Immagini su tutto lo schermo con testo sopra — il palco in cima a una pagina, opzionalmente come alternanza di diverse diapositive, tue o direttamente dal telegiornale.",
   "icon": "🖼️",
   "pages": [
     {
@@ -26,7 +26,7 @@
   ],
   "examples": [
     {
-      "title": "Immagine singola a tutta larghezza",
+      "title": "Immagine singola su tutta la larghezza",
       "attributes": {
         "height": "medium",
         "full-bleed": true,
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Pellicole intercambiabili, a tutta altezza dello schermo",
+      "title": "Cambio di slitta, schermo alto",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,

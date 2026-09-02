@@ -1,6 +1,6 @@
 {
-  "title": "Hero-Slider",
-  "summary": "Imagens que ocupam toda a largura do ecrã com texto por cima — a área no topo da página, podendo ser apresentada como uma sequência de vários slides, criados pelo próprio ou diretamente a partir das notícias.",
+  "title": "Hero Slider",
+  "summary": "Imagens em toda a tela com texto acima — o palco no topo da página, opcionalmente como uma alternância de vários slides, seus próprios ou diretamente do noticiário.",
   "icon": "🖼️",
   "pages": [
     {
@@ -15,18 +15,18 @@
     },
     {
       "id": "settings",
-      "title": "Definições",
+      "title": "Configurações",
       "file": "settings.md"
     },
     {
       "id": "faq",
-      "title": "Perguntas frequentes",
+      "title": "FAQ",
       "file": "faq.md"
     }
   ],
   "examples": [
     {
-      "title": "Imagem única a ocupar toda a largura",
+      "title": "Imagem única em toda a largura",
       "attributes": {
         "height": "medium",
         "full-bleed": true,
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Imagens alternadas, ocupando toda a altura do ecrã",
+      "title": "Mudando de slide, alta na tela",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,
