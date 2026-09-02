@@ -44,20 +44,19 @@ const widgetAttributes: string[] = [
   AUTOPLAY_DELAY_ATTRIBUTE,
 ];
 
+let stopInjector: (() => void) | null = null;
+
 /**
- * Beginnt, das Dokument nach dem `slides`-Feld des Konfigurationsdialogs zu
- * beobachten, um an seiner Stelle den Folien-Editor einzuhängen.
+ * Beendet die Beobachtung des Konfigurationsdialogs.
  *
- * Es gibt im Staffbase-SDK keinen Einstiegspunkt für den Konfigurationsdialog;
- * das Laden dieses Bundles ist die einzige Stelle, an der sich der Beobachter
- * anbringen lässt. Bedenkenlos immer auszuführen: auf einer Leseseite, auf der
- * der Dialog nie erscheint, kostet er nichts außer dem `MutationObserver`.
- *
- * Nur offengelegt, damit Tests ihn beim Aufräumen wieder abbauen können —
+ * Nur offengelegt, damit Tests sie beim Aufräumen wieder abbauen können —
  * jsdom baut sein `window` zwischen Testdateien ab, und ein danach noch
  * feuernder Beobachter würde werfen.
  */
-export const stopSlideEditorInjector = startSlideEditorInjector();
+export function stopSlideEditorInjector(): void {
+  stopInjector?.();
+  stopInjector = null;
+}
 
 /** Alles außer den bekannten Stufen bedeutet die Vorgabe — auch ein leeres oder veraltetes Attribut. */
 function readHeight(raw: unknown): HeroHeight {
@@ -152,5 +151,14 @@ const externalBlockDefinition: ExternalBlockDefinition = {
 void startWidget({
   name: "hero-slider-widget",
   version: pkg.version,
-  register: () => window.defineBlock(externalBlockDefinition),
+  // Der Editor haengt am Anmelden, nicht am Laden. Auf Modulebene gestartet
+  // belegte der Beobachter des installierten Bundles das `slides`-Feld,
+  // bevor es ueberhaupt fragte, ob ein lokaler Server uebernimmt — der
+  // Entwicklungsmodus lieferte dann die Ansicht, aber den Editor der
+  // veroeffentlichten Fassung. Live nachgewiesen am 02.09.2026: eine Marke im
+  // lokal ausgelieferten Bundle erschien im Dialog nicht.
+  register: () => {
+    stopInjector = startSlideEditorInjector();
+    window.defineBlock(externalBlockDefinition);
+  },
 });
