@@ -21,6 +21,7 @@ import {
   encodeHeroItemsAttribute,
   heroItemType,
   parseHeroItems,
+  serializeHeroItems,
 } from "./hero-items";
 import { emptySlide } from "./slides-model";
 
@@ -271,7 +272,7 @@ describe("parseHeroItems — News-Kanäle", () => {
   });
 });
 
-describe("encodeHeroItemsAttribute", () => {
+describe("serializeHeroItems", () => {
   it("überlebt einen Round-Trip aller drei Sorten unverändert", () => {
     const items: HeroItem[] = [
       slideWith({
@@ -283,17 +284,17 @@ describe("encodeHeroItemsAttribute", () => {
       channelItem({ order: "oldest", onlyHighlighted: true, hashtags: ["trucks"] }),
     ];
 
-    expect(parseHeroItems(encodeHeroItemsAttribute(items))).toEqual(items);
+    expect(parseHeroItems(serializeHeroItems(items))).toEqual(items);
   });
 
   it("schreibt Folien weiterhin ohne type — eine ältere Fassung soll sie noch lesen", () => {
-    const encoded = JSON.parse(encodeHeroItemsAttribute([slideWith()]));
+    const encoded = JSON.parse(serializeHeroItems([slideWith()]));
 
     expect(encoded[0].type).toBeUndefined();
   });
 
   it("schreibt News-Einträge mit type", () => {
-    const encoded = JSON.parse(encodeHeroItemsAttribute([postItem(), channelItem()]));
+    const encoded = JSON.parse(serializeHeroItems([postItem(), channelItem()]));
 
     expect(encoded.map((entry: { type?: string }) => entry.type)).toEqual([
       "news-post",
@@ -302,7 +303,7 @@ describe("encodeHeroItemsAttribute", () => {
   });
 
   it("lässt Vorgabewerte weg, statt das Attribut aufzublähen", () => {
-    const encoded = encodeHeroItemsAttribute([postItem(), channelItem()]);
+    const encoded = serializeHeroItems([postItem(), channelItem()]);
 
     expect(encoded).not.toContain("showTeaser");
     expect(encoded).not.toContain("requireImage");
@@ -311,7 +312,7 @@ describe("encodeHeroItemsAttribute", () => {
   });
 
   it("lässt leere Felder einer Folie weg", () => {
-    const encoded = encodeHeroItemsAttribute([slideWith()]);
+    const encoded = serializeHeroItems([slideWith()]);
 
     expect(encoded).not.toContain("subline");
     expect(encoded).not.toContain("cta");
@@ -319,7 +320,7 @@ describe("encodeHeroItemsAttribute", () => {
   });
 
   it("schreibt newTab nur, wenn es gesetzt ist", () => {
-    const encoded = encodeHeroItemsAttribute([
+    const encoded = serializeHeroItems([
       slideWith({ cta: { label: "Mehr", href: "https://example.test" } }),
     ]);
 
@@ -337,7 +338,7 @@ describe("encodeHeroItemsAttribute", () => {
       { type: "news-channel", id: "k", channelId: "c", tickerSpeed: 3 },
     ]);
 
-    const roundTripped = JSON.parse(encodeHeroItemsAttribute(parseHeroItems(raw)));
+    const roundTripped = JSON.parse(serializeHeroItems(parseHeroItems(raw)));
 
     expect(roundTripped[0].videoUrl).toBe("https://example.test/a.mp4");
     expect(roundTripped[1].tickerSpeed).toBe(3);
@@ -345,18 +346,18 @@ describe("encodeHeroItemsAttribute", () => {
 
   it("lässt bekannte Felder gegen gleichnamige unbekannte gewinnen", () => {
     const encoded = JSON.parse(
-      encodeHeroItemsAttribute([slideWith({ unknown: { headline: "veraltet" } })]),
+      serializeHeroItems([slideWith({ unknown: { headline: "veraltet" } })]),
     );
 
     expect(encoded[0].headline).toBe("Überschrift");
   });
 
   it("macht aus einer leeren Liste ein leeres Array", () => {
-    expect(encodeHeroItemsAttribute([])).toBe("[]");
+    expect(serializeHeroItems([])).toBe("[]");
   });
 
   it("verwirft eine leere Folie, solange kein Bild gewählt ist", () => {
-    expect(parseHeroItems(encodeHeroItemsAttribute([emptySlide()]))).toEqual([]);
+    expect(parseHeroItems(serializeHeroItems([emptySlide()]))).toEqual([]);
   });
 });
 
@@ -365,5 +366,28 @@ describe("leere Einträge", () => {
     expect(emptyNewsPostItem().id).not.toBe(emptyNewsPostItem().id);
     expect(emptyNewsChannelItem().count).toBe(3);
     expect(emptyNewsChannelItem().order).toBe("newest");
+  });
+});
+
+describe("encodeHeroItemsAttribute", () => {
+  const items: HeroItem[] = [slideWith({ headline: 'Er sagte "hallo"' }), postItem(), channelItem()];
+
+  it("schreibt einen Payload ohne Zeichen, an denen eine Re-Serialisierung abschneiden kann", () => {
+    // Der Grund für diesen Test: Staffbase gibt beim Übersetzen die
+    // Attributwerte des Artikels unescaped wieder aus. Rohes JSON endet
+    // dadurch am ersten Anführungszeichen, und die Bühne bleibt leer.
+    expect(encodeHeroItemsAttribute(items)).toMatch(/^b64:[A-Za-z0-9+/]*={0,2}$/);
+  });
+
+  it("überlebt einen Round-Trip", () => {
+    expect(parseHeroItems(encodeHeroItemsAttribute(items))).toEqual(items);
+  });
+
+  it("liest weiterhin bestehendes rohes JSON", () => {
+    expect(parseHeroItems(serializeHeroItems(items))).toEqual(items);
+  });
+
+  it("gibt bei einem kaputten Payload nichts zurück, statt ihn als JSON zu lesen", () => {
+    expect(parseHeroItems("b64:kein base64!!")).toEqual([]);
   });
 });

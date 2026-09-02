@@ -28,6 +28,8 @@
  * Frei von DOM und React, damit die Regeln ohne Renderer prüfbar bleiben.
  */
 
+import { decodePayload, encodePayload, isPayload } from "@shared/payload";
+
 import { Slide, SlideCta, SlideImage, newSlideId } from "./slides-model";
 
 export type HeroItemType = "slide" | "news-post" | "news-channel";
@@ -315,6 +317,12 @@ export function emptyNewsChannelItem(): NewsChannelItem {
 /**
  * Liest das `slides`-Attribut.
  *
+ * Nimmt beides an:
+ *  - einen Base64-Payload (`b64:…`, siehe `@shared/payload`) — das, was
+ *    {@link encodeHeroItemsAttribute} heute schreibt,
+ *  - rohes JSON — jede bestehende Bühne, die vor dieser Fassung angelegt
+ *    wurde, und jedes von Hand gesetzte Attribut.
+ *
  * Gibt bei allem, was nicht als Liste von Einträgen lesbar ist, eine leere
  * Liste zurück statt zu werfen: das Attribut kommt aus einem Textfeld, in dem
  * jemand mit den besten Absichten etwas anderes stehen lassen kann, und eine
@@ -323,9 +331,18 @@ export function emptyNewsChannelItem(): NewsChannelItem {
 export function parseHeroItems(raw: string | null | undefined): HeroItem[] {
   if (raw === null || raw === undefined || raw.trim() === "") return [];
 
+  // Ein Wert mit Marke, der nicht aufgeht, ist kaputte Nutzlast und kein JSON.
+  // Ihn trotzdem als JSON zu lesen, hieße `b64:` als Text zu deuten.
+  let json = raw;
+  if (isPayload(raw)) {
+    const decoded = decodePayload(raw);
+    if (decoded === null) return [];
+    json = decoded;
+  }
+
   let parsed: unknown;
   try {
-    parsed = JSON.parse(raw);
+    parsed = JSON.parse(json);
   } catch {
     return [];
   }
@@ -424,14 +441,15 @@ const encodeNewsChannelItem = (item: NewsChannelItem): Record<string, unknown> =
 };
 
 /**
- * Schreibt das `slides`-Attribut.
+ * Die Einträge als JSON — die Form, die *im* Attribut steckt, nicht die des
+ * Attributs selbst. Dafür ist {@link encodeHeroItemsAttribute} zuständig.
  *
  * Leere Felder werden weggelassen, damit das Attribut nicht mit
  * `"subline": ""` aufläuft. Folien bekommen ausdrücklich **kein** `type`:
- * damit bleibt das Attribut Zeichen für Zeichen das, was frühere Fassungen
+ * damit bleibt das JSON Zeichen für Zeichen das, was frühere Fassungen
  * geschrieben haben, solange keine News im Spiel sind.
  */
-export function encodeHeroItemsAttribute(items: HeroItem[]): string {
+export function serializeHeroItems(items: HeroItem[]): string {
   return JSON.stringify(
     items.map((item) => {
       if (isNewsPostItem(item)) return encodeNewsPostItem(item);
@@ -439,4 +457,19 @@ export function encodeHeroItemsAttribute(items: HeroItem[]): string {
       return encodeSlideItem(item);
     }),
   );
+}
+
+/**
+ * Schreibt das `slides`-Attribut.
+ *
+ * Base64 statt rohem JSON, weil das Attribut eine Reise durch Staffbases
+ * Übersetzung überstehen muss: dort wird der Artikel neu serialisiert und die
+ * Attributwerte werden dabei **unescaped** ausgegeben. Rohes JSON endet damit
+ * am ersten Anführungszeichen, und die Bühne bleibt in jeder Übersetzung leer
+ * — genau das war beim `table-widget` schon zu sehen. Der Payload besteht nur
+ * aus Zeichen, an denen weder Attributanführung noch Entity-Escaping noch eine
+ * Maschinenübersetzung etwas zu tun haben.
+ */
+export function encodeHeroItemsAttribute(items: HeroItem[]): string {
+  return encodePayload(serializeHeroItems(items));
 }
