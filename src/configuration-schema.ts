@@ -35,7 +35,7 @@ export const configurationSchema: JSONSchema7 = {
   properties: {
     [SLIDES_ATTRIBUTE]: {
       type: "string",
-      title: "Folien",
+      title: "Einträge",
       default: "[]",
     },
     [HEIGHT_ATTRIBUTE]: {
@@ -70,8 +70,9 @@ export const configurationSchema: JSONSchema7 = {
 export const uiSchema: UiSchema = {
   [SLIDES_ATTRIBUTE]: {
     "ui:help":
-      "Bilder, Texte und Schaltflächen der Bühne. Der Editor öffnet sich von selbst; " +
-      "das Textfeld dahinter ist die Rohfassung und muss nicht angefasst werden.",
+      "Die Einträge der Bühne: eigene Folien, einzelne News-Beiträge oder ein ganzer " +
+      "News-Kanal. Der Editor öffnet sich von selbst; das Textfeld dahinter ist die " +
+      "Rohfassung und muss nicht angefasst werden.",
   },
   [HEIGHT_ATTRIBUTE]: {
     "ui:help":

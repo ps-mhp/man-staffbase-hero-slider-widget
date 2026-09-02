@@ -30,9 +30,10 @@ import {
   uiSchema,
 } from "./configuration-schema";
 import { HERO_HEIGHTS, HeroHeight, HeroSlider } from "./hero-slider";
+import { HeroSliderLoader } from "./hero-slider-loader";
 import { startSlideEditorInjector } from "./slide-editor-injector";
 import { DEFAULT_AUTOPLAY_DELAY_MS } from "./use-slider";
-import { parseSlides } from "./slides-model";
+import { isSlideItem, parseHeroItems } from "./hero-items";
 import icon from "../resources/hero-slider-widget.svg";
 import pkg from "../package.json";
 
@@ -91,18 +92,25 @@ const factory: BlockFactory = (BaseBlockClass, _widgetApi) => {
 
     public renderBlock(container: HTMLElement): void {
       const attrs = this.parseAttributes<Record<string, unknown>>();
-      const slides = parseSlides(
+      const items = parseHeroItems(
         typeof attrs[SLIDES_ATTRIBUTE] === "string" ? (attrs[SLIDES_ATTRIBUTE] as string) : "",
       );
 
+      const options = {
+        height: readHeight(attrs[HEIGHT_ATTRIBUTE]),
+        fullBleed: readFullBleed(attrs[FULL_BLEED_ATTRIBUTE]),
+        autoplayDelayMs: readAutoplayDelayMs(attrs[AUTOPLAY_DELAY_ATTRIBUTE]),
+      };
+
       this._root ??= ReactDOM.createRoot(container);
+      // Eine Buehne aus handgepflegten Folien steht sofort und ohne Netz; nur
+      // wenn News im Spiel sind, wird ueber den Loader gegangen.
       this._root.render(
-        <HeroSlider
-          slides={slides}
-          height={readHeight(attrs[HEIGHT_ATTRIBUTE])}
-          fullBleed={readFullBleed(attrs[FULL_BLEED_ATTRIBUTE])}
-          autoplayDelayMs={readAutoplayDelayMs(attrs[AUTOPLAY_DELAY_ATTRIBUTE])}
-        />,
+        items.every(isSlideItem) ? (
+          <HeroSlider slides={items} {...options} />
+        ) : (
+          <HeroSliderLoader items={items} {...options} />
+        ),
       );
     }
 

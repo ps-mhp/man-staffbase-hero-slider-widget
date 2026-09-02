@@ -124,10 +124,18 @@ describe("Stylesheets", () => {
       // begrenzte die Lesebreite nie, und niemand sah es, weil jsdom keine
       // Kaskade rechnet. Eine tote Regel ist schlimmer als eine fehlende —
       // sie sieht nach Absicht aus.
-      const markup = readdirSync(__dirname)
-        .filter((file) => /\.tsx?$/.test(file) && !file.endsWith(".test.ts") && !file.endsWith(".test.tsx"))
-        .map((file) => readFileSync(join(__dirname, file), "utf8"))
-        .join("\n");
+      // Das Markup liegt nicht mehr nur flach in `src/`: die Formulare des
+      // Editors stehen in `src/editors/`. Ohne den Abstieg in Unterordner
+      // hielte diese Prüfung deren Klassen für verwaist.
+      const sources = (dir: string): string[] =>
+        readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+          const path = join(dir, entry.name);
+          if (entry.isDirectory()) return sources(path);
+          if (!/\.tsx?$/.test(entry.name) || /\.test\.tsx?$/.test(entry.name)) return [];
+          return [readFileSync(path, "utf8")];
+        });
+
+      const markup = sources(__dirname).join("\n");
 
       const names = (source: string, prefix: string): Set<string> =>
         new Set([...source.matchAll(new RegExp(`${prefix}(man-(?:hero|se)__[a-z0-9-]+)`, "g"))].map(

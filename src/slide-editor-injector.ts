@@ -15,7 +15,7 @@ import * as React from "react";
 
 import { startFieldModalInjector } from "@shared/config-modal";
 import { SlideEditor } from "./slide-editor";
-import { Slide, encodeSlidesAttribute, parseSlides } from "./slides-model";
+import { HeroItem, encodeHeroItemsAttribute, parseHeroItems } from "./hero-items";
 
 /** Das Schemafeld, an dessen Stelle der Editor tritt. */
 const FIELD_KEY = "slides";
@@ -34,14 +34,14 @@ const FIELD_KEY = "slides";
  * @returns eine Funktion, die die Beobachtung beendet und den Editor abbaut.
  */
 export function startSlideEditorInjector(root: ParentNode = document): () => void {
-  return startFieldModalInjector<Slide[]>({
+  return startFieldModalInjector<HeroItem[]>({
     fieldKey: FIELD_KEY,
     root,
     reopenLabel: "Folien bearbeiten",
     modalTestId: "slide-editor-modal",
     reopenTestId: "slide-editor-reopen",
-    parse: parseSlides,
-    serialize: encodeSlidesAttribute,
+    parse: parseHeroItems,
+    serialize: encodeHeroItemsAttribute,
     // Der Editor zeichnet seinen eigenen Rahmen: Liste, Formular und Fußzeile
     // teilen sich Kanten, die der Formular-Innenabstand des Panels nur von
     // ihnen wegschöbe.

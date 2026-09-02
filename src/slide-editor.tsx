@@ -14,9 +14,14 @@
 /**
  * Der Redaktionsdialog der Bühne.
  *
- * Die Slides liegen als JSON in einem einzigen Attribut — in einem Textfeld
+ * Die Einträge liegen als JSON in einem einzigen Attribut — in einem Textfeld
  * wären sie unbearbeitbar. Dieser Editor tritt an seine Stelle: links die
- * Liste der Slides, rechts die Felder des gewählten.
+ * Liste der Einträge, rechts die Felder des gewählten.
+ *
+ * Ein Eintrag ist entweder eine handgepflegte Folie oder ein Verweis auf die
+ * News: ein einzelner Beitrag oder ein ganzer Kanal. Die Liste links behandelt
+ * alle drei gleich — Reihenfolge, Duplizieren und Löschen gehören zum Eintrag,
+ * nicht zu seiner Sorte. Nur die rechte Spalte wechselt.
  *
  * Er schreibt nichts selbst zurück. Das Übergeben an das Formularfeld, die
  * Rückfrage bei ungesicherten Änderungen und das Wiederöffnen erledigt
@@ -28,104 +33,47 @@ import { ReactElement, useMemo, useState } from "react";
 import { useHotStyle } from "@shared/hot-style";
 import { MediaClient, createMediaClient } from "@shared/media/media-client";
 import { MediaPicker, PickedImage } from "@shared/media/media-picker";
-import { Slide, SlideImage, emptySlide, newSlideId } from "./slides-model";
+import {
+  HeroItem,
+  NewsChannelItem,
+  NewsPostItem,
+  SlideItem,
+  emptyNewsChannelItem,
+  emptyNewsPostItem,
+  isNewsChannelItem,
+  isNewsPostItem,
+  isSlideItem,
+} from "./hero-items";
+import { useItemLabels } from "./editors/item-label";
+import { NewsChannelForm } from "./editors/news-channel-form";
+import { NewsPostForm } from "./editors/news-post-form";
+import { NewsSource, cacheNewsSource, defaultNewsSource } from "./editors/news-source";
+import { SlideForm } from "./editors/slide-form";
+import { SlideImage, emptySlide, newSlideId } from "./slides-model";
 import slideEditorCss from "./styles/slide-editor.scss";
 
 /**
- * Mehr Slides trägt keine Bühne: sie werden nur nacheinander gezeigt, und was
- * hinter dem fünften steht, sieht im Autoplay niemand mehr.
+ * Mehr Einträge trägt keine Bühne: sie werden nur nacheinander gezeigt, und
+ * was hinter dem fünften steht, sieht im Autoplay niemand mehr. Ein
+ * Kanaleintrag zählt hier als einer — wie viele Folien er tatsächlich
+ * beisteuert, entscheidet erst `resolve-hero-items`, das dieselbe Acht ein
+ * zweites Mal durchsetzt.
  */
-export const MAX_SLIDES = 8;
+export const MAX_ITEMS = 8;
 
-/** Welches der beiden Bilder eines Slides der Picker gerade füllt. */
-type PickerTarget = "image" | "imagePortrait";
+/** Welches Bild eines Eintrags der Picker gerade füllt. */
+type PickerTarget = "image" | "imagePortrait" | "imageOverride";
 
 export interface SlideEditorProps {
-  value: Slide[];
-  onChange: (slides: Slide[]) => void;
+  value: HeroItem[];
+  onChange: (items: HeroItem[]) => void;
   onSave: () => void;
   onClose: () => void;
   dirty: boolean;
   /** Vorgabe ist ein Client auf dieselbe Herkunft; für Tests austauschbar. */
   mediaClient?: MediaClient;
-}
-
-/** Die Bildkachel samt Wählen, Ersetzen und Entfernen. */
-function ImageField({
-  label,
-  hint,
-  image,
-  onPick,
-  onClear,
-  onAltChange,
-  testId,
-}: {
-  label: string;
-  hint: string;
-  image: SlideImage | undefined;
-  onPick: () => void;
-  onClear?: () => void;
-  onAltChange?: (alt: string) => void;
-  testId: string;
-}): ReactElement {
-  return (
-    <div className="man-se__field">
-      <span className="man-se__label">{label}</span>
-      <p className="man-se__hint">{hint}</p>
-
-      {image === undefined ? (
-        <button
-          type="button"
-          className="man-se__pick"
-          data-testid={`${testId}-pick`}
-          onClick={onPick}
-        >
-          Bild wählen
-        </button>
-      ) : (
-        <div className="man-se__thumb-row">
-          <img className="man-se__thumb" src={image.url} alt="" data-testid={`${testId}-thumb`} />
-          <div className="man-se__thumb-actions">
-            <button
-              type="button"
-              className="man-se__button"
-              data-testid={`${testId}-replace`}
-              onClick={onPick}
-            >
-              Ersetzen
-            </button>
-            {onClear !== undefined && (
-              <button
-                type="button"
-                className="man-se__button man-se__button--quiet"
-                data-testid={`${testId}-clear`}
-                onClick={onClear}
-              >
-                Entfernen
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-
-      {image !== undefined && onAltChange !== undefined && (
-        <label className="man-se__sub">
-          <span className="man-se__label">Bildbeschreibung</span>
-          {/* Kein Pflichtfeld, aber eines mit Folgen: ohne sie ist das Bild
-              für Screenreader stumm. Rein schmückende Bilder bleiben leer —
-              deshalb wird hier nicht erzwungen, sondern erklärt. */}
-          <input
-            type="text"
-            className="man-se__input"
-            data-testid={`${testId}-alt`}
-            value={image.alt}
-            onChange={(event) => onAltChange(event.target.value)}
-            placeholder="Was ist zu sehen? Leer lassen, wenn rein schmückend."
-          />
-        </label>
-      )}
-    </div>
-  );
+  /** Vorgabe sind die echten News-Endpunkte; für Tests austauschbar. */
+  newsSource?: NewsSource;
 }
 
 export function SlideEditor({
@@ -135,42 +83,48 @@ export function SlideEditor({
   onClose,
   dirty,
   mediaClient,
+  newsSource,
 }: SlideEditorProps): ReactElement {
   const css = useHotStyle(slideEditorCss, "hero-slider-widget", "styles/slide-editor.scss");
   const client = useMemo(() => mediaClient ?? createMediaClient(), [mediaClient]);
+  const source = useMemo(() => cacheNewsSource(newsSource ?? defaultNewsSource), [newsSource]);
 
   const [selected, setSelected] = useState(0);
   const [pickerTarget, setPickerTarget] = useState<PickerTarget | null>(null);
 
-  // Nach dem Löschen des letzten Slides zeigt der Index ins Leere. Klemmen
+  // Nach dem Löschen des letzten Eintrags zeigt der Index ins Leere. Klemmen
   // statt beim Löschen nachzuführen: so kann kein Pfad ihn ungültig lassen.
   const index = Math.min(selected, Math.max(value.length - 1, 0));
-  const slide: Slide | undefined = value[index];
+  const item: HeroItem | undefined = value[index];
+  const labels = useItemLabels(value, source);
+  const full = value.length >= MAX_ITEMS;
 
-  const patch = (changes: Partial<Slide>): void => {
-    if (slide === undefined) return;
-    onChange(value.map((entry, i) => (i === index ? { ...entry, ...changes } : entry)));
+  const patch = (changes: Partial<HeroItem>): void => {
+    if (item === undefined) return;
+    onChange(value.map((entry, i) => (i === index ? ({ ...entry, ...changes } as HeroItem) : entry)));
   };
 
-  const addSlide = (): void => {
-    if (value.length >= MAX_SLIDES) return;
-    onChange([...value, emptySlide()]);
+  const add = (fresh: HeroItem): void => {
+    if (full) return;
+    onChange([...value, fresh]);
     setSelected(value.length);
   };
 
-  const duplicateSlide = (): void => {
-    if (slide === undefined || value.length >= MAX_SLIDES) return;
-    const copy: Slide = { ...slide, id: newSlideId() };
+  const duplicate = (): void => {
+    if (item === undefined || full) return;
+    // Eine neue Kennung, keine geerbte: zwei Einträge mit derselben wären als
+    // React-Schlüssel und beim Auflösen der Folien nicht zu unterscheiden.
+    const copy = { ...item, id: newSlideId() } as HeroItem;
     onChange([...value.slice(0, index + 1), copy, ...value.slice(index + 1)]);
     setSelected(index + 1);
   };
 
-  const removeSlide = (): void => {
+  const remove = (): void => {
     onChange(value.filter((_, i) => i !== index));
     setSelected(Math.max(index - 1, 0));
   };
 
-  /** Verschiebt den gewählten Slide um eine Stelle; am Rand passiert nichts. */
+  /** Verschiebt den gewählten Eintrag um eine Stelle; am Rand passiert nichts. */
   const move = (delta: number): void => {
     const target = index + delta;
     if (target < 0 || target >= value.length) return;
@@ -185,43 +139,17 @@ export function SlideEditor({
   const handlePick = (picked: PickedImage): void => {
     const target = pickerTarget;
     setPickerTarget(null);
-    if (slide === undefined || target === null) return;
+    if (item === undefined || target === null) return;
 
     const image: SlideImage = { url: picked.url, alt: picked.alt ?? "" };
     if (picked.width !== undefined) image.width = picked.width;
     if (picked.height !== undefined) image.height = picked.height;
 
-    if (target === "image") {
-      // Die vorhandene Beschreibung überlebt einen Bildwechsel nicht: sie
-      // beschriebe das alte Motiv und wäre damit schlechter als keine.
-      patch({ image });
-    } else {
-      patch({ imagePortrait: image });
-    }
-  };
-
-  const cta = slide?.cta;
-
-  /**
-   * Setzt ein Feld der Schaltfläche. Beide Werte müssen erhalten bleiben,
-   * solange der Dialog offen ist — sonst verschwände die halb ausgefüllte
-   * Schaltfläche unter den Händen, weil das Modell sie verwirft.
-   */
-  const patchCta = (changes: { label?: string; href?: string; newTab?: boolean }): void => {
-    const merged = {
-      label: changes.label ?? cta?.label ?? "",
-      href: changes.href ?? cta?.href ?? "",
-      newTab: changes.newTab ?? cta?.newTab ?? false,
-    };
-    if (merged.label === "" && merged.href === "") {
-      patch({ cta: undefined });
-      return;
-    }
-    patch({
-      cta: merged.newTab
-        ? { label: merged.label, href: merged.href, newTab: true }
-        : { label: merged.label, href: merged.href },
-    });
+    // Die vorhandene Beschreibung überlebt einen Bildwechsel nicht: sie
+    // beschriebe das alte Motiv und wäre damit schlechter als keine.
+    if (target === "image") patch({ image } as Partial<SlideItem>);
+    else if (target === "imageOverride") patch({ imageOverride: image } as Partial<NewsPostItem>);
+    else patch({ imagePortrait: image } as Partial<SlideItem>);
   };
 
   return (
@@ -231,31 +159,38 @@ export function SlideEditor({
       <div className="man-se__body">
         <div className="man-se__list-pane">
           <div className="man-se__list" role="list" data-testid="slide-list">
-            {value.map((entry, position) => (
-              <button
-                key={entry.id}
-                type="button"
-                role="listitem"
-                className={`man-se__item${position === index ? " man-se__item--active" : ""}`}
-                data-testid={`slide-item-${entry.id}`}
-                aria-current={position === index}
-                onClick={() => setSelected(position)}
-              >
-                <span className="man-se__item-index">{position + 1}</span>
-                {entry.image.url !== "" ? (
-                  <img className="man-se__item-thumb" src={entry.image.url} alt="" />
-                ) : (
-                  <span className="man-se__item-thumb man-se__item-thumb--empty" aria-hidden="true" />
-                )}
-                <span className="man-se__item-title">
-                  {entry.headline.trim() === "" ? "Ohne Überschrift" : entry.headline}
-                </span>
-              </button>
-            ))}
+            {value.map((entry, position) => {
+              const label = labels[position];
+              return (
+                <button
+                  key={entry.id}
+                  type="button"
+                  role="listitem"
+                  className={`man-se__item${position === index ? " man-se__item--active" : ""}`}
+                  data-testid={`slide-item-${entry.id}`}
+                  aria-current={position === index}
+                  onClick={() => setSelected(position)}
+                >
+                  <span className="man-se__item-index">{position + 1}</span>
+                  {label?.thumbUrl !== undefined ? (
+                    <img className="man-se__item-thumb" src={label.thumbUrl} alt="" />
+                  ) : (
+                    <span
+                      className="man-se__item-thumb man-se__item-thumb--empty"
+                      aria-hidden="true"
+                    />
+                  )}
+                  <span className="man-se__item-text">
+                    <span className="man-se__item-kind">{label?.kind ?? "Eintrag"}</span>
+                    <span className="man-se__item-title">{label?.title ?? ""}</span>
+                  </span>
+                </button>
+              );
+            })}
 
             {value.length === 0 && (
               <p className="man-se__empty">
-                Noch keine Folie. Jede Folie braucht mindestens ein Bild.
+                Noch kein Eintrag. Lege eine eigene Folie an oder hole einen Beitrag aus den News.
               </p>
             )}
           </div>
@@ -265,20 +200,36 @@ export function SlideEditor({
               type="button"
               className="man-se__button"
               data-testid="slide-add"
-              onClick={addSlide}
-              disabled={value.length >= MAX_SLIDES}
+              onClick={() => add(emptySlide())}
+              disabled={full}
             >
               Folie hinzufügen
             </button>
-            {value.length >= MAX_SLIDES && (
-              <p className="man-se__hint">Mehr als {MAX_SLIDES} Folien sieht niemand.</p>
-            )}
+            <button
+              type="button"
+              className="man-se__button"
+              data-testid="news-post-add"
+              onClick={() => add(emptyNewsPostItem())}
+              disabled={full}
+            >
+              News-Beitrag hinzufügen
+            </button>
+            <button
+              type="button"
+              className="man-se__button"
+              data-testid="news-channel-add"
+              onClick={() => add(emptyNewsChannelItem())}
+              disabled={full}
+            >
+              News-Kanal hinzufügen
+            </button>
+            {full && <p className="man-se__hint">Mehr als {MAX_ITEMS} Einträge sieht niemand.</p>}
           </div>
         </div>
 
         <div className="man-se__form-pane">
-          {slide === undefined ? (
-            <p className="man-se__empty">Wähle links eine Folie oder lege eine neue an.</p>
+          {item === undefined ? (
+            <p className="man-se__empty">Wähle links einen Eintrag oder lege einen neuen an.</p>
           ) : (
             <div className="man-se__form">
               <div className="man-se__toolbar">
@@ -288,7 +239,7 @@ export function SlideEditor({
                   data-testid="slide-up"
                   onClick={() => move(-1)}
                   disabled={index === 0}
-                  aria-label="Folie nach vorn"
+                  aria-label="Eintrag nach vorn"
                 >
                   ↑
                 </button>
@@ -298,7 +249,7 @@ export function SlideEditor({
                   data-testid="slide-down"
                   onClick={() => move(1)}
                   disabled={index >= value.length - 1}
-                  aria-label="Folie nach hinten"
+                  aria-label="Eintrag nach hinten"
                 >
                   ↓
                 </button>
@@ -306,8 +257,8 @@ export function SlideEditor({
                   type="button"
                   className="man-se__button"
                   data-testid="slide-duplicate"
-                  onClick={duplicateSlide}
-                  disabled={value.length >= MAX_SLIDES}
+                  onClick={duplicate}
+                  disabled={full}
                 >
                   Duplizieren
                 </button>
@@ -315,99 +266,36 @@ export function SlideEditor({
                   type="button"
                   className="man-se__button man-se__button--danger"
                   data-testid="slide-remove"
-                  onClick={removeSlide}
+                  onClick={remove}
                 >
                   Löschen
                 </button>
               </div>
 
-              <ImageField
-                label="Bild"
-                hint="Quer, mindestens 1920 px breit. Ohne Bild wird die Folie nicht gezeigt."
-                image={slide.image.url === "" ? undefined : slide.image}
-                onPick={() => setPickerTarget("image")}
-                onAltChange={(alt) => patch({ image: { ...slide.image, alt } })}
-                testId="slide-image"
-              />
-
-              <ImageField
-                label="Bild für Hochformat (optional)"
-                hint="Wird auf schmalen, stehenden Bildschirmen gezeigt. Ohne dieses Bild wird überall der Querzuschnitt verwendet."
-                image={slide.imagePortrait}
-                onPick={() => setPickerTarget("imagePortrait")}
-                onClear={() => patch({ imagePortrait: undefined })}
-                onAltChange={(alt) =>
-                  patch({
-                    imagePortrait:
-                      slide.imagePortrait === undefined
-                        ? undefined
-                        : { ...slide.imagePortrait, alt },
-                  })
-                }
-                testId="slide-portrait"
-              />
-
-              <label className="man-se__field">
-                <span className="man-se__label">Überschrift</span>
-                <p className="man-se__hint">
-                  Wird in Versalien gesetzt. Kurz halten — bis etwa 24 Zeichen bleibt sie einzeilig.
-                </p>
-                <input
-                  type="text"
-                  className="man-se__input"
-                  data-testid="slide-headline"
-                  value={slide.headline}
-                  onChange={(event) => patch({ headline: event.target.value })}
+              {isSlideItem(item) && (
+                <SlideForm
+                  slide={item}
+                  onPatch={(changes: Partial<SlideItem>) => patch(changes)}
+                  onPick={(target) => setPickerTarget(target)}
                 />
-              </label>
+              )}
 
-              <label className="man-se__field">
-                <span className="man-se__label">Unterzeile (optional)</span>
-                <textarea
-                  className="man-se__input man-se__input--area"
-                  data-testid="slide-subline"
-                  rows={2}
-                  value={slide.subline ?? ""}
-                  onChange={(event) =>
-                    patch({ subline: event.target.value === "" ? undefined : event.target.value })
-                  }
+              {isNewsPostItem(item) && (
+                <NewsPostForm
+                  item={item}
+                  onPatch={(changes: Partial<NewsPostItem>) => patch(changes)}
+                  onPick={(target) => setPickerTarget(target)}
+                  source={source}
                 />
-              </label>
+              )}
 
-              <fieldset className="man-se__field man-se__fieldset">
-                <legend className="man-se__label">Schaltfläche (optional)</legend>
-                <p className="man-se__hint">
-                  Erscheint nur, wenn Beschriftung und Ziel ausgefüllt sind.
-                </p>
-
-                <input
-                  type="text"
-                  className="man-se__input"
-                  data-testid="slide-cta-label"
-                  value={cta?.label ?? ""}
-                  onChange={(event) => patchCta({ label: event.target.value })}
-                  placeholder="Beschriftung"
-                  aria-label="Beschriftung der Schaltfläche"
+              {isNewsChannelItem(item) && (
+                <NewsChannelForm
+                  item={item}
+                  onPatch={(changes: Partial<NewsChannelItem>) => patch(changes)}
+                  source={source}
                 />
-                <input
-                  type="url"
-                  className="man-se__input"
-                  data-testid="slide-cta-href"
-                  value={cta?.href ?? ""}
-                  onChange={(event) => patchCta({ href: event.target.value })}
-                  placeholder="https://…"
-                  aria-label="Ziel der Schaltfläche"
-                />
-                <label className="man-se__check">
-                  <input
-                    type="checkbox"
-                    data-testid="slide-cta-newtab"
-                    checked={cta?.newTab === true}
-                    onChange={(event) => patchCta({ newTab: event.target.checked })}
-                  />
-                  In neuem Tab öffnen
-                </label>
-              </fieldset>
+              )}
             </div>
           )}
         </div>
@@ -436,11 +324,7 @@ export function SlideEditor({
       </div>
 
       {pickerTarget !== null && (
-        <MediaPicker
-          client={client}
-          onSelect={handlePick}
-          onClose={() => setPickerTarget(null)}
-        />
+        <MediaPicker client={client} onSelect={handlePick} onClose={() => setPickerTarget(null)} />
       )}
     </div>
   );

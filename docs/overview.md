@@ -7,6 +7,19 @@ eine Schaltfläche. Vorbild ist die Bühne auf man.eu.
 Wer mehrere Folien anlegt, bekommt einen Wechsler: die Folien blenden
 ineinander über, geblättert wird über Pfeile und die Striche links unten.
 
+Eine Folie muss nicht von Hand gepflegt werden. Neben eigenen Folien kann die
+Bühne auch **Beiträge aus den News** zeigen:
+
+- **News-Beitrag** — ein bestimmter Beitrag als eine Folie. Bild, Überschrift
+  und Teaser kommen aus dem Beitrag, die Schaltfläche führt zu ihm.
+- **News-Kanal** — ein ganzer Kanal, eine Folie je Beitrag. Wie viele, in
+  welcher Reihenfolge und nach welchen Filtern, ist einstellbar. Erscheint im
+  Kanal ein neuer Beitrag, steht er ohne weiteres Zutun auf der Bühne.
+
+Die drei Sorten stehen in derselben Liste und lassen sich frei mischen und
+sortieren — etwa eine eigene Folie als Aufmacher, dahinter die drei jüngsten
+Beiträge eines Kanals.
+
 ## Was Leser:innen sehen
 
 - Das Bild läuft über die volle Fensterbreite — auch dann, wenn die Seite
@@ -23,6 +36,8 @@ ineinander über, geblättert wird über Pfeile und die Striche links unten.
   ihr liegt. Auf dem Telefon wird gewischt; die Pfeile sind dort ausgeblendet.
 - Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, sieht keinen
   Wechsel von selbst und keine Blende — nur noch die Bedienelemente.
+- Folien aus den News sehen aus wie jede andere Folie. Dass der Inhalt aus
+  einem Beitrag stammt, ist von außen nicht zu erkennen.
 
 ## Was Sie im CMS-Editor sehen
 

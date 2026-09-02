@@ -1,6 +1,6 @@
 {
   "title": "Hero-Slider",
-  "summary": "Bildschirmbreite Bilder mit Text darüber — die Bühne am Kopf einer Seite, wahlweise als Wechsel mehrerer Folien.",
+  "summary": "Bildschirmbreite Bilder mit Text darüber — die Bühne am Kopf einer Seite, wahlweise als Wechsel mehrerer Folien, eigener oder direkt aus den News.",
   "icon": "🖼️",
   "pages": [
     { "id": "overview", "title": "Übersicht", "file": "overview.md" },
