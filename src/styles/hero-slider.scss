@@ -246,28 +246,35 @@
 }
 
 // --- 2. Die Fluchtlinie ------------------------------------------------------
-// Dieselbe Rechnung, mit der `onetruck-css` Kopf, Menuezeile und Inhalt auf
-// EINE Linie zieht (`src/04-shell/header/_app.scss`): Restbreite halbieren,
-// nie unter den Seitenrand des schmalen Fensters.
+// Bricht die Bühne aus, liegt die Linie genau dort, wo die Inhaltsspalte der
+// Seite steht — gemessen, nicht gerechnet (`--man-hero-inset-*`, siehe
+// `full-bleed.ts`). Die frühere Formel `(100% - 1300px) / 2` kannte nur
+// Staffbases Standardbreite; onetruck-css zieht Kopf und Inhalt aber mit
+// `--man-gutter` auf eine breitere Linie, und ab etwa 1530px stand der Text
+// darum eingerückt neben ihr — im klassischen Editor wie im Content Designer
+// (gesehen am 29.09.2026, bei 1920px Text auf 310px, Logo und Inhalt auf
+// 144px). Die Messung folgt jeder Seite, auch einer, deren Linie sich ändert.
 //
-// Sie trägt beide Fälle ohne Verzweigung. Bricht die Bühne aus, ist `100%` die
-// Fensterbreite und die Kante liegt auf der der Kopfzeile. Bricht sie nicht
-// aus, ist die Differenz negativ und `max()` fällt auf die 32px zurück.
-//
-// `--sb-content-width` ist Staffbases eigene Inhaltsbreite; über die Variable
-// folgt die Linie einer Änderung im Studio, der MAN-Token ist nur der
-// Rückfall. Der Name muss genau so geschrieben sein, sonst wird für immer nur
-// der Rückfall sichtbar.
+// Bleibt die Bühne in der Spalte, ist deren Kante schon die Linie; der Rand
+// hält den Text nur vom Bildrand fern.
 .man-hero__inner {
   position: absolute;
   inset: 0;
-  padding-inline: max(#{man("space-6")}, calc((100% - var(--sb-content-width, #{man("container")})) / 2));
+  padding-inline: man("space-6");
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   // Der Container selbst fängt keine Klicks — sonst läge eine unsichtbare
   // Fläche über dem ganzen Bild. Nur seine Kinder tun es.
   pointer-events: none;
+}
+
+// Nie unter den Rand der nicht ausbrechenden Bühne: reicht die Spalte selbst
+// bis an den Fensterrand, stünde der Text sonst am Bildrand.
+.man-hero--bleed .man-hero__inner {
+  padding-inline:
+    max(#{man("space-6")}, var(--man-hero-inset-start))
+    max(#{man("space-6")}, var(--man-hero-inset-end));
 }
 
 // --- Textblock ---------------------------------------------------------------

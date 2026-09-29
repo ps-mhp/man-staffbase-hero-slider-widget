@@ -40,6 +40,13 @@ export interface BleedMetrics {
   /** Die Fensterbreite **ohne** Scrollbar — anders als `100vw`. */
   width: number;
   /**
+   * Der Abstand von der rechten Kante der Inhaltsspalte bis zur rechten Kante
+   * der ausgebrochenen Bühne. Links ist es `-pull`. Beides zusammen legt den
+   * Text auf die Fluchtlinie der Seite, wie auch immer die Seite sie zieht —
+   * klassischer Editor oder Content Designer.
+   */
+  insetEnd: number;
+  /**
    * Der Abstand vom Seitenanfang bis zur Bühne, also die Höhe von allem, was
    * über ihr steht. Nur für die Höhenstufe „bildschirmhoch" gebraucht.
    */
@@ -152,12 +159,16 @@ export function measureBleed(anchor: HTMLElement, limit: HTMLElement | null = nu
   const bounded = limit !== null;
   const limitRect = bounded ? limit.getBoundingClientRect() : null;
 
+  const width = bounded ? Math.min(limit.clientWidth, viewport) : viewport;
+  const pull =
+    limitRect !== null && limit !== null
+      ? limitRect.left + limit.clientLeft - rect.left
+      : -(rect.left + scroller.scrollLeft);
+
   return {
-    width: bounded ? Math.min(limit.clientWidth, viewport) : viewport,
-    pull:
-      limitRect !== null && limit !== null
-        ? limitRect.left + limit.clientLeft - rect.left
-        : -(rect.left + scroller.scrollLeft),
+    width,
+    pull,
+    insetEnd: Math.max(0, width + pull - rect.width),
     headerHeight:
       headerHeight >= 0 && headerHeight <= MAX_PLAUSIBLE_HEADER
         ? headerHeight
@@ -201,6 +212,7 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
           previous !== null &&
           previous.pull === next.pull &&
           previous.width === next.width &&
+          previous.insetEnd === next.insetEnd &&
           previous.headerHeight === next.headerHeight
         ) {
           return previous;

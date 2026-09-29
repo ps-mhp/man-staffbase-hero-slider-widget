@@ -44,9 +44,8 @@ export function startSlideEditorInjector(root: ParentNode = document): () => voi
     serialize: encodeHeroItemsAttribute,
     // Der Editor zeichnet seinen eigenen Rahmen: Liste, Formular und Fußzeile
     // teilen sich Kanten, die der Formular-Innenabstand des Panels nur von
-    // ihnen wegschöbe. Die Variante `editor-flush` liefert genau das (90vw ×
-    // 90vh ohne Innenabstand).
-    variant: "editor-flush",
+    // ihnen wegschöbe.
+    panelStyle: { padding: "0px" },
     render: ({ value, onChange, onSave, onClose, dirty }) =>
       React.createElement(SlideEditor, { value, onChange, onSave, onClose, dirty }),
   });

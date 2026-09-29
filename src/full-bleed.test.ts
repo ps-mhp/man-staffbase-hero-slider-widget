@@ -120,6 +120,18 @@ describe("measureBleed", () => {
     expect(measureBleed(anchor).pull).toBe(-150);
   });
 
+  // Die Fluchtlinie ist die Kante der Inhaltsspalte, in der die Bühne ohne
+  // Ausbruch stünde — nicht eine Formel mit 1300px, die weder zum Kopf von
+  // onetruck-css noch zum Content Designer passte (gesehen am 29.09.2026).
+  it("misst den Abstand der Spalte zum rechten Rand der Bühne", () => {
+    Object.defineProperty(document.documentElement, "clientWidth", { value: 1905, configurable: true });
+    const anchor = document.createElement("div");
+    document.body.appendChild(anchor);
+    setRect(anchor, { left: 144, width: 1617, top: 0 });
+
+    expect(measureBleed(anchor)).toMatchObject({ pull: -144, insetEnd: 144, width: 1905 });
+  });
+
   it("bricht nur bis zur Kante eines scrollenden Vorfahren aus", () => {
     // Auf schmalen Schirmen scrollt `div.page-content` die Seite. Er ist aber
     // selbst bildschirmbreit — die Bühne darf also bis zu seiner Innenkante
@@ -138,7 +150,8 @@ describe("measureBleed", () => {
     limit.appendChild(anchor);
     setRect(anchor, { left: 36, top: 0 });
 
-    expect(measureBleed(anchor, limit)).toMatchObject({ pull: -36, width: 390 });
+    setRect(anchor, { left: 36, width: 318, top: 0 });
+    expect(measureBleed(anchor, limit)).toMatchObject({ pull: -36, width: 390, insetEnd: 36 });
   });
 
   it("wird nie breiter als das Fenster", () => {

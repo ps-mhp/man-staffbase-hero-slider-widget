@@ -118,6 +118,8 @@ export function HeroSlider({
   if (bleed !== null) {
     vars["--man-hero-vw"] = `${bleed.width}px`;
     vars["--man-hero-pull"] = `${bleed.pull}px`;
+    vars["--man-hero-inset-start"] = `${-bleed.pull}px`;
+    vars["--man-hero-inset-end"] = `${bleed.insetEnd}px`;
     vars["--man-hero-header"] = `${bleed.headerHeight}px`;
   }
 
