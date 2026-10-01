@@ -23,7 +23,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MediaClient, MediaItem } from "@shared/media/media-client";
 import { MAX_ITEMS, SlideEditor } from "./slide-editor";
 import { HeroItem, DEFAULT_CHANNEL_COUNT, NewsChannelItem, NewsPostItem } from "./hero-items";
-import { NewsChannel, NewsPost } from "./news-client";
+import type { Post as NewsPost } from "@shared/staffbase/posts";
+import { NewsChannel } from "@shared/staffbase/channels";
 import { NewsSource } from "./editors/news-source";
 import { Slide } from "./slides-model";
 

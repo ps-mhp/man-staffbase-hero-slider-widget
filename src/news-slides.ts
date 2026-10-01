@@ -20,7 +20,7 @@
  */
 
 import { DEFAULT_CTA_LABEL } from "./hero-items";
-import { NewsImageVariant, NewsPost, NewsPostContent } from "./news-client";
+import type { Post as NewsPost, PostContent as NewsPostContent, PostImageVariant as NewsImageVariant } from "@shared/staffbase/posts";
 import { Slide, SlideImage } from "./slides-model";
 
 /** Ab hier wird der Teaser zur Bleiwüste über dem Bild. */

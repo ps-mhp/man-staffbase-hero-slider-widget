@@ -31,7 +31,7 @@ import {
   isNewsChannelItem,
   isNewsPostItem,
 } from "./hero-items";
-import { NewsPost } from "./news-client";
+import type { Post as NewsPost } from "@shared/staffbase/posts";
 import { postToSlide } from "./news-slides";
 import { Slide } from "./slides-model";
 

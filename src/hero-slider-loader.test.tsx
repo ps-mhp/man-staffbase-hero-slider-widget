@@ -16,7 +16,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 
 import { HeroItem, NewsChannelItem, NewsPostItem } from "./hero-items";
 import { HeroSliderLoader } from "./hero-slider-loader";
-import { NewsPost } from "./news-client";
+import type { Post as NewsPost } from "@shared/staffbase/posts";
 import { HeroSlidesSource } from "./use-hero-slides";
 
 const post = (id: string): NewsPost => ({

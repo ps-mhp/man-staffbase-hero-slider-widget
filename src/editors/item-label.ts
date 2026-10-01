@@ -24,7 +24,7 @@
 import { useEffect, useState } from "react";
 
 import { HeroItem, heroItemType, isNewsChannelItem, isNewsPostItem, isSlideItem } from "../hero-items";
-import { documentLocales } from "../news-client";
+import { documentLocales } from "@shared/staffbase/posts";
 import { pickPostContent } from "../news-slides";
 import { NewsSource, useNewsChannels } from "./news-source";
 

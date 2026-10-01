@@ -24,7 +24,9 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { HeroItem, encodeHeroItemsAttribute } from "./hero-items";
-import { NewsPost, fetchChannelPosts, fetchPost, userLocales } from "./news-client";
+import { Post as NewsPost, fetchPost, userLocales } from "@shared/staffbase/posts";
+
+import { fetchChannelPosts } from "@shared/staffbase/channels";
 import { ResolveDeps, resolveHeroItems } from "./resolve-hero-items";
 import { Slide } from "./slides-model";
 

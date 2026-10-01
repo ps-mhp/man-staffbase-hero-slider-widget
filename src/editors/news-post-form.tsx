@@ -23,7 +23,7 @@ import * as React from "react";
 import { ReactElement } from "react";
 
 import { DEFAULT_CTA_LABEL, NewsPostItem } from "../hero-items";
-import { documentLocales } from "../news-client";
+import { documentLocales } from "@shared/staffbase/posts";
 import { pickPostContent } from "../news-slides";
 import { ImageField } from "./image-field";
 import { IdSelect, IdSelectOption } from "./id-select";

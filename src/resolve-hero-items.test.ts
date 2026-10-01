@@ -12,7 +12,7 @@
  */
 
 import { HeroItem, NewsChannelItem, NewsPostItem, SlideItem } from "./hero-items";
-import { NewsPost } from "./news-client";
+import type { Post as NewsPost } from "@shared/staffbase/posts";
 import { FETCH_LIMIT, MAX_SLIDES, ResolveDeps, resolveHeroItems } from "./resolve-hero-items";
 
 const post = (id: string, over: Partial<NewsPost> = {}): NewsPost => ({

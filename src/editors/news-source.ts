@@ -20,7 +20,9 @@
 
 import { useEffect, useState } from "react";
 
-import { NewsChannel, NewsPost, fetchChannelPosts, fetchNewsChannels, fetchPost, userLocales } from "../news-client";
+import { Post as NewsPost, fetchPost, userLocales } from "@shared/staffbase/posts";
+
+import { NewsChannel, fetchChannelPosts, fetchNewsChannels } from "@shared/staffbase/channels";
 
 export interface NewsSource {
   channels: () => Promise<NewsChannel[]>;

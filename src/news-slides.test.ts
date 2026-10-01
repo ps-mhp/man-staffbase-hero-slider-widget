@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-import { NewsPost } from "./news-client";
+import type { Post as NewsPost } from "@shared/staffbase/posts";
 import {
   TEASER_MAX,
   pickPostContent,
