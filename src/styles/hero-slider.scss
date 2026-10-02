@@ -10,7 +10,7 @@
 // limitations under the License.
 
 // Die Bühne. Vorbild ist die Hero-Section auf man.eu; die Werte stammen aus
-// dem dort erfassten CSS (`onetruck-css/analysis/ci/specs/stage.json`) und aus
+// dem dort erfassten CSS (`man-theme/analysis/ci/specs/stage.json`) und aus
 // der MAN-CI-Spec 3.9, nicht aus dem Augenmass.
 //
 // Zwei Dinge tragen die ganze Datei:
@@ -209,7 +209,7 @@
 }
 
 // Der Verlauf. Wörtlich aus CI-Spec 3.9 und identisch zu dem, was
-// `onetruck-css` der News-Bühne gibt: nur unten dunkel, kein Vollflächen-Grau
+// `man-theme` der News-Bühne gibt: nur unten dunkel, kein Vollflächen-Grau
 // über dem ganzen Foto.
 .man-hero__media::after {
   content: "";
@@ -249,7 +249,7 @@
 // Bricht die Bühne aus, liegt die Linie genau dort, wo die Inhaltsspalte der
 // Seite steht — gemessen, nicht gerechnet (`--man-hero-inset-*`, siehe
 // `full-bleed.ts`). Die frühere Formel `(100% - 1300px) / 2` kannte nur
-// Staffbases Standardbreite; onetruck-css zieht Kopf und Inhalt aber mit
+// Staffbases Standardbreite; man-theme zieht Kopf und Inhalt aber mit
 // `--man-gutter` auf eine breitere Linie, und ab etwa 1530px stand der Text
 // darum eingerückt neben ihr — im klassischen Editor wie im Content Designer
 // (gesehen am 29.09.2026, bei 1920px Text auf 310px, Logo und Inhalt auf
@@ -345,7 +345,7 @@
 
 // Die Schaltfläche — der Primärknopf der Marke: MAN-Rot gefüllt, weisse
 // Versalien, wie ihn man.eu auf der Bühne zeigt. Der Grundriss (10/24er
-// Polsterung, 16/18er Label) stammt aus `onetruck-css/src/03-elements/button/
+// Polsterung, 16/18er Label) stammt aus `man-theme/src/03-elements/button/
 // _app.scss`; die weisse Kontur davor war eine Erfindung und stand gegen das
 // Vorbild. Als `a` gerendert, weil sie navigiert — und genau deshalb gegen die
 // `a`- und `button`-Regeln der Wirtsseite durchgesetzt: deren Themenblock
@@ -433,7 +433,7 @@
 }
 
 // Der Pfeil selbst: dasselbe Zeichen wie auf man.eu, aus der Symbolschrift
-// `man-icon`. Sie liegt in `onetruck-css/src/01-foundation/_icons-app.scss`
+// `man-icon`. Sie liegt in `man-theme/src/01-foundation/_icons-app.scss`
 // als eingebettetes WOFF2 und ist damit überall geladen, wo das
 // Tenant-Stylesheet gilt (am 01.09.2026 auf onetruck nachgemessen:
 // `document.fonts.check('16px "man-icon"')` → true). Die Codepoints stehen in
@@ -503,7 +503,7 @@
   }
 
   // 40px auf dem Schreibtisch — dieselbe Strichlänge wie die Bühne auf man.eu
-  // (`--dash-w` in `onetruck-css/src/03-elements/news-stage/_app.scss`).
+  // (`--dash-w` in `man-theme/src/03-elements/news-stage/_app.scss`).
   @media (min-width: 768px) {
     @include man-outshine-host {
       width: 40px;

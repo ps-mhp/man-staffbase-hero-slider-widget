@@ -122,7 +122,7 @@ describe("measureBleed", () => {
 
   // Die Fluchtlinie ist die Kante der Inhaltsspalte, in der die Bühne ohne
   // Ausbruch stünde — nicht eine Formel mit 1300px, die weder zum Kopf von
-  // onetruck-css noch zum Content Designer passte (gesehen am 29.09.2026).
+  // man-theme noch zum Content Designer passte (gesehen am 29.09.2026).
   it("misst den Abstand der Spalte zum rechten Rand der Bühne", () => {
     Object.defineProperty(document.documentElement, "clientWidth", { value: 1905, configurable: true });
     const anchor = document.createElement("div");
