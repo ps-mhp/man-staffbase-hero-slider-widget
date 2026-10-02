@@ -26,7 +26,7 @@ Kanal-Eintrag zählt dabei mit allen Folien, die er beisteuert.
 | Bild | Pflicht. Quer, mindestens 1920 px breit. Ohne Bild wird die Folie nicht gezeigt. |
 | Bildbeschreibung | Was auf dem Bild zu sehen ist. Nur bei rein schmückenden Bildern leer lassen — Screenreader lesen dieses Feld vor. |
 | Bild für Hochformat | Optional. Wird auf schmalen, stehenden Bildschirmen gezeigt. Fehlt es, wird überall der Querzuschnitt verwendet. |
-| Überschrift | Wird in Versalien gesetzt. Bis etwa 24 Zeichen bleibt sie einzeilig. |
+| Überschrift | Kurz halten: bis etwa 24 Zeichen bleibt sie einzeilig. |
 | Unterzeile | Optional, ein bis zwei Zeilen. |
 | Schaltfläche | Optional. Erscheint nur, wenn Beschriftung und Ziel ausgefüllt sind. Höchstens eine je Folie. |
 | In neuem Tab öffnen | Öffnet das Ziel der Schaltfläche in einem neuen Tab. Für externe Ziele üblich. |

@@ -11,7 +11,9 @@
 
 // Die Bühne. Vorbild ist die Hero-Section auf man.eu; die Werte stammen aus
 // dem dort erfassten CSS (`man-theme/analysis/ci/specs/stage.json`) und aus
-// der MAN-CI-Spec 3.9, nicht aus dem Augenmass.
+// der MAN-CI-Spec 3.9, nicht aus dem Augenmass. Schrift, Knopf, Fokus und
+// Bewegung folgen seit 02.10.2026 Craft, dem MAN Design System (Rangfolge
+// Craft vor man.eu vor Spec, `man-theme/docs/CRAFT-MIGRATION.md`).
 //
 // Zwei Dinge tragen die ganze Datei:
 //
@@ -23,6 +25,7 @@
 //    der Vorlage: bildschirmbreites Bild, Text im Raster.
 
 @use "@shared/stylings/man-tokens" as *;
+@use "@shared/stylings/man-craft" as *;
 
 .man-hero-host {
   display: block;
@@ -141,7 +144,9 @@
 }
 
 // Überblenden statt Schieben, wie `.swiper-fade` auf man.eu. Alle Slides
-// liegen übereinander; nur der aktive ist sichtbar und bedienbar.
+// liegen übereinander; nur der aktive ist sichtbar und bedienbar. Die Blende
+// ist Bewegung und läuft deshalb auf der Craft-Kurve `ease-move`, nicht
+// linear wie ein Zustandswechsel.
 .man-hero__slide {
   position: absolute;
   inset: 0;
@@ -149,7 +154,7 @@
   visibility: hidden;
   pointer-events: none;
   transition:
-    opacity man("duration-slow") man("ease"),
+    opacity man("duration-slow") man("ease-move"),
     visibility 0s linear man("duration-slow");
 }
 
@@ -158,7 +163,7 @@
   visibility: visible;
   pointer-events: auto;
   transition:
-    opacity man("duration-slow") man("ease"),
+    opacity man("duration-slow") man("ease-move"),
     visibility 0s;
 }
 
@@ -313,17 +318,24 @@
   // `!important` und vier Klassen Spezifität auf 26px. Bei gleichem Nachdruck
   // entscheidet die Spezifität, und eine einzelne Klasse verliert — live
   // gemessen kamen 26px statt der 56px der Bühnenschrift an.
+  //
+  // Die Bühnenschrift ist Craft `display-l` (Condensed 700, 56/1.3) in
+  // gemischter Schreibung: das neue MAN-CI kennt keine Versalien und keine
+  // Laufweite, auch nicht auf der Bühne (Vorgabe MAN, 02.10.2026; wie
+  // `man-theme/src/03-elements/hero/_app.scss`). `man-type` setzt dazu
+  // `text-transform: none` und `letter-spacing: normal` mit demselben
+  // Nachdruck — so trägt auch die Wirtsseite keine Versalien hinein.
   @include man-outshine-host {
-    @include man-type("display-xl", $important: true);
+    @include man-type("display-l", $important: true);
 
     color: man("white") !important;
-    letter-spacing: man("track-tight") !important;
   }
 
+  // Schmal Craft `display-s` (40/1.3). Craft selbst kennt keine Mobilstufen;
+  // man-theme setzt seine Bühne dort ebenso eine Stufe tiefer.
   @media (max-width: 767px) {
     @include man-outshine-host {
-      font-size: 36px !important;
-      line-height: 40px !important;
+      @include man-type("display-s", $important: true);
     }
   }
 }
@@ -343,44 +355,22 @@
   }
 }
 
-// Die Schaltfläche — der Primärknopf der Marke: MAN-Rot gefüllt, weisse
-// Versalien, wie ihn man.eu auf der Bühne zeigt. Der Grundriss (10/24er
-// Polsterung, 16/18er Label) stammt aus `man-theme/src/03-elements/button/
-// _app.scss`; die weisse Kontur davor war eine Erfindung und stand gegen das
-// Vorbild. Als `a` gerendert, weil sie navigiert — und genau deshalb gegen die
-// `a`- und `button`-Regeln der Wirtsseite durchgesetzt: deren Themenblock
-// färbt Fläche und Schrift gleich dunkelgrau ein.
+// Die Schaltfläche — der Craft-Knopf m primary (`man-button`, dieselben Werte
+// wie `man-theme/src/lib/_craft.scss`): MAN-Rot gefüllt, weisse Schrift in
+// Condensed 700 16px, gemischt geschrieben, 40px hoch, eckig; Hover und
+// gedrückt dunkler nach Craft, Fokus der blaue Craft-Ring. Die weisse Kontur
+// einer früheren Fassung stand gegen das Vorbild. Als `a` gerendert, weil sie
+// navigiert — und genau deshalb gegen die `a`- und `button`-Regeln der
+// Wirtsseite durchgesetzt: deren Themenblock färbt Fläche und Schrift gleich
+// dunkelgrau ein.
 .man-hero__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: man("space-5");
-
   @include man-outshine-host {
-    @include man-type("label", $important: true);
+    @include man-button("m", "primary", true);
 
-    padding: 10px 24px !important;
-    min-height: 44px;
-    // Der Knopf der Marke steht auf 16/18, nicht auf den 13px des Labels —
-    // `man-type` liefert Schnitt und Familie, die Grösse kommt vom Grundriss.
-    font-size: 16px !important;
-    line-height: 18px !important;
-    color: man("white") !important;
-    text-decoration: none !important;
-    text-transform: uppercase !important;
-    letter-spacing: man("track-label") !important;
-    background: man("red") !important;
-    border: 0 !important;
-    border-radius: man("radius") !important;
-    transition: background-color man("duration") man("ease");
-  }
-}
-
-.man-hero__cta:hover,
-.man-hero__cta:focus-visible {
-  @include man-outshine-host {
-    color: man("white") !important;
-    background: man("red-hover") !important;
+    // Nach dem Knopf, weil `man-button` `margin: 0` mit Nachdruck setzt.
+    & {
+      margin-top: man("space-5") !important;
+    }
   }
 }
 
@@ -469,6 +459,14 @@
   color: man("red") !important;
 }
 
+// Ein Icon-Knopf trägt nach Craft auch bei Hover und gedrückt keine Fläche —
+// nur das Zeichen färbt sich. Je Zustand ausdrücklich: eine Wirtsregel mit
+// `:hover` oder `:active` im Selektor überböte sonst die einfache Klasse oben.
+.man-hero__arrow:hover,
+.man-hero__arrow:active {
+  background: none !important;
+}
+
 // Striche statt Punkte — die Vorgabe der CI-Spec 3.10. Die Trefferfläche ist
 // höher als der sichtbare Strich: 28 x 3px liessen sich mit dem Finger nicht
 // treffen. `background-clip: content-box` sorgt dafür, dass der Innenabstand
@@ -525,13 +523,14 @@
   }
 }
 
-// Ein sichtbarer Fokus auf allen Bedienelementen. Der Ring der MAN-Tokens ist
-// dunkel und verschwände auf dem Foto — hier steht er deshalb in Weiss.
+// Ein sichtbarer Fokus auf allen Bedienelementen: der Craft-Ring, 2px Blau
+// (`focus-color`) mit 2px Abstand, statt des früheren weissen Rings. Die
+// Bedienung steht im dunklen Teil des Verlaufs; gegen `surface-invers` hält
+// das Blau 3,1:1, über sehr hellen Motiven scheint der Verlauf aber durch und
+// es wird knapper. Die Schaltfläche bringt den Ring mit `man-button` mit.
 .man-hero__arrow:focus-visible,
-.man-hero__dot:focus-visible,
-.man-hero__cta:focus-visible {
-  outline: 2px solid man("white");
-  outline-offset: man("focus-offset");
+.man-hero__dot:focus-visible {
+  @include man-focus-ring;
 }
 
 // Nur für Hilfsmittel: die Ansage, welcher Slide gerade vorn liegt.

@@ -16,7 +16,7 @@
    gezeigt.
 6. Tragen Sie unter **Bildbeschreibung** ein, was zu sehen ist. Lassen Sie das
    Feld nur leer, wenn das Bild rein schmückend ist.
-7. Tragen Sie die **Überschrift** ein. Sie wird in Versalien gesetzt; bis etwa
+7. Tragen Sie die **Überschrift** ein. Halten Sie sie kurz: bis etwa
    24 Zeichen bleibt sie einzeilig.
 8. Optional: **Unterzeile** und **Schaltfläche**. Die Schaltfläche erscheint
    nur, wenn Beschriftung **und** Ziel ausgefüllt sind.

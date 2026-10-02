@@ -88,7 +88,7 @@ export function SlideForm({ slide, onPatch, onPick }: SlideFormProps): ReactElem
       <label className="man-se__field">
         <span className="man-se__label">Überschrift</span>
         <p className="man-se__hint">
-          Wird in Versalien gesetzt. Kurz halten — bis etwa 24 Zeichen bleibt sie einzeilig.
+          Kurz halten — bis etwa 24 Zeichen bleibt sie einzeilig.
         </p>
         <input
           type="text"

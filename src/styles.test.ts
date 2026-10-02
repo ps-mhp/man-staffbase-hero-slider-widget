@@ -64,17 +64,26 @@ describe("Stylesheets", () => {
     it("setzt die Bühnenschrift der Überschrift mit erhöhter Spezifität", () => {
       // Dieselbe Falle wie bei der Unterzeile: `.page h2` der Wirtsseite steht
       // mit `!important` auf 26px. Ohne `man-outshine-host` kam von den 56px
-      // der Bühnenschrift nichts an.
+      // der Bühnenschrift nichts an. Die Stufe ist Craft `display-l`.
       expect(read("hero-slider.scss")).toMatch(
-        /\.man-hero__headline\s*\{[\s\S]*?@include man-outshine-host[\s\S]*?display-xl/,
+        /\.man-hero__headline\s*\{[\s\S]*?@include man-outshine-host\s*\{\s*@include man-type\("display-l", \$important: true\)/,
       );
     });
 
-    it("setzt die Schaltfläche mit erhöhter Spezifität in MAN-Rot", () => {
-      // Der Themenblock von Staffbase färbt Fläche und Schrift jedes `a.button`
-      // im selben Dunkelgrau — der Knopf wäre unlesbar.
+    it("setzt die Bühnenschrift schmal eine Stufe tiefer auf Craft `display-s`", () => {
+      // Wie man-theme seine Bühne: Craft hat keine Mobilstufen, 56px wären
+      // auf einem Telefon zwei Wörter je Zeile.
       expect(read("hero-slider.scss")).toMatch(
-        /\.man-hero__cta\s*\{[\s\S]*?@include man-outshine-host[\s\S]*?background:\s*man\("red"\)\s*!important/,
+        /\.man-hero__headline\s*\{[\s\S]*?@media \(max-width: 767px\)\s*\{\s*@include man-outshine-host\s*\{\s*@include man-type\("display-s", \$important: true\)/,
+      );
+    });
+
+    it("setzt die Schaltfläche mit erhöhter Spezifität als Craft-Knopf m primary", () => {
+      // Der Themenblock von Staffbase färbt Fläche und Schrift jedes `a.button`
+      // im selben Dunkelgrau — der Knopf wäre unlesbar. `man-button` mit
+      // Nachdruck bringt MAN-Rot, Grundriss und alle Zustände nach Craft.
+      expect(read("hero-slider.scss")).toMatch(
+        /\.man-hero__cta\s*\{\s*@include man-outshine-host\s*\{\s*@include man-button\("m", "primary", true\)/,
       );
     });
 
@@ -124,6 +133,42 @@ describe("Stylesheets", () => {
       // Fussleiste riss auf die ganzen 1440px auseinander.
       expect(read("slide-editor.scss")).toMatch(
         /\.man-se__button\s*\{[\s\S]*?@include tokens\.man-outshine-host\s*\{[^}]*margin:\s*0/,
+      );
+    });
+  });
+
+  describe("Craft (MAN Design System)", () => {
+    it("schreibt keine Versalien, keine Laufweite und keine alten Schriftnamen", () => {
+      // Das neue MAN-CI kennt keine Versalien, auch nicht auf der Bühne, und
+      // keine Laufweiten (Vorgabe MAN, 02.10.2026). `MANEurope …` liefert
+      // man-theme nicht mehr aus; `display-xl` ist nur noch ein Übergangsname.
+      const css = read("hero-slider.scss");
+
+      expect(css).not.toMatch(/uppercase/);
+      expect(css).not.toMatch(/letter-spacing:(?!\s*(?:normal|0)(?![\w.%]))/);
+      expect(css).not.toMatch(/track-/);
+      expect(css).not.toMatch(/MANEurope/);
+      expect(css).not.toMatch(/display-xl/);
+    });
+
+    it("blendet die Folien auf der Craft-Bewegungskurve über", () => {
+      // Überblenden ist Bewegung (`ease-move`), kein Zustandswechsel.
+      const css = read("hero-slider.scss");
+
+      expect(css).toMatch(/\.man-hero__slide\s*\{[^}]*opacity man\("duration-slow"\) man\("ease-move"\)/);
+      expect(css).toMatch(/\.man-hero__slide--active\s*\{[^}]*opacity man\("duration-slow"\) man\("ease-move"\)/);
+    });
+
+    it("zeigt den Fokus von Pfeil und Strich als Craft-Ring", () => {
+      expect(read("hero-slider.scss")).toMatch(
+        /\.man-hero__arrow:focus-visible,\s*\.man-hero__dot:focus-visible\s*\{\s*@include man-focus-ring;/,
+      );
+    });
+
+    it("gibt den Pfeilen auch bei Hover und gedrückt keine Fläche", () => {
+      // Icon-Knöpfe tragen nach Craft in keinem Zustand einen Hintergrund.
+      expect(read("hero-slider.scss")).toMatch(
+        /\.man-hero__arrow:hover,\s*\.man-hero__arrow:active\s*\{[^}]*background:\s*none\s*!important/,
       );
     });
   });
