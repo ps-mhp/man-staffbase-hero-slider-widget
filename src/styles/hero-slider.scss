@@ -358,14 +358,16 @@
 // Die Schaltfläche — der Craft-Knopf m primary (`man-button`, dieselben Werte
 // wie `man-theme/src/lib/_craft.scss`): MAN-Rot gefüllt, weisse Schrift in
 // Condensed 700 16px, gemischt geschrieben, 40px hoch, eckig; Hover und
-// gedrückt dunkler nach Craft, Fokus der blaue Craft-Ring. Die weisse Kontur
+// gedrückt dunkler nach Craft, Fokus der blaue Craft-Ring. Anders als Craft
+// bricht eine lange Beschriftung um (`$wrap`), statt über die Bühne zu laufen;
+// einzeilig bleibt es der Craft-Knopf. Die weisse Kontur
 // einer früheren Fassung stand gegen das Vorbild. Als `a` gerendert, weil sie
 // navigiert — und genau deshalb gegen die `a`- und `button`-Regeln der
 // Wirtsseite durchgesetzt: deren Themenblock färbt Fläche und Schrift gleich
 // dunkelgrau ein.
 .man-hero__cta {
   @include man-outshine-host {
-    @include man-button("m", "primary", true);
+    @include man-button("m", "primary", true, $wrap: true);
 
     // Nach dem Knopf, weil `man-button` `margin: 0` mit Nachdruck setzt.
     & {

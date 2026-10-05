@@ -83,7 +83,7 @@ describe("Stylesheets", () => {
       // im selben Dunkelgrau — der Knopf wäre unlesbar. `man-button` mit
       // Nachdruck bringt MAN-Rot, Grundriss und alle Zustände nach Craft.
       expect(read("hero-slider.scss")).toMatch(
-        /\.man-hero__cta\s*\{\s*@include man-outshine-host\s*\{\s*@include man-button\("m", "primary", true\)/,
+        /\.man-hero__cta\s*\{\s*@include man-outshine-host\s*\{\s*@include man-button\("m", "primary", true, \$wrap: true\)/,
       );
     });
 
