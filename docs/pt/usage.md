@@ -16,7 +16,7 @@
    mostrado. 
 6. Em **Descrição da imagem**, insira o que pode ser visto. Deixe o
    Campo em branco somente se a imagem for puramente decorativa. 
-7. Insira o **cabeçalho**. Ele está escrito em letras maiúsculas; até cerca de
+7. Insira o **título**. Mantenha breve: até cerca de
    Permanece uma única linha para 24 caracteres. 
 8. Opcionais: **Sublinha** e **Botão**. O botão aparecerá
    Somente se o rótulo **e** o alvo estiverem preenchidos. 

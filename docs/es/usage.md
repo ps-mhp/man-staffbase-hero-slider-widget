@@ -16,7 +16,7 @@
    mostrado. 
 6. En **Descripción de la imagen**, introduce lo que se puede ver. Deja el
    Campo en blanco solo si la imagen es puramente decorativa. 
-7. Introduce el **encabezado**. Está escrito en mayúsculas; hasta aproximadamente la fecha
+7. Introduce el **encabezado**. Mantenlo corto: hasta aproximadamente
    Sigue siendo una sola línea para 24 caracteres. 
 8. Opcional: **Subline** y **Botón**. El botón aparecerá
    Solo si la etiqueta **y** el objetivo están completados. 

@@ -26,7 +26,7 @@ Les entrées sur la chaîne comptent avec toutes les diapositives qu’il contri
 | Image | Obligatoire. Paysage, au moins 1920 px de large. Sans image, la diapositive ne sera pas montrée. |
 | Description de l’image | Ce que l’on peut voir sur l’image. Ne laissez vide que pour les images purement décoratives — les lecteurs d’écran lisent ce champ. |
 | Image pour format portrait | Optionnel. Affichée sur des écrans étroits et fixes. Si elle manque, le recadrage paysage est utilisé partout. |
-| En-tête | Est écrit en majuscules. Jusqu’à environ 24 caractères, il reste à interligne simple. |
+| Titre | Restez court : jusqu’à environ 24 caractères, il reste une ligne unique. |
 | Sous-ligne | Optionnel, une ou deux lignes. |
 | Bouton | Optionnel. N’apparaît que si la légende et la destination sont remplies. Au plus une par diapositive. |
 | Ouvrir dans un nouvel onglet | Ouvre la cible du bouton dans un nouvel onglet. Courant pour les cibles externes. |

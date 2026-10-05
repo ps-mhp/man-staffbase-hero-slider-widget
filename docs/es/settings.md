@@ -26,7 +26,7 @@ La entrada del canal cuenta con todas las diapositivas que él contribuye.
 | Imagen | Obligatorio. Paisaje, al menos 1920 px de ancho. Sin imagen, la diapositiva no se mostrará. |
 | Descripción de la imagen | Lo que se puede ver en la imagen. Deja en blanco solo imágenes puramente decorativas — los lectores de pantalla leen este campo. |
 | Imagen para formato retrato | Opcional. Se muestra en pantallas estrechas y fijas. Si falta, el recorte de paisaje se utiliza en todas partes. |
-| Encabezado | Está escrito en mayúsculas. Hasta unos 24 caracteres, permanece a un solo espacio. |
+| Encabezado | Mantenlo corto: hasta unos 24 caracteres, sigue siendo de una sola línea. |
 | Sublínea | Opcional, una o dos líneas. |
 | Botón | Opcional. Solo aparece si el pie de foto y el destino están llenos. Como mucho uno por diapositiva. |
 | Abrir en una pestaña nueva | Abre el objetivo del botón en una pestaña nueva. Común para objetivos externos. |

@@ -26,7 +26,7 @@ Channel entry counts with all slides he contributes.
 | Image | Mandatory. Landscape, at least 1920 px wide. Without a picture, the slide will not be shown. |
 | Image description | What can be seen in the picture. Only leave blank for purely decorative images — screen readers read this field. |
 | Image for portrait format | Optional. Shown on narrow, stationary screens. If it is missing, the landscape crop is used everywhere. |
-| Heading | Is set in capital letters. Up to about 24 characters, it remains single-spaced. |
+| Heading | Keep it short: up to about 24 characters, it remains single-line. |
 | Subline | Optional, one or two lines. |
 | Button | Optional. Appears only if the caption and destination are filled. At most one per slide. |
 | Open in New Tab | Opens the target of the button in a new tab. Common for external targets. |

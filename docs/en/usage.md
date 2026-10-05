@@ -16,7 +16,7 @@
    shown. 
 6. Under **Image description**, enter what can be seen. Leave the
    Field blank only if the image is purely decorative. 
-7. Enter the **heading**. It is set in capital letters; until about
+7. Enter the **heading**. Keep it short: until about
    It remains a single line for 24 characters. 
 8. Optional: **Subline** and **Button**. The button will appear
    only if label **and** target are filled in. 

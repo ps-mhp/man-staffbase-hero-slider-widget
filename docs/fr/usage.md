@@ -16,7 +16,7 @@
    montré. 
 6. Sous **Description de l’image**, saisissez ce qui peut être vu. Quittez le
    Champ blanc uniquement si l’image est purement décorative. 
-7. Entrer le **en-tête**. Il est écrit en majuscules ; jusqu’à environ
+7. Entrez le **titre**. Restez court : jusqu’à environ
    Il reste une seule ligne pendant 24 caractères. 
 8. Optionnel : **Sous-ligne** et **Bouton**. Le bouton apparaîtra
    Seulement si l’étiquette **et** la cible sont remplies. 

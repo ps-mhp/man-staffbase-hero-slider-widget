@@ -16,7 +16,7 @@
    getoond. 
 6. Onder **Afbeeldingsbeschrijving** voer in wat zichtbaar is. Laat de
    Veld leeg alleen als de afbeelding puur decoratief is. 
-7. Enter de **kop**. Deze staat in hoofdletters; tot ongeveer
+7. Voer de **kop** in. Houd het kort: tot ongeveer
    Het blijft een enkele regel voor 24 tekens. 
 8. Optioneel: **Sublijn** en **Knop**. De knop verschijnt
    Alleen als label **en** doel zijn ingevuld. 

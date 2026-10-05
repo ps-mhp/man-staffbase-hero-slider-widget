@@ -26,7 +26,7 @@ L'inserimento del canale conta con tutte le slide che lui contribue.
 | Immagine | Obbligatoria. Paesaggio, almeno 1920 px di larghezza. Senza una foto, la diapositiva non sarà mostrata. |
 | Descrizione dell'immagine | Cosa si può vedere nell'immagine. Lascia spazio vuoto solo per immagini puramente decorative — i lettori di schermo leggono questo campo. |
 | Immagine per formato verticale | Opzionale. Mostrata su schermi stretti e fissi. Se manca, il ritaglio paesaggistico viene usato ovunque. |
-| Intestazione | È scritta in lettere maiuscole. Fino a circa 24 caratteri, rimane a spaziale singola. |
+| Intestazione | Tienilo breve: fino a circa 24 caratteri, rimane a una sola riga. |
 | Sottolinea | Opzionale, una o due linee. |
 | Pulsante | Opzionale. Appare solo se la didascalia e la destinazione sono occupate. Al massimo una per diapositiva. |
 | Apri nella nuova scheda | Apre il target del pulsante in una nuova scheda. Comune per i target esterni. |

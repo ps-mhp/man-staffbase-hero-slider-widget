@@ -16,7 +16,7 @@
    pokazano. 
 6. W sekcji **Opis obrazu** wpisz to, co można zobaczyć. Opuszczaj
    Pole puste tylko wtedy, gdy obraz jest czysto dekoracyjny. 
-7. Wprowadź **nagłówek**. Jest zapisany wielkimi literami; aż do około
+7. Wprowadź **nagłówek**. Trzymaj się krótkiego: mniej więcej do około
    Pozostaje to pojedyncza linia przez 24 znaki. 
 8. Opcjonalnie: **Podlinia** i **Przycisk**. Przycisk pojawi się
    tylko jeśli etykieta **i** cel zostanie wypełniona. 

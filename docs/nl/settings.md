@@ -26,7 +26,7 @@ Kanaaltoegang telt mee met alle dia's die hij bijdraagt.
 | Afbeelding | Verplicht. Landschap, minstens 1920 px breed. Zonder afbeelding wordt de dia niet getoond. |
 | Afbeeldingsbeschrijving | Wat er op de foto te zien is. Laat alleen leeg voor puur decoratieve afbeeldingen — schermlezers lezen dit veld. |
 | Afbeelding voor portretformaat | Optioneel. Getoond op smalle, stilstaande schermen. Als het ontbreekt, wordt de landschapsbijsnijding overal gebruikt. |
-| Kop | Is in hoofdletters gezet. Tot ongeveer 24 tekens blijft het enkelspaties staan. |
+| Kop | Houd het kort: tot ongeveer 24 tekens, het blijft enkelregelig. |
 | Subregel | Optioneel, één of twee regels. |
 | Knop | Optioneel. Verschijnt alleen als het bijschrift en de bestemming zijn ingevuld met de tekst. Maximaal één per dia. |
 | Openen in nieuw tabblad | Opent het doel van de knop in een nieuw tabblad. Gebruikelijk voor externe doelen. |

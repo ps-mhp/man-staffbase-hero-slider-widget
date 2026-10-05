@@ -26,7 +26,7 @@ Wejście kanału liczy się we wszystkich slajdach, które przesyła.
 | Obraz | Obowiązkowe. Pejzaż, co najmniej 1920 px szerokości. Bez zdjęcia slajd nie będzie wyświetlany. |
 | Opis obrazu | Co można zobaczyć na zdjęciu. Zostawić puste tylko dla czysto dekoracyjnych obrazów — czytniki ekranu odczytują to pole. |
 | Obraz do formatu portretowego | Opcjonalne. Wyświetlane na wąskich, nieruchomych ekranach. Jeśli go brakuje, kadrowanie poziome jest używane wszędzie. |
-| Nagłówek | Jest napisany wielkimi literami. Do około 24 znaków pozostaje pojedynczo odstępowany. |
+| Nagłówek | Niech będzie krótki: do około 24 znaków pozostaje jednolinijkowy. |
 | Linia podrzędna | Opcjonalnie, jedna lub dwie linijki. |
 | Przycisk | Opcjonalne. Pojawia się tylko, jeśli podpis i miejsce docelowe są wypełnione. Maksymalnie jeden na slajd. |
 | Otwórz w nowej karcie | Otwiera cel przycisku w nowej karcie. Typowe dla celów zewnętrznych. |

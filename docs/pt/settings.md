@@ -26,7 +26,7 @@ A entrada do canal conta com todos os slides que ele contribui.
 | Imagem | Obrigatório. Paisagem, pelo menos 1920 px de largura. Sem foto, o slide não será exibido. |
 | Descrição da imagem | O que pode ser visto na imagem. Deixe em branco apenas para imagens puramente decorativas — leitores de tela leem este campo. |
 | Imagem para formato retrato | Opcional. Mostrada em telas estreitas e fixas. Se faltar, o corte da paisagem é usado em todos os lugares. |
-| Cabeçalho | Está escrito em letras maiúsculas. Com cerca de 24 caracteres, permanece com espaçamento simples. |
+| Título | Seja breve: até cerca de 24 caracteres, permanece com uma única linha. |
 | Sublinha | Opcional, uma ou duas linhas. |
 | Botão | Opcional. Aparece apenas se a legenda e o destino estiverem preenchidos. No máximo um por slide. |
 | Abrir em Nova Aba | Abre o destino do botão em uma nova aba. Comum para alvos externos. |

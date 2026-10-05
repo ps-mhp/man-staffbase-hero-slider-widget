@@ -16,7 +16,7 @@
    mostrato. 
 6. Sotto **Descrizione immagine**, inserisci ciò che si può vedere. Lascia il
    Campo vuoto solo se l'immagine è puramente decorativa. 
-7. Inserisci l'**intestazione**. È scritto in lettere maiuscole; fino a circa
+7. Inserisci la **intestazione**. Tieni breve: fino a circa
    Rimane una singola riga per 24 caratteri. 
 8. Opzionale: **Subline** e **Button**. Il pulsante apparirà
    Solo se l'etichetta **e** target sono stati completati. 
