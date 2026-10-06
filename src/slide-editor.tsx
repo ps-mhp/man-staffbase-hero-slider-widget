@@ -32,7 +32,7 @@ import * as React from "react";
 import { ReactElement, useMemo, useState } from "react";
 import { useHotStyle } from "@shared/hot-style";
 import { MediaClient, createMediaClient } from "@shared/media/media-client";
-import { MediaPicker, PickedImage } from "@shared/media/media-picker";
+import { MediaAccept, MediaPicker, PickedMedia } from "@shared/media/media-picker";
 import {
   HeroItem,
   NewsChannelItem,
@@ -63,6 +63,12 @@ export const MAX_ITEMS = 8;
 
 /** Welches Bild eines Eintrags der Picker gerade füllt. */
 type PickerTarget = "image" | "imagePortrait" | "imageOverride";
+
+/**
+ * Eine Folie nimmt Bilder und Videos. Das Bild eines News-Beitrags bleibt ein
+ * Bild: es ersetzt das Beitragsbild, und das ist nie ein Video.
+ */
+const SLIDE_MEDIA: MediaAccept = ["image", "video"];
 
 export interface SlideEditorProps {
   value: HeroItem[];
@@ -138,7 +144,7 @@ export function SlideEditor({
     setSelected(target);
   };
 
-  const handlePick = (picked: PickedImage): void => {
+  const handlePick = (picked: PickedMedia): void => {
     const target = pickerTarget;
     setPickerTarget(null);
     if (item === undefined || target === null) return;
@@ -146,6 +152,7 @@ export function SlideEditor({
     const image: SlideImage = { url: picked.url, alt: picked.alt ?? "" };
     if (picked.width !== undefined) image.width = picked.width;
     if (picked.height !== undefined) image.height = picked.height;
+    if (picked.type === "video") image.kind = "video";
 
     // Die vorhandene Beschreibung überlebt einen Bildwechsel nicht: sie
     // beschriebe das alte Motiv und wäre damit schlechter als keine.
@@ -371,7 +378,12 @@ export function SlideEditor({
       </div>
 
       {pickerTarget !== null && (
-        <MediaPicker client={client} onSelect={handlePick} onClose={() => setPickerTarget(null)} />
+        <MediaPicker
+          client={client}
+          accept={item !== undefined && isSlideItem(item) ? SLIDE_MEDIA : "images"}
+          onSelect={handlePick}
+          onClose={() => setPickerTarget(null)}
+        />
       )}
     </div>
   );

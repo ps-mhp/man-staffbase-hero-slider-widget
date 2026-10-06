@@ -401,6 +401,66 @@ describe("SlideEditor", () => {
       expect(h.latestSlides()[0]!.image.kind).toBeUndefined();
     });
 
+    it("wählt ein Video aus der Mediathek in seiner abspielbaren Fassung", async () => {
+      const film: MediaItem = {
+        id: "film",
+        url: "https://cdn.example.test/film.mp4",
+        previewUrl: "https://cdn.example.test/t_preview/film.jpg",
+        hasPreview: true,
+        playbackUrl: "https://cdn.example.test/t_mp4/film.mp4",
+        fileName: "film.mp4",
+        type: "video",
+        format: "mp4",
+      };
+      const onChange = jest.fn<void, [HeroItem[]]>();
+      render(
+        <SlideEditor
+          value={[slide("a", { image: { url: "", alt: "" } })]}
+          onChange={onChange}
+          onSave={jest.fn()}
+          onClose={jest.fn()}
+          dirty={false}
+          mediaClient={stubMediaClient({
+            listMedia: jest.fn(async () => ({ items: [film], total: 1, nextOffset: null })),
+          })}
+          newsSource={stubNewsSource()}
+        />,
+      );
+
+      expect(screen.getByTestId("slide-image-pick")).toHaveTextContent("Bild oder Video wählen");
+      fireEvent.click(screen.getByTestId("slide-image-pick"));
+      fireEvent.click(await screen.findByTestId("media-picker-item-film"));
+
+      await waitFor(() => expect(onChange).toHaveBeenCalled());
+      const [picked] = onChange.mock.calls[onChange.mock.calls.length - 1]![0] as Slide[];
+      expect(picked!.image).toMatchObject({
+        url: "https://cdn.example.test/t_mp4/film.mp4",
+        kind: "video",
+      });
+    });
+
+    it("bietet für News-Beiträge weiter nur Bilder an", async () => {
+      const film: MediaItem = { ...mediaItem("film"), type: "video", fileName: "film.mp4" };
+      render(
+        <SlideEditor
+          value={[postItem("p", { channelId: "c1", postId: "p1" })]}
+          onChange={jest.fn()}
+          onSave={jest.fn()}
+          onClose={jest.fn()}
+          dirty={false}
+          mediaClient={stubMediaClient({
+            listMedia: jest.fn(async () => ({ items: [mediaItem("a"), film], total: 2, nextOffset: null })),
+          })}
+          newsSource={stubNewsSource()}
+        />,
+      );
+
+      fireEvent.click(await screen.findByTestId("news-post-image-pick"));
+
+      expect(await screen.findByTestId("media-picker-item-a")).toBeInTheDocument();
+      expect(screen.queryByTestId("media-picker-item-film")).not.toBeInTheDocument();
+    });
+
     it("zeigt nach dem Wechsel der Folie deren Adresse, nicht die verworfene Eingabe", () => {
       setup([slide("a"), slide("b")]);
       typeUrl("slide-image-url", "kaputt");

@@ -32,6 +32,8 @@ export interface ImageFieldProps {
   hint: string;
   image: SlideImage | undefined;
   onPick: () => void;
+  /** Beschriftung der leeren Kachel; Vorgabe „Bild wählen“. */
+  pickLabel?: string;
   onClear?: () => void;
   onAltChange?: (alt: string) => void;
   /** Eine geprüfte Adresse, oder `""`, wenn das Feld geleert wurde. */
@@ -120,6 +122,7 @@ export function ImageField({
   hint,
   image,
   onPick,
+  pickLabel = "Bild wählen",
   onClear,
   onAltChange,
   onUrlChange,
@@ -140,7 +143,7 @@ export function ImageField({
           data-testid={`${testId}-pick`}
           onClick={onPick}
         >
-          Bild wählen
+          {pickLabel}
         </button>
       ) : (
         <div className="man-se__thumb-row">

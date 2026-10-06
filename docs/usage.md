@@ -12,9 +12,9 @@
    selbst.
 4. Klicken Sie über der Liste auf **Neu +** und wählen Sie **Folie**.
 5. Klicken Sie unter **Bild oder Video** auf die gestrichelte Fläche **Bild
-   wählen** und wählen Sie das Bild aus der Mediathek — oder fügen Sie
-   darunter die Adresse eines Bildes oder Videos ein. Ohne Bild wird die Folie
-   nicht gezeigt.
+   oder Video wählen** und wählen Sie das Bild aus der Mediathek — oder fügen
+   Sie darunter die Adresse eines Bildes oder Videos ein. Ohne Bild wird die
+   Folie nicht gezeigt.
 6. Tragen Sie unter **Bildbeschreibung** ein, was zu sehen ist. Lassen Sie das
    Feld nur leer, wenn das Bild rein schmückend ist.
 7. Tragen Sie die **Überschrift** ein. Halten Sie sie kurz: bis etwa
@@ -81,13 +81,17 @@ fällt hinten weg.
 
 ## Ein Video als Bühne zeigen
 
-1. Legen Sie das Video an einem Ort ab, den alle Leser:innen ohne Anmeldung
-   abrufen können, und kopieren Sie seine Adresse. Sie muss mit `https://`
-   beginnen; MP4 (H.264) läuft in allen Browsern.
-2. Wählen Sie im Editor die Folie aus.
-3. Fügen Sie die Adresse unter **Oder Adresse eines Bildes oder Videos** ein.
-   Endet sie auf `.mp4`, `.webm` oder `.mov`, springt **Art** von selbst auf
-   **Video**; sonst stellen Sie es dort von Hand um.
+1. Wählen Sie im Editor die Folie aus.
+2. Klicken Sie unter **Bild oder Video** auf **Bild oder Video wählen** und
+   wählen Sie das Video aus der Mediathek. Videos tragen dort eine Marke mit
+   ihrem Format (etwa `MP4`). Übernommen wird die von Staffbase umgerechnete
+   Fassung — sie läuft in jedem Browser und ist meist deutlich kleiner als das
+   Original.
+3. Liegt das Video woanders: Fügen Sie stattdessen seine Adresse unter
+   **Oder Adresse eines Bildes oder Videos** ein. Sie muss mit `https://`
+   beginnen, und alle Leser:innen müssen das Video ohne Anmeldung abrufen
+   können. Endet sie auf `.mp4`, `.webm` oder `.mov`, springt **Art** von
+   selbst auf **Video**; sonst stellen Sie es dort von Hand um.
 4. Tragen Sie unter **Videobeschreibung** ein, was zu sehen ist, oder lassen
    Sie das Feld leer, wenn das Video rein schmückend ist.
 5. **Übernehmen**, speichern, in der Vorschau prüfen.
@@ -102,8 +106,8 @@ denn sie wird bei jedem Seitenaufruf geladen.
 1. Legen Sie einen hochkant zugeschnittenen Ausschnitt desselben Motivs in der
    Mediathek ab.
 2. Wählen Sie im Editor die betroffene Folie aus.
-3. Klicken Sie unter **Bild oder Video für Hochformat** auf **Bild wählen**
-   oder tragen Sie darunter eine Adresse ein.
+3. Klicken Sie unter **Bild oder Video für Hochformat** auf **Bild oder Video
+   wählen** oder tragen Sie darunter eine Adresse ein.
 4. **Übernehmen**, speichern, und in einem schmalen Fenster oder auf dem
    Telefon prüfen.
 

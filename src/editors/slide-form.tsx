@@ -72,6 +72,7 @@ export function SlideForm({ slide, onPatch, onPick }: SlideFormProps): ReactElem
         hint="Quer, mindestens 1920 px breit. Ohne Bild oder Video wird die Folie nicht gezeigt."
         image={image}
         onPick={() => onPick("image")}
+        pickLabel="Bild oder Video wählen"
         onAltChange={(alt) => onPatch({ image: { ...slide.image, alt } })}
         onUrlChange={(url) =>
           onPatch({ image: url === "" ? { url: "", alt: "" } : mediaFromUrl(image, url) })
@@ -85,6 +86,7 @@ export function SlideForm({ slide, onPatch, onPick }: SlideFormProps): ReactElem
         hint="Wird auf schmalen, stehenden Bildschirmen gezeigt. Ohne wird überall der Querzuschnitt verwendet."
         image={portrait}
         onPick={() => onPick("imagePortrait")}
+        pickLabel="Bild oder Video wählen"
         onClear={() => onPatch({ imagePortrait: undefined })}
         onAltChange={(alt) =>
           onPatch({ imagePortrait: portrait === undefined ? undefined : { ...portrait, alt } })
