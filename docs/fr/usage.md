@@ -11,9 +11,10 @@
 3. Ouvrez les paramètres du widget. L’éditeur s’ouvre depuis
    lui-même. 
 4. Cliquez sur **Nouveau + ** au-dessus de la liste et sélectionnez **Diapositive**. 
-5. Sous **Image**, cliquez sur la zone en tirets **Sélectionner l’image** et
-   Sélectionnez l’image dans la bibliothèque multimédia. Sans image, la diapositive ne le fera pas
-   montré. 
+5. Sous **Image ou Vidéo**, cliquez sur la zone en pointillés **Image
+   ou sélectionner vidéo** et sélectionner l’image dans la bibliothèque média — ou ajouter
+   en dessous, entrez l’adresse d’une image ou d’une vidéo. Sans image, le
+   Diapositive non montrée. 
 6. Sous **Description de l’image**, saisissez ce qui peut être vu. Quittez le
    Champ blanc uniquement si l’image est purement décorative. 
 7. Entrez le **titre**. Restez court : jusqu’à environ
@@ -78,12 +79,35 @@ L’entrée compte comme **un** dans la liste, mais comporte plusieurs diapositi
 Au total, la scène ne montre jamais plus de huit diapositives ; tout ce qui est au-delà de cela 
 s’éloigne à l’arrière. 
 
+## Montrez une vidéo comme scène
+
+1. Dans l’éditeur, sélectionnez la diapositive. 
+2. Sous **Image ou Vidéo**, cliquez sur **Choisir Image ou Vidéo** et
+   Sélectionnez la vidéo dans la bibliothèque média. Les vidéos y portent une marque
+   (par exemple « MP4 »). La conversion
+   Socket — il fonctionne dans n’importe quel navigateur et est généralement beaucoup plus petit que le
+   Original. 
+3. Si la vidéo est ailleurs : coller son adresse sous
+   **Ou l’adresse d’une image ou d’une vidéo**. Elle doit commencer par « https:// »
+   et tous les lecteurs doivent accéder à la vidéo sans s’inscrire
+   . Si cela se termine par « .mp4 », « .webm » ou « .mov », **Art** saute de
+   même sur **Vidéo** ; sinon, vous le modifierez à la main là-bas. 
+4. Entrer ce qui peut être vu sous **Description vidéo** ou sortir
+   Vide la boîte si la vidéo est purement décorative. 
+5. **Postuler**, sauvegarder, enregistrer en aperçu. 
+
+La vidéo tourne silencieusement et en boucle, et seulement tant que son glissement est devant
+. Si vous avez réglé moins de mouvement dans le système, vous verrez votre première image
+. Gardez le fichier petit — quelques mégaoctets pendant quelques secondes — 
+car il est chargé à chaque fois que la page est consultée. 
+
 ## Stocker une image pour le format portrait
 
 1. Placer une section verticale recadrée du même motif dans le
    Bibliothèque médiatique. 
 2. Dans l’éditeur, sélectionnez la diapositive concernée. 
-3. Sous **Image pour le format portrait**, cliquez sur **Choisir image**. 
+3. Sous **Image ou Vidéo pour Portrait** cliquez **Image ou Vidéo
+   ou saisissez une adresse ci-dessous. 
 4. **Applique**, sauvegardez et sauvegardez dans une fenêtre étroite ou sur le
    Vérifie le téléphone. 
 

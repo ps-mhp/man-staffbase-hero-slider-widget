@@ -11,9 +11,10 @@
 3. Abra as configurações do widget. O editor abre a partir de
    ele mesmo. 
 4. Clique em **Novo + ** acima da lista e selecione **Slide**. 
-5. Em **Image**, clique na área tracejada **Select Image** e
-   selecione a imagem da biblioteca de mídia. Sem uma imagem, o slide não será
-   mostrado. 
+5. Em **Imagem ou Vídeo**, clique na área tracejada **Imagem
+   ou selecione vídeo** e selecione a imagem da biblioteca de mídia — ou adicione
+   abaixo dele, insira o endereço de uma imagem ou vídeo. Sem uma imagem, o
+   Slide não mostrado. 
 6. Em **Descrição da imagem**, insira o que pode ser visto. Deixe o
    Campo em branco somente se a imagem for puramente decorativa. 
 7. Insira o **título**. Mantenha breve: até cerca de
@@ -78,12 +79,35 @@ A entrada conta como **um** na lista, mas vem com vários slides.
 No total, o palco nunca mostra mais de oito slides; qualquer coisa além disso 
 cai para trás. 
 
+## Mostre um vídeo como palco
+
+1. No editor, selecione o slide. 
+2. Em **Imagem ou Vídeo**, clique em **Escolher Imagem ou Vídeo** e
+   Selecione o vídeo da biblioteca de mídia. Os vídeos carregam uma marca ali
+   (por exemplo, 'MP4'). O formato convertido
+   Soquete — ele roda em qualquer navegador e geralmente é muito menor que o
+   Original. 
+3. Se o vídeo estiver em outro lugar: Cole seu endereço sob
+   **Ou endereço de uma imagem ou vídeo**. Deve começar com 'https://'
+   e todos os leitores devem acessar o vídeo sem se cadastrar
+   . Se terminar em '.mp4', '.webm' ou '.mov', **Art** salta de
+   até mesmo em **Vídeo**; caso contrário, você vai mudar manualmente ali. 
+4. Insira o que pode ser visto em **Descrição do vídeo** ou saia
+   Deixe a caixa em branco se o vídeo for puramente decorativo. 
+5. **Candidate-se**, salve, prévia de check-in. 
+
+O vídeo roda silenciosamente e em loop, e só enquanto o slide estiver à frente
+. Se você definiu menos movimento no sistema, verá sua primeira imagem
+. Mantenha o arquivo pequeno — alguns megabytes por alguns segundos — 
+porque ele é carregado toda vez que a página é acessada. 
+
 ## Armazenar uma imagem para formato retrato
 
 1. Colocar uma seção vertical recortada do mesmo motivo no
    Biblioteca de mídia. 
 2. No editor, selecione o slide afetado. 
-3. Em **Imagem para formato retrato**, clique em **Escolher imagem**. 
+3. Em **Imagem ou Vídeo para Retrato** clique **Imagem ou Vídeo
+   ou insira um endereço abaixo. 
 4. **Aplicar**, salvar e salvar em uma janela estreita ou no
    Olhe o telefone. 
 

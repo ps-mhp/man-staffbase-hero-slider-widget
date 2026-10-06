@@ -4,7 +4,17 @@
 
 Resposta: O slide está sem a imagem. Slides sem imagem não são mostrados — um
 uma área escura e vazia seria indistinguível de um erro na página. 
-Abra o editor e selecione uma imagem em **Imagem**. 
+Abra o editor e selecione uma imagem em **Imagem ou Vídeo**
+Ou digite um endereço. 
+
+**Pergunta:** Eu digitei um endereço em vídeo, mas o slide só mostra
+uma superfície escura. 
+
+Resposta: Na maioria das vezes, o vídeo não está disponível sem registro, ou **Arte** é escrita
+para **Image** porque o endereço não possui extensão. Abra o endereço em
+Uma janela privada do navegador: se não rodar lá, o
+Leitores não entendem. Uma mensagem logo abaixo do campo significa que o endereço
+não foi adotado — deve começar com 'https://'. 
 
 **Pergunta:** Eu coloquei uma etiqueta para o botão, mas
 ela não aparece. 

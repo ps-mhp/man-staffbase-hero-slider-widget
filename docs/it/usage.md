@@ -11,9 +11,10 @@
 3. Apri le impostazioni del widget. L'editor si apre da
    se stesso. 
 4. Clicca su **Nuovo + ** sopra la lista e seleziona **Slide**. 
-5. Sotto **Immagine**, clicca sull'area tratteggiata **Seleziona Immagine** e
-   Seleziona l'immagine dalla libreria multimediale. Senza un'immagine, la diapositiva non
-   mostrato. 
+5. Sotto **Immagine o Video**, clicca sull'area tratteggiata **Immagine
+   oppure seleziona video** e seleziona l'immagine dalla libreria multimediale — oppure aggiungi
+   Sotto di essa, inserisci l'indirizzo di un'immagine o di un video. Senza un'immagine, il
+   Diapositiva non mostrata. 
 6. Sotto **Descrizione immagine**, inserisci ciò che si può vedere. Lascia il
    Campo vuoto solo se l'immagine è puramente decorativa. 
 7. Inserisci la **intestazione**. Tieni breve: fino a circa
@@ -78,12 +79,35 @@ La voce conta come **uno** nella lista, ma viene accompagnata da diverse diaposi
 In totale, il palco non mostra mai più di otto diapositive; tutto ciò che va oltre 
 cade dietro. 
 
+## Mostra un video come palco
+
+1. Nell'editor, seleziona la diapositiva. 
+2. Sotto **Immagine o Video**, clicca su **Scegli Immagine o Video** e
+   Seleziona il video dalla media library. I video portano un marchio lì
+   (ad esempio 'MP4'). Il formato convertito
+   Socket — funziona in qualsiasi browser ed è solitamente molto più piccolo del
+   Originale. 
+3. Se il video si trova altrove: incolla il suo indirizzo sotto
+   **O indirizzo di un'immagine o di un video**. Deve iniziare con 'https://'
+   e tutti i lettori devono accedere al video senza registrarsi
+   . Se finisce in '.mp4', '.webm' o '.mov', **Art** salta da
+   anche su **Video**; altrimenti lo cambierai lì a mano. 
+4. Inserisci ciò che può essere visto sotto **Descrizione del video** o esci
+   Svuota la scatola se il video è puramente decorativo. 
+5. **Candidati**, salva, check-in anteprima. 
+
+Il video gira silenzioso e in loop, e solo finché la slitta è davanti
+. Se hai impostato meno movimento nel sistema, vedrai la tua prima immagine
+. Tieni il file piccolo — qualche megabyte per qualche secondo — 
+perché viene caricato ogni volta che la pagina è accessibile. 
+
 ## Conserva un'immagine per il formato verticale
 
 1. Posizionare una sezione ritagliata verticale dello stesso motivo nel
    Biblioteca multimediale. 
 2. Nell'editor, seleziona la slide interessata. 
-3. Sotto **Immagine per il formato ritratto**, clicca su **Scegli immagine**. 
+3. Sotto **Immagine o Video per Ritratto** clicca **Immagine o Video
+   oppure inserisci un indirizzo qui sotto. 
 4. **Applica**, salva e salva in una finestra stretta o sul
    Controlla il telefono. 
 

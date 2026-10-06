@@ -23,9 +23,11 @@ Kanaaltoegang telt mee met alle dia's die hij bijdraagt.
 
 | Veld | Beschrijving |
 | --- | --- |
-| Afbeelding | Verplicht. Landschap, minstens 1920 px breed. Zonder afbeelding wordt de dia niet getoond. |
-| Afbeeldingsbeschrijving | Wat er op de foto te zien is. Laat alleen leeg voor puur decoratieve afbeeldingen — schermlezers lezen dit veld. |
-| Afbeelding voor portretformaat | Optioneel. Getoond op smalle, stilstaande schermen. Als het ontbreekt, wordt de landschapsbijsnijding overal gebruikt. |
+| Afbeelding of video | Verplicht. Uit de mediabibliotheek of via een adres ('https://...'). Landschap, minstens 1920 px breed. Zonder afbeelding of video wordt de dia niet getoond. |
+| Adres | In plaats van de mediabibliotheek: het 'https'-adres van een afbeelding of video. Andere adressen worden niet gebruikt. |
+| Type | Afbeelding of video. Sets aan het einde van het adres zelf ('.mp4', '.webm', '.mov' zijn video's); alleen voor adressen zonder een afsluiting met de hand. |
+| Afbeelding of videobeschrijving | Wat te zien. Laat alleen leeg voor puur decoratieve afbeeldingen en video's — schermlezers lezen dit veld. |
+| Afbeelding of video voor portretmodus | Optioneel. Getoond op smalle, stilstaande schermen. Als het ontbreekt, wordt de landschapsbijsnijding overal gebruikt. |
 | Kop | Houd het kort: tot ongeveer 24 tekens, het blijft enkelregelig. |
 | Subregel | Optioneel, één of twee regels. |
 | Knop | Optioneel. Verschijnt alleen als het bijschrift en de bestemming zijn ingevuld met de tekst. Maximaal één per dia. |

@@ -23,9 +23,11 @@ Channel entry counts with all slides he contributes.
 
 | Field | Description |
 | --- | --- |
-| Image | Mandatory. Landscape, at least 1920 px wide. Without a picture, the slide will not be shown. |
-| Image description | What can be seen in the picture. Only leave blank for purely decorative images — screen readers read this field. |
-| Image for portrait format | Optional. Shown on narrow, stationary screens. If it is missing, the landscape crop is used everywhere. |
+| Image or video | Mandatory. From the media library or via an address ('https://...'). Landscape, at least 1920 px wide. Without an image or video, the slide will not be shown. |
+| Address | Instead of the media library: the 'https' address of an image or video. Other addresses will not be used. |
+| Type | Image or video. Sets at the end of the address itself ('.mp4', '.webm', '.mov' are videos); only for addresses without an ending by hand. |
+| Image or video description | What to see. Only leave blank for purely decorative images and videos — screen readers read this field. |
+| Image or video for portrait mode | Optional. Shown on narrow, stationary screens. If it is missing, the landscape crop is used everywhere. |
 | Heading | Keep it short: up to about 24 characters, it remains single-line. |
 | Subline | Optional, one or two lines. |
 | Button | Optional. Appears only if the caption and destination are filled. At most one per slide. |

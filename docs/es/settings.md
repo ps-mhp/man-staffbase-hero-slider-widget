@@ -23,9 +23,11 @@ La entrada del canal cuenta con todas las diapositivas que él contribuye.
 
 | Campo | Descripción |
 | --- | --- |
-| Imagen | Obligatorio. Paisaje, al menos 1920 px de ancho. Sin imagen, la diapositiva no se mostrará. |
-| Descripción de la imagen | Lo que se puede ver en la imagen. Deja en blanco solo imágenes puramente decorativas — los lectores de pantalla leen este campo. |
-| Imagen para formato retrato | Opcional. Se muestra en pantallas estrechas y fijas. Si falta, el recorte de paisaje se utiliza en todas partes. |
+| Imagen o vídeo | Obligatorio. Desde la biblioteca de medios o mediante una dirección ('https://...'). Horizontal, al menos 1920 px de ancho. Sin imagen o vídeo, la diapositiva no se mostrará. |
+| Dirección | En lugar de la biblioteca multimedia: la dirección 'https' de una imagen o vídeo. No se utilizarán otras direcciones. |
+| Tipo | Imagen o vídeo. Los conjuntos al final de la dirección ('.mp4', '.webm', '.mov' son vídeos); solo para direcciones sin terminación hechas a mano. |
+| Descripción de imagen o vídeo | Qué ver. Deja en blanco solo imágenes y vídeos puramente decorativos — los lectores de pantalla leen este campo. |
+| Imagen o vídeo para modo retrato | Opcional. Se muestra en pantallas estrechas y fijas. Si falta, el recorte de paisaje se utiliza en todas partes. |
 | Encabezado | Mantenlo corto: hasta unos 24 caracteres, sigue siendo de una sola línea. |
 | Sublínea | Opcional, una o dos líneas. |
 | Botón | Opcional. Solo aparece si el pie de foto y el destino están llenos. Como mucho uno por diapositiva. |

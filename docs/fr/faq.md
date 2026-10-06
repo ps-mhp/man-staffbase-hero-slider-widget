@@ -4,7 +4,17 @@
 
 Réponse : La diapositive manque de l’image. Les diapositives sans image ne sont pas affichées — un
 une zone sombre vide serait indiscernable d’une erreur sur la page. 
-Ouvre l’éditeur et sélectionne une image sous **Image**. 
+Ouvrez l’éditeur et sélectionnez une image sous **Image ou Vidéo**
+Ou saisit une adresse. 
+
+**Question :** J’ai saisi une adresse vidéo, mais la diapositive ne s’affiche que
+une surface sombre. 
+
+Réponse : La plupart du temps, la vidéo n’est pas disponible sans inscription, ou bien **Art** est écrit
+à **Image** car l’adresse n’a pas d’extension. Ouvrir l’adresse dans
+Une fenêtre de navigateur privée : si elle ne s’exécute pas là, le
+Les lecteurs ne le font pas. Un message juste en dessous du champ signifie que l’adresse
+n’a pas été adopté — il doit commencer par « https:// ». 
 
 **Question :** J’ai entré une étiquette pour le bouton, mais
 elle n’apparaît pas. 

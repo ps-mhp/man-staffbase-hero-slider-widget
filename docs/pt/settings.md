@@ -23,9 +23,11 @@ A entrada do canal conta com todos os slides que ele contribui.
 
 | Campo | Descrição |
 | --- | --- |
-| Imagem | Obrigatório. Paisagem, pelo menos 1920 px de largura. Sem foto, o slide não será exibido. |
-| Descrição da imagem | O que pode ser visto na imagem. Deixe em branco apenas para imagens puramente decorativas — leitores de tela leem este campo. |
-| Imagem para formato retrato | Opcional. Mostrada em telas estreitas e fixas. Se faltar, o corte da paisagem é usado em todos os lugares. |
+| Imagem ou vídeo | Obrigatório. Da biblioteca de mídia ou por meio de um endereço ('https://...'). Paisagem, com pelo menos 1920 px de largura. Sem imagem ou vídeo, o slide não será exibido. |
+| Endereço | Em vez da biblioteca de mídia: o endereço 'https' de uma imagem ou vídeo. Outros endereços não serão usados. |
+| Tipo | Imagem ou vídeo. Conjuntos no final do próprio endereço ('.mp4', '.webm', '.mov' são vídeos); apenas para endereços sem terminação feitos manualmente. |
+| Descrição da imagem ou vídeo | O que ver. Deixe em branco apenas para imagens e vídeos puramente decorativos — leitores de tela leem este campo. |
+| Imagem ou vídeo para modo retrato | Opcional. Mostrado em telas estreitas e fixas. Se estiver faltando, o corte paisagem é usado em todos os lugares. |
 | Título | Seja breve: até cerca de 24 caracteres, permanece com uma única linha. |
 | Sublinha | Opcional, uma ou duas linhas. |
 | Botão | Opcional. Aparece apenas se a legenda e o destino estiverem preenchidos. No máximo um por slide. |

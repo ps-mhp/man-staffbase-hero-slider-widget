@@ -4,7 +4,17 @@
 
 Antwoord: De dia mist de afbeelding. Dia's zonder afbeelding worden niet getoond — een
 Een leeg donker gebied zou niet te onderscheiden zijn van een fout op de pagina. 
-Open de editor en selecteer een afbeelding onder **Afbeelding**. 
+Open de editor en selecteer een afbeelding onder **Afbeelding of Video**
+Of voer een adres in. 
+
+**Vraag:** Ik heb een video-adres ingevoerd, maar de dia toont alleen
+een donker oppervlak. 
+
+Antwoord: Meestal is de video niet beschikbaar zonder registratie, of is **Art** geschreven
+naar **Afbeelding** omdat het adres geen extensie heeft. Open het adres in
+Een privébrowservenster: als het daar niet draait, dan de
+Lezers niet. Een bericht direct onder het veld betekent dat het adres
+niet is aangenomen — het moet beginnen met 'https://'. 
 
 **Vraag:** Ik heb een label voor de knop ingevoerd, maar
 ze verschijnt niet. 

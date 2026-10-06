@@ -11,9 +11,10 @@
 3. Abre la configuración del widget. El editor se abre desde
    él mismo. 
 4. Haz clic en **Nuevo + ** encima de la lista y selecciona **Deslizar**. 
-5. En **Imagen**, haz clic en el área discontinua **Seleccionar Imagen** y
-   Selecciona la imagen de la biblioteca multimedia. Sin una imagen, la diapositiva no lo hará
-   mostrado. 
+5. En **Imagen o Vídeo**, haz clic en el área discontinua **Imagen
+   O selecciona vídeo** y selecciona la imagen de la biblioteca multimedia — o añade
+   debajo de ella, introduce la dirección de una imagen o vídeo. Sin imagen, el
+   Diapositiva no mostrada. 
 6. En **Descripción de la imagen**, introduce lo que se puede ver. Deja el
    Campo en blanco solo si la imagen es puramente decorativa. 
 7. Introduce el **encabezado**. Mantenlo corto: hasta aproximadamente
@@ -78,12 +79,35 @@ La entrada cuenta como **una** en la lista, pero viene con varias diapositivas.
 En total, el escenario nunca muestra más de ocho diapositivas; nada más allá de eso 
 se aleja al fondo. 
 
+## Mostrar un vídeo como escenario
+
+1. En el editor, selecciona la diapositiva. 
+2. En **Imagen o Vídeo**, haz clic en **Elige Imagen o Vídeo** y
+   Selecciona el vídeo de la biblioteca multimedia. Los vídeos llevan una marca ahí
+   (por ejemplo, 'MP4'). El formato convertido
+   Socket — funciona en cualquier navegador y suele ser mucho más pequeño que el
+   Original. 
+3. Si el vídeo está en otro sitio: Pega su dirección bajo
+   **O dirección de una imagen o vídeo**. Debe empezar por 'https://'
+   y todos los lectores deben acceder al vídeo sin registrarse
+   . Si termina en '.mp4', '.webm' o '.mov', **Art** salta de
+   incluso en **Vídeo**; de lo contrario, lo cambiarás ahí a mano. 
+4. Introduce lo que se puede ver en **Descripción del vídeo** o vete
+   Vacía la caja si el vídeo es puramente decorativo. 
+5. **Solicitar**, guardar, revisar previsualización. 
+
+El vídeo se emite en silencio y en bucle, y solo mientras su deslizamiento esté delante
+. Si tienes menos movimiento en el sistema, verás tu primera imagen
+. Mantén el archivo pequeño — unos pocos megabytes durante unos segundos — 
+porque se carga cada vez que se accede a la página. 
+
 ## Guardar una imagen para formato retrato
 
 1. Colocar una sección vertical recortada del mismo motivo en el
    Biblioteca multimedia. 
 2. En el editor, selecciona la diapositiva afectada. 
-3. En **Imagen para formato vertical**, haz clic en **Elegir imagen**. 
+3. En **Imagen o vídeo para retrato** haz clic **Imagen o vídeo
+   o introduce una dirección a continuación. 
 4. **Aplicar**, guardar y guardar en una ventana estrecha o en el
    Mira el teléfono. 
 

@@ -11,9 +11,10 @@
 3. Otwórz ustawienia widżetu. Edytor otwiera się od
    siebie. 
 4. Kliknij **Nowy + ** nad listą i wybierz **Slajd**. 
-5. W sekcji **Obraz** kliknij na przerywany obszar **Wybierz Obraz** oraz
-   Wybierz obraz z biblioteki multimedialnej. Bez obrazu slajd nie będzie dostępny
-   pokazano. 
+5. W sekcji **Obraz lub Wideo** kliknij na przerywany obszar **Obraz
+   lub wybierz wideo** i wybierz obraz z biblioteki multimediów — albo dodaj
+   poniżej wpisz adres obrazu lub filmu. Bez obrazu
+   Slajd nie pokazany. 
 6. W sekcji **Opis obrazu** wpisz to, co można zobaczyć. Opuszczaj
    Pole puste tylko wtedy, gdy obraz jest czysto dekoracyjny. 
 7. Wprowadź **nagłówek**. Trzymaj się krótkiego: mniej więcej do około
@@ -78,12 +79,35 @@ Wpis liczy się jako **jeden** na liście, ale zawiera kilka slajdów.
 Łącznie scena nigdy nie pokazuje więcej niż osiem slajdów; wszystko poza tym 
 opada z tyłu. 
 
+## Pokaż wideo jako scenę
+
+1. W edytorze wybierz slajd. 
+2. W sekcji **Obraz lub Wideo** kliknij **Wybierz Obraz lub Wideo** oraz
+   Wybierz wideo z biblioteki multimedialnej. Filmy mają tam markę
+   (np. 'MP4'). Przekształcony
+   Socket — działa w każdej przeglądarce i zwykle jest znacznie mniejszy niż
+   Oryginalne. 
+3. Jeśli wideo jest gdzie indziej: Wklej jego adres pod
+   **Lub adres obrazu lub filmu**. Musi zaczynać się od 'https://'
+   a wszyscy czytelnicy muszą mieć dostęp do filmu bez rejestracji
+   . Jeśli kończy się na '.mp4', '.webm' lub '.mov', **Art** przeskakuje z
+   nawet na **Wideo**; w przeciwnym razie zmienisz to tam ręcznie. 
+4. Wpisz to, co można zobaczyć w **Opis wideo** lub odejdź
+   Pusto pole wyczyść, jeśli wideo jest wyłącznie dekoracyjne. 
+5. **Zastosuj**, zapisz, sprawdź w podglądzie. 
+
+Wideo płynie cicho i w pętli, i tylko tak długo, jak slajd jest przed nim
+. Jeśli ustawiłeś mniej ruchu w systemie, zobaczysz swój pierwszy obraz
+. Trzymaj plik mały — kilka megabajtów na kilka sekund — 
+ponieważ jest ładowany za każdym razem, gdy strona jest dostępna. 
+
 ## Zapisz obraz w formacie portretowym
 
 1. Umieść pionowo przycięty fragment tego samego motywu w
    Biblioteka mediów. 
 2. W edytorze wybierz dotknięty slajd. 
-3. W sekcji **Obraz w formacie portretowym** kliknij **Wybierz obraz**. 
+3. W sekcji **Obraz lub Wideo do portretu** kliknij **Obraz lub Wideo
+   lub wpisz adres poniżej. 
 4. **Zastosowaj**, zapisz i zapisz w wąskim oknie lub na
    Sprawdź telefon. 
 

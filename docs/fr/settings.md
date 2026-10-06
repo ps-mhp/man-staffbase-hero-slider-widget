@@ -23,9 +23,11 @@ Les entrées sur la chaîne comptent avec toutes les diapositives qu’il contri
 
 | Champ | Description |
 | --- | --- |
-| Image | Obligatoire. Paysage, au moins 1920 px de large. Sans image, la diapositive ne sera pas montrée. |
-| Description de l’image | Ce que l’on peut voir sur l’image. Ne laissez vide que pour les images purement décoratives — les lecteurs d’écran lisent ce champ. |
-| Image pour format portrait | Optionnel. Affichée sur des écrans étroits et fixes. Si elle manque, le recadrage paysage est utilisé partout. |
+| Image ou vidéo | Obligatoire. Depuis la bibliothèque média ou via une adresse ('https://...'). Paysage, au moins 1920 px de large. Sans image ou vidéo, la diapositive ne sera pas affichée. |
+| Adresse | Au lieu de la bibliothèque média : l’adresse 'https' d’une image ou d’une vidéo. D’autres adresses ne seront pas utilisées. |
+| Type | Image ou vidéo. Les ensembles situés à la fin de l’adresse elle-même ('.mp4', '.webm', '.mov' sont des vidéos) ; uniquement pour les adresses sans terminaison écrites à la main. |
+| Description de l’image ou de la vidéo | Que voir. Ne laissez blanc que pour les images et vidéos purement décoratives — les lecteurs d’écran lisent ce champ. |
+| Image ou vidéo pour le mode portrait | Optionnel. Affiché sur des écrans étroits et fixes. S’il manque, le recadrage paysage est utilisé partout. |
 | Titre | Restez court : jusqu’à environ 24 caractères, il reste une ligne unique. |
 | Sous-ligne | Optionnel, une ou deux lignes. |
 | Bouton | Optionnel. N’apparaît que si la légende et la destination sont remplies. Au plus une par diapositive. |

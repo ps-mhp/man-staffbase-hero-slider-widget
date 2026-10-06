@@ -11,9 +11,10 @@
 3. Open de instellingen van de widget. De editor opent vanuit
    zichzelf. 
 4. Klik op **Nieuw + ** boven de lijst en selecteer **Slide**. 
-5. Klik onder **Afbeelding** op het stippelgebied **Selecteer Afbeelding** en
-   Selecteer de afbeelding uit de mediabibliotheek. Zonder afbeelding zal de dia dat niet doen
-   getoond. 
+5. Klik onder **Afbeelding of Video** op het stippelgebied **Afbeelding
+   Of selecteer video** en selecteer de afbeelding uit de mediabibliotheek — of voeg toe
+   Daaronder voer je het adres van een afbeelding of video in. Zonder afbeelding is de
+   Dia niet getoond. 
 6. Onder **Afbeeldingsbeschrijving** voer in wat zichtbaar is. Laat de
    Veld leeg alleen als de afbeelding puur decoratief is. 
 7. Voer de **kop** in. Houd het kort: tot ongeveer
@@ -78,12 +79,35 @@ De vermelding telt als **één** in de lijst, maar bevat meerdere dia's.
 In totaal toont het podium nooit meer dan acht dia's; alles daarboven 
 valt achterin weg. 
 
+## Laat een video zien als podium
+
+1. Selecteer in de editor de dia. 
+2. Klik onder **Afbeelding of Video** op **Kies Afbeelding of Video** en
+   Selecteer de video uit de mediabibliotheek. Video's dragen daar een merk
+   formaat (bijv. 'MP4'). De geconverteerde
+   Socket — het draait in elke browser en is meestal veel kleiner dan de
+   Origineel. 
+3. Als de video ergens anders staat: plak het adres eronder
+   **Of adres van een afbeelding of video**. Het moet beginnen met 'https://'
+   en alle lezers moeten de video zonder registratie bekijken
+   . Als het eindigt op '.mp4', '.webm' of '.mov', springt **Art** van
+   zelfs op **Video**; anders verander je het daar met de hand. 
+4. Voer in wat te zien is onder **Videobeschrijving** of ga weg
+   Maak de doos leeg als de video puur decoratief is. 
+5. **Aanbrengen**, opslaan, controleren in de preview. 
+
+De video draait stil en in een lus, en alleen zolang de slide voor de deur is
+. Als je minder beweging in het systeem hebt ingesteld, zie je je eerste afbeelding
+. Houd het bestand klein — een paar megabytes voor een paar seconden — 
+omdat het elke keer wordt geladen wanneer de pagina wordt geopend. 
+
 ## Sla een afbeelding op voor portretformaat
 
 1. Plaats een rechtop, bijgesneden sectie van hetzelfde motief in de
    Mediabibliotheek. 
 2. Selecteer in de editor de betreffende dia. 
-3. Klik onder **Afbeelding voor portretformaat** op **Kies afbeelding**. 
+3. Klik onder **Afbeelding of Video voor Portret** **Afbeelding of Video
+   of voer hieronder een adres in. 
 4. **Passen**, opslaan en opslaan in een klein venster of op de
    Check de telefoon. 
 

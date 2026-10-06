@@ -11,9 +11,10 @@
 3. Open the widget's settings. The editor opens from
    himself. 
 4. Click **New + ** above the list and select **Slide**. 
-5. Under **Image**, click on the dashed area **Select Image** and
-   select the image from the media library. Without an image, the slide will not
-   shown. 
+5. Under **Image or Video**, click on the dashed area **Image
+   or select video** and select the image from the media library — or add
+   below it, enter the address of an image or video. Without an image, the
+   Slide not shown. 
 6. Under **Image description**, enter what can be seen. Leave the
    Field blank only if the image is purely decorative. 
 7. Enter the **heading**. Keep it short: until about
@@ -78,12 +79,35 @@ The entry counts as **one** in the list, but comes with several slides.
 In total, the stage never shows more than eight slides; anything beyond that 
 falls away at the back. 
 
+## Show a video as a stage
+
+1. In the editor, select the slide. 
+2. Under **Image or Video**, click on **Choose Image or Video** and
+   select the video from the media library. Videos carry a brand there
+   format (e.g. 'MP4'). The converted
+   Socket — it runs in any browser and is usually much smaller than the
+   Original. 
+3. If the video is somewhere else: Paste its address under
+   **Or address of an image or video**. It must start with 'https://'
+   and all readers must access the video without registration
+   . If it ends in '.mp4', '.webm' or '.mov', **Art** jumps from
+   even on **Video**; otherwise you will change it there by hand. 
+4. Enter what can be seen under **Video description** or leave
+   Blank the box if the video is purely decorative. 
+5. **Apply**, save, check in preview. 
+
+The video runs silently and in a loop, and only as long as its slide is in front
+. If you have set less movement in the system, you will see your first image
+. Keep the file small — a few megabytes for a few seconds — 
+because it is loaded every time the page is accessed. 
+
 ## Store an image for portrait format
 
 1. Place an upright cropped section of the same motif in the
    Media library. 
 2. In the editor, select the affected slide. 
-3. Under **Image for portrait format**, click on **Choose image**. 
+3. Under **Image or Video for Portrait** click **Image or Video
+   or enter an address below. 
 4. **Apply**, save, and save in a narrow window or on the
    Check the phone. 
 

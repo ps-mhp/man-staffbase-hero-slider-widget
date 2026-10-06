@@ -23,9 +23,11 @@ L'inserimento del canale conta con tutte le slide che lui contribue.
 
 | Campo | Descrizione |
 | --- | --- |
-| Immagine | Obbligatoria. Paesaggio, almeno 1920 px di larghezza. Senza una foto, la diapositiva non sarà mostrata. |
-| Descrizione dell'immagine | Cosa si può vedere nell'immagine. Lascia spazio vuoto solo per immagini puramente decorative — i lettori di schermo leggono questo campo. |
-| Immagine per formato verticale | Opzionale. Mostrata su schermi stretti e fissi. Se manca, il ritaglio paesaggistico viene usato ovunque. |
+| Immagine o video | Obbligatorio. Dalla media library o tramite un indirizzo ('https://...'). Paesaggio, almeno 1920 px di larghezza. Senza immagine o video, la diapositiva non sarà mostrata. |
+| Indirizzo | Al posto della media library: l'indirizzo 'https' di un'immagine o di un video. Non verranno utilizzati altri indirizzi. |
+| Tipo | Immagine o video. Gli insiemi alla fine dell'indirizzo stesso ('.mp4', '.webm', '.mov' sono video); solo per indirizzi senza una terminazione fatti a mano. |
+| Descrizione dell'immagine o del video | Cosa vedere. Lascia spazio solo per immagini e video puramente decorativi — i lettori di schermo leggono questo campo. |
+| Immagine o video per modalità verticale | Opzionale. Mostrato su schermi stretti e fissi. Se manca, il ritaglio paesaggistico viene usato ovunque. |
 | Intestazione | Tienilo breve: fino a circa 24 caratteri, rimane a una sola riga. |
 | Sottolinea | Opzionale, una o due linee. |
 | Pulsante | Opzionale. Appare solo se la didascalia e la destinazione sono occupate. Al massimo una per diapositiva. |

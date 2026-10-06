@@ -4,7 +4,17 @@
 
 Risposta: La diapositiva manca dell'immagine. Le diapositive senza immagine non vengono mostrate — una
 un'area vuota e scura sarebbe indistinguibile da un errore sulla pagina. 
-Apri l'editor e seleziona un'immagine sotto **Immagine**. 
+Apri l'editor e seleziona un'immagine sotto **Immagine o Video**
+oppure inserisci un indirizzo. 
+
+**Domanda:** Ho inserito un indirizzo video, ma la diapositiva mostra solo
+una superficie scura. 
+
+Risposta: La maggior parte delle volte, il video non è disponibile senza registrazione, oppure viene scritto **Art**
+a **Image** perché l'indirizzo non ha un'estensione. Apri l'indirizzo in
+Una finestra privata del browser: se non viene eseguita lì, il
+I lettori no. Un messaggio direttamente sotto il campo significa che l'indirizzo
+non è stata adottata — deve iniziare con 'https://'. 
 
 **Domanda:** Ho inserito un'etichetta per il pulsante, ma
 non appare. 

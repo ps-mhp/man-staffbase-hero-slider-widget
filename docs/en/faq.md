@@ -4,7 +4,17 @@
 
 Answer: The slide is missing the image. Slides without an image are not shown — a
 empty dark area would be indistinguishable from a mistake on the page. 
-Open the editor and select an image under **Image**. 
+Open the editor and select an image under **Image or Video**
+or enter an address. 
+
+**Question:** I have entered a video address, but the slide only shows
+a dark surface. 
+
+Answer: Most of the time, the video is not available without registration, or **Art** is written
+to **Image** because the address does not have an extension. Open the address in
+a private browser window: if it doesn't run there, the
+Readers don't. A message directly below the field means that the address
+has not been adopted — it must begin with 'https://'. 
 
 **Question:** I have entered a label for the button, but
 she does not appear. 

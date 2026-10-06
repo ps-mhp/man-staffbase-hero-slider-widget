@@ -4,7 +4,17 @@
 
 Odpowiedź: Slajd nie zawiera obrazu. Slajdy bez obrazu nie są wyświetlane —
 Pusty, ciemny obszar byłby nie do odróżnienia od błędu na stronie. 
-Otwórz edytor i wybierz obraz w **Obraz**. 
+Otwórz edytor i wybierz obraz w sekcji **Obraz lub Wideo**
+albo wpisz adres. 
+
+**Pytanie:** Wpisałem adres wideo, ale slajd pokazuje tylko
+ciemna powierzchnia. 
+
+Odpowiedź: Najczęściej wideo nie jest dostępne bez rejestracji lub **Sztuka** jest napisana
+do **Image**, ponieważ adres nie ma rozszerzenia. Otwórz adres w
+Prywatne okno przeglądarki: jeśli tam nie działa,
+Czytelnicy nie. Wiadomość bezpośrednio pod polem oznacza, że adres
+nie został przyjęty — musi zaczynać się od "https://". 
 
 **Pytanie:** Wprowadziłem etykietę do przycisku, ale
 nie pojawia się. 

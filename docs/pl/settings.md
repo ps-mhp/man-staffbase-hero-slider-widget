@@ -23,9 +23,11 @@ Wejście kanału liczy się we wszystkich slajdach, które przesyła.
 
 | Pole | Opis |
 | --- | --- |
-| Obraz | Obowiązkowe. Pejzaż, co najmniej 1920 px szerokości. Bez zdjęcia slajd nie będzie wyświetlany. |
-| Opis obrazu | Co można zobaczyć na zdjęciu. Zostawić puste tylko dla czysto dekoracyjnych obrazów — czytniki ekranu odczytują to pole. |
-| Obraz do formatu portretowego | Opcjonalne. Wyświetlane na wąskich, nieruchomych ekranach. Jeśli go brakuje, kadrowanie poziome jest używane wszędzie. |
+| Obraz lub wideo | Obowiązkowe. Z biblioteki mediów lub przez adres ("https://..."). Pejzaż, co najmniej 1920 px szerokości. Bez obrazu lub wideo slajd nie będzie wyświetlany. |
+| Adres | Zamiast biblioteki multimedialnej: adres 'https' obrazu lub filmu. Inne adresy nie będą używane. |
+| Wpisz | Obraz lub wideo. Zestawy na końcu samego adresu (".mp4", ".webm", ".mov" to filmy); tylko dla adresów bez zakończenia wykonane ręcznie. |
+| Opis obrazu lub wideo | Co zobaczyć. Zostawić puste tylko dla czysto dekoracyjnych obrazów i filmów — czytniki ekranu czytają to pole. |
+| Obraz lub wideo do trybu portretowego | Opcjonalne. Wyświetlane na wąskich, nieruchomych ekranach. Jeśli brakuje, kadrowanie poziome jest używane wszędzie. |
 | Nagłówek | Niech będzie krótki: do około 24 znaków pozostaje jednolinijkowy. |
 | Linia podrzędna | Opcjonalnie, jedna lub dwie linijki. |
 | Przycisk | Opcjonalne. Pojawia się tylko, jeśli podpis i miejsce docelowe są wypełnione. Maksymalnie jeden na slajd. |

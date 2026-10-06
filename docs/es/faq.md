@@ -4,7 +4,17 @@
 
 Respuesta: La diapositiva carece de la imagen. Las diapositivas sin imagen no se muestran — una
 Un área oscura y vacía sería indistinguible de un error en la página. 
-Abre el editor y selecciona una imagen bajo **Imagen**. 
+Abre el editor y selecciona una imagen bajo **Imagen o Vídeo**
+O introduce una dirección. 
+
+**Pregunta:** He introducido una dirección en vídeo, pero la diapositiva solo muestra
+una superficie oscura. 
+
+Respuesta: La mayoría de las veces, el vídeo no está disponible sin registro, o se escribe **Arte**
+a **Imagen** porque la dirección no tiene extensión. Abre la dirección en
+Una ventana privada del navegador: si no se ejecuta allí, el
+Los lectores no lo saben. Un mensaje justo debajo del campo significa que la dirección
+no ha sido adoptado — debe comenzar por 'https://'. 
 
 **Pregunta:** He introducido una etiqueta para el botón, pero
 no aparece. 
