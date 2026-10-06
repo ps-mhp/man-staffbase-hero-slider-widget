@@ -163,6 +163,28 @@ describe("parseHeroItems — Folien", () => {
     expect(items[0].image.width).toBeUndefined();
     expect(items[0].image.height).toBeUndefined();
   });
+
+  it("liest Videos als Bühnen- und Hochformat-Medium", () => {
+    const items = parseHeroItems(
+      JSON.stringify([
+        {
+          image: { url: "https://example.test/a.mp4", alt: "", kind: "video" },
+          imagePortrait: { url: "https://example.test/a-hoch.mp4", alt: "", kind: "video" },
+        },
+      ]),
+    ) as SlideItem[];
+
+    expect(items[0].image.kind).toBe("video");
+    expect(items[0].imagePortrait?.kind).toBe("video");
+  });
+
+  it("liest eine unbekannte Sorte als Bild", () => {
+    const items = parseHeroItems(
+      JSON.stringify([{ image: { url: "https://example.test/a.jpg", alt: "", kind: "3d" } }]),
+    ) as SlideItem[];
+
+    expect(items[0].image.kind).toBeUndefined();
+  });
 });
 
 describe("parseHeroItems — News-Beiträge", () => {
@@ -317,6 +339,19 @@ describe("serializeHeroItems", () => {
     expect(encoded).not.toContain("subline");
     expect(encoded).not.toContain("cta");
     expect(encoded).not.toContain("imagePortrait");
+  });
+
+  it("schreibt die Sorte nur bei Videos — Bilder bleiben, wie sie waren", () => {
+    const video = slideWith({
+      image: { url: "https://example.test/a.mp4", alt: "", kind: "video" },
+      imagePortrait: { url: "https://example.test/a-hoch.mp4", alt: "", kind: "video" },
+    });
+    const encoded = JSON.parse(serializeHeroItems([video, slideWith({ id: "b" })]));
+
+    expect(encoded[0].image.kind).toBe("video");
+    expect(encoded[0].imagePortrait.kind).toBe("video");
+    expect(serializeHeroItems([slideWith()])).not.toContain("kind");
+    expect(parseHeroItems(serializeHeroItems([video]))).toEqual([video]);
   });
 
   it("schreibt newTab nur, wenn es gesetzt ist", () => {

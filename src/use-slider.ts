@@ -57,6 +57,8 @@ export interface SliderState {
   stop: () => void;
   /** Meldet eine Wischgeste; gibt zurück, ob sie als solche gewertet wurde. */
   swipe: (deltaX: number) => boolean;
+  /** Bittet die Umgebung um weniger Bewegung? Dann laufen auch keine Videos. */
+  reducedMotion: boolean;
 }
 
 /**
@@ -130,7 +132,7 @@ export function useSlider({ count, delayMs = DEFAULT_AUTOPLAY_DELAY_MS }: UseSli
   const stop = useCallback(() => setStopped(true), []);
 
   return useMemo(
-    () => ({ index, playing, goTo, next, previous, setPaused, stop, swipe }),
-    [index, playing, goTo, next, previous, stop, swipe],
+    () => ({ index, playing, goTo, next, previous, setPaused, stop, swipe, reducedMotion }),
+    [index, playing, goTo, next, previous, stop, swipe, reducedMotion],
   );
 }

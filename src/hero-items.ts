@@ -30,7 +30,7 @@
 
 import { decodePayload, encodePayload, isPayload } from "@shared/payload";
 
-import { Slide, SlideCta, SlideImage, newSlideId } from "./slides-model";
+import { Slide, SlideCta, SlideImage, isVideo, newSlideId } from "./slides-model";
 
 export type HeroItemType = "slide" | "news-post" | "news-channel";
 
@@ -170,6 +170,9 @@ export const parseImage = (value: unknown): SlideImage | undefined => {
   const height = asPositiveNumber(value.height);
   if (width !== undefined) image.width = width;
   if (height !== undefined) image.height = height;
+  // Jede andere Sorte ist ein Bild: so zeigt eine Bühne aus einer neueren
+  // Fassung wenigstens das, was diese kennt.
+  if (value.kind === "video") image.kind = "video";
   return image;
 };
 
@@ -373,22 +376,29 @@ export function parseHeroItems(raw: string | null | undefined): HeroItem[] {
   return items;
 }
 
-const encodeSlideItem = (item: SlideItem): Record<string, unknown> => {
-  const image: Record<string, unknown> = { url: item.image.url, alt: item.image.alt };
-  if (item.image.width !== undefined) image.width = item.image.width;
-  if (item.image.height !== undefined) image.height = item.image.height;
+const encodeImage = (image: SlideImage): Record<string, unknown> => {
+  const out: Record<string, unknown> = { url: image.url, alt: image.alt };
+  if (image.width !== undefined) out.width = image.width;
+  if (image.height !== undefined) out.height = image.height;
+  // Nur Videos tragen eine Sorte: ein Bild bleibt Zeichen für Zeichen das,
+  // was frühere Fassungen geschrieben haben.
+  if (image.kind === "video") out.kind = "video";
+  return out;
+};
 
+const encodeSlideItem = (item: SlideItem): Record<string, unknown> => {
   // Unbekannte Felder zuerst, damit die bekannten sie bei Namensgleichheit
   // überschreiben und nicht umgekehrt.
   const out: Record<string, unknown> = {
     ...(item.unknown ?? {}),
     id: item.id,
-    image,
+    image: encodeImage(item.image),
     headline: item.headline,
   };
 
   if (item.imagePortrait !== undefined) {
-    out.imagePortrait = { url: item.imagePortrait.url, alt: item.imagePortrait.alt };
+    const { url, alt } = item.imagePortrait;
+    out.imagePortrait = isVideo(item.imagePortrait) ? { url, alt, kind: "video" } : { url, alt };
   }
   if (item.subline !== undefined && item.subline !== "") out.subline = item.subline;
   if (item.cta !== undefined) {
@@ -397,13 +407,6 @@ const encodeSlideItem = (item: SlideItem): Record<string, unknown> => {
         ? { label: item.cta.label, href: item.cta.href, newTab: true }
         : { label: item.cta.label, href: item.cta.href };
   }
-  return out;
-};
-
-const encodeImage = (image: SlideImage): Record<string, unknown> => {
-  const out: Record<string, unknown> = { url: image.url, alt: image.alt };
-  if (image.width !== undefined) out.width = image.width;
-  if (image.height !== undefined) out.height = image.height;
   return out;
 };
 

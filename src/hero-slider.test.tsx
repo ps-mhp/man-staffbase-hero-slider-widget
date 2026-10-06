@@ -121,6 +121,156 @@ describe("HeroSlider", () => {
     });
   });
 
+  describe("Video", () => {
+    const video = (id: string, extra: Partial<Slide> = {}): Slide =>
+      slide(id, {
+        image: { url: `https://example.test/${id}.mp4`, alt: "", kind: "video" },
+        ...extra,
+      });
+
+    /** Welche Videos gerade laufen — jsdom spielt nichts ab. */
+    let running: Set<HTMLMediaElement>;
+    let play: jest.SpyInstance;
+    let pause: jest.SpyInstance;
+    const originalMatchMedia = globalThis.matchMedia;
+
+    /** Lässt `matchMedia` genau die genannten Abfragen bejahen. */
+    const matching = (...queries: string[]): void => {
+      globalThis.matchMedia = ((query: string) => ({
+        matches: queries.includes(query),
+        media: query,
+        addEventListener: () => undefined,
+        removeEventListener: () => undefined,
+      })) as unknown as typeof globalThis.matchMedia;
+    };
+
+    beforeEach(() => {
+      running = new Set();
+      play = jest
+        .spyOn(HTMLMediaElement.prototype, "play")
+        .mockImplementation(function (this: HTMLMediaElement) {
+          running.add(this);
+          return Promise.resolve();
+        });
+      pause = jest
+        .spyOn(HTMLMediaElement.prototype, "pause")
+        .mockImplementation(function (this: HTMLMediaElement) {
+          running.delete(this);
+        });
+    });
+
+    afterEach(() => {
+      play.mockRestore();
+      pause.mockRestore();
+      globalThis.matchMedia = originalMatchMedia;
+    });
+
+    it("zeigt ein Video stumm, in Schleife und ohne Bedienleiste statt eines Bildes", () => {
+      const { container } = render(<HeroSlider slides={[video("a")]} />);
+      const element = container.querySelector("video");
+
+      expect(container.querySelector("img")).toBeNull();
+      expect(element).toHaveAttribute("src", "https://example.test/a.mp4#t=0.001");
+      expect(element).toHaveAttribute("loop");
+      expect(element).toHaveAttribute("disablepictureinpicture");
+      expect(element).toHaveAttribute("disableremoteplayback");
+      expect(element).toHaveAttribute("playsinline");
+      expect(element).not.toHaveAttribute("controls");
+      expect(element!.muted).toBe(true);
+      expect(element).toHaveClass("man-hero__image");
+    });
+
+    it("spielt nur das Video der vorderen Folie", () => {
+      const { container } = render(<HeroSlider slides={[video("a"), video("b")]} />);
+      const [first, second] = Array.from(container.querySelectorAll("video"));
+
+      expect(running.has(first!)).toBe(true);
+      expect(running.has(second!)).toBe(false);
+
+      fireEvent.click(screen.getByTestId("hero-next"));
+
+      expect(running.has(first!)).toBe(false);
+      expect(running.has(second!)).toBe(true);
+    });
+
+    it("lädt nur das erste Video vorab ganz", () => {
+      const { container } = render(<HeroSlider slides={[video("a"), video("b")]} />);
+      const [first, second] = Array.from(container.querySelectorAll("video"));
+
+      expect(first).toHaveAttribute("preload", "auto");
+      expect(second).toHaveAttribute("preload", "metadata");
+    });
+
+    it("lässt das Video bei weniger Bewegung stehen", () => {
+      matching("(prefers-reduced-motion: reduce)");
+      render(<HeroSlider slides={[video("a")]} />);
+
+      expect(play).not.toHaveBeenCalled();
+    });
+
+    it("hält still, wenn der Browser das Abspielen verweigert", async () => {
+      play.mockImplementation(() => Promise.reject(new DOMException("blockiert", "NotAllowedError")));
+
+      const { container } = render(<HeroSlider slides={[video("a")]} />);
+      await act(async () => undefined);
+
+      expect(container.querySelector("video")).toBeInTheDocument();
+    });
+
+    it("beschreibt ein Video wie ein Bild — oder blendet es für Hilfsmittel aus", () => {
+      const { container } = render(
+        <HeroSlider
+          slides={[
+            video("a", { image: { url: "https://example.test/a.mp4", alt: "Lkw im Schnee", kind: "video" } }),
+            video("b"),
+          ]}
+        />,
+      );
+      const [described, decorative] = Array.from(container.querySelectorAll("video"));
+
+      expect(described).toHaveAttribute("aria-label", "Lkw im Schnee");
+      expect(described).toHaveAttribute("role", "img");
+      expect(described).not.toHaveAttribute("aria-hidden");
+      expect(decorative).not.toHaveAttribute("role");
+      expect(decorative).toHaveAttribute("aria-hidden", "true");
+      expect(decorative).not.toHaveAttribute("aria-label");
+    });
+
+    it("zeigt auf schmalen, stehenden Schirmen den Hochkant-Zuschnitt", () => {
+      matching("(orientation: portrait) and (max-width: 767px)");
+      const { container } = render(
+        <HeroSlider
+          slides={[
+            video("a", {
+              imagePortrait: { url: "https://example.test/a-hoch.mp4", alt: "", kind: "video" },
+            }),
+            video("b", { imagePortrait: { url: "https://example.test/b-hoch.jpg", alt: "B" } }),
+          ]}
+        />,
+      );
+
+      expect(container.querySelector("video")).toHaveAttribute(
+        "src",
+        "https://example.test/a-hoch.mp4#t=0.001",
+      );
+      expect(container.querySelector("img")).toHaveAttribute("src", "https://example.test/b-hoch.jpg");
+    });
+
+    it("zeigt auf breiten Schirmen das Video, auch wenn hochkant ein Bild hinterlegt ist", () => {
+      const { container } = render(
+        <HeroSlider
+          slides={[video("a", { imagePortrait: { url: "https://example.test/a-hoch.jpg", alt: "" } })]}
+        />,
+      );
+
+      expect(container.querySelector("video")).toHaveAttribute(
+        "src",
+        "https://example.test/a.mp4#t=0.001",
+      );
+      expect(container.querySelector("img")).toBeNull();
+    });
+  });
+
   describe("Ausbruch", () => {
     it("bricht nach Vorgabe aus und misst Kante und Fensterbreite ohne Scrollbar", () => {
       Object.defineProperty(document.documentElement, "clientWidth", {

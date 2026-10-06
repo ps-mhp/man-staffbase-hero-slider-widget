@@ -26,13 +26,114 @@
  * Frei von DOM und React.
  */
 
-/** Ein Bild samt seiner Beschreibung. */
+/** Was hinter einer Medienadresse steckt. */
+export type MediaKind = "image" | "video";
+
+/**
+ * Ein Bild — oder ein Video — samt seiner Beschreibung.
+ *
+ * Der Name ist älter als das Video: er steht in jeder gespeicherten Bühne, und
+ * ein Umbenennen hätte allen bestehenden Konfigurationen das Bild genommen.
+ */
 export interface SlideImage {
   url: string;
   alt: string;
   /** Nur bekannt, wenn das Bild aus der Mediathek kam; steuert `aspect-ratio`. */
   width?: number;
   height?: number;
+  /**
+   * `"video"` bei Videos; bei Bildern fehlt das Feld. Es steht ausdrücklich da,
+   * statt bei jedem Zeigen aus der Endung gelesen zu werden: viele Adressen —
+   * Mediendienste, CDNs mit Parametern — tragen gar keine.
+   */
+  kind?: "video";
+}
+
+/** Endungen, an denen eine Adresse sicher als Video gilt. */
+const VIDEO_EXTENSIONS = new Set(["mp4", "m4v", "webm", "ogv", "mov"]);
+
+/** Endungen, an denen eine Adresse sicher als Bild gilt. */
+const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "gif", "webp", "avif", "svg"]);
+
+export function isVideo(image: SlideImage): boolean {
+  return image.kind === "video";
+}
+
+/**
+ * Liest die Sorte an der Endung des Pfads ab; Suchteil und Anker zählen nicht.
+ * Ohne eindeutige Endung bleibt die Antwort offen — dann entscheidet, was vorher
+ * eingestellt war, oder die Redaktion von Hand.
+ */
+export function mediaKindFromUrl(url: string): MediaKind | undefined {
+  let path: string;
+  try {
+    path = new URL(url).pathname;
+  } catch {
+    return undefined;
+  }
+  const extension = /\.([a-z0-9]+)$/i.exec(path)?.[1]?.toLowerCase();
+  if (extension === undefined) return undefined;
+  if (VIDEO_EXTENSIONS.has(extension)) return "video";
+  if (IMAGE_EXTENSIONS.has(extension)) return "image";
+  return undefined;
+}
+
+/**
+ * Prüft eine von Hand eingegebene Medienadresse.
+ *
+ * Nur `https:` — `http:` sperrt jede Staffbase-Seite als gemischten Inhalt, und
+ * `data:`, `javascript:` oder relative Pfade gehören nicht in ein Feld, das
+ * „Adresse“ heißt. Der Rechnername braucht einen Punkt: `https://e` ist beim
+ * Tippen schon eine gültige URL, aber noch keine Adresse, und jeder solche
+ * Zwischenstand wäre ein vergeblicher Abruf. Zugangsdaten in der Adresse
+ * stünden für alle lesbar im Markup der Seite.
+ *
+ * Gibt die Adresse ohne Leerraum zurück oder `null`.
+ */
+export function parseMediaUrl(text: string): string | null {
+  const trimmed = text.trim();
+  let url: URL;
+  try {
+    url = new URL(trimmed);
+  } catch {
+    return null;
+  }
+  if (url.protocol !== "https:") return null;
+  if (!url.hostname.includes(".")) return null;
+  if (url.username !== "" || url.password !== "") return null;
+  return trimmed;
+}
+
+/**
+ * Die Adresse, unter der ein Video vor dem Abspielen sein erstes Bild zeigt.
+ *
+ * Safari malt mit `preload="metadata"` kein Bild, solange nichts abgespielt
+ * wird — bei weniger Bewegung oder verweigertem Abspielen also nie, und die
+ * Bühne bliebe schwarz. Der Zeitanker lässt ihn das erste Bild laden; die
+ * übrigen Browser stört er nicht.
+ */
+export function firstFrameUrl(url: string): string {
+  return url.includes("#") ? url : `${url}#t=0.001`;
+}
+
+/** Dasselbe Medium als Bild oder als Video; das Original bleibt unberührt. */
+export function withMediaKind(image: SlideImage, kind: MediaKind): SlideImage {
+  const next: SlideImage = { ...image };
+  delete next.kind;
+  return kind === "video" ? { ...next, kind: "video" } : next;
+}
+
+/**
+ * Das Medium hinter einer neu eingegebenen Adresse.
+ *
+ * Die Maße fallen weg — sie gehörten zur alten Datei. Die Beschreibung bleibt:
+ * wer eine Adresse ändert, korrigiert meist einen Tippfehler, und jeder
+ * Tastendruck nähme sonst den Text darunter mit. Verrät die Endung nichts,
+ * bleibt die bisherige Sorte stehen, aus demselben Grund.
+ */
+export function mediaFromUrl(current: SlideImage | undefined, url: string): SlideImage {
+  const kind = mediaKindFromUrl(url) ?? (current !== undefined && isVideo(current) ? "video" : "image");
+  return withMediaKind({ url, alt: current?.alt ?? "" }, kind);
 }
 
 /** Die Schaltfläche unter dem Text. Höchstens eine je Slide (siehe E6). */

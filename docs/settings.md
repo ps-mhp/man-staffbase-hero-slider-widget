@@ -23,9 +23,11 @@ Kanal-Eintrag zählt dabei mit allen Folien, die er beisteuert.
 
 | Feld | Beschreibung |
 | --- | --- |
-| Bild | Pflicht. Quer, mindestens 1920 px breit. Ohne Bild wird die Folie nicht gezeigt. |
-| Bildbeschreibung | Was auf dem Bild zu sehen ist. Nur bei rein schmückenden Bildern leer lassen — Screenreader lesen dieses Feld vor. |
-| Bild für Hochformat | Optional. Wird auf schmalen, stehenden Bildschirmen gezeigt. Fehlt es, wird überall der Querzuschnitt verwendet. |
+| Bild oder Video | Pflicht. Aus der Mediathek oder über eine Adresse (`https://…`). Quer, mindestens 1920 px breit. Ohne Bild oder Video wird die Folie nicht gezeigt. |
+| Adresse | Statt der Mediathek: die `https`-Adresse eines Bildes oder Videos. Andere Adressen werden nicht übernommen. |
+| Art | Bild oder Video. Stellt sich an der Endung der Adresse selbst ein (`.mp4`, `.webm`, `.mov` sind Videos); nur bei Adressen ohne Endung von Hand wählen. |
+| Bild- bzw. Videobeschreibung | Was zu sehen ist. Nur bei rein schmückenden Bildern und Videos leer lassen — Screenreader lesen dieses Feld vor. |
+| Bild oder Video für Hochformat | Optional. Wird auf schmalen, stehenden Bildschirmen gezeigt. Fehlt es, wird überall der Querzuschnitt verwendet. |
 | Überschrift | Kurz halten: bis etwa 24 Zeichen bleibt sie einzeilig. |
 | Unterzeile | Optional, ein bis zwei Zeilen. |
 | Schaltfläche | Optional. Erscheint nur, wenn Beschriftung und Ziel ausgefüllt sind. Höchstens eine je Folie. |

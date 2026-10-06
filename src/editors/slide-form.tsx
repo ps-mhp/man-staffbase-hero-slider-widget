@@ -23,6 +23,7 @@ import * as React from "react";
 import { ReactElement } from "react";
 
 import { SlideItem } from "../hero-items";
+import { mediaFromUrl, withMediaKind } from "../slides-model";
 import { ImageField } from "./image-field";
 
 /** Welches der beiden Bilder einer Folie der Picker gerade füllt. */
@@ -59,27 +60,41 @@ export function SlideForm({ slide, onPatch, onPick }: SlideFormProps): ReactElem
     });
   };
 
+  // Das Hauptbild ist nie `undefined` — eine leere Folie trägt `url: ""`.
+  // Für die Kachel und das Adressfeld heißt das dasselbe: noch kein Medium.
+  const image = slide.image.url === "" ? undefined : slide.image;
+  const portrait = slide.imagePortrait;
+
   return (
     <>
       <ImageField
-        label="Bild"
-        hint="Quer, mindestens 1920 px breit. Ohne Bild wird die Folie nicht gezeigt."
-        image={slide.image.url === "" ? undefined : slide.image}
+        label="Bild oder Video"
+        hint="Quer, mindestens 1920 px breit. Ohne Bild oder Video wird die Folie nicht gezeigt."
+        image={image}
         onPick={() => onPick("image")}
         onAltChange={(alt) => onPatch({ image: { ...slide.image, alt } })}
+        onUrlChange={(url) =>
+          onPatch({ image: url === "" ? { url: "", alt: "" } : mediaFromUrl(image, url) })
+        }
+        onKindChange={(kind) => onPatch({ image: withMediaKind(slide.image, kind) })}
         testId="slide-image"
       />
 
       <ImageField
-        label="Bild für Hochformat (optional)"
-        hint="Wird auf schmalen, stehenden Bildschirmen gezeigt. Ohne dieses Bild wird überall der Querzuschnitt verwendet."
-        image={slide.imagePortrait}
+        label="Bild oder Video für Hochformat (optional)"
+        hint="Wird auf schmalen, stehenden Bildschirmen gezeigt. Ohne wird überall der Querzuschnitt verwendet."
+        image={portrait}
         onPick={() => onPick("imagePortrait")}
         onClear={() => onPatch({ imagePortrait: undefined })}
         onAltChange={(alt) =>
+          onPatch({ imagePortrait: portrait === undefined ? undefined : { ...portrait, alt } })
+        }
+        onUrlChange={(url) =>
+          onPatch({ imagePortrait: url === "" ? undefined : mediaFromUrl(portrait, url) })
+        }
+        onKindChange={(kind) =>
           onPatch({
-            imagePortrait:
-              slide.imagePortrait === undefined ? undefined : { ...slide.imagePortrait, alt },
+            imagePortrait: portrait === undefined ? undefined : withMediaKind(portrait, kind),
           })
         }
         testId="slide-portrait"

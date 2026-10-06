@@ -4,7 +4,17 @@
 
 Antwort: Der Folie fehlt das Bild. Folien ohne Bild werden nicht gezeigt — eine
 leere dunkle Fläche wäre auf der Seite nicht von einem Fehler zu unterscheiden.
-Öffnen Sie den Editor und wählen Sie unter **Bild** ein Bild aus.
+Öffnen Sie den Editor und wählen Sie unter **Bild oder Video** ein Bild aus
+oder tragen Sie eine Adresse ein.
+
+**Frage:** Ich habe eine Video-Adresse eingetragen, aber die Folie zeigt nur
+eine dunkle Fläche.
+
+Antwort: Meist ist das Video ohne Anmeldung nicht abrufbar, oder **Art** steht
+auf **Bild**, weil die Adresse keine Endung trägt. Öffnen Sie die Adresse in
+einem privaten Browserfenster: läuft es dort nicht, sehen es auch die
+Leser:innen nicht. Eine Meldung direkt unter dem Feld heißt, dass die Adresse
+nicht übernommen wurde — sie muss mit `https://` beginnen.
 
 **Frage:** Ich habe eine Beschriftung für die Schaltfläche eingetragen, aber
 sie erscheint nicht.

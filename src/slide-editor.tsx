@@ -49,7 +49,7 @@ import { NewsChannelForm } from "./editors/news-channel-form";
 import { NewsPostForm } from "./editors/news-post-form";
 import { NewsSource, cacheNewsSource, defaultNewsSource } from "./editors/news-source";
 import { SlideForm } from "./editors/slide-form";
-import { SlideImage, emptySlide, newSlideId } from "./slides-model";
+import { SlideImage, emptySlide, firstFrameUrl, newSlideId } from "./slides-model";
 import slideEditorCss from "./styles/slide-editor.scss";
 
 /**
@@ -238,7 +238,14 @@ export function SlideEditor({
                   onClick={() => setSelected(position)}
                 >
                   <span className="man-se__item-index">{position + 1}</span>
-                  {label?.thumbUrl !== undefined ? (
+                  {label?.thumbUrl !== undefined && label.thumbVideo ? (
+                    <video
+                      className="man-se__item-thumb"
+                      src={firstFrameUrl(label.thumbUrl)}
+                      muted
+                      preload="metadata"
+                    />
+                  ) : label?.thumbUrl !== undefined ? (
                     <img className="man-se__item-thumb" src={label.thumbUrl} alt="" />
                   ) : (
                     <span
@@ -310,6 +317,10 @@ export function SlideEditor({
 
               {isSlideItem(item) && (
                 <SlideForm
+                  // Je Eintrag eine eigene Instanz: das Adressfeld hält eine
+                  // noch ungültige Eingabe fest, und die gehört nicht in die
+                  // nächste Folie.
+                  key={item.id}
                   slide={item}
                   onPatch={(changes: Partial<SlideItem>) => patch(changes)}
                   onPick={(target) => setPickerTarget(target)}

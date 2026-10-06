@@ -304,6 +304,113 @@ describe("SlideEditor", () => {
     });
   });
 
+  describe("Bild oder Video per Adresse", () => {
+    const typeUrl = (testId: string, url: string): void => {
+      fireEvent.change(screen.getByTestId(testId), { target: { value: url } });
+    };
+
+    it("bietet neben der Mediathek ein Adressfeld an", () => {
+      setup([slide("a", { image: { url: "", alt: "" } })]);
+
+      expect(screen.getByTestId("slide-image-pick")).toBeInTheDocument();
+      expect(screen.getByTestId("slide-image-url")).toHaveValue("");
+    });
+
+    it("übernimmt ein Bild per Adresse", () => {
+      const h = setup([slide("a", { image: { url: "", alt: "" } })]);
+      typeUrl("slide-image-url", "https://cdn.example.test/neu.jpg");
+
+      expect(h.latestSlides()[0]!.image).toEqual({ url: "https://cdn.example.test/neu.jpg", alt: "" });
+    });
+
+    it("erkennt ein Video an der Endung", () => {
+      const h = setup([slide("a", { image: { url: "", alt: "" } })]);
+      typeUrl("slide-image-url", "https://cdn.example.test/film.mp4");
+
+      expect(h.latestSlides()[0]!.image).toEqual({
+        url: "https://cdn.example.test/film.mp4",
+        alt: "",
+        kind: "video",
+      });
+    });
+
+    it("zeigt ein Video in der Kachel und in der Liste als Video", () => {
+      setup([
+        slide("a", { image: { url: "https://cdn.example.test/film.mp4", alt: "", kind: "video" } }),
+      ]);
+
+      expect(screen.getByTestId("slide-image-thumb").tagName).toBe("VIDEO");
+      expect(screen.getByTestId("slide-item-a").querySelector("video")).toHaveAttribute(
+        "src",
+        "https://cdn.example.test/film.mp4#t=0.001",
+      );
+      expect(screen.getByText("Videobeschreibung")).toBeInTheDocument();
+    });
+
+    it("nimmt eine unvollständige oder unsichere Adresse nicht an und sagt warum", () => {
+      const h = setup([slide("a")]);
+      typeUrl("slide-image-url", "javascript:alert(1)");
+
+      expect(h.onChange).not.toHaveBeenCalled();
+      expect(screen.getByTestId("slide-image-url")).toHaveAttribute("aria-invalid", "true");
+      expect(screen.getByTestId("slide-image-url-error")).toHaveTextContent("https://");
+    });
+
+    it("leert das Hauptbild, wenn die Adresse gelöscht wird", () => {
+      const h = setup([slide("a")]);
+      typeUrl("slide-image-url", "");
+
+      expect(h.latestSlides()[0]!.image.url).toBe("");
+    });
+
+    it("entfernt das Hochformat, wenn seine Adresse gelöscht wird", () => {
+      const h = setup([
+        slide("a", { imagePortrait: { url: "https://cdn.example.test/hoch.png", alt: "" } }),
+      ]);
+      typeUrl("slide-portrait-url", "");
+
+      expect(h.latestSlides()[0]!.imagePortrait).toBeUndefined();
+    });
+
+    it("setzt das Hochformat per Adresse", () => {
+      const h = setup([slide("a")]);
+      typeUrl("slide-portrait-url", "https://cdn.example.test/hoch.webm");
+
+      expect(h.latestSlides()[0]!.imagePortrait).toEqual({
+        url: "https://cdn.example.test/hoch.webm",
+        alt: "",
+        kind: "video",
+      });
+    });
+
+    it("lässt die Sorte von Hand umschalten, wenn die Adresse keine Endung verrät", () => {
+      const h = setup([slide("a", { image: { url: "https://cdn.example.test/stream/7", alt: "" } })]);
+      fireEvent.change(screen.getByTestId("slide-image-kind"), { target: { value: "video" } });
+
+      expect(h.latestSlides()[0]!.image.kind).toBe("video");
+    });
+
+    it("macht aus einem Mediathek-Bild nach einem Video wieder ein Bild", async () => {
+      const h = setup([
+        slide("a", { image: { url: "https://cdn.example.test/film.mp4", alt: "", kind: "video" } }),
+      ]);
+      fireEvent.click(screen.getByTestId("slide-image-replace"));
+      fireEvent.click(await screen.findByAltText("a.png"));
+
+      await waitFor(() => expect(h.onChange).toHaveBeenCalled());
+      expect(h.latestSlides()[0]!.image.kind).toBeUndefined();
+    });
+
+    it("zeigt nach dem Wechsel der Folie deren Adresse, nicht die verworfene Eingabe", () => {
+      setup([slide("a"), slide("b")]);
+      typeUrl("slide-image-url", "kaputt");
+      fireEvent.click(screen.getByTestId("slide-item-b"));
+
+      expect(screen.getByTestId("slide-image-url")).toHaveValue("https://cdn.example.test/b.png");
+      expect(screen.queryByTestId("slide-image-url-error")).not.toBeInTheDocument();
+    });
+  });
+
   describe("Fußzeile", () => {
     it("benennt ungesicherte Änderungen", () => {
       setup([slide("a")], true);

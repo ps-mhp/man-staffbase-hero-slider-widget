@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 import { HeroItem, heroItemType, isNewsChannelItem, isNewsPostItem, isSlideItem } from "../hero-items";
 import { documentLocales } from "@shared/staffbase/posts";
 import { pickPostContent } from "../news-slides";
+import { isVideo } from "../slides-model";
 import { NewsSource, useNewsChannels } from "./news-source";
 
 export interface ItemLabel {
@@ -33,6 +34,8 @@ export interface ItemLabel {
   kind: string;
   title: string;
   thumbUrl: string | undefined;
+  /** Zeigt `thumbUrl` auf ein Video? Dann braucht die Zeile ein `<video>`. */
+  thumbVideo: boolean;
 }
 
 const KIND_TEXT: Record<string, string> = {
@@ -88,6 +91,7 @@ export function useItemLabels(items: HeroItem[], source: NewsSource): ItemLabel[
         kind,
         title: item.headline.trim() === "" ? "Ohne Überschrift" : item.headline,
         thumbUrl: item.image.url === "" ? undefined : item.image.url,
+        thumbVideo: isVideo(item.image),
       };
     }
 
@@ -101,6 +105,7 @@ export function useItemLabels(items: HeroItem[], source: NewsSource): ItemLabel[
             ? headline
             : (postTitles[item.postId] ?? fallback),
         thumbUrl: item.imageOverride?.url,
+        thumbVideo: item.imageOverride !== undefined && isVideo(item.imageOverride),
       };
     }
 
@@ -112,9 +117,10 @@ export function useItemLabels(items: HeroItem[], source: NewsSource): ItemLabel[
         kind,
         title: `${name} · ${String(item.count)} Beiträge`,
         thumbUrl: undefined,
+        thumbVideo: false,
       };
     }
 
-    return { kind, title: "Unbekannter Eintrag", thumbUrl: undefined };
+    return { kind, title: "Unbekannter Eintrag", thumbUrl: undefined, thumbVideo: false };
   });
 }

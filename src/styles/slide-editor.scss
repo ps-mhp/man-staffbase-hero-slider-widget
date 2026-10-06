@@ -261,6 +261,17 @@
   color: chrome.$text-muted;
 }
 
+// Unter einem Feld steht der Hinweis nach der Eingabe statt davor.
+.man-se__input + .man-se__hint {
+  margin: 6px 0 0;
+}
+
+// Eine Eingabe, die nicht übernommen wird, muss das sagen — sonst wundert sich
+// die Redaktion, warum die Vorschau beim alten Bild bleibt.
+.man-se__hint--warning {
+  color: chrome.$text-warning;
+}
+
 .man-se__input {
   display: block;
   box-sizing: border-box;
