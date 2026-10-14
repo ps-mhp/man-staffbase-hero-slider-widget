@@ -107,6 +107,42 @@ describe("openClippingAncestors", () => {
     expect(openClippingAncestors(child).limit).toBeNull();
     expect(plain.style.overflowX).toBe("");
   });
+
+  // Der Content Designer legt die Seite in einen offenen Shadow Root und den
+  // Baustein noch einmal in den seines `sb-custom-block`. Hält die Suche dort
+  // an, bleibt der clippende Container der Wirtsseite zu, und die Bühne wird
+  // auf die Spaltenbreite zurückgeschnitten — am 14.10.2026 live gemessen.
+  it("öffnet auch clippende Vorfahren jenseits eines Shadow Roots", () => {
+    const clipper = document.createElement("div");
+    clipper.style.overflowX = "hidden";
+    clipper.style.overflowY = "hidden";
+    setScrollSize(clipper, 600, 600);
+    const host = document.createElement("div");
+    clipper.appendChild(host);
+    document.body.appendChild(clipper);
+
+    const child = document.createElement("div");
+    host.attachShadow({ mode: "open" }).appendChild(child);
+
+    expect(openClippingAncestors(child).limit).toBeNull();
+    expect(clipper.style.overflowX).toBe("visible");
+    expect(clipper.style.overflowY).toBe("visible");
+  });
+
+  it("hält auch jenseits eines Shadow Roots an einem echten Scroller an", () => {
+    const scroller = document.createElement("div");
+    scroller.style.overflowX = "auto";
+    setScrollSize(scroller, 2000, 800);
+    const host = document.createElement("div");
+    scroller.appendChild(host);
+    document.body.appendChild(scroller);
+
+    const child = document.createElement("div");
+    host.attachShadow({ mode: "open" }).appendChild(child);
+
+    expect(openClippingAncestors(child).limit).toBe(scroller);
+    expect(scroller.style.overflowX).toBe("auto");
+  });
 });
 
 describe("measureBleed", () => {

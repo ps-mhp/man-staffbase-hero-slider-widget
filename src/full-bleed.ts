@@ -86,6 +86,29 @@ export interface ClipOpening {
 }
 
 /**
+ * Der nächste Vorfahr — auch über die Grenze eines Shadow DOM hinweg.
+ *
+ * `parentElement` endet am obersten Knoten eines Shadow Roots: dessen Elter
+ * ist der Root selbst, und der ist kein Element. Im klassischen Editor fiel
+ * das nie auf. Der Content Designer legt die Seite dagegen in einen offenen
+ * Shadow Root, und der Baustein steckt zusätzlich im Shadow Root seines
+ * `sb-custom-block`. Die Suche nach clippenden Vorfahren endete damit schon
+ * innerhalb des Bausteins, und genau die beiden Container, die abschneiden,
+ * blieben zu: `div.mb-6.overflow-hidden` um jeden Block und `div.scroller` um
+ * die Seite. Die Bühne wurde zwar fensterbreit gerechnet, aber wieder auf die
+ * Spaltenbreite zurückgeschnitten — gemessen am 14.10.2026 auf
+ * /content/page/6aa12fb54e0ac62265cf06f6: Bühne 1400px breit ab x=0, sichtbar
+ * nur 1300px ab x=50.
+ */
+function parentOf(node: HTMLElement): HTMLElement | null {
+  if (node.parentElement !== null) return node.parentElement;
+  const root = node.getRootNode();
+  // `host` ist bei einem offenen Shadow Root das Element, in dem er hängt;
+  // über ihn geht die Suche in der Wirtsseite weiter.
+  return root instanceof ShadowRoot && root.host instanceof HTMLElement ? root.host : null;
+}
+
+/**
  * Räumt die clippenden Vorfahren zwischen `element` und `<body>` aus dem Weg.
  *
  * Ein Container wird nur geöffnet, wenn er **nicht selbst scrollt**: dann ist
@@ -108,7 +131,7 @@ export function openClippingAncestors(element: HTMLElement): ClipOpening {
     for (const undo of undos) undo();
   };
 
-  let node = element.parentElement;
+  let node = parentOf(element);
   while (node !== null && node !== document.body && node !== document.documentElement) {
     const style = getComputedStyle(node);
 
@@ -132,7 +155,7 @@ export function openClippingAncestors(element: HTMLElement): ClipOpening {
       if (CLIPS.test(style.overflowY)) target.style.overflowY = "visible";
     }
 
-    node = node.parentElement;
+    node = parentOf(node);
   }
 
   return { undo: undoAll, limit: null };
