@@ -165,6 +165,23 @@ export function openClippingAncestors(element: HTMLElement): ClipOpening {
 const SECTION_BLOCK = '[data-c13y-component="section-block"]';
 
 /**
+ * Der Abschnitt, in dem die Bühne steckt — oder `null` im klassischen Editor.
+ *
+ * Die Suche überquert Shadow-Root-Grenzen (`parentOf`) und endet spätestens
+ * am `<body>`. Dass es *keinen* Abschnitt gibt, ist kein Sonderfall, sondern
+ * der klassische Editor: jeder Aufrufer behandelt diesen Fall ausdrücklich,
+ * statt auf gut Glück zu greifen.
+ */
+export function findSection(element: HTMLElement): HTMLElement | null {
+  let node: HTMLElement | null = parentOf(element);
+  while (node !== null && node !== document.body && node !== document.documentElement) {
+    if (node.matches(SECTION_BLOCK)) return node;
+    node = parentOf(node);
+  }
+  return null;
+}
+
+/**
  * Nimmt dem Abschnitt des Content Designers seinen senkrechten Innenabstand.
  *
  * Der Content Designer legt jeden Abschnitt in ein `div` mit eigenem Padding
@@ -186,13 +203,8 @@ const SECTION_BLOCK = '[data-c13y-component="section-block"]';
  * eingebettet und darf beim Verschwinden nichts zurücklassen.
  */
 export function openSectionPadding(element: HTMLElement): () => void {
-  let node: HTMLElement | null = parentOf(element);
-  while (node !== null && node !== document.body && node !== document.documentElement) {
-    if (node.matches(SECTION_BLOCK)) break;
-    node = parentOf(node);
-  }
-
-  const padded = node?.matches(SECTION_BLOCK) === true ? node.firstElementChild : null;
+  const section = findSection(element);
+  const padded = section?.firstElementChild ?? null;
   if (!(padded instanceof HTMLElement)) return () => undefined;
 
   const previousTop = padded.style.paddingTop;
@@ -272,16 +284,15 @@ export function stretchToSection(element: HTMLElement): () => void {
 
   // Erst sammeln, dann setzen: ohne Abschnitt am Ende der Kette bleibt alles
   // unangetastet, statt auf halbem Weg Spuren zu hinterlassen.
+  const section = findSection(element);
+  if (section === null) return () => undefined;
+
   const chain: HTMLElement[] = [];
   let node: HTMLElement | null = parentOf(element);
-  while (node !== null && node !== document.body && node !== document.documentElement) {
-    if (node.matches(SECTION_BLOCK)) break;
+  while (node !== null && node !== section) {
     chain.push(node);
     node = parentOf(node);
   }
-
-  const section = node?.matches(SECTION_BLOCK) === true ? node : null;
-  if (section === null) return () => undefined;
 
   for (const ancestor of chain) {
     force(ancestor, "margin-top", "0px");
@@ -341,6 +352,23 @@ export function measureBleed(anchor: HTMLElement, limit: HTMLElement | null = nu
   };
 }
 
+/** Was `useFullBleed` über die Lage der Bühne weiss. */
+export interface BleedState {
+  /**
+   * Die Maße, oder `null` solange (oder falls) kein Ausbruch möglich ist.
+   * Erst mit einem Ergebnis darf die Bühne breit werden — vorher wäre sie
+   * für einen Bildaufbau lang falsch positioniert.
+   */
+  metrics: BleedMetrics | null;
+  /**
+   * Ob die Bühne tatsächlich in einem Abschnitt des neuen Editors steckt und
+   * dessen Höhe einnimmt. Im klassischen Editor nie — die Höhenstufe
+   * „Abschnittshöhe" fällt dort auf die Vorgabestufe zurück, statt sich an
+   * einem Abschnitt auszurichten, den es nicht gibt.
+   */
+  filled: boolean;
+}
+
 /**
  * Hält den Ausbruch an einem Anker fest.
  *
@@ -350,20 +378,19 @@ export function measureBleed(anchor: HTMLElement, limit: HTMLElement | null = nu
  * (Höhenstufe „Abschnittshöhe"). Unabhängig vom Ausbruch, aber im selben
  * Effekt: beide räumen an derselben Ahnenkette, und zwei Effekte nähmen sich
  * gegenseitig die gemerkten Vorzustände ab.
- * @returns die Maße, oder `null` solange (oder falls) kein Ausbruch möglich
- * ist. Erst mit einem Ergebnis darf die Bühne breit werden — vorher wäre sie
- * für einen Bildaufbau lang falsch positioniert.
  */
 export function useFullBleed(
   anchor: HTMLElement | null,
   enabled: boolean,
   fill = false,
-): BleedMetrics | null {
+): BleedState {
   const [metrics, setMetrics] = useState<BleedMetrics | null>(null);
+  const [filled, setFilled] = useState(false);
 
   useEffect(() => {
     if (anchor === null || (!enabled && !fill)) {
       setMetrics(null);
+      setFilled(false);
       return;
     }
 
@@ -376,6 +403,11 @@ export function useFullBleed(
       : { undo: (): void => undefined, limit: null };
     const closePadding = openSectionPadding(anchor);
     const collapse = fill ? stretchToSection(anchor) : (): void => undefined;
+
+    // Nicht der Wunsch zählt, sondern der Befund: ohne Abschnitt hat
+    // `stretchToSection` nichts angefasst, und die Bühne muss sich wie die
+    // Vorgabestufe verhalten.
+    setFilled(fill && findSection(anchor) !== null);
 
     // Rücknahme in umgekehrter Reihenfolge des Eingriffs.
     const undoAll = (): void => {
@@ -430,5 +462,5 @@ export function useFullBleed(
     };
   }, [anchor, enabled, fill]);
 
-  return metrics;
+  return { metrics, filled };
 }

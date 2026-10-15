@@ -41,13 +41,13 @@ export const configurationSchema: JSONSchema7 = {
     [HEIGHT_ATTRIBUTE]: {
       type: "string",
       title: "Höhe",
-      default: "medium",
+      default: "section",
       oneOf: [
         { const: "small", title: "Niedrig (320–420 px)" },
-        { const: "medium", title: "Standard (420–560 px)" },
+        { const: "medium", title: "Mittel (420–560 px)" },
         { const: "large", title: "Hoch (560–720 px)" },
         { const: "viewport", title: "Bildschirmhoch" },
-        { const: "section", title: "Abschnittshöhe (neuer Editor)" },
+        { const: "section", title: "Abschnittshöhe (Vorgabe)" },
       ],
     },
     [FULL_BLEED_ATTRIBUTE]: {
@@ -79,9 +79,10 @@ export const uiSchema: UiSchema = {
     "ui:help":
       "Die Bühne ist auf breiten Bildschirmen 21:9 und auf schmalen 4:3, begrenzt durch die gewählte Stufe. " +
       "„Bildschirmhoch“ füllt die sichtbare Seite abzüglich der Kopfzeile. " +
-      "„Abschnittshöhe“ gilt nur im neuen Editor: die Bühne schliesst oben und unten bündig mit dem " +
-      "Abschnitt ab und nimmt dessen Höhe ein. Steht noch etwas anderes im selben Abschnitt, rückt es " +
-      "näher an die Bühne.",
+      "Die Vorgabe „Abschnittshöhe“ lässt die Bühne im neuen Editor oben und unten bündig mit dem " +
+      "Abschnitt abschliessen und dessen Höhe einnehmen; steht noch etwas anderes im selben Abschnitt, " +
+      "rückt es näher an die Bühne. Im klassischen Editor gibt es keinen Abschnitt — dort verhält sie " +
+      "sich wie „Mittel“.",
   },
   [FULL_BLEED_ATTRIBUTE]: {
     "ui:help":

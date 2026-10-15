@@ -61,11 +61,19 @@ export function stopSlideEditorInjector(): void {
   stopInjector = null;
 }
 
-/** Alles außer den bekannten Stufen bedeutet die Vorgabe — auch ein leeres oder veraltetes Attribut. */
+/**
+ * Alles außer den bekannten Stufen bedeutet die Vorgabe — auch ein leeres oder
+ * veraltetes Attribut.
+ *
+ * Die Vorgabe ist „Abschnittshöhe": im neuen Editor schliesst die Bühne damit
+ * bündig mit ihrem Abschnitt ab, im klassischen fällt sie mangels Abschnitt
+ * auf die Masse der CI-Spec 3.9 zurück. Bestehende Inhalte tragen ihre Stufe
+ * als Attribut und bleiben davon unberührt.
+ */
 function readHeight(raw: unknown): HeroHeight {
   return typeof raw === "string" && (HERO_HEIGHTS as readonly string[]).includes(raw)
     ? (raw as HeroHeight)
-    : "medium";
+    : "section";
 }
 
 /**

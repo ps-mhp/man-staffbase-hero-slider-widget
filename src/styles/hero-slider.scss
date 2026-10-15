@@ -157,11 +157,22 @@
   }
 }
 
-.man-hero--height-section {
+.man-hero--height-section.man-hero--filled {
   height: 100%;
 }
 
 .man-hero--height-section .man-hero__frame {
+  // Der Rückfall für den klassischen Editor: dort gibt es keinen Abschnitt,
+  // an dem sich die Bühne ausrichten könnte. Die Stufe verhält sich dann
+  // Pixel für Pixel wie die Vorgabe der CI-Spec — sie ist die Vorgabe und
+  // darf ausserhalb des neuen Editors nichts verändern.
+  min-height: 420px;
+  max-height: 560px;
+}
+
+// Erst wenn ein Abschnitt wirklich gefunden wurde (`man-hero--filled`), nimmt
+// die Bühne seine Höhe ein. Nicht der Wunsch entscheidet, sondern der Befund.
+.man-hero--height-section.man-hero--filled .man-hero__frame {
   height: 100%;
   // Ohne diese Zeile klemmte die Bühne weiterhin auf der Vorgabestufe und
   // könnte einen höheren Abschnitt gar nicht füllen.

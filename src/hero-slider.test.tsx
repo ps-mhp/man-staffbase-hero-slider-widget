@@ -331,9 +331,9 @@ describe("HeroSlider", () => {
     });
   });
 
-  describe("Höhe", () => {    it("verwendet ohne Angabe die Stufe der CI-Spec", () => {
+  describe("Höhe", () => {    it("verwendet ohne Angabe die Abschnittshöhe", () => {
       const { container } = render(<HeroSlider slides={[slide("a")]} />);
-      expect(container.querySelector(".man-hero")).toHaveClass("man-hero--height-medium");
+      expect(container.querySelector(".man-hero")).toHaveClass("man-hero--height-section");
     });
 
     it("übernimmt eine gewählte Stufe", () => {
@@ -341,16 +341,30 @@ describe("HeroSlider", () => {
       expect(container.querySelector(".man-hero")).toHaveClass("man-hero--height-viewport");
     });
 
-    it("zeichnet für die Abschnittshöhe auch den äusseren Kasten aus", () => {
+    it("füllt ohne Abschnitt nichts — auch nicht bei der Abschnittshöhe", () => {
       const { container } = render(<HeroSlider slides={[slide("a")]} height="section" />);
-      // Die Höhe muss vom Abschnitt bis zur Bühne durchreichen; bricht sie am
-      // äusseren Kasten ab, löst sie sich wieder zu `auto` auf.
-      expect(container.querySelector(".man-hero-host")).toHaveClass("man-hero-host--fill");
+
+      // Im klassischen Editor gibt es keinen Abschnitt. Ohne diesen Rückfall
+      // verlöre die Bühne dort ihre Klemmung und würde allein aus dem
+      // Seitenverhältnis viel höher als bisher.
+      expect(container.querySelector(".man-hero")).not.toHaveClass("man-hero--filled");
+      expect(container.querySelector(".man-hero-host")).not.toHaveClass("man-hero-host--fill");
     });
 
-    it("lässt den äusseren Kasten bei allen anderen Stufen in Ruhe", () => {
-      const { container } = render(<HeroSlider slides={[slide("a")]} height="large" />);
-      expect(container.querySelector(".man-hero-host")).not.toHaveClass("man-hero-host--fill");
+    it("zeichnet im Abschnitt beide Kästen aus", () => {
+      const section = document.createElement("div");
+      section.dataset.c13yComponent = "section-block";
+      section.appendChild(document.createElement("div"));
+      document.body.appendChild(section);
+
+      const { container } = render(<HeroSlider slides={[slide("a")]} height="section" />, {
+        container: section.firstElementChild as HTMLElement,
+      });
+
+      // Die Höhe muss vom Abschnitt bis zur Bühne durchreichen; bricht sie am
+      // äusseren Kasten ab, löst sie sich wieder zu `auto` auf.
+      expect(container.querySelector(".man-hero")).toHaveClass("man-hero--filled");
+      expect(container.querySelector(".man-hero-host")).toHaveClass("man-hero-host--fill");
     });
   });
 

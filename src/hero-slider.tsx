@@ -189,7 +189,7 @@ function SlideMedia({ slide, eager, play, portrait }: SlideMediaProps): ReactEle
 
 export function HeroSlider({
   slides,
-  height = "medium",
+  height = "section",
   fullBleed = true,
   autoplayDelayMs = DEFAULT_AUTOPLAY_DELAY_MS,
 }: HeroSliderProps): ReactElement | null {
@@ -205,7 +205,7 @@ export function HeroSlider({
     delayMs: autoplayDelayMs,
   });
 
-  const bleed = useFullBleed(anchor, fullBleed, height === "section");
+  const { metrics: bleed, filled } = useFullBleed(anchor, fullBleed, height === "section");
   const portrait = useMediaQuery(PORTRAIT_MEDIA);
 
   const onKeyDown = useCallback(
@@ -248,13 +248,14 @@ export function HeroSlider({
     // bricht aus. Ohne diese Trennung gäbe es keinen festen Punkt, an dem sich
     // die Kante der Spalte messen liesse.
     <div
-      className={`man-hero-host${height === "section" ? " man-hero-host--fill" : ""}`}
+      className={`man-hero-host${filled ? " man-hero-host--fill" : ""}`}
       ref={setAnchor}
     >
       <div
         className={[
           "man-hero",
           `man-hero--height-${height}`,
+          filled ? "man-hero--filled" : "",
           many ? "man-hero--many" : "",
           bleed !== null ? "man-hero--bleed" : "",
         ]
