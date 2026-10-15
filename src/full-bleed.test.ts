@@ -11,7 +11,12 @@
  * limitations under the License.
  */
 
-import { FALLBACK_HEADER_HEIGHT, measureBleed, openClippingAncestors } from "./full-bleed";
+import {
+  FALLBACK_HEADER_HEIGHT,
+  measureBleed,
+  openClippingAncestors,
+  openSectionPadding,
+} from "./full-bleed";
 
 /**
  * jsdom rechnet kein Layout: `getBoundingClientRect` liefert überall Nullen
@@ -142,6 +147,78 @@ describe("openClippingAncestors", () => {
 
     expect(openClippingAncestors(child).limit).toBe(scroller);
     expect(scroller.style.overflowX).toBe("auto");
+  });
+});
+
+/**
+ * Der neue Editor legt jeden Abschnitt in ein `div` mit eigenem Padding. Über
+ * und unter einer Bühne, die bis an den Bildschirmrand läuft, bliebe davon
+ * senkrecht ein Streifen Weissraum stehen.
+ */
+function buildSection(): { padded: HTMLElement; widget: HTMLElement } {
+  const section = document.createElement("div");
+  section.dataset.c13yComponent = "section-block";
+  const padded = document.createElement("div");
+  padded.style.padding = "48px 24px";
+  const widget = document.createElement("div");
+
+  padded.appendChild(widget);
+  section.appendChild(padded);
+  document.body.appendChild(section);
+  return { padded, widget };
+}
+
+describe("openSectionPadding", () => {
+  it("nimmt dem Abschnitt den senkrechten Innenabstand", () => {
+    const { padded, widget } = buildSection();
+
+    openSectionPadding(widget);
+
+    expect(padded.style.paddingTop).toBe("0px");
+    expect(padded.style.paddingBottom).toBe("0px");
+  });
+
+  it("lässt den waagerechten Innenabstand stehen", () => {
+    const { padded, widget } = buildSection();
+
+    openSectionPadding(widget);
+
+    // Waagerecht ist das Padding folgenlos: der Ausbruch wird gemessen, nicht
+    // gerechnet. Angefasst wird nur, was nachweislich stört.
+    expect(padded.style.paddingLeft).toBe("24px");
+    expect(padded.style.paddingRight).toBe("24px");
+  });
+
+  it("findet den Abschnitt auch jenseits eines Shadow Roots", () => {
+    const { padded, widget } = buildSection();
+    const inner = document.createElement("div");
+    widget.attachShadow({ mode: "open" }).appendChild(inner);
+
+    openSectionPadding(inner);
+
+    expect(padded.style.paddingTop).toBe("0px");
+  });
+
+  it("stellt beim Zurücknehmen den vorherigen Inline-Wert her", () => {
+    const { padded, widget } = buildSection();
+    padded.style.paddingTop = "40px";
+
+    openSectionPadding(widget)();
+
+    expect(padded.style.paddingTop).toBe("40px");
+    expect(padded.style.paddingBottom).toBe("48px");
+  });
+
+  it("fällt ohne Abschnitt aus", () => {
+    const outside = document.createElement("div");
+    const widget = document.createElement("div");
+    outside.style.padding = "48px";
+    outside.appendChild(widget);
+    document.body.appendChild(outside);
+
+    expect(() => openSectionPadding(widget)()).not.toThrow();
+    // Im klassischen Editor gibt es keinen Abschnitt — und nichts anzufassen.
+    expect(outside.style.paddingTop).toBe("48px");
   });
 });
 

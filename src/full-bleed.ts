@@ -161,6 +161,52 @@ export function openClippingAncestors(element: HTMLElement): ClipOpening {
   return { undo: undoAll, limit: null };
 }
 
+/** Der Abschnitt des Content Designers, in dem ein Baustein steckt. */
+const SECTION_BLOCK = '[data-c13y-component="section-block"]';
+
+/**
+ * Nimmt dem Abschnitt des Content Designers seinen senkrechten Innenabstand.
+ *
+ * Der Content Designer legt jeden Abschnitt in ein `div` mit eigenem Padding
+ * — im neuen Editor stammt es aus den Abschnittseinstellungen und steht auf
+ * allen vier Seiten. Waagerecht ist das folgenlos, weil der Ausbruch ohnehin
+ * gemessen und nicht gerechnet wird. Senkrecht nicht: über und unter einer
+ * Bühne, die bis an den Bildschirmrand läuft, bleibt ein Streifen Weissraum
+ * stehen, den es in der Vorlage nicht gibt. Die Bühne schliesst oben an die
+ * Kopfzeile und unten an den Folgeinhalt an — den Abstand nach unten setzt
+ * sie selbst (`.man-hero-host`).
+ *
+ * Angefasst wird nur das erste Kind des Abschnitts, also genau der Container,
+ * der das Padding trägt, und nur die beiden senkrechten Seiten. Alles andere
+ * — Rand, Hintergrund, waagerechter Abstand — bleibt, wie der Abschnitt es
+ * vorsieht. Steckt die Bühne in keinem Abschnitt (klassischer Editor), fällt
+ * der Eingriff aus.
+ *
+ * @returns nimmt den Eingriff zurück; das Widget wird in fremde Seiten
+ * eingebettet und darf beim Verschwinden nichts zurücklassen.
+ */
+export function openSectionPadding(element: HTMLElement): () => void {
+  let node: HTMLElement | null = parentOf(element);
+  while (node !== null && node !== document.body && node !== document.documentElement) {
+    if (node.matches(SECTION_BLOCK)) break;
+    node = parentOf(node);
+  }
+
+  const padded = node?.matches(SECTION_BLOCK) === true ? node.firstElementChild : null;
+  if (!(padded instanceof HTMLElement)) return () => undefined;
+
+  const previousTop = padded.style.paddingTop;
+  const previousBottom = padded.style.paddingBottom;
+
+  padded.style.paddingTop = "0px";
+  padded.style.paddingBottom = "0px";
+
+  return () => {
+    padded.style.paddingTop = previousTop;
+    padded.style.paddingBottom = previousBottom;
+  };
+}
+
 /**
  * Misst Kante, Breite und Kopfzeilenhöhe an einem Anker, der selbst **nicht**
  * ausbricht — sonst misst man die eigene Verschiebung mit.
@@ -218,8 +264,11 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
     }
 
     // Erst räumen, dann messen: ein noch clippender Vorfahr verfälscht die
-    // Breite nicht, aber ein bereits ausgebrochenes Element täte es.
+    // Breite nicht, aber ein bereits ausgebrochenes Element täte es. Das
+    // Padding des Abschnitts fällt vor der Messung, weil es die gemessene
+    // Kopfzeilenhöhe sonst um seinen eigenen Wert zu gross ausweist.
     const opening = openClippingAncestors(anchor);
+    const closePadding = openSectionPadding(anchor);
 
     const update = (): void =>
       setMetrics((previous) => {
@@ -248,6 +297,7 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
       window.addEventListener("resize", update);
       return () => {
         window.removeEventListener("resize", update);
+        closePadding();
         opening.undo();
       };
     }
@@ -257,6 +307,7 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
     observer.observe(anchor);
     return () => {
       observer.disconnect();
+      closePadding();
       opening.undo();
     };
   }, [anchor, enabled]);
