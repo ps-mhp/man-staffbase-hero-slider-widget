@@ -127,6 +127,16 @@ describe("Stylesheets", () => {
       );
     });
 
+    it("nimmt der Bühne die Luft nach unten, wenn sie den Abschnitt füllt", () => {
+      // Die Luft von oben ist genau die Lücke, um die es bei der
+      // Abschnittshöhe geht; der Abstand zum nächsten Abschnitt gehört dort
+      // dem Abschnitt. Ebenfalls verstärkt, sonst schlägt die eigene Regel
+      // für `.man-hero-host` zurück.
+      expect(read("hero-slider.scss")).toMatch(
+        /\.man-hero-host--fill\s*\{[\s\S]*?man-outshine-host\s*\{\s*margin-bottom:\s*0/,
+      );
+    });
+
     it("hält die Knöpfe des Dialogs kompakt", () => {
       // Staffbase gibt den Knöpfen im Konfigurationsdialog `margin: auto`.
       // Live gemessen lagen dadurch 219px Luft neben "Abbrechen", und die

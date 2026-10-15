@@ -16,6 +16,7 @@ import {
   measureBleed,
   openClippingAncestors,
   openSectionPadding,
+  stretchToSection,
 } from "./full-bleed";
 
 /**
@@ -219,6 +220,150 @@ describe("openSectionPadding", () => {
     expect(() => openSectionPadding(widget)()).not.toThrow();
     // Im klassischen Editor gibt es keinen Abschnitt — und nichts anzufassen.
     expect(outside.style.paddingTop).toBe("48px");
+  });
+});
+
+/**
+ * Wie `buildSection`, aber mit der Ahnenkette, die der neue Editor zwischen
+ * Abschnitt und Baustein stapelt — gemessen am 15.10.2026: Container mit
+ * `mb-6`, Spalte, Hülle des Bausteins, `sb-custom-block`. Jede Stufe steuert
+ * ihren Teil zu der Lücke unter der Bühne bei.
+ */
+function buildChain(): {
+  section: HTMLElement;
+  padded: HTMLElement;
+  container: HTMLElement;
+  block: HTMLElement;
+  host: HTMLElement;
+} {
+  const section = document.createElement("div");
+  section.dataset.c13yComponent = "section-block";
+  section.style.padding = "0 0 24px";
+
+  const padded = document.createElement("div");
+  padded.style.padding = "40px 50px";
+
+  const container = document.createElement("div");
+  container.dataset.c13yComponent = "container-block";
+  container.style.marginBottom = "32px";
+
+  const block = document.createElement("div");
+  const host = document.createElement("div");
+
+  block.appendChild(host);
+  container.appendChild(block);
+  padded.appendChild(container);
+  section.appendChild(padded);
+  document.body.appendChild(section);
+  return { section, padded, container, block, host };
+}
+
+describe("stretchToSection", () => {
+  it("nimmt der Kette bis zum Abschnitt die senkrechten Abstände", () => {
+    const { container, host } = buildChain();
+
+    stretchToSection(host);
+
+    expect(container.style.marginBottom).toBe("0px");
+    expect(container.style.marginTop).toBe("0px");
+  });
+
+  it("nimmt dem Abschnitt seinen eigenen senkrechten Innenabstand", () => {
+    const { section, host } = buildChain();
+
+    stretchToSection(host);
+
+    // 24px am Abschnitt selbst — ein anderes Element als der Polster-`div`
+    // darin, um den sich `openSectionPadding` kümmert.
+    expect(section.style.paddingBottom).toBe("0px");
+    expect(section.style.paddingTop).toBe("0px");
+  });
+
+  it("reicht die Höhe über jeden Vorfahren durch", () => {
+    const { padded, container, block, host } = buildChain();
+
+    stretchToSection(host);
+
+    // Lückenlos: bricht die Kette an einer Stelle, löst sich `height: 100%`
+    // der Bühne wieder zu `auto` auf und eine eingestellte Abschnittshöhe
+    // käme nie unten an.
+    expect([padded, container, block].map((el) => el.style.height)).toEqual([
+      "100%",
+      "100%",
+      "100%",
+    ]);
+  });
+
+  it("lässt die Höhe des Abschnitts selbst unangetastet", () => {
+    const { section, host } = buildChain();
+
+    stretchToSection(host);
+
+    // Der Abschnitt gibt die Höhe vor, er nimmt sie nicht entgegen.
+    expect(section.style.height).toBe("");
+  });
+
+  it("macht ein `inline` darstellendes Element blockweise", () => {
+    const { block, host } = buildChain();
+    // `sb-custom-block` ist ein unbekanntes Element; eine Höhe greift an
+    // einem `inline`-Kasten nicht.
+    block.style.display = "inline";
+
+    stretchToSection(host);
+
+    expect(block.style.display).toBe("block");
+  });
+
+  it("findet den Abschnitt auch jenseits eines Shadow Roots", () => {
+    const { section, host } = buildChain();
+    const inner = document.createElement("div");
+    host.attachShadow({ mode: "open" }).appendChild(inner);
+
+    stretchToSection(inner);
+
+    expect(section.style.paddingBottom).toBe("0px");
+  });
+
+  it("setzt die Werte mit Nachdruck", () => {
+    const { section, container, host } = buildChain();
+
+    stretchToSection(host);
+
+    // Ohne `!important` blieben live 56 der 88 Lückenpixel stehen: der
+    // Editor führt `mb-6` am Container und den Innenabstand des Abschnitts
+    // selbst mit Nachdruck, und ein gewöhnlicher Inline-Wert verliert
+    // dagegen (gemessen am 15.10.2026).
+    expect(container.style.getPropertyPriority("margin-bottom")).toBe("important");
+    expect(section.style.getPropertyPriority("padding-bottom")).toBe("important");
+  });
+
+  it("stellt beim Zurücknehmen den vorherigen Zustand her", () => {
+    const { section, padded, container, host } = buildChain();
+
+    stretchToSection(host)();
+
+    expect(container.style.marginBottom).toBe("32px");
+    expect(padded.style.height).toBe("");
+    expect(section.style.paddingBottom).toBe("24px");
+    // Waagerecht war nie etwas zu tun.
+    expect(padded.style.paddingLeft).toBe("50px");
+  });
+
+  it("lässt ohne Abschnitt die ganze Kette unangetastet", () => {
+    const outside = document.createElement("div");
+    const middle = document.createElement("div");
+    const host = document.createElement("div");
+    middle.style.marginBottom = "32px";
+    middle.appendChild(host);
+    outside.appendChild(middle);
+    document.body.appendChild(outside);
+
+    stretchToSection(host);
+
+    // Entweder ganz oder gar nicht: ein halb geräumter Weg hinterliesse im
+    // klassischen Editor eine zerschossene Seite.
+    expect(middle.style.marginBottom).toBe("32px");
+    expect(middle.style.height).toBe("");
   });
 });
 

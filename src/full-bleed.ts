@@ -207,6 +207,102 @@ export function openSectionPadding(element: HTMLElement): () => void {
   };
 }
 
+/** Die Eigenschaften, die `stretchToSection` anfasst. */
+type FillProperty =
+  | "margin-top"
+  | "margin-bottom"
+  | "padding-top"
+  | "padding-bottom"
+  | "height"
+  | "display";
+
+/**
+ * Lässt die Bühne die Höhe ihres Abschnitts einnehmen.
+ *
+ * Gemessen am 15.10.2026 auf /content/page/6ad091f099aab81970383823: der
+ * Abschnitt war 682px hoch, die Bühne 594px. Die fehlenden 88px lagen
+ * sämtlich **unter** ihr; oben schloss sie dank `openSectionPadding` bereits
+ * bündig an. Sie stammten aus Abständen, die der neue Editor zwischen Bühne
+ * und Abschnittskante stapelt — 32px eigene Luft der Bühne, 32px `mb-6` des
+ * Containers, 24px Innenabstand des Abschnitts. Eine freie Fläche, in die
+ * die Bühne wachsen könnte, gab es also gar nicht: der Abschnitt stand auf
+ * Inhaltshöhe, und der „ungenutzte" Rest war Abstand.
+ *
+ * Deshalb zwei Eingriffe statt einem:
+ *
+ * 1. Die senkrechten Abstände auf dem Weg vom Baustein bis zum Abschnitt
+ *    fallen — damit schliesst die Bühne unten so bündig ab wie oben.
+ * 2. Jeder Vorfahr bekommt `height: 100%`. Steht der Abschnitt auf
+ *    Inhaltshöhe, löst sich das mangels fester Elternhöhe zu `auto` auf und
+ *    ändert nichts; hat er eine eingestellte Höhe oder eine höhere
+ *    Nachbarspalte, reicht die Kette diese Höhe bis zur Bühne durch. Dasselbe
+ *    CSS trägt beide Fälle, ohne dass das Widget sie unterscheiden müsste.
+ *
+ * `!important` ist hier nicht Bequemlichkeit, sondern gemessen: ohne
+ * Nachdruck blieben von den 88px genau 56 stehen — der Editor führt `mb-6`
+ * am Container und den Innenabstand des Abschnitts selbst mit `!important`,
+ * und ein gewöhnlicher Inline-Wert verliert dagegen. Mit Nachdruck ist die
+ * Lücke oben wie unten 0 (am selben Tag auf derselben Seite nachgestellt).
+ *
+ * Angefasst wird nur die Ahnenkette der Bühne, nicht der übrige Abschnitt.
+ * Die Stufe ist ausdrücklich zu wählen; steht noch etwas anderes im selben
+ * Abschnitt, rückt es durch die entfallenden Abstände näher an die Bühne —
+ * das ist die Bedeutung von „Abschnittshöhe" und kein Versehen.
+ *
+ * Der senkrechte Innenabstand des Abschnitts **selbst** fällt hier, nicht in
+ * `openSectionPadding`: dort geht es um den Polster-`div` darin, und das sind
+ * zwei verschiedene Elemente mit zwei verschiedenen Werten (gemessen 40px im
+ * `div`, 24px am Abschnitt).
+ *
+ * @returns nimmt alle Eingriffe zurück.
+ */
+export function stretchToSection(element: HTMLElement): () => void {
+  const undos: Array<() => void> = [];
+  const force = (node: HTMLElement, property: FillProperty, value: string): void => {
+    const previousValue = node.style.getPropertyValue(property);
+    const previousPriority = node.style.getPropertyPriority(property);
+    undos.push(() => {
+      // Ein leerer Wert heisst „stand nicht inline" — dann muss die
+      // Eigenschaft ganz verschwinden, nicht auf `""` stehen bleiben.
+      if (previousValue === "") node.style.removeProperty(property);
+      else node.style.setProperty(property, previousValue, previousPriority);
+    });
+    node.style.setProperty(property, value, "important");
+  };
+
+  // Erst sammeln, dann setzen: ohne Abschnitt am Ende der Kette bleibt alles
+  // unangetastet, statt auf halbem Weg Spuren zu hinterlassen.
+  const chain: HTMLElement[] = [];
+  let node: HTMLElement | null = parentOf(element);
+  while (node !== null && node !== document.body && node !== document.documentElement) {
+    if (node.matches(SECTION_BLOCK)) break;
+    chain.push(node);
+    node = parentOf(node);
+  }
+
+  const section = node?.matches(SECTION_BLOCK) === true ? node : null;
+  if (section === null) return () => undefined;
+
+  for (const ancestor of chain) {
+    force(ancestor, "margin-top", "0px");
+    force(ancestor, "margin-bottom", "0px");
+    force(ancestor, "height", "100%");
+    // `sb-custom-block` ist ein unbekanntes Element und damit `inline`; eine
+    // Höhe greift daran nicht. Gemessen am 15.10.2026: `display: inline` bei
+    // 594px Rechteckhöhe — die Höhe stammte ausschliesslich vom Inhalt.
+    if (getComputedStyle(ancestor).display === "inline") force(ancestor, "display", "block");
+  }
+
+  // Der Abschnitt gibt die Höhe vor, er nimmt sie nicht entgegen: angefasst
+  // wird nur sein eigener senkrechter Innenabstand.
+  force(section, "padding-top", "0px");
+  force(section, "padding-bottom", "0px");
+
+  return () => {
+    for (const undo of undos) undo();
+  };
+}
+
 /**
  * Misst Kante, Breite und Kopfzeilenhöhe an einem Anker, der selbst **nicht**
  * ausbricht — sonst misst man die eigene Verschiebung mit.
@@ -250,15 +346,23 @@ export function measureBleed(anchor: HTMLElement, limit: HTMLElement | null = nu
  *
  * @param anchor das nicht ausbrechende Element, an dem gemessen wird.
  * @param enabled ob überhaupt ausgebrochen werden soll.
+ * @param fill ob die Bühne die Höhe ihres Abschnitts einnehmen soll
+ * (Höhenstufe „Abschnittshöhe"). Unabhängig vom Ausbruch, aber im selben
+ * Effekt: beide räumen an derselben Ahnenkette, und zwei Effekte nähmen sich
+ * gegenseitig die gemerkten Vorzustände ab.
  * @returns die Maße, oder `null` solange (oder falls) kein Ausbruch möglich
  * ist. Erst mit einem Ergebnis darf die Bühne breit werden — vorher wäre sie
  * für einen Bildaufbau lang falsch positioniert.
  */
-export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): BleedMetrics | null {
+export function useFullBleed(
+  anchor: HTMLElement | null,
+  enabled: boolean,
+  fill = false,
+): BleedMetrics | null {
   const [metrics, setMetrics] = useState<BleedMetrics | null>(null);
 
   useEffect(() => {
-    if (anchor === null || !enabled) {
+    if (anchor === null || (!enabled && !fill)) {
       setMetrics(null);
       return;
     }
@@ -267,8 +371,24 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
     // Breite nicht, aber ein bereits ausgebrochenes Element täte es. Das
     // Padding des Abschnitts fällt vor der Messung, weil es die gemessene
     // Kopfzeilenhöhe sonst um seinen eigenen Wert zu gross ausweist.
-    const opening = openClippingAncestors(anchor);
+    const opening = enabled
+      ? openClippingAncestors(anchor)
+      : { undo: (): void => undefined, limit: null };
     const closePadding = openSectionPadding(anchor);
+    const collapse = fill ? stretchToSection(anchor) : (): void => undefined;
+
+    // Rücknahme in umgekehrter Reihenfolge des Eingriffs.
+    const undoAll = (): void => {
+      collapse();
+      closePadding();
+      opening.undo();
+    };
+
+    // Ohne Ausbruch gibt es nichts zu messen; die Höhe steht trotzdem schon.
+    if (!enabled) {
+      setMetrics(null);
+      return undoAll;
+    }
 
     const update = (): void =>
       setMetrics((previous) => {
@@ -297,8 +417,7 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
       window.addEventListener("resize", update);
       return () => {
         window.removeEventListener("resize", update);
-        closePadding();
-        opening.undo();
+        undoAll();
       };
     }
 
@@ -307,10 +426,9 @@ export function useFullBleed(anchor: HTMLElement | null, enabled: boolean): Blee
     observer.observe(anchor);
     return () => {
       observer.disconnect();
-      closePadding();
-      opening.undo();
+      undoAll();
     };
-  }, [anchor, enabled]);
+  }, [anchor, enabled, fill]);
 
   return metrics;
 }

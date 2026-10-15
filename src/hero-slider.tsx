@@ -29,9 +29,15 @@ import { DEFAULT_AUTOPLAY_DELAY_MS, useSlider } from "./use-slider";
 import heroSliderCss from "./styles/hero-slider.scss";
 
 /** Die Höhenstufen aus der Konfiguration; `medium` folgt der CI-Spec 3.9. */
-export type HeroHeight = "small" | "medium" | "large" | "viewport";
+export type HeroHeight = "small" | "medium" | "large" | "viewport" | "section";
 
-export const HERO_HEIGHTS: readonly HeroHeight[] = ["small", "medium", "large", "viewport"];
+export const HERO_HEIGHTS: readonly HeroHeight[] = [
+  "small",
+  "medium",
+  "large",
+  "viewport",
+  "section",
+];
 
 /** Unterhalb dieser Breite zeigt das `<picture>` den Hochkant-Zuschnitt. */
 const PORTRAIT_MEDIA = "(orientation: portrait) and (max-width: 767px)";
@@ -199,7 +205,7 @@ export function HeroSlider({
     delayMs: autoplayDelayMs,
   });
 
-  const bleed = useFullBleed(anchor, fullBleed);
+  const bleed = useFullBleed(anchor, fullBleed, height === "section");
   const portrait = useMediaQuery(PORTRAIT_MEDIA);
 
   const onKeyDown = useCallback(
@@ -241,7 +247,10 @@ export function HeroSlider({
     // Der äussere Kasten bleibt immer in der Inhaltsspalte; nur der innere
     // bricht aus. Ohne diese Trennung gäbe es keinen festen Punkt, an dem sich
     // die Kante der Spalte messen liesse.
-    <div className="man-hero-host" ref={setAnchor}>
+    <div
+      className={`man-hero-host${height === "section" ? " man-hero-host--fill" : ""}`}
+      ref={setAnchor}
+    >
       <div
         className={[
           "man-hero",

@@ -47,6 +47,7 @@ export const configurationSchema: JSONSchema7 = {
         { const: "medium", title: "Standard (420–560 px)" },
         { const: "large", title: "Hoch (560–720 px)" },
         { const: "viewport", title: "Bildschirmhoch" },
+        { const: "section", title: "Abschnittshöhe (neuer Editor)" },
       ],
     },
     [FULL_BLEED_ATTRIBUTE]: {
@@ -77,7 +78,10 @@ export const uiSchema: UiSchema = {
   [HEIGHT_ATTRIBUTE]: {
     "ui:help":
       "Die Bühne ist auf breiten Bildschirmen 21:9 und auf schmalen 4:3, begrenzt durch die gewählte Stufe. " +
-      "„Bildschirmhoch“ füllt die sichtbare Seite abzüglich der Kopfzeile.",
+      "„Bildschirmhoch“ füllt die sichtbare Seite abzüglich der Kopfzeile. " +
+      "„Abschnittshöhe“ gilt nur im neuen Editor: die Bühne schliesst oben und unten bündig mit dem " +
+      "Abschnitt ab und nimmt dessen Höhe ein. Steht noch etwas anderes im selben Abschnitt, rückt es " +
+      "näher an die Bühne.",
   },
   [FULL_BLEED_ATTRIBUTE]: {
     "ui:help":

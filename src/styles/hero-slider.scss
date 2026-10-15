@@ -137,6 +137,40 @@
   min-height: 420px;
 }
 
+// Die Bühne nimmt die Höhe ihres Abschnitts ein (neuer Editor).
+//
+// Das Gegenstück zu `stretchToSection`: dort fallen die Abstände zwischen
+// Bühne und Abschnittskante und jeder Vorfahr bekommt `height: 100%`, hier
+// nimmt die Bühne diese Kette auf. Steht der Abschnitt auf Inhaltshöhe —
+// gemessen der Normalfall —, löst sich `height: 100%` mangels fester
+// Elternhöhe zu `auto` auf; dann bestimmt wieder das geerbte
+// `aspect-ratio`, und die Bühne ist so hoch wie zuvor, nur eben ohne die
+// Lücke darunter. Hat der Abschnitt dagegen eine eingestellte Höhe oder eine
+// höhere Nachbarspalte, greift die Kette durch und die Bühne füllt sie.
+.man-hero-host--fill {
+  height: 100%;
+
+  // Die Luft nach unten gehört hier dem Abschnitt. Bliebe sie stehen, wäre
+  // sie genau die Lücke, um die es geht.
+  @include man-outshine-host {
+    margin-bottom: 0;
+  }
+}
+
+.man-hero--height-section {
+  height: 100%;
+}
+
+.man-hero--height-section .man-hero__frame {
+  height: 100%;
+  // Ohne diese Zeile klemmte die Bühne weiterhin auf der Vorgabestufe und
+  // könnte einen höheren Abschnitt gar nicht füllen.
+  max-height: none;
+  // Der Boden für den Fall, dass die Kette zu `auto` zerfällt **und** das
+  // Seitenverhältnis auf einem sehr schmalen Kasten kaum Höhe ergibt.
+  min-height: 320px;
+}
+
 // --- Slides ------------------------------------------------------------------
 .man-hero__slides {
   position: absolute;

@@ -340,6 +340,18 @@ describe("HeroSlider", () => {
       const { container } = render(<HeroSlider slides={[slide("a")]} height="viewport" />);
       expect(container.querySelector(".man-hero")).toHaveClass("man-hero--height-viewport");
     });
+
+    it("zeichnet für die Abschnittshöhe auch den äusseren Kasten aus", () => {
+      const { container } = render(<HeroSlider slides={[slide("a")]} height="section" />);
+      // Die Höhe muss vom Abschnitt bis zur Bühne durchreichen; bricht sie am
+      // äusseren Kasten ab, löst sie sich wieder zu `auto` auf.
+      expect(container.querySelector(".man-hero-host")).toHaveClass("man-hero-host--fill");
+    });
+
+    it("lässt den äusseren Kasten bei allen anderen Stufen in Ruhe", () => {
+      const { container } = render(<HeroSlider slides={[slide("a")]} height="large" />);
+      expect(container.querySelector(".man-hero-host")).not.toHaveClass("man-hero-host--fill");
+    });
   });
 
   describe("Bedienelemente", () => {
