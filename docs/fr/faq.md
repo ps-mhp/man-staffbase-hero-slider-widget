@@ -1,116 +1,115 @@
 # FAQ
 
-**Question :** J’ai créé un toboggan, mais la scène reste vide. 
+**Question :** J'ai créé une diapositive, mais la scène reste vide.
 
-Réponse : La diapositive manque de l’image. Les diapositives sans image ne sont pas affichées — un
-une zone sombre vide serait indiscernable d’une erreur sur la page. 
-Ouvrez l’éditeur et sélectionnez une image sous **Image ou Vidéo**
-Ou saisit une adresse. 
+Réponse : Il manque une image à la diapositive. Les diapositives sans image ne s'affichent pas — une
+surface sombre et vide serait impossible à distinguer d'une erreur sur la page.
+Ouvrez l'éditeur et sélectionnez une image sous **Image ou vidéo**
+ou saisissez une adresse.
 
-**Question :** J’ai saisi une adresse vidéo, mais la diapositive ne s’affiche que
-une surface sombre. 
+**Question :** J'ai saisi une adresse vidéo, mais la diapositive n'affiche qu'
+une zone sombre.
 
-Réponse : La plupart du temps, la vidéo n’est pas disponible sans inscription, ou bien **Art** est écrit
-à **Image** car l’adresse n’a pas d’extension. Ouvrir l’adresse dans
-Une fenêtre de navigateur privée : si elle ne s’exécute pas là, le
-Les lecteurs ne le font pas. Un message juste en dessous du champ signifie que l’adresse
-n’a pas été adopté — il doit commencer par « https:// ». 
+Réponse : La plupart du temps, la vidéo n’est pas accessible sans connexion, ou le **Type** est
+réglé sur **Image**, car l’adresse ne comporte pas d’extension. Ouvrez l’adresse dans
+une fenêtre de navigateur privée : si elle ne fonctionne pas là-bas, les
+lecteurs et lectrices ne la verront pas non plus. Un message situé juste en dessous du champ indique que l’adresse
+n’a pas été prise en compte — elle doit commencer par `https://`.
 
-**Question :** J’ai entré une étiquette pour le bouton, mais
-elle n’apparaît pas. 
+**Question :** J’ai saisi un libellé pour le bouton, mais
+il n’apparaît pas.
 
-Réponse : Le bouton a besoin de **deux** — étiquette et cible. Tant que
-Un des champs est vide, il n’est pas affiché. 
+Réponse : Le bouton a besoin des **deux** — libellé et destination. Tant que
+l’un des champs est vide, il ne s’affiche pas.
 
-**Question :** L’image ne couvre pas toute la largeur de la fenêtre. 
+**Question :** L’image ne s’affiche pas sur toute la largeur de la fenêtre.
 
-Réponse : Deux causes possibles. L’une ou l’autre est **Afficher la largeur complète** 
-Ou le widget se trouve dans une colonne à côté d’autres contenus. 
-Mettez-le sur une ligne distincte en haut de la page. 
+Réponse : Il y a deux causes possibles. Soit l’option **Afficher sur toute la largeur**
+est désactivée, soit le widget se trouve dans une colonne à côté d’autres contenus.
+Placez-le sur une ligne distincte en haut de la page.
 
-**Question :** Le texte n’est pas là où commence le reste du contenu de la page. 
+**Question :** Le texte ne se trouve pas à l’endroit où commence le reste du contenu de la page.
 
-Réponse : L’étape est basée sur la largeur de contenu que la page indique. 
-Si cela dévie, signalez le cas avec l’adresse de la page. 
+Réponse : La zone d’édition s’adapte à la largeur de contenu indiquée par la page.
+Si celle-ci diffère, signalez le problème en précisant l’adresse de la page.
 
-**Question :** Au lieu de l’éditeur, je vois un champ de texte « Entrées » avec des boucles
-Des crochets dedans. 
+**Question :** À la place de l’éditeur, je vois un champ de texte « Entrées » contenant des
+accolades.
 
-Réponse : L’éditeur n’a pas réussi à s’accrocher au dialogue. Fin
-Paramètres et les rouvrir. Le texte dans le champ est le
-version approximative des entrées ; ne pas l’éditer à la main — une faute de frappe
-En l’intégrant, tous les foils disparaissent. 
+Réponse : L’éditeur n’a pas pu s’intégrer à la boîte de dialogue. Fermez
+les paramètres et rouvrez-les. Le texte dans le champ correspond à la
+version brute des entrées ; ne le modifiez pas manuellement — une faute de frappe
+dans ce champ ferait disparaître toutes les diapositives.
 
-**Question :** La scène ne change pas toute seule. 
+**Question :** La scène ne change pas automatiquement.
 
-Réponse : Trois causes possibles : Il n’y a qu’une seule diapositive ; **secondes par diapositive** 
-est réglé à '0' ; ou dans le système d’exploitation, « Réduire le mouvement » est activé. 
-Dans ce dernier cas, c’est intentionnel — le défilement peut toujours se faire via des flèches
-et des titres. 
+Réponse : Il y a trois causes possibles : il n’y a qu’une seule diapositive ; le paramètre **Secondes par diapositive**
+est réglé sur `0` ; ou l’option « Réduire les animations » est activée dans le système d’exploitation.
+Dans ce dernier cas, c’est voulu — vous pouvez toujours faire défiler les diapositives à l’aide des flèches
+et des traits.
 
-**Question :** Je ne vois aucune flèche sur le téléphone. 
+**Question :** Je ne vois pas de flèches sur mon téléphone.
 
-Réponse : C’est ainsi que c’est censé. Sur des écrans étroits, on fait glisser ; le
-Les lignes sous le texte continuent d’indiquer quelle diapositive se trouve actuellement devant. 
+Réponse : C’est normal. Sur les écrans étroits, on fait glisser le doigt ; les
+lignes sous le texte indiquent toujours quelle diapositive est actuellement au premier plan.
 
-**Question :** Mon image est recadrée au bord. 
+**Question :** Mon motif est rogné sur les bords.
 
-Réponse : La scène recadre en 21:9 ou 4:3 selon la largeur de la fenêtre. Sélectionner
-Créez une image avec de l’air autour du sujet, ou entrez **Image pour
-Le format portrait** a sa propre découpe découpée sur le bord. 
+Réponse : La scène recadre l’image au format 21:9 ou 4:3 en fonction de la largeur de la fenêtre. Choisissez
+une image laissant un espace autour du motif, ou définissez sous **Image pour
+format portrait** votre propre recadrage à la verticale.
 
-**Question :** Puis-je créer plus de huit diapositives ? 
+**Question :** Puis-je créer plus de huit diapositives ?
 
-Réponse : Non. À cinq secondes par diapositive, une course complète prend même à
-huit diapositives quarante secondes — personne ne reste aussi longtemps sur scène. 
-Le huit s’applique à toutes les diapositives ensemble : une entrée de canal avec cinq poteaux
-Il n’autorise que trois autres diapositives à côté. 
+Réponse : Non. À raison de cinq secondes par diapositive, un cycle complet dure déjà
+quarante secondes avec huit diapositives — personne ne reste aussi longtemps sur une scène.
+Le nombre huit s’applique à l’ensemble des diapositives : une entrée de chaîne comportant cinq articles
+ne permet d’ajouter que trois diapositives supplémentaires.
 
-**Question :** Dois-je maintenir la scène lorsqu’un nouveau post est publié dans les actualités ?
-? 
+**Question :** Dois-je mettre à jour la scène lorsqu’un nouvel article
+paraît dans les actualités ?
 
-Réponse : Pas avec une entrée de la chaîne d’information — elle affiche toujours le courant
-Publications de la chaîne selon les filtres définis. Un **article d’actualité**- 
-L’entrée, en revanche, reste avec le poste que vous avez choisi. 
+Réponse : Pas dans le cas d’une entrée de **canal d’actualités** — celle-ci affiche toujours les
+articles actuels du canal selon les filtres définis. Une entrée de type **« publication d’actualité »**,
+en revanche, reste associée à la publication que vous avez sélectionnée.
 
-**Question :** Une diapositive des informations a soudainement disparu. 
+**Question :** Une diapositive issue des actualités a soudainement disparu.
 
-Réponse : Le post a été supprimé, déplacé ou est disponible pour la personne qui lit
-invisible. Seul ce fleuret tombe ; les autres restent debout. 
+Réponse : La publication a été supprimée, déplacée ou n’est pas visible pour le lecteur. Seule cette diapositive a disparu ; les autres restent affichées.
 
-**Question :** Mon entrée de chaîne montre moins de diapositives que de set. 
+**Question :** Mon entrée de chaîne affiche moins de diapositives que ce qui est configuré.
 
-Réponse : La plupart du temps, les filtres sont trop étroits. **Seuls les posts avec une image**
-Preset — Un canal sans images ne fournira rien. Vérifiez le
-Aperçu dans l’éditeur : il montre exactement ce qui apparaîtra sur scène. 
+Réponse : La plupart du temps, les filtres sont trop restrictifs. L’option **« Uniquement les articles avec image »** est
+sélectionnée par défaut — une chaîne sans images ne fournit donc aucun résultat. Vérifiez l’
+aperçu dans l’éditeur : il affiche exactement ce qui apparaîtra sur la scène.
 
-**Question :** Il n’y a pas un seul canal dans la sélection des chaînes, mais plutôt un
-Champ texte pour un identifiant. 
+**Question :** La sélection des chaînes ne contient aucune chaîne, mais un
+champ de texte destiné à saisir un identifiant.
 
-Réponse : La liste des chaînes d’information n’était pas disponible. Charger le dialogue
-nouveau. Si cela ne suffit pas, entrez l’identifiant de canal à la main ; il tient
-dans l’adresse du canal dans le CMS. 
+Réponse : La liste des chaînes d’actualités n’était pas accessible. Rechargez la boîte de dialogue.
+Si cela ne fonctionne pas, saisissez manuellement l’identifiant de la chaîne ; il figure
+dans l’adresse de la chaîne dans le CMS.
 
-**Question :** Pourquoi l’image d’un reportage est-elle floue sur scène ou
-Étrangement coupé ? 
+**Question :** Pourquoi l’image d’un article d’actualité est-elle floue ou
+cadrée de manière étrange sur la scène ?
 
-Réponse : Les images mises en avant sont coupées pour le format du flux, pas pour un
-Scène haute à l’écran. Dans l’entrée sous **Conception scénique
-écraser** un séparé, transversal et d’au moins 1920 px de large. 
+Réponse : Les images des articles sont recadrées pour le format de flux, et non pour une
+scène occupant toute la hauteur de l'écran. Dans l'entrée, sous **Remplacer l'image de la scène**,
+enregistrez votre propre image, au format paysage et d'au moins 1920 px de large.
 
-**Question :** Que se passe-t-il avec la scène lors de la traduction automatique de la
-Côté ? 
+**Question :** Que devient la scène lors de la traduction automatique de la
+page ?
 
-Réponse : Tous les textes écrits par vous-mêmes sont traduits : titre, 
-Sous-ligne, légende de bouton et description de l’image d’une diapositive
-ainsi que le titre et la légende d’une entrée de presse. 
-Les images, les cibles de recommandation, les canaux, les filtres et la commande restent inchangés. 
+Réponse : Tous les textes rédigés par vos soins sont traduits : titre,
+sous-titre, libellé du bouton et description de l’image d’une diapositive,
+ainsi que le titre personnalisé et le libellé d’une actualité.
+Les images, les liens, les chaînes, les filtres et l’ordre restent inchangés.
 
-**Question :** Une entrée de presse montre des textes différents dans la page traduite que dans
-de la langue d’origine — est-ce une erreur ? 
+**Question :** Un article d’actualité affiche, sur la page traduite, des textes différents de ceux de
+la langue d’origine — s’agit-il d’une erreur ?
 
-Réponse : Non. Le titre et le texte du plan d’un article de presse proviennent de l’article
-et elle est affichée dans la langue utilisée par le lecteur dans l’application
-. Seul ce que vous avez écrit dans l’entrée elle-même sera traduit
-. Si une version linguistique de l’article manque, celle existante apparaît au lieu de
-de laisser le papier blanc.
+Réponse : Non. Le titre et le résumé d’un article d’actualité proviennent de l’article
+lui-même, et ceux-ci s’affichent dans la langue que le lecteur a sélectionnée dans l’application
+. Seul ce que vous avez écrit dans l’article lui-même est traduit.
+Si une version linguistique de l’article fait défaut, c’est la version existante qui s’affiche, plutôt que
+de laisser la page vide.

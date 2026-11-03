@@ -1,48 +1,58 @@
-# Hero Slider
+# Hero-Slider
 
-Suwak bohatera to **scena** na początku jednej strony: duży obraz nad
-pełna szerokość okna, powyżej nagłówek, opcjonalnie podlinia oraz
-Przycisk. Model to scena na man.eu. 
+Hero-Slider to **sekcja** u góry strony: duże zdjęcie zajmujące
+całą szerokość okna, nad nim nagłówek, opcjonalnie podtytuł oraz
+przycisk. Wzorem jest sekcja na stronie man.eu.
 
-Jeśli stworzysz kilka slajdów, dostajesz coś zmieniającego: olśnij slajdy
-łączą się ze sobą, przewijanie odbywa się za pomocą strzałek i kresek w lewym dolnym rogu. 
+Jeśli utworzy się kilka slajdów, pojawi się przełącznik: slajdy
+przechodzą płynnie jeden w drugi, a przewijanie odbywa się za pomocą strzałek i kresek w lewym dolnym rogu.
 
-Film nie musi być utrzymywany ręcznie. Oprócz własnych filmów,
-Scena pokazuje także **Artykuły z wiadomości**: 
+Slajd nie musi być edytowany ręcznie. Oprócz własnych slajdów
+strona główna może również wyświetlać **wpisy z aktualności**:
 
-- **Post informacyjny** — konkretny post jako slajd. Obraz, nagłówek
-  A z poczty pojawiają się zapowiedzi, guzik prowadzi do niego. 
-- **Kanał informacyjny** — jeden cały kanał, jeden slajd na post. Ile, w
-  w jakiej kolejności i według których filtrów można regulować. Pojawia się w
-  Channel, jest na scenie bez żadnych dalszych działań. 
+- **Wpis z aktualności** — konkretny wpis jako slajd. Zdjęcie, nagłówek
+  i zapowiedź pochodzą z wpisu, a przycisk prowadzi do niego.
+- **Kanał wiadomości** — cały kanał, jeden slajd na każdy wpis. Liczbę slajdów,
+  ich kolejność oraz filtry można dostosować. Gdy w
+  kanale pojawi się nowy wpis, automatycznie trafia on na scenę.
 
-Trzy odmiany znajdują się na tej samej liście i można je swobodnie mieszać, a
-— na przykład osobny slajd jako lead, a następnie trzy najnowsze
-Posty z kanału. 
+Te trzy rodzaje znajdują się na tej samej liście i można je dowolnie łączyć oraz
+sortować — na przykład osobny slajd jako lead, a za nim trzy najnowsze
+artykuły z kanału.
 
 ## Co widzą czytelnicy
 
-- Obraz przebiega przez całą szerokość okna — nawet jeśli strona jest
-  sam ma węższą kolumnę treści. 
-- **Tekst pozostaje na linii znikającej strony**: zaczyna się od tego samego
-  pionowa linia, taka jak nagłówek, menu i tekst pod sceną. On
-  wyraźnie nie przykleja się do krawędzi obrazu. 
-- Tekst znajduje się w lewym dolnym rogu, na ciemnym przejściu biegnącym od dołu do dołu
-  na górze. Na szerokich ekranach drugi gradient pochodzi od lewej strony
-  dzięki temu lekki tekst pozostaje czytelny na lekkim temacie. 
-- Jeśli jest kilka slajdów: strzałki w lewo i prawo, jedna linia na slajd pomiędzy nimi. 
-  Linia obecnego slajdu jest czerwona. 
-- Przełącznik działa tak długo, jak mysz znajduje się nad sceną lub gdy fokus jest włączony
-  Kłamiesz. Na telefonie jest przesuwanie palcem; strzałki są tam ukryte. 
-- Jeśli ustawiłeś w systemie operacyjnym "Reduce Motion", nie zobaczysz żadnych
-  Zmiana sama w sobie i bez panelu — tylko sterowanie. 
-- Slajdy z wiadomości wyglądają jak każdy inny slajd. Że treść z
-  nie jest rozpoznawalna z zewnątrz. 
+- Obraz zajmuje całą szerokość okna — nawet jeśli strona
+  sama ma węższą kolumnę treści.
+- Scena znajduje się **równo u góry**: jeśli strona posiada pasek nawigacyjny,
+  scena znajduje się bezpośrednio pod nim; jeśli go nie ma, przylega bezpośrednio do
+  menu. Pusty biały pasek, który strona zazwyczaj pozostawia nad pierwszą
+  treścią, zostaje pominięty.
+- **Tekst pozostaje na linii bazowej strony**: zaczyna się na tej samej
+  pionowej linii co nagłówek, menu i tekst poniżej obszaru obrazu. Nie
+  przylega on w żadnym wypadku do krawędzi obrazu.
+- Tekst znajduje się w lewym dolnym rogu, na ciemnym gradientem, który rozchodzi się od dołu
+  do góry. Na szerokich ekranach dodawany jest drugi gradient z lewej strony,
+  aby jasny tekst pozostawał czytelny na jasnym tle.
+- W przypadku wielu slajdów: strzałki po lewej i prawej stronie, a pomiędzy nimi kreska dla każdego slajdu.
+  Kreska bieżącego slajdu jest czerwona.
+- Przełączanie trwa tak długo, jak długo mysz znajduje się nad sceną lub fokus jest na
+  niej. Na telefonie przesuwa się palcem; strzałki są tam ukryte.
+- **Na telefonie** (przy szerokości poniżej 768 pikseli) na
+  obrazku widoczny jest tylko nagłówek o długości maksymalnie czterech wierszy; wszystko, co wykracza poza ten limit, kończy się znakiem „…”.
+  Podtytuł i przycisk są tam ukryte — zamiast tego dotknięcie
+  w dowolnym miejscu slajdu prowadzi do celu przycisku. Dla czytników ekranu
+  ich etykietą pozostaje nazwa tego linku. Jeśli slajd nie ma celu, nie można
+  go dotknąć.
+- Użytkownicy, którzy w systemie operacyjnym włączyli opcję „Ogranicz ruchy”, nie widzą
+  samoczynnej zmiany slajdów ani przejścia — widzą jedynie elementy sterujące.
+- Slajdy z sekcji aktualności wyglądają jak każdy inny slajd. Z zewnątrz nie da się rozpoznać, że treść pochodzi
+  z artykułu.
 
-## Co widzisz w edytorze CMS
+## Co widać w edytorze CMS
 
-Edytor pokazuje etap w kolumnie treści, czyli **węższy niż na
-opublikowanej strony**. Jak daleko naprawdę sięga obraz i gdzie znajduje się tekst
-jest dostępny tylko w wersji zapowiedzi lub na opublikowanej stronie.
-. Zawsze sprawdzaj tam przynajmniej raz na wąską
-Szerokość okna — tu właśnie ma zastosowanie kadrowanie portretowe.
+Edytor wyświetla obszar roboczy w obrębie kolumny treści, a więc **węższy niż na
+opublikowanej stronie**. Jak daleko faktycznie sięga obraz i gdzie znajduje się tekst,
+można ocenić jedynie w podglądzie lub na opublikowanej stronie.
+Zawsze należy tam sprawdzić przynajmniej raz przy wąskiej Zawsze sprawdź to tam przynajmniej raz przy wąskiej
+szerokości okna — tam ma zastosowanie kadrowanie w orientacji pionowej.

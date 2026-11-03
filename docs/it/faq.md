@@ -1,116 +1,116 @@
-# FAQ
+# Domande frequenti
 
-**Domanda:** Ho creato uno scivolo, ma il palco è ancora vuoto. 
+**Domanda:** Ho creato una diapositiva, ma lo schermo rimane vuoto.
 
-Risposta: La diapositiva manca dell'immagine. Le diapositive senza immagine non vengono mostrate — una
-un'area vuota e scura sarebbe indistinguibile da un errore sulla pagina. 
-Apri l'editor e seleziona un'immagine sotto **Immagine o Video**
-oppure inserisci un indirizzo. 
+Risposta: Alla diapositiva manca l’immagine. Le diapositive senza immagine non vengono visualizzate: una
+superficie vuota e scura non sarebbe distinguibile da un errore sulla pagina.
+Apri l’editor e seleziona un’immagine nella sezione **Immagine o video**
+oppure inserisci un indirizzo.
 
-**Domanda:** Ho inserito un indirizzo video, ma la diapositiva mostra solo
-una superficie scura. 
+**Domanda:** Ho inserito l’indirizzo di un video, ma la diapositiva mostra solo
+una superficie scura.
 
-Risposta: La maggior parte delle volte, il video non è disponibile senza registrazione, oppure viene scritto **Art**
-a **Image** perché l'indirizzo non ha un'estensione. Apri l'indirizzo in
-Una finestra privata del browser: se non viene eseguita lì, il
-I lettori no. Un messaggio direttamente sotto il campo significa che l'indirizzo
-non è stata adottata — deve iniziare con 'https://'. 
+Risposta: Di solito il video non è accessibile senza registrazione, oppure **Tipo** è impostato
+su **Immagine** perché l’indirizzo non ha un’estensione. Apri l’indirizzo in
+una finestra privata del browser: se lì non funziona, non lo vedranno nemmeno i
+lettori. Un messaggio proprio sotto il campo indica che l’indirizzo
+non è stato accettato — deve iniziare con `https://`.
 
-**Domanda:** Ho inserito un'etichetta per il pulsante, ma
-non appare. 
+**Domanda:** Ho inserito una didascalia per il pulsante, ma
+non viene visualizzata.
 
-Risposta: Il pulsante ha bisogno di **entrambi** — etichetta e bersaglio. Finché
-Uno dei campi è vuoto, non viene mostrato. 
+Risposta: Il pulsante richiede **entrambi** — testo e destinazione. Finché
+uno dei campi è vuoto, non viene visualizzato.
 
-**Domanda:** L'immagine non si estende su tutta la larghezza della finestra. 
+**Domanda:** L’immagine non occupa l’intera larghezza della finestra.
 
-Risposta: Due possibili cause. Entrambe è **Mostra tutta la larghezza** 
-oppure il widget si trova in una colonna accanto ad altri contenuti. 
-Mettilo su una riga a sé in cima alla pagina. 
+Risposta: Due possibili cause. O l’opzione **Mostra a tutta larghezza**
+è disattivata, oppure il widget si trova in una colonna accanto ad altri contenuti.
+Posizionatelo in una riga a sé stante nella parte superiore della pagina.
 
-**Domanda:** Il testo non è il punto in cui inizia il resto del contenuto della pagina. 
+**Domanda:** Il testo non si trova nel punto in cui inizia il resto del contenuto della pagina.
 
-Risposta: La fase si basa sulla larghezza del contenuto che la pagina riporta. 
-Se si discosta, segnala il caso con l'indirizzo della pagina. 
+Risposta: L’area di lavoro si adatta alla larghezza del contenuto segnalata dalla pagina.
+Se la larghezza è diversa, segnalate il caso indicando l’indirizzo della pagina.
 
-**Domanda:** Invece dell'editor, vedo un campo di testo "Voci" con riccio
-Ci sono parentesi dentro. 
+**Domanda:** Al posto dell’editor vedo un campo di testo «Voci» con delle
+parentesi graffe al suo interno.
 
-Risposta: L'editor non riusciva a collegarsi al dialogo. Chiudi
-Impostazioni e aprili di nuovo. Il testo nel campo è il
-versione approssimativa delle voci; non modificarlo a mano — un errore di battitura
-In esso fa sparire tutti i foil. 
+Risposta: L’editor non è riuscito a integrarsi nella finestra di dialogo. Chiuda
+le impostazioni e le riapra. Il testo nel campo è la
+bozza delle voci; non lo modifichi manualmente — un errore di battitura
+al suo interno fa scomparire tutte le diapositive.
 
-**Domanda:** Il palco non cambia da solo. 
+**Domanda:** Lo schermo non cambia automaticamente.
 
-Risposta: Tre possibili cause: C'è solo una scivola; **secondi per diapositiva** 
-è impostato su '0'; oppure, nel sistema operativo, "Reduce Motion" è attivato. 
-Nel secondo caso, questo è intenzionale — lo scorrimento può comunque essere fatto tramite frecce
-e trattini. 
+Risposta: Tre possibili cause: c’è una sola diapositiva; **Secondi per diapositiva**
+è impostato su `0`; oppure nel sistema operativo è attivata l’opzione «Riduci movimento».
+In quest’ultimo caso è intenzionale: è comunque possibile scorrere le diapositive tramite le frecce
+e le linee.
 
-**Domanda:** Non vedo frecce sul telefono. 
+**Domanda:** Sul telefono non vedo le frecce.
 
-Risposta: È così che è inteso. Su schermi stretti, si fa scorrere lo scorrimento; il
-Le righe sotto il testo continuano a indicare quale diapositiva si trova attualmente davanti. 
+Risposta: È previsto così. Sugli schermi stretti si scorre con il dito; le
+linee sotto il testo continuano a indicare quale diapositiva è attualmente in primo piano.
 
-**Domanda:** La mia immagine è ritagliata ai bordi. 
+**Domanda:** Il mio soggetto è tagliato ai bordi.
 
-Risposta: Il palco ritaglia a 21:9 o 4:3 a seconda della larghezza della finestra. Seleziona
-Crea un'immagine con aria attorno al soggetto, oppure inserisci **Immagine per
-Il formato verticale** ha un proprio ritaglio tagliato ai bordi. 
+Risposta: A seconda della larghezza della finestra, l’area di visualizzazione ritaglia l’immagine in formato 21:9 o 4:3. Scegliete
+un’immagine con un margine intorno al soggetto, oppure inserite in **Immagine per
+formato verticale** un vostro ritaglio ritagliato in verticale.
 
-**Domanda:** Posso creare più di otto diapositive? 
+**Domanda:** Posso creare più di otto diapositive?
 
-Risposta: No. A cinque secondi per diapositiva, una corsa completa dura anche a
-Otto slide, quaranta secondi — nessuno resta così a lungo su un palco. 
-L'otto vale per tutte le slide insieme: una voce canale con cinque post
-Permette solo altre tre slide accanto. 
+Risposta: No. Con cinque secondi per diapositiva, un ciclo completo dura già
+quaranta secondi con otto diapositive — nessuno rimane su un palcoscenico così a lungo.
+L’otto si riferisce a tutte le diapositive insieme: una voce del canale con cinque contributi
+consente di affiancarle solo altre tre diapositive.
 
-**Domanda:** Devo mantenere il palco quando un nuovo post viene pubblicato nelle notizie?
-? 
+**Domanda:** Devo aggiornare il palco quando nelle Notizie appare un nuovo
+contributo?
 
-Risposta: Non con una voce di un canale di notizie** — mostra sempre la voce corrente
-Post del canale secondo i filtri impostati. Un **post di notizie**- 
-La voce, invece, rimane con il post che hai scelto. 
+Risposta: Non è necessario per una voce del **canale Notizie** — questa mostra sempre i
+contributi attuali del canale in base ai filtri impostati. Una voce **“Articolo delle notizie”**,
+invece, rimane associata all’articolo che avete selezionato.
 
-**Domanda:** Una diapositiva del telegiornale è improvvisamente scomparsa. 
+**Domanda:** Una diapositiva delle notizie è improvvisamente scomparsa.
 
-Risposta: Il post è stato cancellato, spostato o è disponibile per chi legge
-non visibile. Solo questa fiamma cade; gli altri rimangono in piedi. 
+Risposta: L’articolo è stato cancellato, spostato o non è visibile per il lettore
+. Viene eliminata solo quella diapositiva; le altre rimangono.
 
-**Domanda:** La mia voce sul canale mostra meno diapositive di quelle impostate. 
+**Domanda:** La mia voce del canale mostra meno diapositive di quelle impostate.
 
-Risposta: La maggior parte delle volte i filtri sono troppo stretti. **Solo i post con immagine**
-preset — un canale senza immagini non fornirà nulla. Controlla il
-Anteprima nell'editor: mostra esattamente cosa apparirà sul palco. 
+Risposta: Di solito i filtri sono troppo restrittivi. **Solo contributi con immagine** è
+l’impostazione predefinita — un canale senza immagini non mostra quindi nulla. Controllate l’
+anteprima nell’editor: mostra esattamente ciò che apparirà sullo schermo.
 
-**Domanda:** Non c'è un solo canale nella selezione dei canali, ma un
-Campo di testo per un identificatore. 
+**Domanda:** Nella selezione dei canali non compare nessun canale, ma solo un
+campo di testo per l’ID.
 
-Risposta: L'elenco dei canali di notizie non era disponibile. Carica il dialogo
-nuovo. Se non aiuta, inserisci manualmente l'identificatore del canale; rimane valido
-nell'indirizzo del canale nel CMS. 
+Risposta: L’elenco dei canali di notizie non era accessibile. Ricaricate la finestra di dialogo.
+Se ciò non risolve il problema, inserite manualmente l’identificativo del canale; lo trovate
+nell’indirizzo del canale nel CMS.
 
-**Domanda:** Perché l'immagine di un servizio giornalistico è sfocata sul palco o
-strano tagliato? 
+**Domanda:** Perché l’immagine di un post di notizie sul palco risulta sfocata o
+ritagliata in modo strano?
 
-Risposta: Le immagini in evidenza sono tagliate per il formato feed, non per un
-palco alto lo schermo. Nella voce sotto **Progettazione del palco
-sovrascrivere** una separata, trasversale e di almeno 1920 px di larghezza. 
+Risposta: Le immagini degli articoli sono ritagliate per il formato feed, non per un
+palcoscenico a tutta schermata. Nella voce **Sovrascrivi immagine del palcoscenico**,
+inserite un’immagine personalizzata, in formato orizzontale e larga almeno 1920 px.
 
-**Domanda:** Cosa succede al palco durante la traduzione automatica del
-Side? 
+**Domanda:** Cosa succede alla pagina durante la traduzione automatica della
+pagina?
 
-Risposta: Tutti i testi autoscritti sono tradotti: titolo, 
-Sottolinea, didascalia di pulsante e descrizione dell'immagine di una diapositiva
-così come il titolo intestato e la didascalia di una voce di notizie. 
-Immagini, target di referenza, canali, filtri e ordine rimangono invariati. 
+Risposta: Vengono tradotti tutti i testi scritti manualmente: titolo,
+sottotitolo, etichetta del pulsante e descrizione dell’immagine di una diapositiva,
+nonché il titolo sovrascritto e l’etichetta di una voce di notizie.
+Le immagini, i link di destinazione, i canali, i filtri e l’ordine rimangono invariati.
 
-**Domanda:** Una voce di giornale mostra testi diversi nella pagina tradotta rispetto a
-della lingua di partenza — è un errore? 
+**Domanda:** Un articolo della sezione “Notizie” mostra nella pagina tradotta testi diversi rispetto alla
+lingua di origine — si tratta di un errore?
 
-Risposta: No. Il titolo e il testo di riassunto di un articolo di giornale provengono dall'articolo
-E viene mostrato nella lingua che il lettore utilizza nell'app
-. Solo ciò che hai scritto nella voce stessa sarà tradotto
-. Se manca una versione linguistica dell'articolo, appare quella esistente invece di
-Lasciare la carta stagnola vuota.
+Risposta: No. Il titolo e il testo di anteprima di un articolo di notizie provengono dall’articolo
+stesso, che viene visualizzato nella lingua che il lettore ha impostato nell’app
+. Viene tradotto solo ciò che avete scritto nella voce stessa
+. Se manca una versione linguistica del contributo, viene visualizzata quella disponibile, invece di
+lasciare la schermata vuota.

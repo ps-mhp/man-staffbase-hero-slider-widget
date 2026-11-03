@@ -24,6 +24,7 @@ import * as React from "react";
 import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useHotStyle } from "@shared/hot-style";
 import { useFullBleed } from "./full-bleed";
+import { usePageTop } from "./page-top";
 import { Slide, SlideImage, firstFrameUrl, isVideo } from "./slides-model";
 import { DEFAULT_AUTOPLAY_DELAY_MS, useSlider } from "./use-slider";
 import heroSliderCss from "./styles/hero-slider.scss";
@@ -208,6 +209,11 @@ export function HeroSlider({
   const { metrics: bleed, filled } = useFullBleed(anchor, fullBleed, height === "section");
   const portrait = useMediaQuery(PORTRAIT_MEDIA);
 
+  // Der Beginn der Seite, solange eine Bühne auf ihr liegt: unter den
+  // Brotkrumen, wenn es welche gibt, sonst bündig am Menü (siehe
+  // `page-top.ts`).
+  usePageTop();
+
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (slides.length < 2) return;
@@ -330,7 +336,12 @@ export function HeroSlider({
                         // für externe Ziele.
                         rel={slide.cta.newTab === true ? "noopener noreferrer" : undefined}
                       >
-                        {slide.cta.label}
+                        {/* Eigenes Element, damit die Beschriftung schmal
+                            verborgen werden kann, ohne den Link selbst zu
+                            verbergen: dort deckt er die ganze Folie ab und
+                            macht sie zum Ziel, seinen Namen braucht er
+                            trotzdem weiter (siehe `hero-slider.scss`). */}
+                        <span className="man-hero__cta-label">{slide.cta.label}</span>
                       </a>
                     )}
                   </div>

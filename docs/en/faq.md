@@ -1,116 +1,115 @@
 # FAQ
 
-**Question:** I have created a slide, but the stage remains empty. 
+**Question:** I created a slide, but the stage remains blank.
 
-Answer: The slide is missing the image. Slides without an image are not shown — a
-empty dark area would be indistinguishable from a mistake on the page. 
+Answer: The slide is missing an image. Slides without an image are not displayed—an
+empty dark area on the page would be indistinguishable from an error.
 Open the editor and select an image under **Image or Video**
-or enter an address. 
+or enter a URL.
 
-**Question:** I have entered a video address, but the slide only shows
-a dark surface. 
+**Question:** I entered a video URL, but the slide only shows
+a dark area.
 
-Answer: Most of the time, the video is not available without registration, or **Art** is written
-to **Image** because the address does not have an extension. Open the address in
-a private browser window: if it doesn't run there, the
-Readers don't. A message directly below the field means that the address
-has not been adopted — it must begin with 'https://'. 
+Answer: Usually, the video isn’t accessible without logging in, or **Type** is set
+to **Image** because the URL lacks an extension. Open the URL in
+a private browser window: if it doesn’t play there, readers
+won’t be able to see it either. A message directly below the field indicates that the address
+was not accepted—it must begin with `https://`.
 
-**Question:** I have entered a label for the button, but
-she does not appear. 
+**Question:** I entered a label for the button, but
+it doesn’t appear.
 
-Answer: The button needs **both** — label and target. As long as
-one of the fields is empty, it is not displayed. 
+Answer: The button needs **both**—a label and a destination. As long as
+one of the fields is empty, it won’t be displayed.
 
-**Question:** The image does not run over the full width of the window. 
+**Question:** The image doesn’t span the full width of the window.
 
-Answer: Two possible causes. Either is **Show full width** 
-or the widget is in a column next to other content. 
-Put it on its own line at the top of the page. 
+Answer: Two possible causes. Either **Show Full Width**
+is turned off, or the widget is in a column next to other content.
+Place it on its own line at the top of the page.
 
-**Question:** The text is not where the rest of the page content begins. 
+**Question:** The text isn’t where the rest of the page content begins.
 
-Answer: The stage is based on the content width that the page reports. 
-If it deviates, report the case with the page address. 
+Answer: The stage adjusts to the content width reported by the page.
+If it differs, please report the issue along with the page URL.
 
-**Question:** Instead of the editor, I see a text field "Entries" with curly
-Brackets in it. 
+**Question:** Instead of the editor, I see a text field labeled “Entries” with curly
+braces inside it.
 
-Answer: The editor could not hook into the dialog. Close
-Settings and open them again. The text in the field is the
-rough version of the entries; do not edit it by hand — a typo
-in it makes all the foils disappear. 
+Answer: The editor was unable to integrate into the dialog. Close
+the settings and open them again. The text in the field is the
+raw version of the entries; do not edit it manually—a typo
+in it will cause all slides to disappear.
 
-**Question:** The stage does not change by itself. 
+**Question:** The stage doesn’t change on its own.
 
-Answer: Three possible causes: There is only one slide; **seconds per slide** 
-is set to '0'; or in the operating system, "Reduce Motion" is turned on. 
-In the latter case, this is intentional — scrolling can still be done via arrows
-and dashes. 
+Answer: Three possible causes: There’s only one slide; **Seconds per Slide**
+is set to `0`; or “Reduce motion” is enabled in the operating system.
+In the latter case, this is intentional—you can still navigate using arrows
+and lines.
 
-**Question:** I don't see any arrows on the phone. 
+**Question:** I don’t see any arrows on my phone.
 
-Answer: That's how it's intended. On narrow screens, you swipe; the
-Lines below the text continue to indicate which slide is currently in front. 
+Answer: That’s by design. On narrow screens, you swipe; the
+lines below the text still indicate which slide is currently on top.
 
-**Question:** My image is cropped at the edge. 
+**Question:** My image is cropped at the edge.
 
-Answer: The stage crops to 21:9 or 4:3 depending on the width of the window. Select
-Create an image with air around the subject, or enter **Image for
-portrait format** has its own cut-out cut out on edge. 
+Answer: Depending on the window width, the stage crops the image to 21:9 or 4:3. Choose
+an image with some space around the subject, or upload your own portrait-oriented crop under **Image for
+Portrait Orientation**.
 
-**Question:** Can I create more than eight slides? 
+**Question:** Can I create more than eight slides?
 
-Answer: No. At five seconds per slide, a full run takes even at
-eight slides forty seconds — no one stays on a stage for that long. 
-The eight applies to all slides together: One channel entry with five posts
-only allows three other slides next to it. 
+Answer: No. At five seconds per slide, a full cycle takes forty seconds even with
+just eight slides—no one stays on a stage that long.
+The limit of eight applies to all slides combined: A channel entry with five posts
+allows for only three additional slides alongside it.
 
-**Question:** Do I have to maintain the stage when a new post is published in the news.
-? 
+**Question:** Do I have to update the stage when a new post
+appears in the News?
 
-Answer: Not with a **News channel** entry — it always shows the current
-posts of the channel according to the filters set. A **news post**- 
-The entry, on the other hand, remains with the post you have chosen. 
+Answer: Not for a **News Channel** entry—it always displays the latest
+posts from the channel based on the set filters. A **News Post**
+entry, on the other hand, stays with the post you selected.
 
-**Question:** A slide from the news has suddenly disappeared. 
+**Question:** A slide from the News section has suddenly disappeared.
 
-Answer: The post has been deleted, moved, or is available to the person reading
-not visible. Only this one foil falls away; the others remain standing. 
+Answer: The post was deleted, moved, or is not visible to the reader. Only this one slide is missing; the rest remain.
 
-**Question:** My channel entry shows fewer slides than set. 
+**Question:** My channel entry shows fewer slides than I set.
 
-Answer: Most of the time the filters are too narrow. **Only posts with image** is
-preset — a channel without images will not provide anything. Check the
-Preview in the editor: it shows exactly what will appear on stage. 
+Answer: Most often, the filters are too restrictive. **Only posts with images** is
+the default setting—so a channel without images won’t display anything. Check the
+preview in the editor: it shows exactly what will appear on the stage.
 
-**Question:** There is not a single channel in the channel selection, instead a
-Text field for an identifier. 
+**Question:** There isn’t a single channel listed in the channel selection; instead, there’s a
+text field for an ID.
 
-Answer: The list of news channels was not available. Load the dialog
-new. If that doesn't help, enter the channel identifier by hand; it stands
-in the address of the channel in the CMS. 
+Answer: The list of news channels was unavailable. Reload the dialog
+box. If that doesn’t help, enter the channel ID manually; you’ll find it
+in the channel’s URL in the CMS.
 
-**Question:** Why is the image of a news report blurred on stage or
-strangely cut? 
+**Question:** Why is the image of a news post on the stage blurry or
+strangely cropped?
 
-Answer: Featured images are cut for the feed format, not for a
-screen-high stage. In the entry under **Stage design
-overwrite** a separate, transverse and at least 1920 px wide. 
+Answer: Article images are cropped for the feed format, not for a
+full-screen stage. In the entry, under **Override Stage Image**,
+upload your own image—landscape orientation and at least 1920 px wide.
 
-**Question:** What happens to the stage during the automatic translation of the
-Side? 
+**Question:** What happens to the stage when the
+page is automatically translated?
 
-Answer: All self-written texts are translated: headline, 
-Subline, button caption, and image description of a slide
-as well as the headed title and caption of a news entry. 
-Images, referral targets, channels, filters, and the order remain unchanged. 
+Answer: All user-written text is translated: the headline,
+subheading, button label, and image description of a slide,
+as well as the overridden title and label of a news entry.
+Images, link destinations, channels, filters, and the order remain unchanged.
 
-**Question:** A news entry shows different texts in the translated page than in
-of the source language — is that a mistake? 
+**Question:** A news entry displays different text on the translated page than in
+the source language—is this an error?
 
-Answer: No. The title and outline text of a news article come from the article
-and it is shown in the language that the reader uses in the app
-. Only what you wrote in the entry itself will be translated
-. If a language version of the article is missing, the existing one appears instead of
-to leave the foil blank.
+Answer: No. The title and teaser text of a news post come from the post
+itself, and they are displayed in the language the reader has set
+in the app. Only what you’ve written in the entry itself is translated.
+If a language version of the post is missing, the available version appears instead of
+leaving the slide blank.

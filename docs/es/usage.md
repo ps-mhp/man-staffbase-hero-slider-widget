@@ -1,151 +1,154 @@
 # Paso a paso
 
-## Monta un escenario con una foto
+## Configurar un escenario con una imagen
 
-1. Colocar la imagen en la biblioteca multimedia de Staffbase de antemano. Al menos en paisaje
-   1920 px de ancho; el escenario lo reduce a 21:9 dependiendo del ancho de la ventana o
-   4:3 — por tanto, el motivo no debería alcanzar los bordes. 
-2. Coloca el widget **Hero Slider** en la parte superior de la página, en una fila
-   Sin ningún otro widget al lado. ¿Está en una columna junto a las demás?
-   Contenido, no puede extenderse de forma significativa a lo largo de todo el ancho. 
-3. Abre la configuración del widget. El editor se abre desde
-   él mismo. 
-4. Haz clic en **Nuevo + ** encima de la lista y selecciona **Deslizar**. 
-5. En **Imagen o Vídeo**, haz clic en el área discontinua **Imagen
-   O selecciona vídeo** y selecciona la imagen de la biblioteca multimedia — o añade
-   debajo de ella, introduce la dirección de una imagen o vídeo. Sin imagen, el
-   Diapositiva no mostrada. 
-6. En **Descripción de la imagen**, introduce lo que se puede ver. Deja el
-   Campo en blanco solo si la imagen es puramente decorativa. 
-7. Introduce el **encabezado**. Mantenlo corto: hasta aproximadamente
-   Sigue siendo una sola línea para 24 caracteres. 
-8. Opcional: **Subline** y **Botón**. El botón aparecerá
-   Solo si la etiqueta **y** el objetivo están completados. 
-9. Haz clic en **Aplicar**. 
-10. Poner **segundos por diapositiva** a '0' — para una sola diapositiva, hay
-    No hay nada que cambiar. 
-11. Guardar la página y previsualizarla, una vez de ancho
-    y una vez en una ventana estrecha. 
+1. Guarda primero la imagen en la biblioteca multimedia de Staffbase. En formato apaisado, con un ancho mínimo
+   de 1920 píxeles; el escenario la recortará a una proporción de 21:9 o
+   4:3; por lo tanto, la imagen no debe llegar hasta los bordes.
+2. Coloca el widget **Hero-Slider** en la parte superior de la página, en una fila
+   sin otros widgets a su lado. Si se encuentra en una columna junto a otros
+   contenidos, no podrá ocuparse de forma adecuada todo el ancho.
+3. Abre la configuración del widget. El editor se abrirá
+   automáticamente.
+4. Haz clic en **Nuevo +**, encima de la lista, y selecciona **Diapositiva**.
+5. Debajo de **Imagen o vídeo**, haz clic en el área rayada **Seleccionar imagen
+   o vídeo** y selecciona la imagen de la biblioteca multimedia, o bien introduce
+   debajo la dirección de una imagen o un vídeo. Sin imagen, la
+   diapositiva no se mostrará.
+6. En **Descripción de la imagen**, introduzca lo que se ve en ella. Deje el
+   campo en blanco solo si la imagen es meramente decorativa.
+7. Introduzca el **título**. Que sea breve: hasta unos
+   24 caracteres, se mantendrá en una sola línea.
+8. Opcional: **línea inferior** y **botón**. El botón solo aparecerá
+   si se han rellenado el texto **y** el destino. En el teléfono,
+   el escenario no muestra ninguno de los dos: allí solo aparece el título, y toda la
+   diapositiva lleva al destino del botón. Por lo tanto, lo que figure en el subtítulo
+   no debería ser nada que sea imprescindible leer.
+9. Haga clic en **Aplicar**.
+10. Establezca **Segundos por diapositiva** en `0`; si solo hay una diapositiva,
+    no hay nada que cambiar.
+11. Guarde la página y compruébela en la vista previa, una vez en pantalla ancha
+    y otra vez en una ventana estrecha.
 
-## Crea varias diapositivas
+## Crear varias diapositivas
 
-1. Abre la configuración y por tanto el editor. 
-2. Para cada diapositiva adicional, bajo **Nuevo +**, seleccione **Diapositiva** y
-   rellenarlas como se indicó antes. No es posible que se puedan superar más de ocho diapositivas — en cuanto a los pergaminos
-   Nadie. 
-3. Ordenar usando las flechas **↑** y **↓** en la esquina superior derecha. La primera diapositiva
-   es el que se puede ver cuando carga la página. 
-4. Comprueba que **segundos por diapositiva** esté configurado en '5' (por defecto). 
-5. **Solicitar**, guardar, revisar previsualización. 
+1. Abre la configuración y, con ello, el editor.
+2. Para cada diapositiva adicional, selecciona en **Nuevo +** la opción **Diapositiva** y
+   rellénala como se ha indicado anteriormente. No es posible tener más de ocho diapositivas: nadie se desplaza
+   tanto.
+3. Ordena las diapositivas con las flechas **↑** y **↓** de la esquina superior derecha. La primera diapositiva
+   es la que se ve al cargar la página.
+4. Comprueba que **Segundos por diapositiva** esté en `5` (ajuste predeterminado).
+5. **Aplicar**, guardar y comprobar en la vista previa.
 
-## Lleva una sola nota al escenario
+## Mostrar una noticia concreta en la página principal
 
-1. Abre la configuración y por tanto el editor. 
-2. Haz clic en **Nuevo +** encima de la lista y selecciona **Publicación de Noticias**. 
-   A la izquierda aparece una entrada con la marca **Post**. 
-3. En **Canal**, seleccione el canal de noticias. Solo entonces puede el
-   Seleccionar publicación. 
-4. En **Publicar**, selecciona la publicación deseada. Puedes elegir entre
-   Las cincuenta publicaciones más recientes del canal, las más recientes primero. 
-5. Consulta la **Vista previa** a continuación: muestra imagen, titular y
-   Adianta exactamente como se ve el papel de aluminio después. 
-6. Opcional: **Sobrescribe titular**, **Mostrar adelanto como subtítulo** 
-   o cambiar la **etiqueta del botón**. El objetivo del
-   El botón siempre es la publicación en sí. 
-7. Opcional: **Sobrescribe el diseño de la fase**. La imagen destacada es para el feed
-   Corte y no siempre lleva un escenario alto. 
-8. **Solicita**, guarda, previsualización de check-in. 
+1. Abre la configuración y, con ello, el editor.
+2. Haz clic en **Nuevo +**, encima de la lista, y selecciona **Noticia**.
+   A la izquierda aparecerá una entrada con la etiqueta **Publicación**.
+3. En **Canal**, selecciona el canal de noticias. Solo entonces podrás
+   seleccionar la noticia.
+4. En **Noticia**, selecciona la noticia deseada. Puedes elegir entre
+   las cincuenta noticias más recientes del canal, ordenadas de más reciente a más antigua.
+5. Comprueba la **vista previa** que aparece debajo: muestra la imagen, el título y
+   el resumen tal y como se verá la diapositiva más adelante.
+6. Opcional: **sobrescribir el título**, **mostrar el resumen como subtítulo**
+   o cambiar el **texto del botón**. El destino del
+   botón es siempre la propia publicación.
+7. Opcional: **sobrescribir la imagen de portada**. La imagen de la publicación está recortada para el feed
+   y no siempre incluye una parte superior.
+8. **Aplicar**, guardar y comprobar en la vista previa.
 
 ## Mostrar todas las publicaciones de un canal
 
-1. Abre la configuración y por tanto el editor. 
-2. Haz clic en **Nuevo +** encima de la lista y selecciona **Canal de Noticias**. 
-   A la izquierda, aparece una entrada con la marca **Channel**. 
-3. En **Canal**, selecciona el canal de noticias. 
-4. Establecer **Número de Slides** (por defecto '3', máximo ocho). 
-5. Selecciona el **Orden**: 'Primero el más nuevo' o 'Primero el más antiguo'. 
-6. Configurar **Filtro** si es necesario: 
-   - **Solo publicaciones destacadas** — limitadas a lo que hay en las noticias
-     está clavado. 
-   - **Solo publicaciones con imagen** — activadas por defecto. Sin imagen permanecería
-     del foil, solo una zona oscura con texto. 
-   - **Palabras clave** — separar varios con una coma; una contribución es suficiente si
-     uno de ellos. 
-7. Revisa la **Vista previa**: muestra exactamente las publicaciones que tienen los filtros
-   . Si permanece vacía, los filtros son demasiado estrechos. 
-8. **Solicita**, guarda, previsualización de check-in. 
+1. Abre la configuración y, con ello, el editor.
+2. Haz clic en **Nuevo +**, situado encima de la lista, y selecciona **Canal de noticias**.
+   A la izquierda aparecerá una entrada con la etiqueta **Canal**.
+3. En **Canal**, selecciona el canal de noticias.
+4. Configura el **número de diapositivas** (valor predeterminado `3`, máximo ocho).
+5. Selecciona el **orden**: `Más recientes primero` o `Más antiguos primero`.
+6. Si es necesario, aplica **filtros**:
+   - **Solo publicaciones destacadas**: se limita a lo que está
+     fijado en las noticias.
+   - **Solo publicaciones con imagen**: activado por defecto. Sin imagen,
+     la diapositiva solo mostraría un área oscura con texto.
+   - **Palabras clave**: sepáralas con comas; basta con que una publicación
+     contenga una de ellas.
+7. Comprueba la **vista previa**: muestra exactamente las entradas que quedan
+   tras aplicar los filtros. Si queda vacía, los filtros son demasiado restrictivos.
+8. **Aplicar**, guardar y comprobar en la vista previa.
 
-La entrada cuenta como **una** en la lista, pero viene con varias diapositivas. 
-En total, el escenario nunca muestra más de ocho diapositivas; nada más allá de eso 
-se aleja al fondo. 
+La entrada cuenta como **una** en la lista, pero incluye varias diapositivas.
+En total, el escenario nunca muestra más de ocho diapositivas; lo que exceda este número,
+queda omitido.
 
 ## Mostrar un vídeo como escenario
 
-1. En el editor, selecciona la diapositiva. 
-2. En **Imagen o Vídeo**, haz clic en **Elige Imagen o Vídeo** y
-   Selecciona el vídeo de la biblioteca multimedia. Los vídeos llevan una marca ahí
-   (por ejemplo, 'MP4'). El formato convertido
-   Socket — funciona en cualquier navegador y suele ser mucho más pequeño que el
-   Original. 
-3. Si el vídeo está en otro sitio: Pega su dirección bajo
-   **O dirección de una imagen o vídeo**. Debe empezar por 'https://'
-   y todos los lectores deben acceder al vídeo sin registrarse
-   . Si termina en '.mp4', '.webm' o '.mov', **Art** salta de
-   incluso en **Vídeo**; de lo contrario, lo cambiarás ahí a mano. 
-4. Introduce lo que se puede ver en **Descripción del vídeo** o vete
-   Vacía la caja si el vídeo es puramente decorativo. 
-5. **Solicitar**, guardar, revisar previsualización. 
+1. Seleccione la diapositiva en el editor.
+2. En **Imagen o vídeo**, haz clic en **Seleccionar imagen o vídeo** y
+   selecciona el vídeo de la biblioteca multimedia. Los vídeos aparecen allí identificados con
+   su formato (por ejemplo, `MP4`). Se aplica la versión convertida por Staffbase
+   — se reproduce en cualquier navegador y suele ser considerablemente más pequeña que el
+   original.
+3. Si el vídeo se encuentra en otro lugar: introduce en su lugar su dirección en
+   **O dirección de una imagen o un vídeo**. Debe comenzar por `https://`
+   , y todos los lectores deben poder acceder al vídeo sin necesidad de registrarse
+  . Si termina en `.mp4`, `.webm` o `.mov`, el **Tipo** cambia
+   automáticamente a **Vídeo**; en caso contrario, cámbielo manualmente.
+4. En **Descripción del vídeo**, indique qué se ve en él o deje
+   el campo en blanco si el vídeo es meramente decorativo.
+5. **Aplicar**, guardar y comprobar en la vista previa.
 
-El vídeo se emite en silencio y en bucle, y solo mientras su deslizamiento esté delante
-. Si tienes menos movimiento en el sistema, verás tu primera imagen
-. Mantén el archivo pequeño — unos pocos megabytes durante unos segundos — 
-porque se carga cada vez que se accede a la página. 
+El vídeo se reproduce sin sonido y en bucle, y solo mientras su diapositiva esté en primer
+plano. Quien haya configurado menos movimiento en el sistema, verá su primera imagen
+fija. Mantenga el archivo pequeño —unos pocos megabytes para unos segundos—,
+ya que se carga cada vez que se visita la página.
 
-## Guardar una imagen para formato retrato
+## Añadir una imagen para el formato vertical
 
-1. Colocar una sección vertical recortada del mismo motivo en el
-   Biblioteca multimedia. 
-2. En el editor, selecciona la diapositiva afectada. 
-3. En **Imagen o vídeo para retrato** haz clic **Imagen o vídeo
-   o introduce una dirección a continuación. 
-4. **Aplicar**, guardar y guardar en una ventana estrecha o en el
-   Mira el teléfono. 
+1. Guarde en la
+   biblioteca multimedia un recorte del mismo motivo recortado en vertical.
+2. Seleccione la diapositiva correspondiente en el editor.
+3. En **Imagen o vídeo para formato vertical**, haz clic en **Seleccionar imagen o vídeo
+  ** o introduce una dirección debajo.
+4. **Aplicar**, guarda y comprueba el resultado en una ventana estrecha o en el
+  teléfono.
 
-## Cambio después
+## Modificar posteriormente
 
-1. Abre la configuración del widget; el editor se abrirá con el
-   entradas existentes. 
-2. Selecciona la entrada que quieres cambiar a la izquierda. El marcador sobre el título dice, 
-   de qué tipo es: **Contrapunto**, **Publicación** o **Canal**. 
-3. Cambiar los campos a la derecha. **Duplicar** crea una copia de la
-   entrada seleccionada justo detrás, mediante **Eliminar** desaparece. Flechas, 
-   La duplicación y la eliminación se aplican por igual a los tres tipos. 
-4. **Apply** escribe los cambios en el widget — solo entonces el
-   Guardar la página. 
+1. Abre la configuración del widget; se abrirá el editor con las
+   entradas existentes.
+2. Selecciona a la izquierda la entrada que deseas modificar. El indicador situado encima del título indica
+  de qué tipo se trata: **Diapositiva**, **Publicación** o **Canal**.
+3. Modifica los campos de la derecha. Al hacer clic en **Duplicar** se crea una copia de la
+   entrada seleccionada justo detrás; con **Eliminar**, esta desaparece. Las flechas,
+   **Duplicar** y **Eliminar** se aplican por igual a los tres tipos.
+4. **Aplicar** guarda los cambios en el widget; solo entonces
+   se guarda la página.
 
-## Cuando algo no funciona
+## Si algo no funciona
 
-1. **El escenario sigue vacío.** Falta al menos una foto: diapositivas sin imagen
-   no se muestran. Abre el editor y comprueba cada entrada para
-   una imagen — en el caso de las entradas de noticias en el previsualización. 
-2. **La imagen no se extiende a todo el ancho.** Si el widget está en un
-   ¿Columna junto a otro contenido? Luego ponlo en su propia fila. 
-   Si no, comprueba si **Mostrar sobre ancho completo** está activado
-   . 
-3. **El texto no se sitúa sobre la línea nula.** Esto puede deberse a una
-   diferente ancho de contenido de la página. Reporta el caso con el
-   Dirección de página — la etapa se basa en el ancho de la propia página
-   informes. 
-4. **En lugar del editor, verás un cuadro de texto "Entradas" con JSON.**
-   El editor no pudo montar. Recarga el diálogo. Edición
-   No el texto hecho a mano. 
-5. **El selector de canales permanecerá en blanco y aparecerá un cuadro de texto para un
-   Identificador.** La lista de canales de noticias no estaba disponible. Descarga el
-   Diálogo nuevo; esto no ayuda, introduce el identificador del canal. Tú
-   está en la dirección del canal en el CMS. 
-6. **Falta una diapositiva de noticias en la página.** La publicación queda eliminada, 
-   movidas o no visibles para la persona que lee. Las diapositivas restantes
-   No te veas afectado. Consulta la entrada en la vista previa del editor. 
-7. **Una entrada de canal trae menos contrapartes que las que se establecen.** Los filtros son
-   demasiado ajustado — normalmente **Solo publica con imagen** en un canal sin fotos — o
-   El escenario ya está lleno con ocho diapositivas.
+1. **El escenario permanece vacío.** Falta al menos una imagen: las diapositivas sin imagen
+   no se muestran. Abre el editor y comprueba que cada entrada tenga
+   una imagen; en el caso de las entradas de noticias, compruébalo en la vista previa.
+2. **La imagen no ocupa todo el ancho.** ¿Se encuentra el widget en una
+   columna junto a otros contenidos? En ese caso, colóquelo en una línea propia.
+   De lo contrario, compruebe si la opción **Mostrar a todo el ancho** está activada
+  .
+3. **El texto no se alinea con la línea de referencia.** Esto puede deberse a que
+   el ancho del contenido de la página no coincide. Notifique el caso indicando la
+   dirección de la página; el escenario se ajusta al ancho que la propia página
+   indica.
+4. **En lugar del editor, ves un campo de texto «Entradas» con JSON.** El
+   editor no ha podido integrarse. Vuelve a cargar el cuadro de diálogo. No edites
+   el texto manualmente.
+5. **La selección de canales permanece vacía y aparece un campo de texto para introducir un
+   identificador.** No se ha podido acceder a la lista de canales de noticias. Vuelve a cargar el
+   cuadro de diálogo; si eso no funciona, introduce el identificador del canal. Lo
+   encontrarás en la dirección del canal en el CMS.
+6. **Falta una diapositiva de noticias en la página.** La entrada se ha eliminado,
+   se ha movido o no es visible para el lector. El resto de diapositivas
+   no se ven afectadas. Comprueba la entrada en la vista previa del editor.
+7. **Una entrada de canal muestra menos diapositivas de las configuradas.** Los filtros son
+   demasiado restrictivos —normalmente **Solo entradas con imagen** en un canal sin imágenes— o
+   el escenario ya está lleno con ocho diapositivas.

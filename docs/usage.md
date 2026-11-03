@@ -20,7 +20,10 @@
 7. Tragen Sie die **Überschrift** ein. Halten Sie sie kurz: bis etwa
    24 Zeichen bleibt sie einzeilig.
 8. Optional: **Unterzeile** und **Schaltfläche**. Die Schaltfläche erscheint
-   nur, wenn Beschriftung **und** Ziel ausgefüllt sind.
+   nur, wenn Beschriftung **und** Ziel ausgefüllt sind. Auf dem Telefon zeigt
+   die Bühne beides nicht an: dort trägt sie nur die Überschrift, und die
+   ganze Folie führt zum Ziel der Schaltfläche. Was in der Unterzeile steht,
+   sollte deshalb nichts sein, was unbedingt gelesen werden muss.
 9. Klicken Sie auf **Übernehmen**.
 10. Stellen Sie **Sekunden je Folie** auf `0` — bei einer einzelnen Folie gibt
     es nichts zu wechseln.

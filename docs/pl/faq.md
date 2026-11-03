@@ -1,116 +1,116 @@
 # FAQ
 
-**Pytanie:** Stworzyłem zjeżdżalnię, ale scena pozostaje pusta. 
+**Pytanie:** Utworzyłem slajd, ale scena pozostaje pusta.
 
-Odpowiedź: Slajd nie zawiera obrazu. Slajdy bez obrazu nie są wyświetlane —
-Pusty, ciemny obszar byłby nie do odróżnienia od błędu na stronie. 
-Otwórz edytor i wybierz obraz w sekcji **Obraz lub Wideo**
-albo wpisz adres. 
+Odpowiedź: Na slajdzie brakuje obrazu. Slajdy bez obrazu nie są wyświetlane —
+pusta, ciemna powierzchnia nie dałaby się odróżnić od błędu na stronie.
+Otwórz edytor i w sekcji **Obraz lub wideo** wybierz obraz
+lub wprowadź adres.
 
-**Pytanie:** Wpisałem adres wideo, ale slajd pokazuje tylko
-ciemna powierzchnia. 
+**Pytanie:** Wpisałem adres filmu, ale slajd wyświetla tylko
+ciemny obszar.
 
-Odpowiedź: Najczęściej wideo nie jest dostępne bez rejestracji lub **Sztuka** jest napisana
-do **Image**, ponieważ adres nie ma rozszerzenia. Otwórz adres w
-Prywatne okno przeglądarki: jeśli tam nie działa,
-Czytelnicy nie. Wiadomość bezpośrednio pod polem oznacza, że adres
-nie został przyjęty — musi zaczynać się od "https://". 
+Odpowiedź: Najczęściej film jest niedostępny bez logowania lub **Typ** jest ustawiony
+na **Obraz**, ponieważ adres nie zawiera rozszerzenia. Otwórz adres w
+prywatnym oknie przeglądarki: jeśli tam się nie uruchamia, to również
+czytelnicy go nie zobaczą. Komunikat tuż pod polem oznacza, że adres
+nie został zaakceptowany — musi zaczynać się od `https://`.
 
-**Pytanie:** Wprowadziłem etykietę do przycisku, ale
-nie pojawia się. 
+**Pytanie:** Wpisałem etykietę dla przycisku, ale
+nie pojawia się ona.
 
-Odpowiedź: Przycisk potrzebuje **obu — etykiety i celu. Dopóki
-Jedno z pól jest puste, nie jest wyświetlane. 
+Odpowiedź: Przycisk wymaga **obu** elementów — etykiety i adresu docelowego. Dopóki
+jedno z pól jest puste, przycisk nie będzie wyświetlany.
 
-**Pytanie:** Obraz nie przebiega przez całą szerokość okna. 
+**Pytanie:** Obraz nie zajmuje całej szerokości okna.
 
-Odpowiedź: Są dwie możliwe przyczyny. Każda z nich to **Pokaż pełną szerokość** 
-albo widżet znajduje się w kolumnie obok innych treści. 
-Umieść to na osobnej linii na górze strony. 
+Odpowiedź: Istnieją dwie możliwe przyczyny. Albo opcja **Wyświetlaj na całej szerokości**
+jest wyłączona, albo widżet znajduje się w kolumnie obok innych treści.
+Umieść go w osobnym wierszu u góry strony.
 
-**Pytanie:** Tekst nie jest miejscem, gdzie zaczyna się reszta zawartości strony. 
+**Pytanie:** Tekst nie znajduje się w miejscu, w którym zaczyna się pozostała treść strony.
 
-Odpowiedź: Etap zależy od szerokości treści, którą strona raportuje. 
-Jeśli się zmieni, zgłoś sprawę z adresem strony. 
+Odpowiedź: Obszar edycji dostosowuje się do szerokości treści zgłaszanej przez stronę.
+Jeśli się różni, zgłoś ten przypadek, podając adres strony.
 
-**Pytanie:** Zamiast edytora widzę pole tekstowe "Wpisy" z kręconym
-Nawiasy w nim. 
+**Pytanie:** Zamiast edytora widzę pole tekstowe „Wpisy” z nawiasami
+falkowymi w środku.
 
-Odpowiedź: Redaktor nie mógł podłączyć się do dialogu. Zamknij
-Ustawienia i otwieram je ponownie. Tekst w polu to
-wstępną wersję wpisów; nie edytować jej ręcznie — literówka
-W nim znikają wszystkie folie. 
+Odpowiedź: Edytor nie mógł połączyć się z oknem dialogowym. Zamknij
+ustawienia i otwórz je ponownie. Tekst w polu to
+surowa wersja wpisów; nie edytuj go ręcznie — jedna literówka
+spowoduje zniknięcie wszystkich slajdów.
 
-**Pytanie:** Scena sama się nie zmienia. 
+**Pytanie:** Scena nie zmienia się automatycznie.
 
-Odpowiedź: Trzy możliwe przyczyny: Jest tylko jeden slajd; **sekundy na slajd** 
-jest ustawione na '0'; lub w systemie operacyjnym włączone jest "Reduce Motion". 
-W tym drugim przypadku jest to zamierzone — przewijanie nadal można robić za pomocą strzałek
-i kreski. 
+Odpowiedź: Istnieją trzy możliwe przyczyny: jest tylko jeden slajd; **sekundy na slajd**
+są ustawione na `0`; lub w systemie operacyjnym włączona jest opcja „Ogranicz ruch”.
+W tym ostatnim przypadku jest to zamierzone — nadal można przewijać za pomocą strzałek
+i kresek.
 
-**Pytanie:** Nie widzę żadnych strzałek na telefonie. 
+**Pytanie:** Na telefonie nie widzę strzałek.
 
-Odpowiedź: Tak to jest zamierzone. Na wąskich ekranach przesuwasz palcem;
-Linie poniżej tekstu dalej wskazują, który slajd jest aktualnie przed nim. 
+Odpowiedź: Tak ma być. Na wąskich ekranach przesuwa się palcem;
+kreski pod tekstem nadal wskazują, który slajd jest aktualnie na wierzchu.
 
-**Pytanie:** Mój obraz jest przycięty na krawędzi. 
+**Pytanie:** Mój motyw jest przycięty na krawędzi.
 
-Odpowiedź: Etap przycina do 21:9 lub 4:3, w zależności od szerokości okna. Wybierz
-Stwórz obraz z powietrzem wokół obiektu lub wpisz **Obraz dla
-Format portretowy** ma własne wycięcie wycięte na krawędzi. 
+Odpowiedź: Scena przycina obraz do formatu 21:9 lub 4:3 w zależności od szerokości okna. Wybierz
+obraz z marginesem wokół motywu lub w sekcji **Obraz dla
+formatu pionowego** dodaj własny fragment przycięty w orientacji pionowej.
 
-**Pytanie:** Czy mogę stworzyć więcej niż osiem slajdów? 
+**Pytanie:** Czy mogę utworzyć więcej niż osiem slajdów?
 
-Odpowiedź: Nie. Przy pięciu sekundach na ślizg, pełny przejazd trwa równomiernie przy
-Osiem slajdów, czterdzieści sekund — nikt nie zostaje na scenie tak długo. 
-Osiem dotyczy wszystkich slajdów razem: Jeden wpis kanałowy z pięcioma postami
-pozwala tylko na trzy inne zjeżdżalnie obok siebie. 
+Odpowiedź: Nie. Przy pięciu sekundach na slajd pełny cykl trwa już przy
+ośmiu slajdach czterdzieści sekund — nikt nie pozostaje na scenie tak długo.
+Liczba osiem dotyczy wszystkich slajdów łącznie: wpis w kanale zawierający pięć wpisów
+pozwala na umieszczenie obok niego tylko trzech dodatkowych slajdów.
 
-**Pytanie:** Czy muszę utrzymywać poziom, gdy nowy wpis pojawia się w wiadomościach?
-? 
+**Pytanie:** Czy muszę aktualizować scenę, gdy w sekcji „Aktualności” pojawi się nowy
+wpis?
 
-Odpowiedź: Nie przy wpisie **Kanału informacyjnego** — zawsze pokazuje aktualne
-Posty kanału według ustawionych filtrów. **Post informacyjny**- 
-Wpis natomiast pozostaje przy wybranym przez Ciebie wpisie. 
+Odpowiedź: W przypadku wpisu z **kanału „Aktualności”** nie — zawsze wyświetla on aktualne
+wpisy z kanału zgodnie z ustawionymi filtrami. Natomiast wpis typu **„Wpis z aktualności”**
+pozostaje przy wybranym przez Ciebie wpisie.
 
-**Pytanie:** Slajd z wiadomości nagle zniknął. 
+**Pytanie:** Slajd z aktualności nagle zniknął.
 
-Odpowiedź: Post został usunięty, przeniesiony lub jest dostępny dla osoby czytającej
-niewidoczny. Tylko ta jedna folia odpada; pozostałe pozostają stojące. 
+Odpowiedź: Wpis został usunięty, przeniesiony lub jest niewidoczny dla osoby
+czytającej. Zniknęła tylko ta jedna slajda; pozostałe pozostają na swoim miejscu.
 
-**Pytanie:** Mój wpis kanału pokazuje mniej slajdów niż ustawionych. 
+**Pytanie:** Mój wpis kanału wyświetla mniej slajdów niż zostało ustawione.
 
-Odpowiedź: Najczęściej filtry są zbyt wąskie. **Tylko posty z obrazem**
-Preset — kanał bez obrazów nie dostarczy niczego. Sprawdź
-Podgląd w edytorze: pokazuje dokładnie, co pojawi się na scenie. 
+Odpowiedź: Najczęściej filtry są zbyt wąskie. Domyślnym ustawieniem jest **tylko wpisy ze zdjęciami** —
+kanał bez zdjęć nie wyświetla w takim przypadku żadnych treści. Sprawdź
+podgląd w edytorze: pokazuje on dokładnie to, co pojawi się na scenie.
 
-**Pytanie:** W wyborze kanału nie ma ani jednego kanału, zamiast tego
-Pole tekstowe dla identyfikatora. 
+**Pytanie:** W wyborze kanałów nie ma ani jednego kanału, zamiast tego pojawia się
+pole tekstowe na identyfikator.
 
-Odpowiedź: Lista kanałów informacyjnych nie była dostępna. Załaduj dialog
-nowe. Jeśli to nie pomoże, wpisz identyfikator kanału ręcznie; pozostaje
-w adresie kanału w CMS. 
+Odpowiedź: Lista kanałów wiadomości była niedostępna. Proszę ponownie załadować okno dialogowe.
+Jeśli to nie pomoże, proszę ręcznie wpisać identyfikator kanału; znajduje się on
+w adresie kanału w systemie CMS.
 
-**Pytanie:** Dlaczego obraz reportażu jest rozmyty na scenie lub
-dziwnie pocięte? 
+**Pytanie:** Dlaczego zdjęcie wpisu z aktualnościami na scenie jest nieostre lub
+dziwnie przycięte?
 
-Odpowiedź: Zdjęcia wyróżnione są wycięte pod format feedu, a nie dla
-scena na wysokości ekranu. W wpisie pod **Projekt scenografii
-nadpisują** osobny, poprzeczny i co najmniej 1920 px szerokości. 
+Odpowiedź: Zdjęcia do artykułów są przycięte pod kątem formatu kanału informacyjnego, a nie pod kątem
+ekranu o pełnej wysokości. W wpisie w sekcji **Zastąp obraz sceny**
+przeznacz własny obraz, w orientacji poziomej i o szerokości co najmniej 1920 px.
 
-**Pytanie:** Co dzieje się ze sceną podczas automatycznego tłumaczenia
-Bok? 
+**Pytanie:** Co dzieje się z ramką podczas automatycznego tłumaczenia
+strony?
 
-Odpowiedź: Wszystkie teksty napisane samodzielnie są tłumaczone: nagłówek, 
-Linia podtekstowa, podpis przycisku i opis obrazu slajdu
-a także tytuł i podpis pod hasłem wiadomości. 
-Obrazy, cele skierowania, kanały, filtry i kolejność pozostają niezmienione. 
+Odpowiedź: Tłumaczone są wszystkie teksty wpisane samodzielnie: nagłówek,
+podtytuł, etykieta przycisku i opis obrazu na slajdzie,
+a także nadpisany tytuł i etykieta wpisu z aktualnościami.
+Obrazy, linki, kanały, filtry i kolejność pozostają niezmienione.
 
-**Pytanie:** W wiadomości na stronie tłumaczonej są inne teksty niż w
-języka źródłowego — czy to błąd? 
+**Pytanie:** W przetłumaczonej wersji strony wpis z aktualności zawiera inne teksty niż w
+języku źródłowym — czy to błąd?
 
-Odpowiedź: Nie. Tytuł i konspekt artykułu pochodzą z samego artykułu
-i jest ona wyświetlana w języku, którego używa czytelnik w aplikacji
-. Tylko to, co napisałeś w samym wpisie, zostanie przetłumaczone
-. Jeśli brakuje wersji językowej artykułu, pojawia się obecna zamiast
-Zostawić folię pustą.
+Odpowiedź: Nie. Tytuł i tekst zapowiedzi wpisu w sekcji aktualności pochodzą z samego
+wpisu, a ten jest wyświetlany w języku, który czytelnik ustawił w aplikacji.
+Tłumaczone jest tylko to, co sam wpisałeś Tłumaczone jest tylko to, co napisałeś w samym wpisie.
+Jeśli brakuje wersji językowej wpisu, wyświetlana jest ta dostępna, zamiast
+pozostawiać puste miejsce.

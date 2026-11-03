@@ -45,20 +45,16 @@
   }
 }
 
-// Die Bühne rückt näher an die Kopfzeile. Staffbase hält den Seitenrahmen je
-// nach Zustand auf 136 bis 180px Kopfabstand (gemessen am 01.09.2026:
-// `.desktop.with-contextual-toolbar.wow-header-activated.with-mega-menu
-// #wrapper` gewinnt mit `calc(136px + 44px)`) — unter einer Bühne, die bis an
-// den Bildschirmrand läuft, steht damit ein Streifen Weissraum, den es auf
-// man.eu nicht gibt.
+// Der Kopfabstand der Seite steht nicht mehr hier, sondern in `page-top.ts`.
 //
-// Die Regel steht bewusst hier und nicht im Stylesheet des Mandanten: sie
-// gilt nur, solange eine Bühne auf der Seite liegt, und verschwindet mit ihr.
-// `!important` ist nötig, aber unstrittig — der Gegner steht bei vier Klassen
-// und einer Kennung, führt seinen Wert aber ohne Nachdruck.
-#wrapper:has(hero-slider-widget) {
-  padding-top: 155px !important;
-}
+// Bis zum 03.11.2026 zog eine Regel `#wrapper:has(hero-slider-widget)` auf
+// feste 155px herunter. Sie traf die Seite ohne Brotkrumen und verfehlte die
+// mit: deren Kasten liegt aus dem Fluss auf `top: 100px`, `122px` oder
+// `calc(136px + 30px)` (je nach Seitenzustand, `resources/css/app.css`), und
+// die Bühne schob sich darunter. Die Kante ist nicht vorhersagbar, also wird
+// sie gemessen — und zugleich fällt der Grund weg, die Regel auf den
+// Schreibtisch zu beschränken: der gemessene Wert ist auf dem Telefon von
+// sich aus der dortige, nicht der der Desktop-Kopfzeile.
 
 .man-hero {
   position: relative;
@@ -101,7 +97,15 @@
   // (560 × 4/3). Das Bild stand dann links und war rechts abgeschnitten,
   // statt mittig im Ausschnitt zu sitzen. Live gemessen am 01.09.2026.
   width: 100%;
-  aspect-ratio: 4 / 3;
+  // Hochkant auf dem Telefon. Das Querformat 4/3 ergab bei 393px Breite nur
+  // 295px Höhe und wurde deshalb immer auf die Mindesthöhe der Stufe
+  // hochgezogen (420px); Überschrift, Unterzeile, Knopf und Bedienleiste
+  // füllten davon am 15.10.2026 gemessene 409px — vom Bild blieb nichts
+  // übrig, der Text stand randlos auf der Oberkante. 4/5 gibt derselben
+  // Breite 491px und damit wieder Bild unter dem Text. Dasselbe Verhältnis
+  // bedient `PORTRAIT_MEDIA` in `hero-slider.tsx` mit dem Hochkant-Zuschnitt:
+  // unter 768px ist die Bühne hochkant gedacht.
+  aspect-ratio: 4 / 5;
 
   @media (min-width: 768px) {
     aspect-ratio: 21 / 9;
@@ -310,21 +314,36 @@
 .man-hero__inner {
   position: absolute;
   inset: 0;
-  padding-inline: man("space-6");
+  // Schmal der Seitenrand des Telefons (16px), erst ab der Umbruchbreite die
+  // 32px der Vorlage. Mit 32px blieben auf einem 393px breiten Schirm nur
+  // 329px für die Überschrift — die Bühnenschrift brach dadurch eine Zeile
+  // früher um als nötig, und der Text stand enger eingerückt als jeder andere
+  // Seiteninhalt daneben.
+  padding-inline: man("space-4");
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   // Der Container selbst fängt keine Klicks — sonst läge eine unsichtbare
   // Fläche über dem ganzen Bild. Nur seine Kinder tun es.
   pointer-events: none;
+
+  @media (min-width: 768px) {
+    padding-inline: man("space-6");
+  }
 }
 
 // Nie unter den Rand der nicht ausbrechenden Bühne: reicht die Spalte selbst
 // bis an den Fensterrand, stünde der Text sonst am Bildrand.
 .man-hero--bleed .man-hero__inner {
   padding-inline:
-    max(#{man("space-6")}, var(--man-hero-inset-start))
-    max(#{man("space-6")}, var(--man-hero-inset-end));
+    max(#{man("space-4")}, var(--man-hero-inset-start))
+    max(#{man("space-4")}, var(--man-hero-inset-end));
+
+  @media (min-width: 768px) {
+    padding-inline:
+      max(#{man("space-6")}, var(--man-hero-inset-start))
+      max(#{man("space-6")}, var(--man-hero-inset-end));
+  }
 }
 
 // --- Textblock ---------------------------------------------------------------
@@ -378,9 +397,28 @@
 
   // Schmal Craft `display-s` (40/1.3). Craft selbst kennt keine Mobilstufen;
   // man-theme setzt seine Bühne dort ebenso eine Stufe tiefer.
+  //
+  // Und abgeschnitten statt überlaufend: eine lange Überschrift schob auf dem
+  // Telefon Unterzeile und Knopf aus dem Bild und lief am Ende selbst über
+  // die Unterkante der Bühne hinaus. Vier Zeilen sind das Mass der Bühne;
+  // was nicht hineinpasst, endet in „…". `line-clamp` ist die heutige
+  // Schreibweise, `-webkit-line-clamp` die, die alle Browser kennen — beide
+  // brauchen `display: -webkit-box`.
   @media (max-width: 767px) {
     @include man-outshine-host {
       @include man-type("display-s", $important: true);
+
+      & {
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        overflow: hidden;
+        // `balance` kennt die abgeschnittenen Zeilen nicht und richtet den
+        // Umbruch nach dem ganzen Text — die sichtbaren Zeilen blieben
+        // dadurch kurz und die Bühne wirkte halbleer.
+        text-wrap: initial;
+      }
     }
   }
 }
@@ -418,6 +456,69 @@
     & {
       margin-top: man("space-5") !important;
     }
+  }
+}
+
+// --- Die Folie als Ganzes auf dem Telefon ------------------------------------
+//
+// Schmal trägt die Bühne nur noch die Überschrift. Unterzeile und Knopf
+// brauchten zusammen gemessene 145px der 491px hohen Bühne, und bei langen
+// Texten schob sich alles gegenseitig aus dem Bild; die Unterzeile war in der
+// Kürze ohnehin kaum zu lesen.
+//
+// Der Knopf verschwindet dabei nicht, er wird zur Fläche: der Link deckt die
+// ganze Folie ab, ein Tipp irgendwo darauf führt zum Artikel. Das ist auf dem
+// Telefon das gewohnte Verhalten einer Bildkachel und zugleich das grösste
+// denkbare Tippziel. Er bleibt ein echter `a` mit Namen — die Beschriftung
+// steht nur nicht mehr im Bild, sondern nur noch im Namen des Links.
+//
+// Die Bedienleiste liegt im `__inner` danach und damit in der Stapelfolge
+// darüber: die Striche bleiben trotz der Fläche bedienbar.
+@media (max-width: 767px) {
+  .man-hero__subline {
+    @include man-outshine-host {
+      display: none !important;
+    }
+  }
+
+  .man-hero__cta {
+    @include man-outshine-host {
+      position: absolute !important;
+      inset: 0 !important;
+      display: block !important;
+      width: auto !important;
+      min-width: 0 !important;
+      height: auto !important;
+      min-height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      background: none !important;
+      box-shadow: none !important;
+
+      &:hover,
+      &:active {
+        background: none !important;
+      }
+
+      // Der Ring liegt sonst ausserhalb der Folie, und der Rahmen schneidet
+      // ihn ab — bei Bedienung per Tastatur wäre nichts zu sehen.
+      &:focus-visible {
+        outline-offset: calc(-1 * #{man("focus-width")}) !important;
+      }
+    }
+  }
+
+  // Nur im Bild verborgen: Screenreader lesen die Beschriftung weiter, sie
+  // ist der Name des Links. `clip-path` statt `display: none`, denn was nicht
+  // dargestellt wird, hat auch keinen Namen.
+  .man-hero__cta-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 }
 
@@ -532,12 +633,23 @@
   // Pfeil. Live gemessen am 01.09.2026.
   @include man-outshine-host {
     width: 28px;
-    height: 3px;
+    // Höhe und Mindesthöhe mit Nachdruck: Staffbase setzt `button { …
+    // min-height: 40px }` (`resources/css/app.css`), und eine Mindesthöhe
+    // schlägt jede Höhe. Aus dem 3px-Strich wurde dadurch ein 28x40 grosser
+    // Klotz — auf dem Telefon drei rote und graue Kästen unter dem Text statt
+    // der Strichleiste (gemessen am 15.10.2026 bei 393x852).
+    height: 3px !important;
+    min-height: 0 !important;
     padding: 0 !important;
     // Die Trefferfläche ist höher als der sichtbare Strich: 28 x 3px liessen
     // sich mit dem Finger nicht treffen. `content-box` hält den Innenabstand
     // farblos, damit nur der Strich selbst zu sehen ist.
-    padding-block: man("space-2") !important;
+    //
+    // Auf dem Telefon führt allein der Finger — dort ist der Strich das
+    // einzige Bedienelement (die Pfeile sind ausgeblendet) und bekommt
+    // deshalb das volle Tippziel von 44px statt der 19px, die 8px Polster
+    // ergäben.
+    padding-block: man("space-5") !important;
     box-sizing: content-box !important;
     border: 0;
     border-radius: man("radius");
@@ -552,6 +664,7 @@
   @media (min-width: 768px) {
     @include man-outshine-host {
       width: 40px;
+      padding-block: man("space-2") !important;
     }
   }
 }

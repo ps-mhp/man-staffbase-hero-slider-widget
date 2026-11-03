@@ -24,6 +24,10 @@ Beiträge eines Kanals.
 
 - Das Bild läuft über die volle Fensterbreite — auch dann, wenn die Seite
   selbst eine schmalere Inhaltsspalte hat.
+- Die Bühne sitzt **oben bündig**: Hat die Seite eine Brotkrumenleiste, steht
+  die Bühne unmittelbar darunter; hat sie keine, schliesst sie direkt an das
+  Menü an. Der leere weisse Streifen, den die Seite sonst über dem ersten
+  Inhalt freihält, entfällt.
 - Der **Text bleibt auf der Fluchtlinie der Seite**: er beginnt an derselben
   senkrechten Linie wie Kopfzeile, Menü und der Text unterhalb der Bühne. Er
   klebt ausdrücklich nicht am Bildrand.
@@ -34,6 +38,12 @@ Beiträge eines Kanals.
   Der Strich der aktuellen Folie ist rot.
 - Der Wechsel hält an, solange die Maus über der Bühne steht oder der Fokus in
   ihr liegt. Auf dem Telefon wird gewischt; die Pfeile sind dort ausgeblendet.
+- **Auf dem Telefon** (unter 768 Pixel Breite) steht nur die Überschrift auf
+  dem Bild, höchstens vier Zeilen lang; was darüber hinausgeht, endet in „…".
+  Unterzeile und Schaltfläche treten dort zurück — stattdessen führt ein Tipp
+  irgendwo auf die Folie zum Ziel der Schaltfläche. Für Screenreader bleibt
+  ihre Beschriftung der Name dieses Links. Hat eine Folie kein Ziel, ist sie
+  auch nicht anzutippen.
 - Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, sieht keinen
   Wechsel von selbst und keine Blende — nur noch die Bedienelemente.
 - Folien aus den News sehen aus wie jede andere Folie. Dass der Inhalt aus

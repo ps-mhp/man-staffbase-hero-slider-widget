@@ -78,6 +78,31 @@ describe("Stylesheets", () => {
       );
     });
 
+    it("schneidet die Überschrift schmal nach vier Zeilen ab", () => {
+      // Eine lange Überschrift schob auf dem Telefon alles unter sich aus dem
+      // Bild und lief zuletzt selbst über die Unterkante der Bühne hinaus.
+      const css = read("hero-slider.scss");
+
+      expect(css).toMatch(/-webkit-line-clamp:\s*4/);
+      expect(css).toMatch(/\bline-clamp:\s*4/);
+      expect(css).toMatch(/display:\s*-webkit-box\s*!important/);
+    });
+
+    it("macht die Folie schmal selbst zum Link und verbirgt Unterzeile und Knopf", () => {
+      // Schmal trägt die Bühne nur die Überschrift; der Knopf wird zur
+      // Fläche über der ganzen Folie. Seine Beschriftung bleibt als Name des
+      // Links bestehen — `clip-path`, nicht `display: none`.
+      const css = read("hero-slider.scss");
+
+      expect(css).toMatch(
+        /@media \(max-width: 767px\)\s*\{\s*\.man-hero__subline\s*\{[\s\S]*?display:\s*none\s*!important/,
+      );
+      expect(css).toMatch(
+        /\.man-hero__cta\s*\{[\s\S]*?position:\s*absolute\s*!important;\s*inset:\s*0\s*!important/,
+      );
+      expect(css).toMatch(/\.man-hero__cta-label\s*\{[\s\S]*?clip-path:\s*inset\(50%\)/);
+    });
+
     it("setzt die Schaltfläche mit erhöhter Spezifität als Craft-Knopf m primary", () => {
       // Der Themenblock von Staffbase färbt Fläche und Schrift jedes `a.button`
       // im selben Dunkelgrau — der Knopf wäre unlesbar. `man-button` mit
@@ -93,6 +118,18 @@ describe("Stylesheets", () => {
       // Strich 88px statt 40px breit und riss jeden Abstand der Leiste auf.
       expect(read("hero-slider.scss")).toMatch(
         /\.man-hero__dot\s*\{[\s\S]*?@include man-outshine-host[\s\S]*?padding:\s*0\s*!important/,
+      );
+    });
+
+    it("nimmt dem Strich die Mindesthöhe der Wirtsseite", () => {
+      // Staffbase setzt `button { … min-height: 40px }`, und eine Mindesthöhe
+      // schlägt jede Höhe. Der 3px-Strich wurde dadurch ein 28x40 grosser
+      // Klotz — am 15.10.2026 bei 393x852 als Reihe roter und grauer Kästen
+      // unter dem Text gesehen.
+      const css = read("hero-slider.scss");
+
+      expect(css).toMatch(
+        /\.man-hero__dot\s*\{[\s\S]*?height:\s*3px\s*!important;\s*min-height:\s*0\s*!important/,
       );
     });
 

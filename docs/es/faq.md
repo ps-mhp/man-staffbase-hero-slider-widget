@@ -1,116 +1,115 @@
 # Preguntas frecuentes
 
-**Pregunta:** He creado un tobogán, pero el escenario sigue vacío. 
+**Pregunta:** He creado una diapositiva, pero el escenario sigue vacío.
 
-Respuesta: La diapositiva carece de la imagen. Las diapositivas sin imagen no se muestran — una
-Un área oscura y vacía sería indistinguible de un error en la página. 
-Abre el editor y selecciona una imagen bajo **Imagen o Vídeo**
-O introduce una dirección. 
+Respuesta: A la diapositiva le falta la imagen. Las diapositivas sin imagen no se muestran; un
+espacio oscuro y vacío no se distinguiría de un error en la página.
+Abre el editor y, en **Imagen o vídeo**, selecciona una imagen
+o introduce una dirección.
 
-**Pregunta:** He introducido una dirección en vídeo, pero la diapositiva solo muestra
-una superficie oscura. 
+**Pregunta:** He introducido una dirección de vídeo, pero la diapositiva solo muestra
+un área oscura.
 
-Respuesta: La mayoría de las veces, el vídeo no está disponible sin registro, o se escribe **Arte**
-a **Imagen** porque la dirección no tiene extensión. Abre la dirección en
-Una ventana privada del navegador: si no se ejecuta allí, el
-Los lectores no lo saben. Un mensaje justo debajo del campo significa que la dirección
-no ha sido adoptado — debe comenzar por 'https://'. 
+Respuesta: Por lo general, el vídeo no se puede reproducir sin iniciar sesión, o bien el **Tipo** está
+configurado en **Imagen** porque la dirección no tiene extensión. Abre la dirección en
+una ventana privada del navegador: si allí no se reproduce, los
+lectores y lectoras tampoco lo verán. Un mensaje justo debajo del campo indica que la dirección
+no se ha aceptado; debe comenzar por `https://`.
 
-**Pregunta:** He introducido una etiqueta para el botón, pero
-no aparece. 
+**Pregunta:** He introducido un texto para el botón, pero
+no aparece.
 
-Respuesta: El botón necesita **ambos** — etiquetar y apuntar. Mientras
-Uno de los campos está vacío, no se muestra. 
+Respuesta: El botón necesita **ambas cosas**: texto y destino. Mientras
+uno de los campos esté vacío, no se mostrará.
 
-**Pregunta:** La imagen no recorre todo el ancho de la ventana. 
+**Pregunta:** La imagen no ocupa todo el ancho de la ventana.
 
-Respuesta: Dos posibles causas. Cualquiera de las dos es **Mostrar ancho completo** 
-o el widget está en una columna junto a otro contenido. 
-Ponlo en una línea propia en la parte superior de la página. 
+Respuesta: Hay dos posibles causas. O bien la opción **Mostrar a todo lo ancho**
+está desactivada, o bien el widget se encuentra en una columna junto a otros contenidos.
+Colóquelo en una línea propia en la parte superior de la página.
 
-**Pregunta:** El texto no es donde comienza el resto del contenido de la página. 
+**Pregunta:** El texto no aparece donde comienza el resto del contenido de la página.
 
-Respuesta: La etapa se basa en el ancho de contenido que la página reporta. 
-Si se desvía, reporta el caso con la dirección de la página. 
+Respuesta: El escenario se adapta al ancho de contenido que indica la página.
+Si difiere, notifique el caso indicando la dirección de la página.
 
-**Pregunta:** En vez del editor, veo un campo de texto "Entradas" con rizos
-Con paréntesis. 
+**Pregunta:** En lugar del editor, veo un campo de texto «Entradas» con
+llaves en su interior.
 
-Respuesta: El editor no pudo conectar con el diálogo. Cerrar
-Configuración y ábrelos de nuevo. El texto en el campo es el
-versión aproximada de las entradas; no editarla a mano — un error tipográfico
-En él hace desaparecer todos los foils. 
+Respuesta: El editor no ha podido integrarse en el cuadro de diálogo. Cierre
+la configuración y vuelva a abrirla. El texto del campo es el
+borrador de las entradas; no lo edite manualmente, ya que un error tipográfico
+en él haría que desaparecieran todas las diapositivas.
 
-**Pregunta:** El escenario no cambia por sí solo. 
+**Pregunta:** El escenario no cambia por sí solo.
 
-Respuesta: Tres posibles causas: Solo hay un tobogán; **segundos por diapositiva** 
-está configurado en '0'; o en el sistema operativo, está activado "Reducir movimiento". 
-En este último caso, esto es intencionado: el desplazamiento aún puede hacerse mediante flechas
-y guiones. 
+Respuesta: Hay tres posibles causas: solo hay una diapositiva; **Segundos por diapositiva**
+está en `0`; o en el sistema operativo está activada la opción «Reducir movimiento».
+En este último caso, es intencionado: se puede seguir pasando de una diapositiva a otra mediante las flechas
+y las líneas.
 
-**Pregunta:** No veo ninguna flecha en el teléfono. 
+**Pregunta:** No veo flechas en el teléfono.
 
-Respuesta: Así es como está pensado. En pantallas estrechas, deslizas; el
-Las líneas debajo del texto siguen indicando cuál diapositiva está actualmente delante. 
+Respuesta: Así está previsto. En pantallas estrechas se desliza el dedo; las
+líneas situadas debajo del texto siguen indicando qué diapositiva está actualmente en primer plano.
 
-**Pregunta:** Mi imagen está recortada en el borde. 
+**Pregunta:** Mi imagen está recortada por los bordes.
 
-Respuesta: El escenario se recorta a 21:9 o 4:3 dependiendo del ancho de la ventana. Seleccionar
-Crea una imagen con aire alrededor del sujeto, o introduce **Imagen para
-El formato retrato** tiene su propio recorte recortado en el borde. 
+Respuesta: El escenario recorta la imagen a 21:9 o 4:3, dependiendo del ancho de la ventana. Elige
+una imagen con margen alrededor del motivo o añade, en **Imagen para
+formato vertical**, un recorte propio recortado en vertical.
 
-**Pregunta:** ¿Puedo crear más de ocho diapositivas? 
+**Pregunta:** ¿Puedo crear más de ocho diapositivas?
 
-Respuesta: No. A cinco segundos por deslizamiento, una carrera completa dura incluso en
-Ocho diapositivas cuarenta segundos — nadie se queda tanto tiempo en un escenario. 
-El ocho se aplica a todas las diapositivas juntas: una entrada de canal con cinco publicaciones
-Solo permite tres diapositivas más al lado. 
+Respuesta: No. A cinco segundos por diapositiva, una reproducción completa ya dura, con
+ocho diapositivas, cuarenta segundos; nadie se queda tanto tiempo en un escenario.
+El límite de ocho se aplica al conjunto de todas las diapositivas: una entrada de canal con cinco publicaciones
+solo permite tres diapositivas más junto a ella.
 
-**Pregunta:** ¿Tengo que mantener el escenario cuando se publica una nueva publicación en las noticias?
-? 
+**Pregunta:** ¿Tengo que actualizar el escenario cuando aparece una nueva entrada
+en las noticias?
 
-Respuesta: No con una entrada de *canal de noticias**: siempre muestra la información actual
-Publicaciones del canal según los filtros establecidos. Una **publicación de noticias**- 
-La entrada, en cambio, permanece con el puesto que has elegido. 
+Respuesta: En el caso de una entrada del **canal de noticias**, no; siempre muestra las
+entradas actuales del canal según los filtros configurados. En cambio, una entrada de **publicación de noticias**
+se mantiene en la publicación que hayas seleccionado.
 
-**Pregunta:** Una diapositiva de las noticias ha desaparecido de repente. 
+**Pregunta:** Una diapositiva de las noticias ha desaparecido de repente.
 
-Respuesta: La publicación ha sido eliminada, trasladada o está disponible para la persona que lee
-no visible. Solo este florete cae; los demás permanecen en pie. 
+Respuesta: La publicación se ha eliminado, se ha movido o no es visible para el lector. Solo desaparece esa diapositiva; el resto permanece.
 
-**Pregunta:** Mi entrada de canal muestra menos diapositivas que las del set. 
+**Pregunta:** Mi entrada de canal muestra menos diapositivas de las configuradas.
 
-Respuesta: La mayoría de las veces los filtros son demasiado estrechos. **Solo publicaciones con imagen**
-Preajuste — un canal sin imágenes no proporcionará nada. Comprueba el
-Previsualización en el editor: muestra exactamente lo que aparecerá en el escenario. 
+Respuesta: Normalmente, los filtros son demasiado restrictivos. La opción **«Solo entradas con imagen»** está
+activada por defecto, por lo que un canal sin imágenes no mostrará nada. Comprueba la
+vista previa en el editor: muestra exactamente lo que aparecerá en la pantalla.
 
-**Pregunta:** No hay un solo canal en la selección de canales, sino un
-Campo de texto para un identificador. 
+**Pregunta:** En la selección de canales no aparece ningún canal, sino un
+campo de texto para introducir un identificador.
 
-Respuesta: La lista de canales de noticias no estaba disponible. Cargar el diálogo
-nuevo. Si eso no ayuda, introduce el identificador del canal a mano; sigue siendo
-en la dirección del canal en el CMS. 
+Respuesta: No se ha podido acceder a la lista de canales de noticias. Vuelve a cargar el cuadro de diálogo.
+Si eso no funciona, introduce el identificador del canal manualmente; lo encontrarás
+en la dirección del canal en el CMS.
 
-**Pregunta:** ¿Por qué la imagen de un reportaje de noticias está borrosa en el escenario o
-¿Extrañamente cortado? 
+**Pregunta:** ¿Por qué la imagen de una noticia aparece borrosa o
+recortada de forma extraña en el escenario?
 
-Respuesta: Las imágenes destacadas se eliminan para el formato feed, no para un
-escenario a la altura de la pantalla. En la entrada bajo **Diseño de escenario
-Sobrescribe** un separado, transversal y de al menos 1920 px de ancho. 
+Respuesta: Las imágenes de las noticias están recortadas para el formato de feed, no para un
+escenario a altura de pantalla. En la entrada, en **Sobrescribir imagen del escenario**,
+añade una propia, en formato horizontal y con un ancho mínimo de 1920 píxeles.
 
-**Pregunta:** ¿Qué ocurre con el escenario durante la traducción automática de la
-¿De lado? 
+**Pregunta:** ¿Qué ocurre con el escenario cuando se traduce automáticamente la
+página?
 
-Respuesta: Todos los textos escritos por ti mismo están traducidos: titular, 
-Sublínea, pie de foto de botón y descripción de la imagen de una diapositiva
-así como el título y pie de foto encabezado de una entrada de prensa. 
-Las imágenes, los objetivos de referencia, los canales, los filtros y el pedido permanecen sin cambios. 
+Respuesta: Se traducen todos los textos escritos por ti mismo: el título,
+el subtítulo, el texto del botón y la descripción de la imagen de una diapositiva,
+así como el título sobrescrito y el texto de una entrada de noticias.
+Las imágenes, los enlaces, los canales, los filtros y el orden permanecen sin cambios.
 
-**Pregunta:** Una entrada de noticias muestra textos diferentes en la página traducida que en
-del idioma de origen — ¿es eso un error? 
+**Pregunta:** Una entrada de noticias muestra en la página traducida textos diferentes a los del
+idioma original; ¿se trata de un error?
 
-Respuesta: No. El título y el texto esquemática de un artículo de noticias provienen del artículo
-y se muestra en el idioma que el lector utiliza en la aplicación
-. Solo se traducirá lo que escribiste en la entrada
-. Si falta una versión lingüística del artículo, aparece la existente en lugar de
-Dejar el papel de aluminio en blanco.
+Respuesta: No. El título y el texto de resumen de una noticia proceden de la propia
+noticia, y se muestran en el idioma que el lector haya
+configurado en la aplicación. Solo se traduce lo que haya escrito en la propia entrada.
+Si falta una versión lingüística de la entrada, aparece la disponible, en lugar de
+dejar la diapositiva en blanco.

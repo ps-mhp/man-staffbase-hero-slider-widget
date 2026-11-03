@@ -1,48 +1,58 @@
-# Hero Slider
+# Hero-Slider
 
-Il cursore eroico è il **palco** in cima a una pagina: un'immagine grande sopra il
-larghezza completa della finestra, sopra di essa un titolo, opzionalmente una sottolinea e
-Un bottone. Il modello è il palco su man.eu. 
+L'Hero-Slider è il **palcoscenico** nella parte superiore di una pagina: un'immagine di grandi dimensioni che occupa l'
+intera larghezza della finestra, con sopra un titolo, eventualmente una didascalia e
+un pulsante. Il modello di riferimento è il palcoscenico su man.eu.
 
-Se crei diverse slide, ottieni un cambiatore: sbuffa the slide
-si fondono tra loro, lo scorrimento avviene tramite frecce e trattini in basso a sinistra. 
+Chi crea più diapositive ottiene un carrello: le diapositive si
+succedono in dissolvenza, mentre la navigazione avviene tramite le frecce e le linee in basso a sinistra.
 
-Un film non deve essere mantenuto a mano. Oltre ai tuoi film, il
-Stage mostra anche **articoli dalle notizie**: 
+Non è necessario aggiornare manualmente una diapositiva. Oltre alle diapositive personalizzate, la
+pagina iniziale può mostrare anche **articoli dalle notizie**:
 
-- **Post di notizie** — un post specifico come diapositiva. Immagine, titolo
-  E i teaser arrivano dal post, il pulsante porta a lui. 
-- **Canale di notizie** — un intero canale, una diapositiva per ogni post. Quanti, in
-  in quale ordine e secondo quali filtri, può essere regolato. Appare nel
-  Channel, è sul palco senza ulteriori azioni. 
+- **Articolo** — un determinato articolo come diapositiva. Immagine, titolo
+  e anteprima provengono dall’articolo, il pulsante rimanda ad esso.
+- **Canale di notizie** — un intero canale, una diapositiva per ogni articolo. È possibile impostare il numero,
+  l’ordine e i filtri. Se nel
+  canale viene pubblicato un nuovo articolo, questo appare automaticamente sul palco senza alcun intervento.
 
-Le tre varietà sono nella stessa lista e possono essere liberamente miscelate e
-— ad esempio, una diapositiva separata come lead, seguita dalle tre più recenti
-Post da un canale. 
+I tre tipi figurano nello stesso elenco e possono essere liberamente combinati e
+ordinati — ad esempio, una diapositiva dedicata come articolo di apertura, seguita dai tre articoli più recenti
+di un canale.
 
 ## Cosa vedono i lettori
 
-- L'immagine attraversa tutta la larghezza della finestra — anche se la pagina è
-  essa stessa ha una colonna di contenuti più ristretta. 
-- Il **testo rimane sulla riga che si annulla della pagina**: inizia dalla stessa
-  linea verticale come header, menu e il testo sotto il palco. Lui
-  espressamente non si attacca al bordo dell'immagine. 
-- Il testo è in basso a sinistra, su un gradiente scuro che va dal basso al basso
-  in alto. Sugli schermi wide, un secondo gradiente viene da sinistra
-  così quel testo leggero rimane leggibile su un soggetto leggero. 
-- Se ci sono più slide: frecce a sinistra e a destra, una linea per ogni slide nel mezzo. 
-  La linea della slide attuale è rossa. 
-- L'interruttore dura finché il mouse è sopra il palco o la messa a fuoco è inserita
-  stai mentendo. C'è uno swipe sul telefono; le frecce sono nascoste lì. 
-- Se hai impostato "Riduce Movimento" nel sistema operativo, non ne vedrai nessuna
-  Cambia da solo e niente pannello — solo i comandi. 
-- Le diapositive delle notizie sembrano come qualsiasi altra diapositiva. Che il contenuto da
-  non è riconoscibile dall'esterno. 
+- L’immagine occupa l’intera larghezza della finestra — anche se la pagina
+  stessa ha una colonna di contenuto più stretta.
+- Il «palcoscenico» è posizionato **a filo in alto**: se la pagina ha una barra di navigazione,
+  il «palcoscenico» si trova immediatamente sotto di essa; se non ce l’ha, si collega direttamente al
+  menu. La striscia bianca vuota che la pagina altrimenti lascia libera sopra il primo
+  contenuto viene eliminata.
+- Il **testo rimane allineato alla linea di riferimento della pagina**: inizia sulla stessa
+  linea verticale dell’intestazione, del menu e del testo sottostante l’area di visualizzazione. Esso
+  non è espressamente allineato al bordo dell’immagine.
+- Il testo si trova in basso a sinistra, su una sfumatura scura che va dal basso
+  verso l’alto. Sugli schermi larghi si aggiunge una seconda sfumatura da sinistra
+  , affinché il testo chiaro rimanga leggibile su uno sfondo chiaro.
+- In caso di più diapositive: frecce a sinistra e a destra, con una linea tra di esse per ogni diapositiva.
+  La linea della diapositiva corrente è rossa.
+- Il cambio rimane attivo finché il mouse si trova sopra il palco o il focus è
+  su di esso. Sul telefono si scorre con il dito; in questo caso le frecce vengono nascoste.
+- **Sul telefono** (con larghezza inferiore a 768 pixel) sull’immagine compare solo il titolo,
+  lungo al massimo quattro righe; ciò che va oltre termina con «…».
+  La riga inferiore e il pulsante vengono nascosti; al loro posto, un tocco
+  in un punto qualsiasi della diapositiva porta alla destinazione del pulsante. Per gli screen reader,
+  la loro etichetta rimane il nome di questo link. Se una diapositiva non ha una destinazione,
+  non è possibile toccarla.
+- Chi ha impostato «Riduci animazioni» nel sistema operativo non vede alcun
+  cambio automatico né dissolvenze — solo gli elementi di controllo.
+- Le diapositive delle notizie hanno lo stesso aspetto di qualsiasi altra diapositiva. Il fatto che il contenuto provenga
+  da un articolo non è riconoscibile dall’esterno.
 
-## Quello che vedi nell'editor CMS
+## Cosa vedete nell’editor CMS
 
-L'editor mostra la fase all'interno della colonna dei contenuti, cioè **più stretta che su
-della pagina pubblicata**. Quanto si estende davvero l'immagine e dove si trova il testo
-è disponibile solo nell'anteprima o nella pagina pubblicata.
-. Controlla sempre almeno una volta in un gruppo stretto
-Larghezza delle finestre — qui si applica il ritaglio del ritratto.
+L’editor mostra l’area di visualizzazione all’interno della colonna dei contenuti, quindi **più stretta rispetto alla
+pagina pubblicata**. È possibile valutare fino a dove si estende realmente l’immagine e dove si trova il testo
+solo nell’anteprima o sulla pagina pubblicata
+. Controllate sempre almeno una volta con una
+larghezza della finestra ridotta: è lì che entra in gioco il ritaglio in formato verticale.
