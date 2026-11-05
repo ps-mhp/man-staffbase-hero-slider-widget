@@ -30,10 +30,10 @@ import {
   configurationSchema,
   uiSchema,
 } from "./configuration-schema";
-import { HERO_HEIGHTS, HeroHeight, HeroSlider } from "./hero-slider";
+import { HeroSlider } from "./hero-slider";
 import { HeroSliderLoader } from "./hero-slider-loader";
 import { startSlideEditorInjector } from "./slide-editor-injector";
-import { DEFAULT_AUTOPLAY_DELAY_MS } from "./use-slider";
+import { readAutoplayDelayMs, readFlag, readHeight } from "./attributes";
 import { isSlideItem, parseHeroItems } from "./hero-items";
 import { heroSliderTranslationProvider } from "./translation-provider";
 import icon from "../resources/hero-slider-widget.svg";
@@ -61,38 +61,6 @@ export function stopSlideEditorInjector(): void {
   stopInjector = null;
 }
 
-/**
- * Alles außer den bekannten Stufen bedeutet die Vorgabe — auch ein leeres oder
- * veraltetes Attribut.
- *
- * Die Vorgabe ist „Abschnittshöhe": im neuen Editor schliesst die Bühne damit
- * bündig mit ihrem Abschnitt ab, im klassischen fällt sie mangels Abschnitt
- * auf die Masse der CI-Spec 3.9 zurück. Bestehende Inhalte tragen ihre Stufe
- * als Attribut und bleiben davon unberührt.
- */
-function readHeight(raw: unknown): HeroHeight {
-  return typeof raw === "string" && (HERO_HEIGHTS as readonly string[]).includes(raw)
-    ? (raw as HeroHeight)
-    : "section";
-}
-
-/**
- * Der Ausbruch ist an, solange ihn niemand ausdrücklich abschaltet. Staffbase
- * liefert Wahrheitswerte je nach Weg als `boolean` oder als Zeichenkette; nur
- * ein echtes „aus" zählt, damit ein fehlendes Attribut die Vorgabe nicht kippt.
- */
-function readFullBleed(raw: unknown): boolean {
-  if (raw === false || raw === "false") return false;
-  return true;
-}
-
-/** Sekunden aus dem Dialog in Millisekunden; alles Unbrauchbare fällt auf die Vorgabe zurück. */
-function readAutoplayDelayMs(raw: unknown): number {
-  const seconds = typeof raw === "number" ? raw : Number.parseFloat(String(raw ?? ""));
-  if (!Number.isFinite(seconds) || seconds < 0) return DEFAULT_AUTOPLAY_DELAY_MS;
-  return seconds * 1000;
-}
-
 const factory: BlockFactory = (BaseBlockClass, _widgetApi) => {
   /**
    * <hero-slider-widget slides='[{"id":"a","image":{"url":"…","alt":"…"},"headline":"…"}]'></hero-slider-widget>
@@ -108,7 +76,7 @@ const factory: BlockFactory = (BaseBlockClass, _widgetApi) => {
 
       const options = {
         height: readHeight(attrs[HEIGHT_ATTRIBUTE]),
-        fullBleed: readFullBleed(attrs[FULL_BLEED_ATTRIBUTE]),
+        fullBleed: readFlag(attrs[FULL_BLEED_ATTRIBUTE]),
         autoplayDelayMs: readAutoplayDelayMs(attrs[AUTOPLAY_DELAY_ATTRIBUTE]),
       };
 

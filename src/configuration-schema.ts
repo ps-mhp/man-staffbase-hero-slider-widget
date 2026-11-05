@@ -18,6 +18,8 @@ export const SLIDES_ATTRIBUTE = "slides";
 export const HEIGHT_ATTRIBUTE = "height";
 export const FULL_BLEED_ATTRIBUTE = "full-bleed";
 export const AUTOPLAY_DELAY_ATTRIBUTE = "autoplay-delay";
+export const POSITION_ATTRIBUTE = "position";
+export const CONTROLS_ATTRIBUTE = "controls";
 
 /**
  * Das Schema des Konfigurationsdialogs.
@@ -61,7 +63,8 @@ export const configurationSchema: JSONSchema7 = {
       default: 5,
       minimum: 0,
       maximum: 30,
-    },
+    
+},
   },
 };
 
@@ -93,5 +96,16 @@ export const uiSchema: UiSchema = {
     "ui:help":
       "0 hält die Bühne an; dann wird nur über Pfeile und Striche geblättert. " +
       "Wer im System weniger Bewegung eingestellt hat, sieht ohnehin keinen Wechsel von selbst.",
+  [POSITION_ATTRIBUTE]: {
+    "ui:help":
+      "„Vor den Brotkrumen“ setzt die Bühne bündig unter das Menü; die Brotkrumen rücken " +
+      "darunter. Das greift nur, wenn die Bühne oben auf der Seite steht und die Seite " +
+      "überhaupt Brotkrumen hat — sonst verhält sie sich wie „nach den Brotkrumen“.",
   },
+  [CONTROLS_ATTRIBUTE]: {
+    "ui:help":
+      "Blendet Pfeile und Striche aus. Geblättert wird weiter mit Wischen und den " +
+      "Pfeiltasten, und die eingestellte Zeit je Folie läuft unverändert.",
+  },
+},
 };
