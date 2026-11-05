@@ -38,10 +38,10 @@ afterEach(() => {
 });
 
 describe("isEditor", () => {
-  it("erkennt den klassischen Editor an der Werkzeugleiste", () => {
-    const toolbar = document.createElement("div");
-    toolbar.id = "contextual-action-toolbar";
-    document.body.appendChild(toolbar);
+  it("erkennt den klassischen Editor an seinem Zustand im Dokument", () => {
+    const state = document.createElement("div");
+    state.setAttribute("data-react-values", "{}");
+    document.body.appendChild(state);
 
     expect(isEditor(place(false))).toBe(true);
   });
@@ -63,6 +63,16 @@ describe("isEditor", () => {
     // Der Abschnitt taugt nicht als Merkmal: er gehört zur gespeicherten
     // Seite und steht auch dort, wo niemand mehr etwas bearbeitet.
     at("/content/page/6a6850edcb9e7d3876d306d4");
+
+    expect(isEditor(place(true))).toBe(false);
+  });
+
+  it("hält die Werkzeugleiste der Leseansicht nicht für den Editor", () => {
+    // Wer die Seite bearbeiten darf, sieht die Leiste auch beim blossen
+    // Lesen. Als Merkmal genommen, stünde der Hinweis auf der fertigen Seite.
+    const toolbar = document.createElement("div");
+    toolbar.id = "contextual-action-toolbar";
+    document.body.appendChild(toolbar);
 
     expect(isEditor(place(true))).toBe(false);
   });

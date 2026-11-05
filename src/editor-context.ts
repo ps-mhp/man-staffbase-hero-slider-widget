@@ -19,31 +19,38 @@
  * Streifen über dem Bild wäre für sie nur ein Fehler der Seite.
  *
  * Gefragt wird an zwei Stellen, weil Staffbase zwei Editoren hat: der
- * klassische bringt die kontextuelle Werkzeugleiste mit, der Content Designer
- * arbeitet unter einer eigenen Adresse.
+ * klassische hält seinen Zustand in `[data-react-values]`, der Content
+ * Designer arbeitet unter einer eigenen Adresse.
  *
- * Nicht gefragt wird nach dem Abschnitt des Content Designers. Der sieht
- * zwar nach Editor aus, ist aber Teil der gespeicherten Seite und steht
- * genauso auf der fertigen Seite — `full-bleed.ts` baut im Lesemodus darauf.
- * Als Merkmal genommen, hielte er jede mit dem Designer gebaute Seite für
- * den Editor und zeigte den Hinweis ausgerechnet denen, die ihn nicht
- * gebrauchen können.
+ * Zwei naheliegende Merkmale taugen ausdrücklich **nicht**. Der Abschnitt des
+ * Content Designers (`[data-c13y-component="section-block"]`) gehört zur
+ * gespeicherten Seite und steht genauso auf der fertigen — `full-bleed.ts`
+ * baut im Lesemodus gerade darauf. Und die kontextuelle Werkzeugleiste
+ * (`#contextual-action-toolbar`) ist Teil der Leseansicht: wer die Seite
+ * bearbeiten darf, sieht sie auch beim blossen Lesen (siehe
+ * `shared/content-modal/page-frame.tsx` und `CHROME_SELECTOR` in
+ * `page-top.ts`). Beide hielten gewöhnliche Seiten für den Editor und
+ * zeigten den Hinweis denen, die ihn nicht gebrauchen können.
  */
 
-/** Die Werkzeugleiste des klassischen Editors. */
-export const EDITOR_TOOLBAR_SELECTOR = "#contextual-action-toolbar";
+/**
+ * Der Zustand des klassischen Editors. Keine veröffentlichte Seite trägt
+ * ihn — dasselbe Merkmal nutzt `content-tabs` (`EDITOR_MARKER_SELECTOR` in
+ * dessen `bootstrap.tsx`).
+ */
+export const EDITOR_MARKER_SELECTOR = "[data-react-values]";
 
 /**
  * Der Pfad des Studios, unter dem der Content Designer bearbeitet
- * (`/studio/content/page/…/edit`). Dieselbe Prüfung wie im Loader
- * (`loader/bootstrap.js`). Eine gelesene Seite liegt nie dort.
+ * (`/studio/content/page/…/edit`). Eine gelesene Seite liegt nie dort; der
+ * Loader (`loader/bootstrap.js`) prüft sie ebenso.
  */
 const STUDIO_PATH = "/studio";
 
 /** Steht `element` auf einer Seite, die gerade bearbeitet wird? */
 export function isEditor(element: HTMLElement): boolean {
   const doc = element.ownerDocument;
-  if (doc.querySelector(EDITOR_TOOLBAR_SELECTOR) !== null) return true;
+  if (doc.querySelector(EDITOR_MARKER_SELECTOR) !== null) return true;
   const path = doc.location?.pathname ?? "";
   return path === STUDIO_PATH || path.startsWith(`${STUDIO_PATH}/`);
 }
