@@ -606,6 +606,124 @@ describe("holdPageTop — ausgetauschter Brotkrumen-Kasten", () => {
   });
 });
 
+describe("holdPageTop — ausgetauschter Seitenrahmen", () => {
+  it("lässt auf keinem der beiden Rahmen einen erzwungenen Kopfabstand zurück", async () => {
+    addChrome(136);
+    const oldWrapper = addWrapper();
+
+    const release = hold({});
+    expect(oldWrapper.style.getPropertyValue("padding-top")).toBe("136px");
+
+    // Die Einzelseitenanwendung tauscht den Rahmen beim Seitenwechsel aus.
+    oldWrapper.remove();
+    const newWrapper = addWrapper();
+    await triggerPass();
+    expect(newWrapper.style.getPropertyValue("padding-top")).toBe("136px");
+
+    release();
+
+    // Das Widget wird in fremde Seiten eingebettet und darf nichts
+    // zurücklassen — schon gar kein `!important` auf einem Rahmen, den es
+    // nicht mehr kennt.
+    expect(newWrapper.style.getPropertyValue("padding-top")).toBe("");
+    expect(oldWrapper.style.getPropertyValue("padding-top")).toBe("");
+  });
+});
+
+describe("holdPageTop — Meldung je Bühne", () => {
+  it("meldet die Höhe der Brotkrumen nur der Bühne, unter der sie liegen", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186);
+    const first = addHost(wrapper, 136, 636);
+    const second = addHost(wrapper, 636, 1136);
+
+    const seenFirst: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    const seenSecond: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    hold({ position: "pre", host: first, onLayout: (layout) => seenFirst.push(layout) });
+    hold({ position: "pre", host: second, onLayout: (layout) => seenSecond.push(layout) });
+
+    expect(seenFirst.at(-1)).toEqual({ applied: true, breadcrumbsHeight: 20 });
+    // Die Brotkrumen liegen unter der ersten Bühne. Hielte die zweite
+    // denselben Platz frei, stünde unter ihr ein Streifen Weissraum, hinter
+    // dem nichts ist.
+    expect(seenSecond.at(-1)).toEqual({ applied: false, breadcrumbsHeight: 0 });
+  });
+
+  it("meldet einer Bühne in post keinen Rückfall, wenn die Messung nichts ergibt", () => {
+    // Ohne feste Leiste ist nichts zu messen; der Abstand von Staffbase
+    // bleibt stehen.
+    addWrapper();
+    const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    hold({ position: "post", onLayout: (layout) => seen.push(layout) });
+
+    // `applied: false` heisst „`pre` angefordert und nicht bekommen". Wer
+    // `post` angemeldet hat, bekommt genau das, was er wollte.
+    expect(seen.at(-1)).toEqual({ applied: true, breadcrumbsHeight: 0 });
+  });
+});
+
+/** Ein ResizeObserver, der nur meldet, was er auch beobachtet. */
+class FakeResizeObserver {
+  static instances: FakeResizeObserver[] = [];
+  private readonly observed = new Set<Element>();
+  constructor(private readonly callback: () => void) {
+    FakeResizeObserver.instances.push(this);
+  }
+  observe(target: Element): void {
+    this.observed.add(target);
+  }
+  unobserve(target: Element): void {
+    this.observed.delete(target);
+  }
+  disconnect(): void {
+    this.observed.clear();
+  }
+  /** Eine Grössenänderung, wie der Browser sie meldete. */
+  static resize(target: Element): void {
+    for (const instance of FakeResizeObserver.instances) {
+      if (instance.observed.has(target)) instance.callback();
+    }
+  }
+}
+
+describe("holdPageTop — Beobachtung der Bühne", () => {
+  beforeEach(() => {
+    FakeResizeObserver.instances = [];
+    (window as unknown as { ResizeObserver: unknown }).ResizeObserver = FakeResizeObserver;
+  });
+
+  afterEach(() => {
+    delete (window as unknown as { ResizeObserver?: unknown }).ResizeObserver;
+  });
+
+  it("beobachtet die nachgerückte Bühne, wenn ihr Vorgänger geht", async () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const { box } = addBreadcrumbs(wrapper, 186);
+    const first = addHost(wrapper, 136, 636);
+    const second = addHost(wrapper, 136, 536);
+
+    const releaseFirst = hold({ position: "pre", host: first });
+    hold({ position: "pre", host: second });
+
+    releaseFirst();
+    expect(box.style.getPropertyValue("top")).toBe("536px");
+    // Erst alles abwarten, was der Umbau selbst noch auslöst — sonst
+    // schriebe ein fremder Durchlauf den Wert, den dieser Test prüft.
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // Eine spät geladene Schrift oder ein Bild ändert die Höhe der Bühne,
+    // ohne die Seite umzubauen. Bliebe der Beobachter an der abgemeldeten
+    // Bühne, hingen die Brotkrumen auf der alten Kante fest.
+    setRect(second, { top: 136, bottom: 700, height: 564 });
+    FakeResizeObserver.resize(second);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(box.style.getPropertyValue("top")).toBe("700px");
+  });
+});
+
 describe("usePageTop", () => {
   it("baut den Halter nicht bei jedem Bildaufbau neu auf", () => {
     addChrome(136);
