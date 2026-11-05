@@ -11,7 +11,12 @@
  * limitations under the License.
  */
 
-import { MAX_PLAUSIBLE_TOP, holdPageTop, measurePageTop } from "./page-top";
+import {
+  MAX_PLAUSIBLE_TOP,
+  canPlacePreBreadcrumbs,
+  holdPageTop,
+  measurePageTop,
+} from "./page-top";
 
 /**
  * jsdom rechnet kein Layout: `getBoundingClientRect` liefert überall Nullen.
@@ -47,15 +52,29 @@ function addWrapper(top = 0): HTMLElement {
  * Die Brotkrumen in ihrem Kasten, so wie Staffbase sie stellt: der Kasten
  * absolut über der Seite, die Liste darin im Fluss.
  */
-function addBreadcrumbs(wrapper: HTMLElement, bottom: number, positioned = true): HTMLElement {
+function addBreadcrumbs(
+  wrapper: HTMLElement,
+  bottom: number,
+  positioned = true,
+): { box: HTMLElement; crumbs: HTMLElement } {
   const box = document.createElement("div");
   if (positioned) box.style.position = "absolute";
+  setRect(box, { top: bottom - 20, bottom, height: 20 });
   const crumbs = document.createElement("nav");
   crumbs.id = "breadcrumbs";
   setRect(crumbs, { top: bottom - 20, bottom, height: 20 });
   box.appendChild(crumbs);
   wrapper.appendChild(box);
-  return crumbs;
+  return { box, crumbs };
+}
+
+/** Die Bühne selbst; im Modus `pre` trägt ihre Unterkante die Brotkrumen. */
+function addHost(wrapper: HTMLElement, top: number, bottom: number): HTMLElement {
+  const host = document.createElement("div");
+  host.className = "man-hero-host";
+  setRect(host, { top, bottom, height: bottom - top });
+  wrapper.appendChild(host);
+  return host;
 }
 
 afterEach(() => {
@@ -84,7 +103,7 @@ describe("measurePageTop", () => {
   it("übergeht ausgeblendete Brotkrumen", () => {
     addChrome(136);
     const wrapper = addWrapper();
-    const crumbs = addBreadcrumbs(wrapper, 186);
+    const { crumbs } = addBreadcrumbs(wrapper, 186);
     setRect(crumbs, { top: 0, bottom: 0, height: 0 });
 
     // Ein Kasten ohne Höhe ist keine Zeile, unter die etwas rücken müsste.
@@ -212,5 +231,185 @@ describe("holdPageTop", () => {
     expect(wrapper.style.getPropertyValue("padding-top")).toBe("186px");
 
     release();
+  });
+});
+
+describe("measurePageTop — Lage vor den Brotkrumen", () => {
+  it("setzt die Bühne bündig ans Menü, obwohl es Brotkrumen gibt", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186);
+
+    // Genau der Unterschied zum Modus `post`: dort wäre es 186.
+    expect(measurePageTop(document, "pre")).toBe(136);
+  });
+
+  it("verwirft auch hier einen unglaubwürdig tiefen Messwert", () => {
+    addChrome(MAX_PLAUSIBLE_TOP + 1);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, MAX_PLAUSIBLE_TOP + 1);
+
+    expect(measurePageTop(document, "pre")).toBeNull();
+  });
+});
+
+describe("canPlacePreBreadcrumbs", () => {
+  it("lässt die Lage zu, wenn Brotkrumen aus dem Fluss über der Bühne liegen", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186);
+    const host = addHost(wrapper, 136, 636);
+
+    expect(canPlacePreBreadcrumbs(document, host)).toBe(true);
+  });
+
+  it("verweigert sie ohne Brotkrumen", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const host = addHost(wrapper, 136, 636);
+
+    // Ohne Brotkrumen gibt es nichts zu verschieben; die Bühne steht ohnehin
+    // am Menü, und die Lage ist eine Unterscheidung ohne Unterschied.
+    expect(canPlacePreBreadcrumbs(document, host)).toBe(false);
+  });
+
+  it("verweigert sie bei Brotkrumen im Fluss", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186, false);
+    const host = addHost(wrapper, 186, 686);
+
+    // Stehen sie im Fluss, schieben sie den Inhalt selbst. Ihnen ein `top` zu
+    // schreiben bliebe folgenlos.
+    expect(canPlacePreBreadcrumbs(document, host)).toBe(false);
+  });
+
+  it("verweigert sie, wenn die Bühne nicht oben auf der Seite steht", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186);
+    const host = addHost(wrapper, MAX_PLAUSIBLE_TOP + 100, MAX_PLAUSIBLE_TOP + 600);
+
+    // Die Brotkrumen unter eine Bühne zu schieben, über der schon Inhalt
+    // steht, ergäbe eine Zeile mitten auf der Seite.
+    expect(canPlacePreBreadcrumbs(document, host)).toBe(false);
+  });
+
+  it("verweigert sie ohne bekannte Bühne", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186);
+
+    // Ohne Unterkante der Bühne gibt es kein Ziel für die Brotkrumen.
+    expect(canPlacePreBreadcrumbs(document, null)).toBe(false);
+  });
+});
+
+describe("holdPageTop — Lage vor den Brotkrumen", () => {
+  it("setzt die Bühne ans Menü und die Brotkrumen unter sie", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const { box } = addBreadcrumbs(wrapper, 186);
+    const host = addHost(wrapper, 136, 636);
+
+    const release = holdPageTop(document, { position: "pre", host });
+
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("136px");
+    expect(box.style.getPropertyValue("top")).toBe("636px");
+    // Der Gegner führt seinen Wert bei hoher Spezifität.
+    expect(box.style.getPropertyPriority("top")).toBe("important");
+
+    release();
+
+    // Das Widget wird in fremde Seiten eingebettet und darf nichts zurücklassen.
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("");
+    expect(box.style.getPropertyValue("top")).toBe("");
+  });
+
+  it("stellt ein vorgefundenes Inline-top der Brotkrumen wieder her", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const { box } = addBreadcrumbs(wrapper, 186);
+    box.style.setProperty("top", "122px");
+    const host = addHost(wrapper, 136, 636);
+
+    holdPageTop(document, { position: "pre", host })();
+
+    expect(box.style.getPropertyValue("top")).toBe("122px");
+  });
+
+  it("meldet die Höhe der Brotkrumen, damit die Bühne Platz freihält", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186);
+    const host = addHost(wrapper, 136, 636);
+
+    const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    const release = holdPageTop(document, {
+      position: "pre",
+      host,
+      onLayout: (layout) => seen.push(layout),
+    });
+
+    expect(seen.at(-1)).toEqual({ applied: true, breadcrumbsHeight: 20 });
+
+    release();
+  });
+
+  it("fällt still auf die Lage unter den Brotkrumen zurück, wenn sie nicht geht", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186);
+    // Die Bühne steht nicht oben auf der Seite.
+    const host = addHost(wrapper, MAX_PLAUSIBLE_TOP + 100, MAX_PLAUSIBLE_TOP + 600);
+
+    const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    const release = holdPageTop(document, {
+      position: "pre",
+      host,
+      onLayout: (layout) => seen.push(layout),
+    });
+
+    expect(seen.at(-1)).toEqual({ applied: false, breadcrumbsHeight: 0 });
+    // Der Innenabstand folgt dann der Regel von `post`.
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("186px");
+
+    release();
+  });
+
+  it("meldet im Modus post nichts Freizuhaltendes", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const { box } = addBreadcrumbs(wrapper, 186);
+    const host = addHost(wrapper, 186, 686);
+
+    const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    const release = holdPageTop(document, {
+      position: "post",
+      host,
+      onLayout: (layout) => seen.push(layout),
+    });
+
+    expect(seen.at(-1)).toEqual({ applied: true, breadcrumbsHeight: 0 });
+    // Im Modus `post` bleiben die Brotkrumen unangetastet.
+    expect(box.style.getPropertyValue("top")).toBe("");
+
+    release();
+  });
+
+  it("gibt die Brotkrumen erst frei, wenn die letzte Bühne geht", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const { box } = addBreadcrumbs(wrapper, 186);
+    const host = addHost(wrapper, 136, 636);
+
+    const first = holdPageTop(document, { position: "pre", host });
+    const second = holdPageTop(document, { position: "pre", host });
+
+    first();
+    expect(box.style.getPropertyValue("top")).toBe("636px");
+
+    second();
+    expect(box.style.getPropertyValue("top")).toBe("");
   });
 });

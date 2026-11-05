@@ -46,6 +46,8 @@
 
 import { useEffect } from "react";
 
+import { HeroPosition } from "./attributes";
+
 /** Der Seitenrahmen, dessen Kopfabstand den Beginn des Inhalts setzt. */
 export const WRAPPER_SELECTOR = "#wrapper";
 
@@ -76,22 +78,25 @@ function isVisible(element: HTMLElement): boolean {
 }
 
 /**
- * Ob `element` zwischen sich und `wrapper` aus dem Fluss genommen ist.
+ * Der äusserste Kasten zwischen `element` und `wrapper`, der aus dem Fluss
+ * genommen ist — oder `null`, wenn keiner es ist.
  *
- * Der Unterschied entscheidet, was gemessen werden darf. Stehen die
- * Brotkrumen im Fluss, schieben sie den Inhalt selbst — dann ist ihre
- * Unterkante eine Folge des Kopfabstands, und sie zu messen hiesse, den
- * eigenen Eingriff zu messen. Liegen sie darüber, schiebt sie niemand, und
- * ihre Unterkante ist die einzige verlässliche Kante.
+ * Der Unterschied entscheidet, was gemessen und was geschrieben werden darf.
+ * Stehen die Brotkrumen im Fluss, schieben sie den Inhalt selbst — dann ist
+ * ihre Unterkante eine Folge des Kopfabstands, und sie zu messen hiesse, den
+ * eigenen Eingriff zu messen; ein geschriebenes `top` bliebe ausserdem
+ * folgenlos. Liegen sie darüber, schiebt sie niemand, und der äusserste
+ * Kasten ist der, der das `top` von Staffbase trägt.
  */
-function isOutOfFlow(element: HTMLElement, wrapper: HTMLElement): boolean {
+function outOfFlowBox(element: HTMLElement, wrapper: HTMLElement): HTMLElement | null {
   let node: HTMLElement | null = element;
+  let found: HTMLElement | null = null;
   while (node !== null && node !== wrapper) {
     const { position } = getComputedStyle(node);
-    if (position === "absolute" || position === "fixed") return true;
+    if (position === "absolute" || position === "fixed") found = node;
     node = node.parentElement;
   }
-  return false;
+  return found;
 }
 
 /** Die Unterkante der tiefsten festen Leiste, oder `null`, wenn es keine gibt. */
@@ -112,11 +117,17 @@ function chromeBottom(doc: Document): number | null {
 /**
  * Der Kopfabstand, den der `#wrapper` für diese Seite haben müsste.
  *
+ * @param position `post` setzt den Inhalt unter die Brotkrumen (die Vorgabe),
+ * `pre` bündig unter die festen Leisten — dort rücken die Brotkrumen unter die
+ * Bühne, und ihre Unterkante ist nicht mehr der Anfang des Inhalts.
  * @returns den Wert in CSS-Pixeln, oder `null`, wenn nichts Verlässliches zu
  * messen war — dann bleibt der Abstand von Staffbase unangetastet. Ein
  * geratener Wert wäre schlechter als der fremde.
  */
-export function measurePageTop(doc: Document = document): number | null {
+export function measurePageTop(
+  doc: Document = document,
+  position: HeroPosition = "post",
+): number | null {
   const wrapper = doc.querySelector<HTMLElement>(WRAPPER_SELECTOR);
   if (wrapper === null) return null;
 
@@ -126,28 +137,90 @@ export function measurePageTop(doc: Document = document): number | null {
   const wrapperTop = wrapper.getBoundingClientRect().top + scroller.scrollTop;
 
   const crumbs = doc.querySelector<HTMLElement>(BREADCRUMBS_SELECTOR);
-  const edge =
-    crumbs !== null && isVisible(crumbs) && isOutOfFlow(crumbs, wrapper)
-      ? crumbs.getBoundingClientRect().bottom + scroller.scrollTop
-      : // Feste Leisten stehen im Fenster, nicht im Dokument: ihre Unterkante
-        // ist bereits der Abstand vom Seitenanfang und darf nicht noch einmal
-        // um den Bildlauf verschoben werden.
-        chromeBottom(doc);
+  const underCrumbs =
+    position === "post" &&
+    crumbs !== null &&
+    isVisible(crumbs) &&
+    outOfFlowBox(crumbs, wrapper) !== null;
+
+  const edge = underCrumbs
+    ? (crumbs as HTMLElement).getBoundingClientRect().bottom + scroller.scrollTop
+    : // Feste Leisten stehen im Fenster, nicht im Dokument: ihre Unterkante
+      // ist bereits der Abstand vom Seitenanfang und darf nicht noch einmal
+      // um den Bildlauf verschoben werden.
+      chromeBottom(doc);
 
   if (edge === null) return null;
 
   const top = edge - wrapperTop;
-  // Bündig heisst bündig: der Abstand zwischen Brotkrumen und Bühne ist 0,
-  // die Luft darunter setzt die Bühne selbst (`.man-hero-host`).
+  // Bündig heisst bündig: der Abstand zwischen Kante und Bühne ist 0, die Luft
+  // darunter setzt die Bühne selbst (`.man-hero-host`).
   if (top < 0 || top > MAX_PLAUSIBLE_TOP) return null;
   return top;
 }
 
-/** Was vom Innenabstand des Rahmens vor dem Eingriff da war. */
+/**
+ * Ob die Lage vor den Brotkrumen auf dieser Seite überhaupt zustande kommt.
+ *
+ * Verlangt wird alles, was der Eingriff braucht: ein Seitenrahmen, messbare
+ * feste Leisten, ein Brotkrumen-Kasten aus dem Fluss (nur der trägt das `top`,
+ * das verschoben werden kann) und eine Bühne, die oben auf der Seite steht.
+ * Die Brotkrumen unter eine Bühne zu schieben, über der schon Inhalt steht,
+ * ergäbe eine Zeile mitten auf der Seite.
+ *
+ * Trifft eines davon nicht zu, ist das kein Fehler, sondern eine Seite, auf
+ * die die Einstellung nicht passt: der Aufrufer fällt still auf `post` zurück.
+ */
+export function canPlacePreBreadcrumbs(
+  doc: Document = document,
+  host: HTMLElement | null = null,
+): boolean {
+  if (host === null) return false;
+
+  const wrapper = doc.querySelector<HTMLElement>(WRAPPER_SELECTOR);
+  if (wrapper === null) return false;
+
+  const crumbs = doc.querySelector<HTMLElement>(BREADCRUMBS_SELECTOR);
+  if (crumbs === null || !isVisible(crumbs)) return false;
+  if (outOfFlowBox(crumbs, wrapper) === null) return false;
+  if (measurePageTop(doc, "pre") === null) return false;
+
+  const scroller = doc.scrollingElement ?? doc.documentElement;
+  const wrapperTop = wrapper.getBoundingClientRect().top + scroller.scrollTop;
+  const hostTop = host.getBoundingClientRect().top + scroller.scrollTop;
+  return hostTop - wrapperTop <= MAX_PLAUSIBLE_TOP;
+}
+
+/** Was von einer Stileigenschaft vor dem Eingriff da war. */
 interface SavedPadding {
   element: HTMLElement;
+  property: string;
   value: string;
   priority: string;
+}
+
+/** Was die Bühne über das Ergebnis der Messung wissen muss. */
+export interface PageTopLayout {
+  /**
+   * Ob der angemeldete Modus zustande kam. Nur `false`, wenn `pre`
+   * angefordert, aber auf dieser Seite nicht anwendbar war.
+   */
+  applied: boolean;
+  /**
+   * Die Höhe des verschobenen Brotkrumen-Kastens in CSS-Pixeln, die die Bühne
+   * unter sich freihalten muss. `0`, solange nichts verschoben ist.
+   */
+  breadcrumbsHeight: number;
+}
+
+/** Womit sich eine Bühne den Kopfabstand holt. */
+export interface PageTopOptions {
+  /** Die Lage zu den Brotkrumen; Vorgabe ist darunter. */
+  position?: HeroPosition;
+  /** Die Bühne selbst; im Modus `pre` trägt ihre Unterkante die Brotkrumen. */
+  host?: HTMLElement | null;
+  /** Wird nach jeder Messung gerufen. */
+  onLayout?: (layout: PageTopLayout) => void;
 }
 
 /**
@@ -158,6 +231,14 @@ interface SavedPadding {
  */
 let holders = 0;
 let saved: SavedPadding | null = null;
+/** Der Vorzustand des Brotkrumen-Kastens, solange er verschoben ist. */
+let savedCrumbs: SavedPadding | null = null;
+/** Der Modus, den der erste Halter angemeldet hat. */
+let mode: HeroPosition = "post";
+/** Die Bühne des ersten Halters; ihre Unterkante trägt die Brotkrumen. */
+let anchorHost: HTMLElement | null = null;
+/** Wer über das Ergebnis jeder Messung unterrichtet werden will. */
+const listeners = new Set<(layout: PageTopLayout) => void>();
 let resizeObserver: ResizeObserver | null = null;
 let mutationObserver: MutationObserver | null = null;
 let frame: number | null = null;
@@ -168,17 +249,68 @@ let frame: number | null = null;
  */
 let scheduled: (() => void) | null = null;
 
+function restoreSaved(entry: SavedPadding | null): void {
+  if (entry === null) return;
+  const { element, property, value, priority } = entry;
+  // Ein leerer Wert heisst „stand nicht inline" — dann muss die Eigenschaft
+  // ganz verschwinden, nicht auf `""` stehen bleiben.
+  if (value === "") element.style.removeProperty(property);
+  else element.style.setProperty(property, value, priority);
+}
+
+function restore(): void {
+  restoreSaved(saved);
+  saved = null;
+  restoreSaved(savedCrumbs);
+  savedCrumbs = null;
+}
+
+/**
+ * Schiebt den Brotkrumen-Kasten unter die Bühne.
+ *
+ * Bezug des Kastens ist die Polsterkante des `#wrapper` — sie liegt vor dem
+ * Innenabstand und bleibt von unserem Eingriff unberührt. Die Unterkante der
+ * Bühne hängt umgekehrt nicht vom `top` des Kastens ab, weil der aus dem Fluss
+ * genommen ist. Die Messkette ist damit azyklisch und kann sich nicht selbst
+ * hochschaukeln.
+ *
+ * @returns die Höhe des Kastens, die die Bühne unter sich freihalten muss.
+ */
+function placeBreadcrumbs(doc: Document, wrapper: HTMLElement, host: HTMLElement): number {
+  const crumbs = doc.querySelector<HTMLElement>(BREADCRUMBS_SELECTOR);
+  if (crumbs === null) return 0;
+  const box = outOfFlowBox(crumbs, wrapper);
+  if (box === null) return 0;
+
+  const scroller = doc.scrollingElement ?? doc.documentElement;
+  const wrapperTop = wrapper.getBoundingClientRect().top + scroller.scrollTop;
+  const hostBottom = host.getBoundingClientRect().bottom + scroller.scrollTop;
+
+  savedCrumbs ??= {
+    element: box,
+    property: "top",
+    value: box.style.getPropertyValue("top"),
+    priority: box.style.getPropertyPriority("top"),
+  };
+
+  box.style.setProperty("top", `${hostBottom - wrapperTop}px`, "important");
+  return box.getBoundingClientRect().height;
+}
+
 function write(doc: Document): void {
   const wrapper = doc.querySelector<HTMLElement>(WRAPPER_SELECTOR);
   if (wrapper === null) return;
 
-  const top = measurePageTop(doc);
+  const applied = mode === "pre" ? canPlacePreBreadcrumbs(doc, anchorHost) : true;
+
+  const top = measurePageTop(doc, applied ? mode : "post");
   if (top === null) return;
 
   // Der Vorzustand wird beim ersten Schreiben gemerkt, nicht bei jedem —
   // sonst merkte sich der zweite Durchlauf unseren eigenen Wert.
   saved ??= {
     element: wrapper,
+    property: "padding-top",
     value: wrapper.style.getPropertyValue("padding-top"),
     priority: wrapper.style.getPropertyPriority("padding-top"),
   };
@@ -186,16 +318,18 @@ function write(doc: Document): void {
   // `!important` ist nötig und unstrittig: der Gegner steht bei vier Klassen
   // und einer Kennung, führt seinen Wert aber ohne Nachdruck.
   wrapper.style.setProperty("padding-top", `${top}px`, "important");
-}
 
-function restore(): void {
-  if (saved === null) return;
-  const { element, value, priority } = saved;
-  saved = null;
-  // Ein leerer Wert heisst „stand nicht inline" — dann muss die Eigenschaft
-  // ganz verschwinden, nicht auf `""` stehen bleiben.
-  if (value === "") element.style.removeProperty("padding-top");
-  else element.style.setProperty("padding-top", value, priority);
+  let breadcrumbsHeight = 0;
+  if (applied && mode === "pre" && anchorHost !== null) {
+    breadcrumbsHeight = placeBreadcrumbs(doc, wrapper, anchorHost);
+  } else {
+    // Fiel die Lage nachträglich weg — etwa weil die Brotkrumen verschwanden
+    // —, müssen die Brotkrumen zurück an ihren Platz, nicht stehen bleiben.
+    restoreSaved(savedCrumbs);
+    savedCrumbs = null;
+  }
+
+  for (const listener of listeners) listener({ applied, breadcrumbsHeight });
 }
 
 /**
@@ -207,10 +341,23 @@ function restore(): void {
  * quer darüber. Mehrere Meldungen je Bild werden zu einer Messung
  * zusammengefasst.
  *
+ * Stehen zwei Bühnen auf einer Seite, gilt der Modus der ersten: der
+ * Kopfabstand der Seite gibt es nur einmal, und zwei einander widersprechende
+ * Ansagen liessen sich nicht beide erfüllen. Die zweite erfährt das über
+ * `onLayout`.
+ *
  * @returns gibt den Kopfabstand wieder frei; der letzte Halter stellt den
  * Zustand der Wirtsseite wieder her.
  */
-export function holdPageTop(doc: Document = document): () => void {
+export function holdPageTop(doc: Document = document, options: PageTopOptions = {}): () => void {
+  const { position = "post", host = null, onLayout } = options;
+
+  if (onLayout !== undefined) listeners.add(onLayout);
+
+  if (holders === 0) {
+    mode = position;
+    anchorHost = host;
+  }
   holders += 1;
   write(doc);
 
@@ -229,6 +376,9 @@ export function holdPageTop(doc: Document = document): () => void {
     else {
       resizeObserver = new view.ResizeObserver(update);
       resizeObserver.observe(doc.documentElement);
+      // Die Unterkante der Bühne wandert mit ihrer Höhe; im Modus `pre` hängen
+      // die Brotkrumen daran.
+      if (host !== null) resizeObserver.observe(host);
     }
 
     if (typeof view.MutationObserver !== "undefined") {
@@ -241,6 +391,7 @@ export function holdPageTop(doc: Document = document): () => void {
   return () => {
     if (released) return;
     released = true;
+    if (onLayout !== undefined) listeners.delete(onLayout);
     holders -= 1;
     if (holders > 0) return;
 
@@ -254,14 +405,17 @@ export function holdPageTop(doc: Document = document): () => void {
       view.cancelAnimationFrame(frame);
       frame = null;
     }
+    mode = "post";
+    anchorHost = null;
     restore();
   };
 }
 
 /** {@link holdPageTop} an der Lebensdauer einer Komponente. */
-export function usePageTop(active = true): void {
-  useEffect(() => {
-    if (!active) return undefined;
-    return holdPageTop(document);
-  }, [active]);
+export function usePageTop(options: PageTopOptions = {}): void {
+  const { position = "post", host = null, onLayout } = options;
+  useEffect(
+    () => holdPageTop(document, { position, host, onLayout }),
+    [position, host, onLayout],
+  );
 }
