@@ -20,17 +20,30 @@
  *
  * Gefragt wird an zwei Stellen, weil Staffbase zwei Editoren hat: der
  * klassische bringt die kontextuelle Werkzeugleiste mit, der Content Designer
- * legt jeden Baustein in einen Abschnitt.
+ * arbeitet unter einer eigenen Adresse.
+ *
+ * Nicht gefragt wird nach dem Abschnitt des Content Designers. Der sieht
+ * zwar nach Editor aus, ist aber Teil der gespeicherten Seite und steht
+ * genauso auf der fertigen Seite — `full-bleed.ts` baut im Lesemodus darauf.
+ * Als Merkmal genommen, hielte er jede mit dem Designer gebaute Seite für
+ * den Editor und zeigte den Hinweis ausgerechnet denen, die ihn nicht
+ * gebrauchen können.
  */
-
-import { findSection } from "./full-bleed";
 
 /** Die Werkzeugleiste des klassischen Editors. */
 export const EDITOR_TOOLBAR_SELECTOR = "#contextual-action-toolbar";
+
+/**
+ * Der Pfad des Studios, unter dem der Content Designer bearbeitet
+ * (`/studio/content/page/…/edit`). Dieselbe Prüfung wie im Loader
+ * (`loader/bootstrap.js`). Eine gelesene Seite liegt nie dort.
+ */
+const STUDIO_PATH = "/studio";
 
 /** Steht `element` auf einer Seite, die gerade bearbeitet wird? */
 export function isEditor(element: HTMLElement): boolean {
   const doc = element.ownerDocument;
   if (doc.querySelector(EDITOR_TOOLBAR_SELECTOR) !== null) return true;
-  return findSection(element) !== null;
+  const path = doc.location?.pathname ?? "";
+  return path === STUDIO_PATH || path.startsWith(`${STUDIO_PATH}/`);
 }

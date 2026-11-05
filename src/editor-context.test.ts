@@ -27,8 +27,14 @@ function place(inSection: boolean): HTMLElement {
   return host;
 }
 
+/** Die Adresse, unter der die Seite gerade steht. */
+function at(path: string): void {
+  window.history.pushState({}, "", path);
+}
+
 afterEach(() => {
   document.body.innerHTML = "";
+  at("/");
 });
 
 describe("isEditor", () => {
@@ -40,7 +46,9 @@ describe("isEditor", () => {
     expect(isEditor(place(false))).toBe(true);
   });
 
-  it("erkennt den Content Designer am Abschnitt um die Bühne", () => {
+  it("erkennt den Content Designer an der Adresse des Studios", () => {
+    at("/studio/content/page/6a6850edcb9e7d3876d306d4/edit");
+
     expect(isEditor(place(true))).toBe(true);
   });
 
@@ -48,6 +56,20 @@ describe("isEditor", () => {
     // Dort darf kein Hinweis stehen: Leser:innen können an der Einstellung
     // nichts ändern, und ein Streifen über dem Bild sähe aus wie ein Fehler
     // der Seite.
+    expect(isEditor(place(false))).toBe(false);
+  });
+
+  it("hält eine gelesene Seite aus dem Content Designer nicht für den Editor", () => {
+    // Der Abschnitt taugt nicht als Merkmal: er gehört zur gespeicherten
+    // Seite und steht auch dort, wo niemand mehr etwas bearbeitet.
+    at("/content/page/6a6850edcb9e7d3876d306d4");
+
+    expect(isEditor(place(true))).toBe(false);
+  });
+
+  it("lässt sich von einer Seite, die nur so heisst, nicht täuschen", () => {
+    at("/studioreise/content/page/1");
+
     expect(isEditor(place(false))).toBe(false);
   });
 });
