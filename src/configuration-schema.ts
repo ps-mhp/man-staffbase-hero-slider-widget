@@ -63,8 +63,21 @@ export const configurationSchema: JSONSchema7 = {
       default: 5,
       minimum: 0,
       maximum: 30,
-    
-},
+    },
+    [POSITION_ATTRIBUTE]: {
+      type: "string",
+      title: "Lage zu den Brotkrumen",
+      default: "post",
+      oneOf: [
+        { const: "post", title: "Nach den Brotkrumen (Vorgabe)" },
+        { const: "pre", title: "Vor den Brotkrumen" },
+      ],
+    },
+    [CONTROLS_ATTRIBUTE]: {
+      type: "boolean",
+      title: "Bedienelemente zeigen",
+      default: true,
+    },
   },
 };
 
@@ -96,6 +109,7 @@ export const uiSchema: UiSchema = {
     "ui:help":
       "0 hält die Bühne an; dann wird nur über Pfeile und Striche geblättert. " +
       "Wer im System weniger Bewegung eingestellt hat, sieht ohnehin keinen Wechsel von selbst.",
+  },
   [POSITION_ATTRIBUTE]: {
     "ui:help":
       "„Vor den Brotkrumen“ setzt die Bühne bündig unter das Menü; die Brotkrumen rücken " +
@@ -107,5 +121,4 @@ export const uiSchema: UiSchema = {
       "Blendet Pfeile und Striche aus. Geblättert wird weiter mit Wischen und den " +
       "Pfeiltasten, und die eingestellte Zeit je Folie läuft unverändert.",
   },
-},
 };
