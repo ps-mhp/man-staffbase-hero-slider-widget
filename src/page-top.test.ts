@@ -11,11 +11,14 @@
  * limitations under the License.
  */
 
+import { renderHook } from "@testing-library/react";
+
 import {
   MAX_PLAUSIBLE_TOP,
   canPlacePreBreadcrumbs,
   holdPageTop,
   measurePageTop,
+  usePageTop,
 } from "./page-top";
 
 /**
@@ -77,7 +80,22 @@ function addHost(wrapper: HTMLElement, top: number, bottom: number): HTMLElement
   return host;
 }
 
+/**
+ * Halter, die der Test nicht selbst freigibt. Der Zustand des Moduls überlebt
+ * den einzelnen Test; ohne Aufräumen trüge ein gescheiterter Test seinen
+ * Halter in den nächsten.
+ */
+const openReleases: (() => void)[] = [];
+
+/** {@link holdPageTop} mit Freigabe am Testende. */
+function hold(options: Parameters<typeof holdPageTop>[1]): () => void {
+  const release = holdPageTop(document, options);
+  openReleases.push(release);
+  return release;
+}
+
 afterEach(() => {
+  while (openReleases.length > 0) openReleases.pop()?.();
   document.body.innerHTML = "";
 });
 
@@ -411,5 +429,202 @@ describe("holdPageTop — Lage vor den Brotkrumen", () => {
 
     second();
     expect(box.style.getPropertyValue("top")).toBe("");
+  });
+});
+
+/**
+ * Ein Aufbau, dessen Kanten aus unseren eigenen geschriebenen Werten folgen —
+ * die Bühne beginnt am Innenabstand des Rahmens, der Brotkrumen-Kasten steht
+ * dort, wo sein Inline-`top` ihn hinstellt.
+ *
+ * Die festen `setRect`-Kanten der übrigen Tests können eine Rückkopplung gar
+ * nicht zeigen: sie ändern sich nie. Erst hier wird messbar, ob ein zweiter
+ * Durchlauf dieselben Werte schreibt wie der erste.
+ */
+function addDerivedPage(): { wrapper: HTMLElement; box: HTMLElement; host: HTMLElement } {
+  addChrome(136);
+  const wrapper = addWrapper();
+
+  const box = document.createElement("div");
+  box.style.position = "absolute";
+  const crumbs = document.createElement("nav");
+  crumbs.id = "breadcrumbs";
+  box.appendChild(crumbs);
+  wrapper.appendChild(box);
+
+  const host = document.createElement("div");
+  host.className = "man-hero-host";
+  wrapper.appendChild(host);
+
+  const edge = (element: HTMLElement, property: string, fallback: number): number => {
+    const inline = element.style.getPropertyValue(property);
+    return inline === "" ? fallback : Number.parseFloat(inline);
+  };
+  const rect = (top: number, height: number): DOMRect =>
+    ({
+      top,
+      bottom: top + height,
+      height,
+      left: 0,
+      right: 0,
+      width: 0,
+      x: 0,
+      y: top,
+    }) as DOMRect;
+
+  // Der Kasten hängt an dem `top`, das wir ihm schreiben; ohne unseres steht
+  // er dort, wo Staffbase ihn stellt.
+  const boxRect = (): DOMRect => rect(edge(box, "top", 166), 20);
+  box.getBoundingClientRect = boxRect;
+  crumbs.getBoundingClientRect = boxRect;
+  // Die Bühne hängt am Innenabstand, den wir dem Rahmen schreiben.
+  host.getBoundingClientRect = () => rect(edge(wrapper, "padding-top", 0), 500);
+
+  return { wrapper, box, host };
+}
+
+/** Einen Nachmessdurchlauf auslösen, wie die Seite ihn auslöst: durch Umbau. */
+async function triggerPass(): Promise<void> {
+  document.body.appendChild(document.createElement("span"));
+  await new Promise((resolve) => setTimeout(resolve, 50));
+}
+
+describe("holdPageTop — Rückkopplung", () => {
+  it("schreibt im zweiten Durchlauf dieselben Werte wie im ersten", async () => {
+    const { wrapper, box, host } = addDerivedPage();
+
+    const release = hold({ position: "pre", host });
+
+    const paddingAfterFirst = wrapper.style.getPropertyValue("padding-top");
+    const topAfterFirst = box.style.getPropertyValue("top");
+    expect(paddingAfterFirst).toBe("136px");
+    expect(topAfterFirst).toBe("636px");
+
+    await triggerPass();
+
+    // Flösse ein geschriebener Wert in eine gemessene Kante zurück, wanderte
+    // die Seite bei jedem Durchlauf ein Stück weiter nach unten.
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe(paddingAfterFirst);
+    expect(box.style.getPropertyValue("top")).toBe(topAfterFirst);
+
+    release();
+    expect(box.style.getPropertyValue("top")).toBe("");
+  });
+
+  it("findet zurück, wenn die Lage wegfällt, während die Brotkrumen verschoben sind", async () => {
+    const { wrapper, box, host } = addDerivedPage();
+
+    const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    const release = hold({
+      position: "pre",
+      host,
+      onLayout: (layout) => seen.push(layout),
+    });
+    expect(box.style.getPropertyValue("top")).toBe("636px");
+
+    // Über der Bühne taucht Inhalt auf: die Lage vor den Brotkrumen passt
+    // nicht mehr. Gemessen werden dürfen die Brotkrumen erst, nachdem sie
+    // zurückgestellt sind — sonst misst der Eingriff seinen eigenen Wert.
+    host.getBoundingClientRect = () =>
+      ({
+        top: MAX_PLAUSIBLE_TOP + 100,
+        bottom: MAX_PLAUSIBLE_TOP + 600,
+        height: 500,
+        left: 0,
+        right: 0,
+        width: 0,
+        x: 0,
+        y: MAX_PLAUSIBLE_TOP + 100,
+      }) as DOMRect;
+    await triggerPass();
+
+    expect(box.style.getPropertyValue("top")).toBe("");
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("186px");
+    expect(seen.at(-1)).toEqual({ applied: false, breadcrumbsHeight: 0 });
+
+    release();
+  });
+});
+
+describe("holdPageTop — mehrere Bühnen", () => {
+  it("gibt Modus und Bühne auf, sobald ihr Halter geht", async () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const { box } = addBreadcrumbs(wrapper, 186);
+    const first = addHost(wrapper, 136, 636);
+    const second = addHost(wrapper, 186, 686);
+
+    const releaseFirst = hold({ position: "pre", host: first });
+    const releaseSecond = hold({ position: "post", host: second });
+
+    releaseFirst();
+    // Eine abgehängte Bühne hat keinen Kasten mehr; ihr Rechteck ist leer.
+    first.remove();
+    setRect(first, {});
+    await triggerPass();
+
+    // Die zweite Bühne hat `post` angemeldet; der Modus der ersten darf sie
+    // nicht überleben.
+    expect(box.style.getPropertyValue("top")).toBe("");
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("186px");
+
+    releaseSecond();
+  });
+
+  it("verweigert die Lage bei einer Bühne ohne Höhe", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186);
+    const host = addHost(wrapper, 0, 0);
+
+    // Vor dem ersten Bildaufbau oder unter einem ausgeblendeten Vorfahren ist
+    // das Rechteck leer — das ist keine Bühne, unter die etwas rücken könnte.
+    expect(canPlacePreBreadcrumbs(document, host)).toBe(false);
+  });
+});
+
+describe("holdPageTop — ausgetauschter Brotkrumen-Kasten", () => {
+  it("lässt auf keinem der beiden Kästen ein erzwungenes top zurück", async () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const { box: oldBox } = addBreadcrumbs(wrapper, 186);
+    const host = addHost(wrapper, 136, 636);
+
+    const release = hold({ position: "pre", host });
+    expect(oldBox.style.getPropertyValue("top")).toBe("636px");
+
+    // Die Einzelseitenanwendung tauscht den Kasten beim Seitenwechsel aus.
+    oldBox.remove();
+    const { box: newBox } = addBreadcrumbs(wrapper, 186);
+    await triggerPass();
+    expect(newBox.style.getPropertyValue("top")).toBe("636px");
+
+    release();
+
+    expect(newBox.style.getPropertyValue("top")).toBe("");
+    expect(oldBox.style.getPropertyValue("top")).toBe("");
+  });
+});
+
+describe("usePageTop", () => {
+  it("baut den Halter nicht bei jedem Bildaufbau neu auf", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const host = addHost(wrapper, 136, 636);
+
+    let calls = 0;
+    const { rerender, unmount } = renderHook(() =>
+      usePageTop({ position: "post", host, onLayout: () => (calls += 1) }),
+    );
+    expect(calls).toBe(1);
+
+    rerender();
+
+    // Der natürliche Aufrufer übergibt eine frisch erzeugte Funktion; hinge
+    // der Effekt daran, flackerte die Seite bei jedem Bildaufbau.
+    expect(calls).toBe(1);
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("136px");
+
+    unmount();
   });
 });

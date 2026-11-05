@@ -44,7 +44,7 @@
  * deshalb nicht selbst hochschaukeln.
  */
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { HeroPosition } from "./attributes";
 
@@ -175,7 +175,12 @@ export function canPlacePreBreadcrumbs(
   doc: Document = document,
   host: HTMLElement | null = null,
 ): boolean {
-  if (host === null) return false;
+  // Eine abgehängte Bühne — oder eine unter einem ausgeblendeten Vorfahren,
+  // oder eine vor dem ersten Bildaufbau — liefert ein leeres Rechteck. Das
+  // läge rechnerisch ganz oben auf der Seite und ginge sonst als „anwendbar"
+  // durch: die Brotkrumen landeten hinter den festen Leisten.
+  if (host === null || !host.isConnected) return false;
+  if (host.getBoundingClientRect().height <= 0) return false;
 
   const wrapper = doc.querySelector<HTMLElement>(WRAPPER_SELECTOR);
   if (wrapper === null) return false;
@@ -224,18 +229,26 @@ export interface PageTopOptions {
 }
 
 /**
- * Wie viele Bühnen den Kopfabstand gerade halten.
+ * Die angemeldeten Bühnen, in der Reihenfolge ihrer Anmeldung.
  *
  * Zwei Bühnen auf einer Seite setzen denselben Wert; die erste, die geht,
- * darf ihn deshalb nicht zurücknehmen, solange die zweite noch steht.
+ * darf ihn deshalb nicht zurücknehmen, solange die zweite noch steht. Gemerkt
+ * wird nicht nur die Anzahl, sondern wer was angemeldet hat: sonst überlebten
+ * Modus und Bühne ihren Halter, und die Messung bezöge sich auf einen Kasten,
+ * den es auf der Seite nicht mehr gibt.
  */
-let holders = 0;
+interface Holder {
+  position: HeroPosition;
+  host: HTMLElement | null;
+}
+
+const holders: Holder[] = [];
 let saved: SavedPadding | null = null;
 /** Der Vorzustand des Brotkrumen-Kastens, solange er verschoben ist. */
 let savedCrumbs: SavedPadding | null = null;
-/** Der Modus, den der erste Halter angemeldet hat. */
+/** Der Modus, den der erste noch stehende Halter angemeldet hat. */
 let mode: HeroPosition = "post";
-/** Die Bühne des ersten Halters; ihre Unterkante trägt die Brotkrumen. */
+/** Die Bühne des ersten noch stehenden Halters; sie trägt die Brotkrumen. */
 let anchorHost: HTMLElement | null = null;
 /** Wer über das Ergebnis jeder Messung unterrichtet werden will. */
 const listeners = new Set<(layout: PageTopLayout) => void>();
@@ -286,6 +299,14 @@ function placeBreadcrumbs(doc: Document, wrapper: HTMLElement, host: HTMLElement
   const wrapperTop = wrapper.getBoundingClientRect().top + scroller.scrollTop;
   const hostBottom = host.getBoundingClientRect().bottom + scroller.scrollTop;
 
+  // Die Einzelseitenanwendung tauscht den Kasten beim Seitenwechsel aus.
+  // Merkte man sich weiter den alten, bekäme der neue unser `!important` und
+  // behielte es für immer — auf einer Seite, die uns nicht gehört.
+  if (savedCrumbs !== null && savedCrumbs.element !== box) {
+    restoreSaved(savedCrumbs);
+    savedCrumbs = null;
+  }
+
   savedCrumbs ??= {
     element: box,
     property: "top",
@@ -293,6 +314,11 @@ function placeBreadcrumbs(doc: Document, wrapper: HTMLElement, host: HTMLElement
     priority: box.style.getPropertyPriority("top"),
   };
 
+  // Angenommen wird, dass der Bezug des Kastens die Polsterkante des
+  // `#wrapper` ohne eigenen Aussenabstand ist. Das trifft auf die bekannten
+  // Varianten zu, aber nicht auf alle ausgelieferten: steht ein
+  // `margin-top` am Rahmen oder ein anderer Bezug darüber, sitzt der Kasten
+  // um genau diesen Betrag versetzt. Bekannte Lücke, bewusst offen gelassen.
   box.style.setProperty("top", `${hostBottom - wrapperTop}px`, "important");
   return box.getBoundingClientRect().height;
 }
@@ -303,8 +329,25 @@ function write(doc: Document): void {
 
   const applied = mode === "pre" ? canPlacePreBreadcrumbs(doc, anchorHost) : true;
 
+  // Zuerst zurückstellen, dann messen. Fiel die Lage weg, während der Kasten
+  // noch verschoben ist, läse eine Messung in `post` die Kante, die dieser
+  // Eingriff selbst gesetzt hat — unter einer Bühne liegt sie weit über
+  // `MAX_PLAUSIBLE_TOP`, die Messung verwürfe sich, und der Kasten bliebe
+  // mitten auf der Seite stehen, ohne dass ein späterer Durchlauf daran noch
+  // etwas änderte.
+  if (!applied || mode !== "pre") {
+    restoreSaved(savedCrumbs);
+    savedCrumbs = null;
+  }
+
   const top = measurePageTop(doc, applied ? mode : "post");
-  if (top === null) return;
+  if (top === null) {
+    // Auch ohne Eingriff müssen die Zuhörer es erfahren: eine Bühne, die
+    // weiter Platz für Brotkrumen freihält, die längst zurückgerückt sind,
+    // hinterliesse eine Lücke.
+    for (const listener of listeners) listener({ applied: false, breadcrumbsHeight: 0 });
+    return;
+  }
 
   // Der Vorzustand wird beim ersten Schreiben gemerkt, nicht bei jedem —
   // sonst merkte sich der zweite Durchlauf unseren eigenen Wert.
@@ -322,11 +365,6 @@ function write(doc: Document): void {
   let breadcrumbsHeight = 0;
   if (applied && mode === "pre" && anchorHost !== null) {
     breadcrumbsHeight = placeBreadcrumbs(doc, wrapper, anchorHost);
-  } else {
-    // Fiel die Lage nachträglich weg — etwa weil die Brotkrumen verschwanden
-    // —, müssen die Brotkrumen zurück an ihren Platz, nicht stehen bleiben.
-    restoreSaved(savedCrumbs);
-    savedCrumbs = null;
   }
 
   for (const listener of listeners) listener({ applied, breadcrumbsHeight });
@@ -354,15 +392,16 @@ export function holdPageTop(doc: Document = document, options: PageTopOptions = 
 
   if (onLayout !== undefined) listeners.add(onLayout);
 
-  if (holders === 0) {
+  const entry: Holder = { position, host };
+  holders.push(entry);
+  if (holders.length === 1) {
     mode = position;
     anchorHost = host;
   }
-  holders += 1;
   write(doc);
 
   const view = doc.defaultView;
-  if (holders === 1 && view !== null) {
+  if (holders.length === 1 && view !== null) {
     const update = (): void => {
       if (frame !== null) return;
       frame = view.requestAnimationFrame(() => {
@@ -392,8 +431,19 @@ export function holdPageTop(doc: Document = document, options: PageTopOptions = 
     if (released) return;
     released = true;
     if (onLayout !== undefined) listeners.delete(onLayout);
-    holders -= 1;
-    if (holders > 0) return;
+    const index = holders.indexOf(entry);
+    if (index !== -1) holders.splice(index, 1);
+    if (holders.length > 0) {
+      // Modus und Bühne gehören dem Halter, der sie angemeldet hat. Geht er,
+      // gilt der nächste noch stehende — sonst zeigte `anchorHost` auf einen
+      // abgehängten Kasten, und die verbliebene Bühne richtete sich nach
+      // einer Lage, die niemand mehr angemeldet hat.
+      const next = holders[0];
+      mode = next.position;
+      anchorHost = next.host;
+      write(doc);
+      return;
+    }
 
     if (scheduled !== null) view?.removeEventListener("resize", scheduled);
     scheduled = null;
@@ -414,8 +464,22 @@ export function holdPageTop(doc: Document = document, options: PageTopOptions = 
 /** {@link holdPageTop} an der Lebensdauer einer Komponente. */
 export function usePageTop(options: PageTopOptions = {}): void {
   const { position = "post", host = null, onLayout } = options;
+  // Der natürliche Aufrufer übergibt eine frisch erzeugte Funktion. Hinge der
+  // Effekt an ihr, risse jeder Bildaufbau den Halter ab und baute ihn neu
+  // auf: Abstand und Brotkrumen zurückgestellt, Beobachter getrennt, alles
+  // wieder gesetzt — ein Flackern je Bildaufbau.
+  const latest = useRef(onLayout);
+  useEffect(() => {
+    latest.current = onLayout;
+  }, [onLayout]);
+
   useEffect(
-    () => holdPageTop(document, { position, host, onLayout }),
-    [position, host, onLayout],
+    () =>
+      holdPageTop(document, {
+        position,
+        host,
+        onLayout: (layout) => latest.current?.(layout),
+      }),
+    [position, host],
   );
 }
