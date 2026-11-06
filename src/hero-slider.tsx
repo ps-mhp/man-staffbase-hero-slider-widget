@@ -299,16 +299,28 @@ export function HeroSlider({
   // Der Platz für die verschobenen Brotkrumen — auf zwei Wegen, weil der
   // Wirtskasten in `man-hero-host--fill` auf `height: 100%` steht und ein
   // Platzhalter in ihm nichts freihielte, sondern über seine Unterkante
-  // hinausliefe. Dort kommt der Platz deshalb als Aussenabstand des
-  // Wirtskastens; inline, weil er die Regel `man-outshine-host {
-  // margin-bottom: 0 }` schlagen muss.
+  // hinausliefe.
   //
-  // Auf die Messung wirkt er nicht zurück: gemessen wird die innere
-  // `.man-hero` (`setStage`), und ein Aussenabstand des äusseren Kastens
-  // verschiebt deren Unterkante nicht.
+  // Ein Aussenabstand des Wirtskastens wäre dort genauso wirkungslos:
+  // `stretchToSection` (siehe `full-bleed.ts`) zwingt jedem Vorfahren
+  // zwischen Wirtskasten und Abschnitt `height: 100% !important` auf. Der
+  // Abstand läge dann unter einem Elter, dessen Höhe auf die des Abschnitts
+  // festgenagelt ist, und liefe über ihn hinaus — genau wie der Platzhalter.
+  //
+  // In dieser Stufe gibt der Abschnitt die Gesamthöhe vor; der Platz muss
+  // deshalb aus der Höhe der Bühne selbst kommen. Der Wirtskasten ist von der
+  // erzwungenen Kette ausgenommen (sie beginnt bei seinem Elter), eine
+  // Inline-Höhe an ihm schlägt also das `height: 100%` der Klasse.
+  //
+  // Das kann sich nicht aufschaukeln: gemeldet wird in `breadcrumbsHeight`
+  // die Höhe des Brotkrumen-Kastens, nicht die der Bühne. Eine niedrigere
+  // Bühne verschiebt zwar die gemessene Unterkante nach oben — und damit das
+  // geschriebene `top` der Brotkrumen —, ändert aber deren Höhe nicht. Der
+  // gemeldete Wert bleibt also derselbe, die Inline-Höhe bleibt dieselbe, und
+  // die Kette steht nach einem Durchlauf still.
   const crumbSpace = layout.breadcrumbsHeight;
   const hostStyle =
-    crumbSpace > 0 && filled ? { marginBottom: `${crumbSpace}px` } : undefined;
+    crumbSpace > 0 && filled ? { height: `calc(100% - ${crumbSpace}px)` } : undefined;
 
   return (
     // Der äussere Kasten bleibt immer in der Inhaltsspalte; nur der innere
@@ -483,8 +495,8 @@ export function HeroSlider({
         // ist der Platz, den sie sich nicht selbst nehmen können.
         //
         // Nur hier, wo der Wirtskasten seine Höhe aus seinem Inhalt bezieht.
-        // In `man-hero-host--fill` steht sie fest, und der Platz kommt als
-        // Aussenabstand des Wirtskastens (siehe `hostStyle`).
+        // In `man-hero-host--fill` steht sie fest, und der Platz kommt aus
+        // der Höhe des Wirtskastens selbst (siehe `hostStyle`).
         <div
           className="man-hero__crumb-space"
           style={{ height: `${crumbSpace}px` }}

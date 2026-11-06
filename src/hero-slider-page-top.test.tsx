@@ -140,28 +140,64 @@ describe("HeroSlider — Platz für die verschobenen Brotkrumen", () => {
     expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
   });
 
-  it("hält den Platz im Abschnitt am Wirtskasten frei, nicht in ihm", () => {
+  it("nimmt den Platz im Abschnitt aus der Höhe des Wirtskastens", () => {
     const { container } = render(<HeroSlider slides={two} position="pre" height="section" />, {
       container: addSection(),
     });
 
     report({ applied: true, breadcrumbsHeight: 48 });
 
-    // Der Wirtskasten steht hier auf der Höhe des Abschnitts; ein Platzhalter
-    // in ihm hielte nichts frei, sondern liefe über seine Unterkante hinaus.
+    // Der Abschnitt gibt die Gesamthöhe vor; ein Platzhalter im Wirtskasten
+    // oder ein Aussenabstand an ihm liefe über dessen Unterkante hinaus. Der
+    // Platz kommt deshalb aus der Höhe des Wirtskastens selbst.
     const host = container.querySelector<HTMLElement>(".man-hero-host");
     expect(host).toHaveClass("man-hero-host--fill");
     expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
-    expect(host?.style.marginBottom).toBe("48px");
+    expect(host?.style.height).toBe("calc(100% - 48px)");
+    expect(host?.style.marginBottom).toBe("");
 
-    // Der Abstand darf nicht in die Messung zurücklaufen: gemessen wird die
-    // Bühne, und die liegt im Wirtskasten, nicht an seiner Aussenkante.
+    // Gemessen wird weiter die Bühne, nicht der Wirtskasten: die gemeldete
+    // Höhe ist die des Brotkrumen-Kastens und ändert sich nicht, wenn die
+    // Bühne schrumpft — sonst schaukelte sich die Kette hoch.
     expect(lastOptions().host).not.toBe(host);
 
     report({ applied: true, breadcrumbsHeight: 0 });
-    expect(host?.style.marginBottom).toBe("");
+    expect(host?.style.height).toBe("");
   });
 
+  it("trägt den Platz je nach Stufe am Wirtskasten oder im Wirtskasten", () => {
+    const { container, rerender } = render(
+      <HeroSlider slides={two} position="pre" height="medium" />,
+      { container: addSection() },
+    );
+
+    // Ohne Abschnittshöhe bezieht der Wirtskasten seine Höhe aus dem Inhalt:
+    // dort hält der Platzhalter den Streifen frei, der Wirtskasten bleibt
+    // ohne Inline-Höhe.
+    report({ applied: true, breadcrumbsHeight: 48 });
+    const host = () => container.querySelector<HTMLElement>(".man-hero-host");
+    expect(host()?.style.height).toBe("");
+    expect(
+      container.querySelector<HTMLElement>(".man-hero__crumb-space")?.style.height,
+    ).toBe("48px");
+
+    // Mit Abschnittshöhe kehrt sich das um: kein Platzhalter mehr, dafür die
+    // Inline-Höhe am Wirtskasten.
+    rerender(<HeroSlider slides={two} position="pre" height="section" />);
+    report({ applied: true, breadcrumbsHeight: 48 });
+    expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
+    expect(host()?.style.height).toBe("calc(100% - 48px)");
+
+    // Und zurück: die Inline-Höhe darf nicht am Kasten hängen bleiben.
+    rerender(<HeroSlider slides={two} position="pre" height="medium" />);
+    report({ applied: true, breadcrumbsHeight: 48 });
+    expect(host()?.style.height).toBe("");
+    expect(container.querySelector(".man-hero__crumb-space")).not.toBeNull();
+  });
+
+  // Rückwärtskompatibilität: ohne gemeldete Brotkrumen bleibt die Auszeichnung
+  // die, die sie vor der Einstellung war. Das beweist den Platz nicht — es
+  // bewacht nur, dass der Weg dorthin nichts hinterlässt.
   it("lässt den Wirtskasten ohne Brotkrumen unangetastet", () => {
     const { container } = render(<HeroSlider slides={two} />, { container: addSection() });
 
