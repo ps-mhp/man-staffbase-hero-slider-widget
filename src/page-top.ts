@@ -478,6 +478,25 @@ function notify(layout: PageTopLayout): void {
 }
 
 /**
+ * Ob ein Eintrag des Strukturbeobachters von jemand anderem stammt.
+ *
+ * Die eigenen Schreibvorgänge — Kopfabstand, `top` der Brotkrumen, Ausgleich
+ * über der Bühne — sind Stilwechsel, auch wenn der Wert gleich bleibt. Zählten
+ * sie als Anlass, liefe die Messung in jedem Bild. Klassen derselben Kästen
+ * zählen weiter: sie setzt nur Staffbase.
+ */
+function isOutsideChange(record: MutationRecord): boolean {
+  if (record.type !== "attributes" || record.attributeName !== "style") return true;
+  const { target } = record;
+  return (
+    target !== saved?.element &&
+    target !== savedCrumbs?.element &&
+    target !== savedOffset?.element &&
+    !(target instanceof Element && target.id === WRAPPER_SELECTOR.slice(1))
+  );
+}
+
+/**
  * Hält den Grössenbeobachter an den Brotkrumen.
  *
  * Staffbase blendet sie erst nach dem Aufbau ein, ohne die Seite umzubauen:
@@ -648,8 +667,20 @@ export function holdPageTop(doc: Document = document, options: PageTopOptions = 
     }
 
     if (typeof view.MutationObserver !== "undefined") {
-      mutationObserver = new view.MutationObserver(update);
-      mutationObserver.observe(doc.documentElement, { childList: true, subtree: true });
+      mutationObserver = new view.MutationObserver((records) => {
+        if (records.some(isOutsideChange)) update();
+      });
+      // Auch Klassen und Stile: Staffbase blendet die Werkzeugleiste per Stil
+      // ein und rückt die Brotkrumen danach um ihre Höhe — ohne neuen Knoten
+      // und ohne neue Grösse (live gesehen 06.11.2026 auf truck: `top` 122 →
+      // 166px, eine Sekunde nach dem Aufbau). Ohne diesen Anlass blieb der
+      // Kopfabstand auf dem alten Stand, und die Bühne lag unter den Brotkrumen.
+      mutationObserver.observe(doc.documentElement, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["class", "style"],
+      });
     }
   }
 

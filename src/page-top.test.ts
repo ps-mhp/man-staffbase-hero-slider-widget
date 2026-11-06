@@ -865,6 +865,55 @@ describe("holdPageTop — Brotkrumen, die nach der ersten Messung erscheinen", (
   });
 });
 
+describe("holdPageTop — Brotkrumen, die nachträglich rücken", () => {
+  it("misst neu, wenn die Seite per Klasse oder Stil umgestellt wird", async () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    const { box } = addBreadcrumbs(wrapper, 150);
+    const outer = addOuterHost(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+    const toolbar = document.createElement("div");
+    toolbar.setAttribute("style", "display: none;");
+    document.body.appendChild(toolbar);
+
+    hold({ position: "post", host: stage, outerHost: outer });
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("150px");
+
+    // Staffbase blendet die Werkzeugleiste per Stil ein, und die Brotkrumen
+    // rücken nach — ohne neuen Knoten und ohne neue Grösse. Gemessen am
+    // alten Stand lägen die Brotkrumen über der Bühne.
+    box.getBoundingClientRect = () =>
+      ({ top: 176, bottom: 196, left: 0, right: 0, width: 0, height: 20, x: 0, y: 176 }) as DOMRect;
+    const crumbs = box.querySelector<HTMLElement>("#breadcrumbs") as HTMLElement;
+    setRect(crumbs, { top: 176, bottom: 196, height: 20 });
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    toolbar.setAttribute("style", "display: block;");
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("196px");
+    expect(outer.getBoundingClientRect().top).toBe(196);
+  });
+
+  it("schaukelt sich an den eigenen Schreibvorgängen nicht auf", async () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    const outer = addOuterHost(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+
+    let calls = 0;
+    hold({ position: "pre", host: stage, outerHost: outer, onLayout: () => (calls += 1) });
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    const settled = calls;
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    // Jeder Durchlauf schreibt Kopfabstand, Brotkrumen und Ausgleich neu —
+    // auch mit gleichem Wert ist das ein Stilwechsel. Zählte er als Anlass,
+    // liefe die Messung in jedem Bild.
+    expect(calls).toBe(settled);
+  });
+});
+
 describe("usePageTop", () => {
   it("baut den Halter nicht bei jedem Bildaufbau neu auf", () => {
     addChrome(136);
