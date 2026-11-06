@@ -601,6 +601,12 @@ describe("HeroSlider", () => {
       const { container } = render(<HeroSlider slides={two} controls={false} />);
       const hero = container.querySelector(".man-hero") as HTMLElement;
 
+      // Erst der Fokus, dann die Taste: ein Tastendruck lässt sich auch auf
+      // einen Kasten werfen, der gar nicht fokussierbar ist. Nur wenn der
+      // Fokus wirklich hängen bleibt, ist die Bühne auch erreichbar.
+      act(() => hero.focus());
+      expect(hero).toHaveFocus();
+
       fireEvent.keyDown(hero, { key: "ArrowRight" });
 
       expect(screen.getByTestId("hero-slide-b")).not.toHaveAttribute("aria-hidden");
@@ -623,10 +629,18 @@ describe("HeroSlider", () => {
     });
 
     it("zeigt die Bedienelemente, solange sie niemand abschaltet", () => {
-      render(<HeroSlider slides={two} />);
+      const { container } = render(<HeroSlider slides={two} />);
 
       expect(screen.getByTestId("hero-prev")).toBeInTheDocument();
       expect(screen.getByTestId("hero-dot-a")).toBeInTheDocument();
+
+      // Mit Bedienelementen führen die Schaltflächen den Fokus; die Bühne
+      // selbst bleibt aussen vor und darf keine der drei Zutaten tragen,
+      // sonst stünde sie doppelt in der Tabreihenfolge.
+      const hero = container.querySelector(".man-hero") as HTMLElement;
+      expect(hero).not.toHaveAttribute("tabindex");
+      expect(hero).not.toHaveAttribute("role");
+      expect(hero).not.toHaveAttribute("aria-label");
     });
   });
 });
