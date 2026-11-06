@@ -79,6 +79,16 @@ async function loadAndRegister(): Promise<BlockDefinition> {
 let probeCount = 0;
 
 /**
+ * Die Bausteine, die ein Test aufgebaut hat.
+ *
+ * Ein nicht abgebauter React-Baum lebt über das Testende hinaus: seine
+ * Effekte feuern in den nächsten Test hinein, und React meldet die Aktualisierung
+ * ausserhalb von `act(...)`. Abgebaut wird deshalb am Testende, nicht erst,
+ * wenn jsdom das Fenster wegräumt.
+ */
+const mounted: (() => Promise<void>)[] = [];
+
+/**
  * Baut den Baustein auf und gibt die Angaben zurück, mit denen die Bühne
  * gerufen wurde.
  */
@@ -99,7 +109,10 @@ async function renderWith(
     {} as Parameters<BlockDefinition["factory"]>[1],
   );
   customElements.define(`hero-slider-probe-${(probeCount += 1)}`, Block);
-  const element = new Block() as HTMLElement & { renderBlock(container: HTMLElement): void };
+  const element = new Block() as HTMLElement & {
+    renderBlock(container: HTMLElement): void;
+    unmountBlock(container: HTMLElement): void;
+  };
 
   // `act` aus der React-Instanz, die das frisch geladene Modul benutzt: nach
   // `jest.resetModules()` ist das nicht mehr die von Testing Library.
@@ -107,10 +120,33 @@ async function renderWith(
   const container = document.createElement("div");
   await act(async () => element.renderBlock(container));
 
+  mounted.push(async () => {
+    await act(async () => element.unmountBlock(container));
+  });
+
   const call = mockHeroSlider.mock.calls.at(-1);
   if (call === undefined) throw new Error("Die Bühne wurde nicht gebaut");
   return call[0];
 }
+
+/**
+ * React erkennt `act(...)` nur, wenn die Umgebung es anmeldet. Testing
+ * Library setzt das Kennzeichen beim Laden; dieses Modul kommt ohne sie aus
+ * und meldet es selbst an — sonst hielte React jede Aktualisierung für eine
+ * ausserhalb von `act(...)` und meldete sie als Fehler.
+ */
+const actEnv = globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean };
+
+beforeEach(() => {
+  actEnv.IS_REACT_ACT_ENVIRONMENT = true;
+});
+
+afterEach(async () => {
+  while (mounted.length > 0) await mounted.pop()?.();
+  delete actEnv.IS_REACT_ACT_ENVIRONMENT;
+  // Der Stellvertreter des Hosts gehört dem Test, der ihn gesetzt hat.
+  delete (window as unknown as Partial<Host>).defineBlock;
+});
 
 const slides = JSON.stringify([
   { id: "a", image: { url: "https://example.test/a.jpg", alt: "Bild a" }, headline: "Überschrift a" },
@@ -208,5 +244,23 @@ describe("Attribute an der Bühne", () => {
     });
 
     expect(props).toMatchObject({ position: "pre", controls: true });
+  });
+});
+
+describe("Spuren im Fenster", () => {
+  it("baut den Baustein auf, ohne dass React etwas zu melden hat", async () => {
+    const errors = jest.spyOn(console, "error").mockImplementation(() => undefined);
+
+    const definition = await loadAndRegister();
+    await renderWith(definition, { [SLIDES_ATTRIBUTE]: slides });
+
+    expect(errors).not.toHaveBeenCalled();
+    errors.mockRestore();
+  });
+
+  it("lässt kein defineBlock eines vorigen Tests am Fenster zurück", () => {
+    // Das Widget wird in fremde Seiten eingebettet; ein stehengebliebener
+    // Stellvertreter trüge die Anmeldung eines Tests in den nächsten.
+    expect((window as unknown as Partial<Host>).defineBlock).toBeUndefined();
   });
 });
