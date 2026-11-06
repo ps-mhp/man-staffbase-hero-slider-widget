@@ -27,7 +27,7 @@
 9. Cliquez sur **Appliquer**.
 10. Réglez **Secondes par diapositive** sur `0` — dans le cas d’une seule diapositive,
     il n’y a rien à modifier.
-11. Enregistrez la page et vérifiez-la dans l’aperçu, une fois en mode large
+11. Enregistrez la page et vérifiez-la dans l’aperçu, une fois en mode plein écran
     et une fois dans une fenêtre étroite.
 
 ## Créer plusieurs diapositives
@@ -96,18 +96,18 @@ est supprimé.
   . Si l’adresse se termine par `.mp4`, `.webm` ou `.mov`, le **Type** passe
    automatiquement à **Vidéo** ; sinon, modifiez-le manuellement.
 4. Sous **Description de la vidéo**, indiquez ce que l’on voit, ou laissez
-   le champ vide si la vidéo est purement décorative.
+   ce champ vide si la vidéo est purement décorative.
 5. **Appliquer**, enregistrer, vérifier dans l’aperçu.
 
 La vidéo est lue en boucle et sans son, et uniquement tant que sa diapositive est
 affichée en premier. Si l’utilisateur a réduit l’animation dans le système, il verra sa première image
-fixe. Veillez à ce que le fichier soit léger — quelques mégaoctets pour quelques secondes —,
+figer. Veillez à ce que le fichier soit léger — quelques mégaoctets pour quelques secondes —,
 car il sera chargé à chaque consultation de la page.
 
 ## Ajouter une image pour le format portrait
 
 1. Enregistrez dans la
-   médiathèque un recadrage au format portrait du même motif.
+   médiathèque un extrait du même motif recadré en format portrait.
 2. Sélectionnez la diapositive concernée dans l’éditeur.
 3. Sous **Image ou vidéo pour le format portrait**, cliquez sur **Sélectionner une image ou une vidéo**
    ou saisissez une adresse en dessous.
@@ -131,7 +131,7 @@ car il sera chargé à chaque consultation de la page.
 1. **La scène reste vide.** Il manque au moins une image : les diapositives sans image
    ne s’affichent pas. Ouvrez l’éditeur et vérifiez que chaque entrée comporte
    une image — pour les actualités, vérifiez dans l’aperçu.
-2. **L’image ne s’étend pas sur toute la largeur.** Le widget se trouve-t-il dans une
+2. **L’image ne s’affiche pas sur toute la largeur.** Le widget se trouve-t-il dans une
    colonne à côté d’autres contenus ? Dans ce cas, placez-le sur une ligne à part.
    Sinon, vérifiez si l’option **Afficher sur toute la largeur** est activée
   .

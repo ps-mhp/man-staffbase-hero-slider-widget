@@ -50,7 +50,7 @@ and lines.
 
 **Question:** I don’t see any arrows on my phone.
 
-Answer: That’s by design. On narrow screens, you swipe; the
+Answer: This is by design. On narrow screens, you swipe; the
 lines below the text still indicate which slide is currently on top.
 
 **Question:** My image is cropped at the edge.
@@ -108,8 +108,24 @@ Images, link destinations, channels, filters, and the order remain unchanged.
 **Question:** A news entry displays different text on the translated page than in
 the source language—is this an error?
 
-Answer: No. The title and teaser text of a news post come from the post
+Answer: No. The title and summary text of a news post come from the post
 itself, and they are displayed in the language the reader has set
 in the app. Only what you’ve written in the entry itself is translated.
 If a language version of the post is missing, the available version appears instead of
 leaving the slide blank.
+
+**Question:** I selected “Before the breadcrumbs,” but nothing changes.
+
+Answer: This setting only takes effect if three conditions are met: the page has
+a breadcrumb trail at all, the stage is positioned at the very top of the page, and
+there is no other content above it. If any of these conditions are not met, the
+stage will remain below the breadcrumbs—a breadcrumb bar in the middle of the page would be
+worse than no change at all. In the editor, a note appears
+above the stage in this case. It does not appear on the published page; there,
+the setting cannot be changed.
+
+**Question:** Without controls—how do you navigate then?
+
+Answer: Swipe with your finger, use the arrow keys to navigate, or let it run automatically:
+the set time per slide remains unchanged. For the keyboard, the
+slide itself becomes selectable as soon as the controls are missing.

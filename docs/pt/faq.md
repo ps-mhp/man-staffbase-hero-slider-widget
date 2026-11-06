@@ -1,4 +1,4 @@
-# Perguntas Frequentes
+# Perguntas frequentes
 
 **Pergunta:** Criei um slide, mas o palco permanece vazio.
 
@@ -10,7 +10,7 @@ ou introduza um endereço.
 **Pergunta:** Introduzi um endereço de vídeo, mas o slide mostra apenas
 uma área escura.
 
-Resposta: Na maioria das vezes, o vídeo não está disponível sem início de sessão, ou **Tipo** está
+Resposta: Na maioria das vezes, o vídeo não está disponível sem autenticação, ou o **Tipo** está
 definido como **Imagem**, porque o endereço não tem extensão. Abra o endereço numa
 janela privada do navegador: se não funcionar aí, os
 leitores também não o verão. Uma mensagem logo abaixo do campo indica que o endereço
@@ -57,7 +57,7 @@ linhas por baixo do texto continuam a indicar qual é o slide que está atualmen
 
 Resposta: A área de apresentação ajusta-se para 21:9 ou 4:3, dependendo da largura da janela. Escolha
 uma imagem com espaço em torno do motivo ou defina, em **Imagem para
-formato vertical**, um recorte próprio, cortado na vertical.
+formato vertical**, um recorte próprio cortado na vertical.
 
 **Pergunta:** Posso criar mais de oito diapositivos?
 
@@ -77,14 +77,14 @@ por outro lado, permanece na publicação que selecionou.
 
 Resposta: A publicação foi eliminada, movida ou não está visível para o leitor. Apenas este slide desaparece; os restantes permanecem.
 
-**Pergunta:** A minha entrada do canal mostra menos slides do que os configurados.
+**Pergunta:** A minha entrada do canal mostra menos slides do que os definidos.
 
 Resposta: Na maioria das vezes, os filtros são demasiado restritivos. **Apenas publicações com imagem** é
 a predefinição — um canal sem imagens não apresenta, portanto, nada. Verifique a
 pré-visualização no editor: mostra exatamente o que irá aparecer no palco.
 
-**Pergunta:** Na seleção de canais não aparece nenhum canal; em vez disso, há um
-campo de texto para introduzir um identificador.
+**Pergunta:** Na seleção de canais não aparece nenhum canal, mas sim um
+campo de texto para um identificador.
 
 Resposta: A lista de canais de notícias não estava acessível. Atualize a janela de diálogo.
 Se isso não resolver, introduza manualmente o identificador do canal; este encontra-se
@@ -109,6 +109,22 @@ As imagens, os destinos dos links, os canais, os filtros e a ordem permanecem in
 língua original — trata-se de um erro?
 
 Resposta: Não. O título e o texto de resumo de uma notícia provêm da própria notícia,
-e são apresentados no idioma que o leitor definiu na aplicação. Apenas é traduzido o que escreveu na própria notícia.
-Se não existir uma versão linguística da notícia, é apresentada a versão disponível, em vez de
+e são apresentados no idioma que o leitor definiu na aplicação. Apenas é traduzido o que escreveu na própria publicação.
+Se não existir uma versão linguística da publicação, aparece a versão disponível, em vez de
 deixar o espaço em branco.
+
+**Pergunta:** Selecionei «Antes da trilha de navegação», mas nada muda.
+
+Resposta: A configuração só se aplica se três condições forem cumpridas: a página tiver
+de facto uma barra de navegação, a barra de navegação estiver na parte superior da página e
+não houver mais nenhum conteúdo acima dela. Se alguma destas condições não for cumprida, a
+palco fica por baixo da barra de navegação — uma barra de navegação no meio da página seria
+pior do que nenhuma alteração. No editor, neste caso, aparece uma nota
+acima do palco. Na página publicada, esta nota não aparece; aí,
+não é possível alterar a configuração.
+
+**Pergunta:** Sem elementos de controlo — como é que se passa de página?
+
+Resposta: Deslizando o dedo, utilizando as setas do teclado ou automaticamente:
+o tempo definido por cada diapositivo decorre normalmente. No que diz respeito ao teclado, o
+próprio palco fica selecionável assim que os elementos de controlo não estiverem presentes.

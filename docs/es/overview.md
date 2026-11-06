@@ -8,10 +8,10 @@ Si se crean varias diapositivas, se obtiene un cambiador: las diapositivas se
 funden unas en otras, y se puede pasar de una a otra mediante las flechas y las líneas situadas en la esquina inferior izquierda.
 
 No es necesario actualizar una diapositiva manualmente. Además de las diapositivas propias, la
-página de inicio también puede mostrar **artículos de la sección de noticias**:
+página de inicio también puede mostrar **artículos de las noticias**:
 
 - **Artículo de noticias**: un artículo concreto como diapositiva. La imagen, el título
-  y el resumen proceden del artículo, y el botón lleva a él.
+  y el resumen provienen del artículo, y el botón lleva a él.
 - **Canal de noticias**: un canal completo, con una diapositiva por artículo. Se puede configurar el número de diapositivas,
   el orden y los filtros. Cuando aparece un nuevo artículo en
   el canal, se muestra automáticamente en el escenario sin necesidad de intervención alguna.

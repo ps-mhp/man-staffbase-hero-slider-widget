@@ -81,7 +81,7 @@ czytającej. Zniknęła tylko ta jedna slajda; pozostałe pozostają na swoim mi
 **Pytanie:** Mój wpis kanału wyświetla mniej slajdów niż zostało ustawione.
 
 Odpowiedź: Najczęściej filtry są zbyt wąskie. Domyślnym ustawieniem jest **tylko wpisy ze zdjęciami** —
-kanał bez zdjęć nie wyświetla w takim przypadku żadnych treści. Sprawdź
+kanał bez zdjęć nie wyświetla w ten sposób żadnych treści. Sprawdź
 podgląd w edytorze: pokazuje on dokładnie to, co pojawi się na scenie.
 
 **Pytanie:** W wyborze kanałów nie ma ani jednego kanału, zamiast tego pojawia się
@@ -94,9 +94,9 @@ w adresie kanału w systemie CMS.
 **Pytanie:** Dlaczego zdjęcie wpisu z aktualnościami na scenie jest nieostre lub
 dziwnie przycięte?
 
-Odpowiedź: Zdjęcia do artykułów są przycięte pod kątem formatu kanału informacyjnego, a nie pod kątem
-ekranu o pełnej wysokości. W wpisie w sekcji **Zastąp obraz sceny**
-przeznacz własny obraz, w orientacji poziomej i o szerokości co najmniej 1920 px.
+Odpowiedź: Zdjęcia artykułów są przycięte pod format kanału informacyjnego, a nie pod
+ekran o wysokości sceny. W wpisie w sekcji **Zastąp obraz sceny**
+przeznacz własny obraz, w formacie poziomym i o szerokości co najmniej 1920 px.
 
 **Pytanie:** Co dzieje się z ramką podczas automatycznego tłumaczenia
 strony?
@@ -106,11 +106,27 @@ podtytuł, etykieta przycisku i opis obrazu na slajdzie,
 a także nadpisany tytuł i etykieta wpisu z aktualnościami.
 Obrazy, linki, kanały, filtry i kolejność pozostają niezmienione.
 
-**Pytanie:** W przetłumaczonej wersji strony wpis z aktualności zawiera inne teksty niż w
+**Pytanie:** W przetłumaczonej wersji strony wpis w sekcji aktualności zawiera inne teksty niż w
 języku źródłowym — czy to błąd?
 
 Odpowiedź: Nie. Tytuł i tekst zapowiedzi wpisu w sekcji aktualności pochodzą z samego
 wpisu, a ten jest wyświetlany w języku, który czytelnik ustawił w aplikacji.
 Tłumaczone jest tylko to, co sam wpisałeś Tłumaczone jest tylko to, co napisałeś w samym wpisie.
-Jeśli brakuje wersji językowej wpisu, wyświetlana jest ta dostępna, zamiast
-pozostawiać puste miejsce.
+Jeśli brakuje wersji językowej wpisu, wyświetla się ta, która jest dostępna, zamiast
+pozostawiać puste pole.
+
+**Pytanie:** Wybrałem opcję „Przed ścieżką nawigacyjną”, ale nic się nie zmienia.
+
+Odpowiedź: Ta opcja działa tylko wtedy, gdy spełnione są trzy warunki: strona posiada
+w ogóle pasek nawigacyjny, obszar wyświetlania znajduje się na samym górze strony oraz
+nad nim nie ma żadnej innej treści. Jeśli którykolwiek z tych warunków nie jest spełniony,
+scena poniżej ścieżki nawigacyjnej — umieszczenie ścieżki nawigacyjnej na środku strony byłoby
+gorsze niż brak jakiejkolwiek zmiany. W edytorze w takim przypadku pojawia się wskazówka
+nad sceną. Na opublikowanej stronie nie jest ona widoczna; tam
+nie można zmienić tego ustawienia.
+
+**Pytanie:** Bez elementów sterujących — jak w takim razie przewijać stronę?
+
+Odpowiedź: Przesuwając palcem, za pomocą klawiszy strzałek lub automatycznie:
+ustawiony czas wyświetlania każdej slajdu pozostaje niezmieniony. W przypadku klawiatury
+sama scena staje się elementem sterującym, gdy tylko brakuje elementów sterujących.

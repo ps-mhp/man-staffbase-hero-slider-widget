@@ -79,8 +79,8 @@
 8. **Aplicar**, guardar y comprobar en la vista previa.
 
 La entrada cuenta como **una** en la lista, pero incluye varias diapositivas.
-En total, el escenario nunca muestra más de ocho diapositivas; lo que exceda este número,
-queda omitido.
+En total, el escenario nunca muestra más de ocho diapositivas; lo que supere ese número,
+se omite al final.
 
 ## Mostrar un vídeo como escenario
 
@@ -95,7 +95,7 @@ queda omitido.
    , y todos los lectores deben poder acceder al vídeo sin necesidad de registrarse
   . Si termina en `.mp4`, `.webm` o `.mov`, el **Tipo** cambia
    automáticamente a **Vídeo**; en caso contrario, cámbielo manualmente.
-4. En **Descripción del vídeo**, indique qué se ve en él o deje
+4. En **Descripción del vídeo**, indique lo que se ve, o deje
    el campo en blanco si el vídeo es meramente decorativo.
 5. **Aplicar**, guardar y comprobar en la vista previa.
 
@@ -118,9 +118,9 @@ ya que se carga cada vez que se visita la página.
 
 1. Abre la configuración del widget; se abrirá el editor con las
    entradas existentes.
-2. Selecciona a la izquierda la entrada que deseas modificar. El indicador situado encima del título indica
+2. Selecciona a la izquierda la entrada que deseas modificar. La marca situada encima del título indica
   de qué tipo se trata: **Diapositiva**, **Publicación** o **Canal**.
-3. Modifica los campos de la derecha. Al hacer clic en **Duplicar** se crea una copia de la
+3. Modifica los campos de la derecha. Al pulsar **Duplicar** se crea una copia de la
    entrada seleccionada justo detrás; con **Eliminar**, esta desaparece. Las flechas,
    **Duplicar** y **Eliminar** se aplican por igual a los tres tipos.
 4. **Aplicar** guarda los cambios en el widget; solo entonces

@@ -41,15 +41,15 @@
 4. Verificate che **Secondi per diapositiva** sia impostato su `5` (impostazione predefinita).
 5. **Applica**, salva, controlla nell’anteprima.
 
-## Pubblicare un singolo articolo di attualità
+## Pubblicare un singolo articolo di notizie
 
 1. Aprite le impostazioni e quindi l’editor.
-2. Cliccate su **Nuovo +** sopra l’elenco e selezionate **Articolo di attualità**.
+2. Cliccate su **Nuovo +** sopra l’elenco e selezionate **Articolo di notizie**.
    A sinistra compare una voce contrassegnata con **Post**.
 3. Sotto **Canale**, selezionate il canale di notizie. Solo dopo sarà possibile
    selezionare l’articolo.
 4. Sotto **Articolo**, selezionate l’articolo desiderato. È possibile scegliere tra
-   i cinquanta articoli più recenti del canale, con i più recenti per primi.
+   i cinquanta articoli più recenti del canale, con i più recenti in primo piano.
 5. Controllate l’**anteprima** sottostante: mostra l’immagine, il titolo e il
    teaser esattamente come appariranno successivamente nella diapositiva.
 6. Opzionale: **sovrascrivere il titolo**, **mostrare il teaser come sottotitolo**
@@ -72,8 +72,8 @@
      appuntato nelle notizie.
    - **Solo post con immagine** — attivato per impostazione predefinita. Senza immagine,
      la diapositiva risulterebbe solo una superficie scura con del testo.
-   - **Parole chiave** — separarle con una virgola; è sufficiente un solo post se
-     contiene una di queste parole.
+   - **Parole chiave** — separarle con una virgola; è sufficiente un post se contiene
+     una di esse.
 7. Controllate l’**anteprima**: mostra esattamente i post che i filtri
    lasciano passare. Se rimane vuota, i filtri sono troppo restrittivi.
 8. **Applicate**, salvate, controllate nell’anteprima.
@@ -101,7 +101,7 @@ viene tralasciato.
 
 Il video viene riprodotto in silenzio e in loop, e solo finché la relativa diapositiva è in primo
 piano. Chi ha impostato una animazione ridotta nel sistema vedrà la prima immagine
-fissa. Mantenete il file di dimensioni ridotte — pochi megabyte per alcuni secondi —,
+fissa. Mantenete il file di piccole dimensioni — pochi megabyte per alcuni secondi —,
 poiché verrà caricato ad ogni visualizzazione della pagina.
 
 ## Inserire un’immagine per il formato verticale

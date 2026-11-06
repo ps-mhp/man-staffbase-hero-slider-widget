@@ -13,7 +13,7 @@ une zone sombre.
 Réponse : La plupart du temps, la vidéo n’est pas accessible sans connexion, ou le **Type** est
 réglé sur **Image**, car l’adresse ne comporte pas d’extension. Ouvrez l’adresse dans
 une fenêtre de navigateur privée : si elle ne fonctionne pas là-bas, les
-lecteurs et lectrices ne la verront pas non plus. Un message situé juste en dessous du champ indique que l’adresse
+lecteurs ne la verront pas non plus. Un message apparaissant juste en dessous du champ indique que l’adresse
 n’a pas été prise en compte — elle doit commencer par `https://`.
 
 **Question :** J’ai saisi un libellé pour le bouton, mais
@@ -22,7 +22,7 @@ il n’apparaît pas.
 Réponse : Le bouton a besoin des **deux** — libellé et destination. Tant que
 l’un des champs est vide, il ne s’affiche pas.
 
-**Question :** L’image ne s’affiche pas sur toute la largeur de la fenêtre.
+**Question :** L’image ne s’étend pas sur toute la largeur de la fenêtre.
 
 Réponse : Il y a deux causes possibles. Soit l’option **Afficher sur toute la largeur**
 est désactivée, soit le widget se trouve dans une colonne à côté d’autres contenus.
@@ -94,8 +94,8 @@ dans l’adresse de la chaîne dans le CMS.
 cadrée de manière étrange sur la scène ?
 
 Réponse : Les images des articles sont recadrées pour le format de flux, et non pour une
-scène occupant toute la hauteur de l'écran. Dans l'entrée, sous **Remplacer l'image de la scène**,
-enregistrez votre propre image, au format paysage et d'au moins 1920 px de large.
+scène occupant toute la hauteur de l’écran. Dans l’entrée, sous **Remplacer l’image de la scène**,
+enregistrez votre propre image, au format paysage et d’au moins 1920 px de large.
 
 **Question :** Que devient la scène lors de la traduction automatique de la
 page ?
@@ -111,5 +111,21 @@ la langue d’origine — s’agit-il d’une erreur ?
 Réponse : Non. Le titre et le résumé d’un article d’actualité proviennent de l’article
 lui-même, et ceux-ci s’affichent dans la langue que le lecteur a sélectionnée dans l’application
 . Seul ce que vous avez écrit dans l’article lui-même est traduit.
-Si une version linguistique de l’article fait défaut, c’est la version existante qui s’affiche, plutôt que
-de laisser la page vide.
+Si aucune version linguistique de l’article n’est disponible, c’est la version existante qui s’affiche, plutôt que
+de laisser la diapositive vide.
+
+**Question :** J’ai sélectionné « Avant le fil d’Ariane », mais rien ne change.
+
+Réponse : Cette fonctionnalité ne s’applique que si trois conditions sont remplies : la page dispose
+bien d’un fil d’Ariane, la zone d’affichage se trouve tout en haut de la page, et
+aucun autre contenu ne se trouve au-dessus. Si l’une de ces conditions n’est pas remplie, la
+scène sous le fil d’Ariane — une barre de navigation au milieu de la page serait
+pire que l’absence totale de modification. Dans l’éditeur, une remarque s’affiche dans ce cas
+au-dessus de la scène. Elle n’apparaît pas sur la page publiée ; là,
+il n’est pas possible de modifier ce paramètre.
+
+**Question :** Sans boutons de commande, comment faire défiler les diapos ?
+
+Réponse : En balayant avec le doigt, à l’aide des touches fléchées, ou automatiquement :
+le temps défini par diapositive s’écoule sans changement. Pour le clavier, la
+scène devient sélectionnable dès que les boutons de commande sont absents.

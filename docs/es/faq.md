@@ -95,7 +95,7 @@ recortada de forma extraña en el escenario?
 
 Respuesta: Las imágenes de las noticias están recortadas para el formato de feed, no para un
 escenario a altura de pantalla. En la entrada, en **Sobrescribir imagen del escenario**,
-añade una propia, en formato horizontal y con un ancho mínimo de 1920 píxeles.
+añade una propia, en horizontal y con un ancho mínimo de 1920 píxeles.
 
 **Pregunta:** ¿Qué ocurre con el escenario cuando se traduce automáticamente la
 página?
@@ -110,6 +110,22 @@ idioma original; ¿se trata de un error?
 
 Respuesta: No. El título y el texto de resumen de una noticia proceden de la propia
 noticia, y se muestran en el idioma que el lector haya
-configurado en la aplicación. Solo se traduce lo que haya escrito en la propia entrada.
-Si falta una versión lingüística de la entrada, aparece la disponible, en lugar de
+configurado en la aplicación. Solo se traduce lo que hayas escrito en la propia entrada.
+Si falta una versión lingüística de la entrada, aparece la que hay disponible, en lugar de
 dejar la diapositiva en blanco.
+
+**Pregunta:** He seleccionado «Antes de la ruta de navegación», pero no cambia nada.
+
+Respuesta: La configuración solo se aplica si se cumplen tres condiciones: la página tiene
+una barra de navegación, el escenario se encuentra en la parte superior de la página y
+no hay ningún otro contenido por encima de él. Si no se cumple alguna de estas condiciones, el
+escena debajo de la ruta de navegación; una ruta de navegación en el centro de la página sería
+peor que no haber realizado ningún cambio. En el editor, en este caso aparece una nota
+encima de la escena. En la página publicada no aparece; allí
+no se puede modificar la configuración.
+
+**Pregunta:** Sin controles: ¿cómo se pasa entonces de una diapositiva a otra?
+
+Respuesta: Deslizando el dedo, con las teclas de flecha o de forma automática:
+el tiempo configurado por diapositiva se mantiene sin cambios. En cuanto al teclado, la
+propia diapositiva se puede seleccionar en cuanto faltan los controles.

@@ -41,11 +41,11 @@ le impostazioni e le riapra. Il testo nel campo è la
 bozza delle voci; non lo modifichi manualmente — un errore di battitura
 al suo interno fa scomparire tutte le diapositive.
 
-**Domanda:** Lo schermo non cambia automaticamente.
+**Domanda:** La scena non cambia automaticamente.
 
 Risposta: Tre possibili cause: c’è una sola diapositiva; **Secondi per diapositiva**
 è impostato su `0`; oppure nel sistema operativo è attivata l’opzione «Riduci movimento».
-In quest’ultimo caso è intenzionale: è comunque possibile scorrere le diapositive tramite le frecce
+In quest’ultimo caso è intenzionale: è comunque possibile sfogliare le diapositive tramite le frecce
 e le linee.
 
 **Domanda:** Sul telefono non vedo le frecce.
@@ -88,11 +88,11 @@ anteprima nell’editor: mostra esattamente ciò che apparirà sullo schermo.
 campo di testo per l’ID.
 
 Risposta: L’elenco dei canali di notizie non era accessibile. Ricaricate la finestra di dialogo.
-Se ciò non risolve il problema, inserite manualmente l’identificativo del canale; lo trovate
+Se ciò non basta, inserite manualmente l’identificativo del canale; lo trovate
 nell’indirizzo del canale nel CMS.
 
 **Domanda:** Perché l’immagine di un post di notizie sul palco risulta sfocata o
-ritagliata in modo strano?
+stranamente ritagliata?
 
 Risposta: Le immagini degli articoli sono ritagliate per il formato feed, non per un
 palcoscenico a tutta schermata. Nella voce **Sovrascrivi immagine del palcoscenico**,
@@ -110,7 +110,23 @@ Le immagini, i link di destinazione, i canali, i filtri e l’ordine rimangono i
 lingua di origine — si tratta di un errore?
 
 Risposta: No. Il titolo e il testo di anteprima di un articolo di notizie provengono dall’articolo
-stesso, che viene visualizzato nella lingua che il lettore ha impostato nell’app
-. Viene tradotto solo ciò che avete scritto nella voce stessa
-. Se manca una versione linguistica del contributo, viene visualizzata quella disponibile, invece di
+stesso, che viene visualizzato nella lingua che il lettore ha
+impostato nell’app. Viene tradotto solo ciò che avete scritto nella voce stessa
+. Se manca una versione linguistica della notizia, viene visualizzata quella disponibile, invece di
 lasciare la schermata vuota.
+
+**Domanda:** Ho selezionato «Prima del percorso di navigazione», ma non cambia nulla.
+
+Risposta: L’impostazione ha effetto solo se si verificano tre condizioni: la pagina ha
+effettivamente una barra di navigazione, la barra si trova nella parte superiore della pagina e
+non c’è altro contenuto sopra di essa. Se una di queste condizioni non è soddisfatta, la
+pagina sotto la barra di navigazione — una barra di navigazione al centro della pagina sarebbe
+peggiore che non avere alcuna modifica. Nell’editor, in questo caso, compare un avviso
+sopra la pagina. Sulla pagina pubblicata non compare; lì
+non è possibile modificare l’impostazione.
+
+**Domanda:** Senza elementi di controllo — come si fa allora a scorrere le diapositive?
+
+Risposta: Scorrendo con il dito, utilizzando i tasti freccia o in modo automatico:
+il tempo impostato per ciascuna diapositiva rimane invariato. Per la tastiera, la
+diapositiva stessa diventa selezionabile non appena mancano gli elementi di controllo.

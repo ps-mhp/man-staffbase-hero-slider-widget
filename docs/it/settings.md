@@ -4,20 +4,22 @@
 | --- | --- |
 | Voci | Il contenuto della pagina: diapositive personalizzate, singoli articoli di notizie e interi canali di notizie. Viene gestito tramite l'editor, che si apre automaticamente all'apertura delle impostazioni. Il campo di testo sottostante contiene il testo grezzo e non deve essere modificato. |
 | Altezza | `Standard (420–560 px)` è l’impostazione predefinita. Accanto ad essa sono disponibili `Bassa (320–420 px)`, `Alta (560–720 px)` e `Altezza schermo`. |
-| Mostra a tutta larghezza | Se attivata (impostazione predefinita), l’immagine si estende per l’intera larghezza della finestra, mentre il testo rimane allineato al margine della pagina. Se disattivata, il palcoscenico rimane nella colonna dei contenuti. |
-| Secondi per diapositiva | Il valore predefinito è `5`. `0` mette in pausa il palcoscenico; in questo caso, lo scorrimento avviene solo tramite frecce e linee. Massimo 30. |
+| Mostra a tutta larghezza | Se attivata (impostazione predefinita), l’immagine si estende per l’intera larghezza della finestra, mentre il testo rimane allineato alla linea di guida della pagina. Se disattivata, il palco rimane nella colonna dei contenuti. |
+| Secondi per diapositiva | `5` è l’impostazione predefinita. `0` mette in pausa la diapositiva; in questo caso, lo scorrimento avviene solo tramite frecce e linee. Massimo 30. |
+| Posizione rispetto al percorso di navigazione | `Dopo il percorso di navigazione` è l’impostazione predefinita: la diapositiva inizia sotto la riga del percorso di navigazione. `Prima del percorso di navigazione` la posiziona a filo sotto il menu e sposta il percorso di navigazione sotto di essa. Funziona solo se la scena si trova nella parte superiore della pagina e se la pagina dispone effettivamente di un percorso di navigazione. |
+| Mostra elementi di controllo | Se attivata (impostazione predefinita), vengono visualizzate frecce e linee. Se disattivati, entrambi scompaiono; la navigazione prosegue con il gesto di scorrimento e i tasti freccia, e il tempo impostato per ogni diapositiva scorre invariato. |
 
 ## Tipi di voci
 
 | Tipo | Descrizione |
 | --- | --- |
 | Diapositiva | Una diapositiva gestita manualmente: immagine, titolo, sottotitolo, pulsante. |
-| Articolo di notizie | Un determinato articolo come diapositiva. Il contenuto e la destinazione provengono dall’articolo. |
+| Articolo di notizie | Un determinato articolo come diapositiva. Il contenuto e il link di destinazione provengono dall’articolo. |
 | Canale di notizie | Un intero canale, una diapositiva per ogni articolo. I nuovi articoli vengono visualizzati automaticamente senza alcun intervento. |
 
-Tutte e tre le voci figurano nello stesso elenco, possono essere mescolate e ordinate tramite **↑** e
+Tutti e tre i tipi figurano nello stesso elenco, possono essere combinati e ordinati tramite **↑** e
 **↓**. Complessivamente, la scena mostra al massimo otto diapositive — una
-voce di canale viene conteggiata con tutte le diapositive che essa contribuisce.
+voce di canale viene conteggiata insieme a tutte le diapositive che essa contribuisce.
 
 ## Campi di una diapositiva
 
@@ -26,7 +28,7 @@ voce di canale viene conteggiata con tutte le diapositive che essa contribuisce.
 | Immagine o video | Obbligatorio. Dalla libreria multimediale o tramite un indirizzo (`https://…`). Orizzontale, larghezza minima 1920 px. Senza immagine o video, la diapositiva non viene visualizzata. |
 | Indirizzo | Al posto della libreria multimediale: l’indirizzo `https` di un’immagine o di un video. Altri indirizzi non vengono accettati. |
 | Tipo | Immagine o video. Viene impostato automaticamente in base all’estensione dell’indirizzo (`.mp4`, `.webm`, `.mov` sono video); selezionarlo manualmente solo per indirizzi senza estensione. |
-| Descrizione dell’immagine o del video | Cosa si vede. Lasciare vuoto solo nel caso di immagini e video puramente decorativi — gli screen reader leggono questo campo. |
+| Descrizione dell’immagine o del video | Cosa si vede. Lasciare vuoto solo nel caso di immagini e video puramente decorativi — gli screen reader leggono ad alta voce questo campo. |
 | Immagine o video per formato verticale | Facoltativo. Viene visualizzato su schermi stretti e verticali. Se manca, viene utilizzato ovunque il ritaglio orizzontale. |
 | Titolo | Da mantenere breve: fino a circa 24 caratteri rimane su una sola riga. |
 | Sottotitolo | Facoltativo, da una a due righe. |
@@ -39,7 +41,7 @@ voce di canale viene conteggiata con tutte le diapositive che essa contribuisce.
 | --- | --- |
 | Canale | Obbligatorio. Determina quali articoli sono disponibili per la selezione. |
 | Articolo | Obbligatorio. I cinquanta articoli più recenti del canale, dal più recente al più vecchio. |
-| Sovrascrivi titolo | Opzionale. Lasciare vuoto per utilizzare il titolo dell’articolo. |
+| Sovrascrivi titolo | Facoltativo. Lasciare vuoto per utilizzare il titolo dell’articolo. |
 | Mostra teaser come sottotitolo | Attivato per impostazione predefinita. Il teaser viene abbreviato a 240 caratteri. |
 | Etichetta del pulsante | Impostazione predefinita: `Scopri di più`. Lasciare vuoto per omettere il pulsante; la destinazione è sempre l’articolo. |
 | Sovrascrivi immagine di copertina | Opzionale. Utile se l’immagine del post è troppo ritagliata per la copertina. |

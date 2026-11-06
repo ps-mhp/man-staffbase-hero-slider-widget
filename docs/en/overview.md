@@ -38,8 +38,8 @@ articles from a channel.
   The line for the current slide is red.
 - The transition continues as long as the mouse hovers over the stage or the focus is
   on it. On a phone, you swipe; the arrows are hidden there.
-- **On a phone** (less than 768 pixels wide), only the heading appears
-  on the image, up to four lines long; anything beyond that ends with “…".
+- **On a phone** (less than 768 pixels wide), only the headline appears
+  on the image, up to four lines long; anything beyond that ends with “…”.
   The subtitle and button are hidden there—instead, tapping
   anywhere on the slide takes you to the button’s destination. For screen readers,
   the button’s label remains the name of this link. If a slide has no destination, it

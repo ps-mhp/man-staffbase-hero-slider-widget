@@ -12,7 +12,7 @@ page d’accueil peut également afficher des **articles issus de l’actualité
 
 - **Article d’actualité** — un article spécifique sous forme de diapositive. L’image, le titre
   et le teaser proviennent de l’article, le bouton renvoie vers celui-ci.
-- **Chaîne d’actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
+- **Chaîne d'actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
   ordre et les filtres sont paramétrables. Lorsqu’un nouvel article paraît dans la
   chaîne, il s’affiche automatiquement sur la scène.
 
@@ -26,7 +26,7 @@ articles d’une rubrique.
   elle-même dispose d’une colonne de contenu plus étroite.
 - La scène est **alignée en haut** : si la page comporte un fil d’Ariane,
   la scène se trouve juste en dessous ; si elle n’en a pas, elle se raccorde directement au
-  menu. La bande blanche vide que la page réserve habituellement au-dessus du premier
+  menu. La bande blanche vide que la page laisse habituellement au-dessus du premier
   contenu est supprimée.
 - Le **texte reste aligné sur la ligne de repère de la page** : il commence sur la même
   ligne verticale que l’en-tête, le menu et le texte situé sous la zone d’affichage. Il

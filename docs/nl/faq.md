@@ -7,7 +7,7 @@ leeg, donker vlak zou op de pagina niet te onderscheiden zijn van een fout.
 Open de editor en selecteer onder **Afbeelding of video** een afbeelding
 of voer een adres in.
 
-**Vraag:** Ik heb een videoadres ingevoerd, maar de dia toont alleen
+**Vraag:** Ik heb een video-adres ingevoerd, maar de dia toont alleen
 een donker vlak.
 
 Antwoord: Meestal is de video zonder aanmelding niet beschikbaar, of staat **Type** ingesteld
@@ -36,7 +36,7 @@ Als deze afwijkt, meld dit dan samen met het pagina-adres.
 **Vraag:** In plaats van de editor zie ik een tekstveld „Invoer“ met accolades
 erin.
 
-Antwoord: De editor kon niet in het dialoogvenster worden geïntegreerd. Sluit
+Antwoord: De editor kon geen verbinding maken met het dialoogvenster. Sluit
 de instellingen en open ze opnieuw. De tekst in het veld is de
 ruwe versie van de vermeldingen; bewerk deze niet handmatig — één typefout
 daarin zorgt ervoor dat alle dia’s verdwijnen.
@@ -48,10 +48,10 @@ staat op `0`; of in het besturingssysteem is „Beweging verminderen“ ingescha
 In het laatste geval is dit de bedoeling — je kunt nog steeds bladeren met pijltjes
 en streepjes.
 
-**Vraag:** Ik zie geen pijltjes op mijn telefoon.
+**Vraag:** Ik zie geen pijltjes op de telefoon.
 
 Antwoord: Dat is zo bedoeld. Op smalle schermen wordt geveegd; de
-streepjes onder de tekst geven nog steeds aan welke dia momenteel op de voorgrond staat.
+streepjes onder de tekst geven nog steeds aan welke dia op dat moment op de voorgrond staat.
 
 **Vraag:** Mijn afbeelding is aan de rand afgesneden.
 
@@ -112,5 +112,21 @@ de brontaal — is dat een fout?
 Antwoord: Nee. De titel en de samenvatting van een nieuwsbericht komen uit het bericht
 zelf, en dat wordt weergegeven in de taal die de lezer in de app
 heeft ingesteld. Alleen wat u in het bericht zelf hebt geschreven, wordt vertaald.
-Als er geen vertaalde versie van het bericht beschikbaar is, wordt de bestaande versie weergegeven in plaats van
-de pagina leeg te laten.
+Als er geen taalversie van het bericht beschikbaar is, wordt de bestaande versie weergegeven in plaats van
+de dia leeg te laten.
+
+**Vraag:** Ik heb „Boven de broodkruimels“ geselecteerd, maar er verandert niets.
+
+Antwoord: De instelling werkt alleen als aan drie voorwaarden is voldaan: de pagina heeft
+überhaupt een broodkruimelbalk, de balk staat helemaal bovenaan de pagina en
+er staat geen andere inhoud boven. Als aan één van deze voorwaarden niet is voldaan, blijft de
+podium onder de broodkruimels — een broodkruimelbalk in het midden van de pagina zou
+erger zijn dan helemaal geen verandering. In de editor staat in dit geval een opmerking
+boven het podium. Op de gepubliceerde pagina verschijnt deze niet; daar kan
+de instelling niet worden gewijzigd.
+
+**Vraag:** Zonder bedieningselementen — hoe blader je dan?
+
+Antwoord: Veeg met je vinger, blader met de pijltjestoetsen, of automatisch:
+de ingestelde tijd per dia blijft ongewijzigd. Voor het toetsenbord wordt het
+podium zelf selecteerbaar zodra de bedieningselementen ontbreken.

@@ -5,7 +5,9 @@
 | Entradas | O conteúdo do palco: slides próprios, notícias individuais e canais de notícias completos. É gerido através do editor, que aparece automaticamente ao abrir as definições. O campo de texto abaixo é a versão preliminar e não precisa de ser alterado. |
 | Altura | `Padrão (420–560 px)` é a predefinição. Além disso, `Baixa (320–420 px)`, `Alta (560–720 px)` e `Altura do ecrã`. |
 | Mostrar em toda a largura | Quando ativada (predefinição), a imagem ocupa toda a largura da janela, enquanto o texto permanece alinhado à margem da página. Quando desativada, o palco permanece na coluna de conteúdo. |
-| Segundos por diapositivo | O valor predefinido é `5`. O valor `0` pára o palco; nesse caso, a navegação é feita apenas através de setas e linhas. Máximo de 30. |
+| Segundos por diapositivo | `5` é a predefinição. `0` pára o palco; nesse caso, a navegação é feita apenas através de setas e linhas. Máximo de 30. |
+| Posição em relação às migalhas de pão | `Após as migalhas de pão` é a predefinição: o palco começa abaixo da linha das migalhas de pão. `Antes da trilha de navegação` coloca-a alinhada com o menu e desloca a trilha de navegação para baixo. Aplica-se apenas se a cena estiver na parte superior da página e se a página tiver, de facto, uma trilha de navegação. |
+| Mostrar elementos de controlo | Quando ativado (predefinição), aparecem setas e linhas. Quando desativado, ambos desaparecem; a navegação continua com gestos de deslizar e as setas do teclado, e o tempo definido por slide decorre inalterado. |
 
 ## Tipos de entradas
 
@@ -50,7 +52,7 @@ entrada de canal conta com todos os diapositivos que contribui.
 | Campo | Descrição |
 | --- | --- |
 | Canal | Obrigatório. Todos os slides desta publicação provêm deste canal. |
-| Número de slides | Predefinido para `3`, máximo de oito. |
+| Número de slides | Predefinido como `3`, máximo de oito. |
 | Ordem | `Mais recentes primeiro` (predefinição) ou `Mais antigos primeiro`. |
 | Apenas publicações em destaque | Desativado por predefinição. Limita-se ao que está fixado nas notícias. |
 | Apenas publicações com imagem | Ativado por predefinição. Sem imagem, o slide ficaria reduzido a uma área escura com texto. |
@@ -71,7 +73,7 @@ entrada de canal conta com todos os diapositivos que contribui.
 - Os elementos de controlo só aparecem a partir do segundo slide. Em ecrãs estreitos,
   as setas ficam ocultas; nesses casos, utiliza-se o gesto de deslizar.
 - Uma publicação que seja eliminada ou que não esteja visível para a pessoa que está a ler
-  leva consigo apenas o seu próprio slide. Os restantes slides permanecem no lugar.
+  leva apenas o seu próprio slide consigo. Os restantes slides permanecem no lugar.
 - Os slides de notícias seguem o idioma do leitor, desde que a publicação
   esteja traduzida; caso contrário, seguem a primeira versão disponível.
 - A **pré-visualização** no editor segue as mesmas regras que a

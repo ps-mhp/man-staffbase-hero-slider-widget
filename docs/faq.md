@@ -114,3 +114,19 @@ selbst, und der wird in der Sprache gezeigt, die der Leser in der App
 eingestellt hat. Übersetzt wird nur, was Sie im Eintrag selbst geschrieben
 haben. Fehlt eine Sprachfassung des Beitrags, erscheint die vorhandene, statt
 die Folie leer zu lassen.
+
+**Frage:** Ich habe „Vor den Brotkrumen“ gewählt, aber nichts ändert sich.
+
+Antwort: Die Lage greift nur, wenn drei Dinge zutreffen: die Seite hat
+überhaupt eine Brotkrumen-Zeile, die Bühne steht ganz oben auf der Seite, und
+über ihr liegt kein weiterer Inhalt. Trifft eines davon nicht zu, bleibt die
+Bühne unter den Brotkrumen — eine Brotkrumen-Zeile mitten auf der Seite wäre
+schlechter als gar keine Änderung. Im Editor steht in diesem Fall ein Hinweis
+über der Bühne. Auf der veröffentlichten Seite erscheint er nicht; dort lässt
+sich an der Einstellung nichts ändern.
+
+**Frage:** Ohne Bedienelemente — wie blättert man dann?
+
+Antwort: Mit dem Finger wischen, mit den Pfeiltasten blättern, oder von selbst:
+die eingestellte Zeit je Folie läuft unverändert. Für die Tastatur wird die
+Bühne selbst anwählbar, sobald die Bedienelemente fehlen.

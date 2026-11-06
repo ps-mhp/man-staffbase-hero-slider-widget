@@ -5,19 +5,21 @@
 | Entries | The content of the stage: custom slides, individual news posts, and entire news channels. Managed via the editor, which appears automatically when you open the settings. The text field below is the draft and does not need to be edited. |
 | Height | `Standard (420–560 px)` is the default. Other options include `Low (320–420 px)`, `High (560–720 px)`, and `Screen Height`. |
 | Show full width | When enabled (default), the image spans the full width of the window, while the text remains aligned with the page’s margin. When disabled, the stage remains within the content column. |
-| Seconds per Slide | `5` is the default. `0` pauses the stage; in this case, you can only navigate using arrows and lines. Maximum of 30. |
+| Seconds per slide | `5` is the default. `0` pauses the stage; scrolling is then done only using arrows and lines. Maximum value is 30. |
+| Position relative to the breadcrumbs | `After the breadcrumbs` is the default: the stage begins below the breadcrumb line. `Before the breadcrumbs` places it flush below the menu and moves the breadcrumbs below it. This only applies if the stage is at the top of the page and the page has breadcrumbs at all. |
+| Show controls | When enabled (default), arrows and dashes appear. When turned off, both disappear; you continue navigating by swiping or using the arrow keys, and the set time per slide remains unchanged. |
 
 ## Types of Entries
 
 | Type | Description |
 | --- | --- |
 | Slide | A manually maintained slide: image, headline, subheading, button. |
-| News Article | A specific article as a slide. Content and link come from the article. |
-| News Channel | An entire channel, one slide per article. New posts appear automatically. |
+| News Post | A specific post as a single slide. Content and link come from the post. |
+| News Channel | An entire channel, one slide per post. New posts appear automatically. |
 
 All three appear in the same list; they can be mixed and sorted using **↑** and
 **↓**. In total, the stage displays a maximum of eight slides—a
-channel entry counts as all the slides it contributes.
+channel entry counts as one, including all the slides it contributes.
 
 ## Fields on a Slide
 
@@ -50,9 +52,9 @@ channel entry counts as all the slides it contributes.
 | Field | Description |
 | --- | --- |
 | Channel | Required. All slides in this entry come from this channel. |
-| Number of Slides | Default is `3`; maximum of eight. |
+| Number of Slides | Default is `3`; maximum is eight. |
 | Order | `Newest First` (default) or `Oldest First`. |
-| Featured posts only | Disabled by default. Limited to what is pinned in the news section. |
+| Featured posts only | Disabled by default. Limited to what is pinned in the news. |
 | Posts with images only | Enabled by default. Without an image, the slide would be nothing more than a dark area with text. |
 | Keywords | Optional; separate multiple keywords with commas. A post is included if it contains at least one of these keywords. |
 | Show teaser as subtitle | Enabled by default. |
@@ -61,9 +63,9 @@ channel entry counts as all the slides it contributes.
 ## Notes
 
 - **Height** acts as a limit, not a fixed height: the stage adapts to wide
-  21:9 screens and on narrow 4:3 screens, and is only constrained to the boundaries of the
+  21:9 screens and on narrow 4:3 screens and is only constrained to the boundaries of the
   selected level.
-- `Screen height` fills the visible area minus the header,
+- `ScreenHeight` fills the visible area minus the header,
   but at least 420 px.
 - **Seconds per Slide** takes effect starting with the second slide.
 - Users who have “Reduce Motion” enabled in their operating system will not see

@@ -6,6 +6,8 @@
 | Höhe | `Standard (420–560 px)` ist voreingestellt. Daneben `Niedrig (320–420 px)`, `Hoch (560–720 px)` und `Bildschirmhoch`. |
 | Über die volle Breite zeigen | Eingeschaltet (Voreinstellung) läuft das Bild über die volle Fensterbreite, während der Text auf der Fluchtlinie der Seite bleibt. Ausgeschaltet bleibt die Bühne in der Inhaltsspalte. |
 | Sekunden je Folie | `5` ist voreingestellt. `0` hält die Bühne an; dann wird nur über Pfeile und Striche geblättert. Höchstens 30. |
+| Lage zu den Brotkrumen | `Nach den Brotkrumen` ist voreingestellt: die Bühne beginnt unter der Brotkrumen-Zeile. `Vor den Brotkrumen` setzt sie bündig unter das Menü und rückt die Brotkrumen darunter. Greift nur, wenn die Bühne oben auf der Seite steht und die Seite überhaupt Brotkrumen hat. |
+| Bedienelemente zeigen | Eingeschaltet (Voreinstellung) erscheinen Pfeile und Striche. Ausgeschaltet verschwinden beide; geblättert wird weiter mit Wischen und den Pfeiltasten, und die eingestellte Zeit je Folie läuft unverändert. |
 
 ## Sorten von Einträgen
 

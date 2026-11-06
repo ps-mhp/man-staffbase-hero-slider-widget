@@ -4,8 +4,8 @@ De Hero-slider is het **podium** bovenaan een pagina: een grote afbeelding over 
 volledige breedte van het venster, met daarboven een kop, eventueel een ondertitel en
 een knop. Het voorbeeld hiervoor is het podium op man.eu.
 
-Wie meerdere dia’s aanmaakt, krijgt een wisselaar: de dia’s
-vloeien in elkaar over, bladeren doe je met pijltjes en de streepjes linksonder.
+Als je meerdere dia’s aanmaakt, krijg je een diavoorstelling: de dia’s
+vloeien in elkaar over, en je bladert met pijltjes en de streepjes linksonder.
 
 Een dia hoeft niet handmatig te worden bijgewerkt. Naast eigen dia’s kan het
 startscherm ook **berichten uit het nieuws** weergeven:
@@ -34,10 +34,10 @@ berichten van een kanaal.
 - De tekst staat linksonder, op een donker verloop dat van onder naar
   boven loopt. Op brede schermen komt daar een tweede verloop vanaf links
   bij, zodat lichte tekst op een lichte achtergrond leesbaar blijft.
-- Bij meerdere dia’s: pijltjes links en rechts, met daartussen een streepje per dia.
+- Bij meerdere dia’s: pijlen links en rechts, met daartussen een streepje per dia.
   Het streepje van de huidige dia is rood.
 - De wisseling blijft doorgaan zolang de muis boven het podium hangt of de focus erop
-  ligt. Op de telefoon wordt geveegd; de pijltjes zijn daar verborgen.
+  ligt. Op de telefoon wordt geveegd; de pijlen zijn daar verborgen.
 - **Op de telefoon** (bij een breedte van minder dan 768 pixels) staat alleen de koptekst op
   de afbeelding, maximaal vier regels lang; wat daarbuiten valt, eindigt met „…".
   De ondertitel en de knop worden daar verborgen — in plaats daarvan leidt een tik
@@ -47,7 +47,7 @@ berichten van een kanaal.
 - Wie in het besturingssysteem „Beweging verminderen“ heeft ingesteld, ziet geen
   overgang en geen overgangseffect — alleen nog de bedieningselementen.
 - Dia’s uit het nieuws zien eruit als elke andere dia. Dat de inhoud uit
-  een artikel komt, is van buitenaf niet te herkennen.
+  een artikel komt, is van buitenaf niet te zien.
 
 ## Wat u in de CMS-editor ziet
 

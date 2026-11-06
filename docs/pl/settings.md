@@ -5,15 +5,17 @@
 | Wpisy | Zawartość sceny: własne slajdy, pojedyncze wpisy z aktualności oraz całe kanały aktualności. Zarządzane za pomocą edytora, który wyświetla się automatycznie po otwarciu ustawień. Poniższe pole tekstowe zawiera wersję roboczą i nie należy go edytować. |
 | Wysokość | Domyślnie ustawiona jest opcja `Standardowa (420–560 px)`. Obok znajdują się opcje `Niska (320–420 px)`, `Wysoka (560–720 px)` oraz `Wysokość ekranu`. |
 | Wyświetlaj na całej szerokości | Gdy opcja jest włączona (ustawienie domyślne), obraz zajmuje całą szerokość okna, a tekst pozostaje w linii wyboru strony. Gdy opcja jest wyłączona, scena pozostaje w kolumnie treści. |
-| Sekundy na slajd | Domyślnie ustawiono `5`. Wartość `0` zatrzymuje scenę; wtedy przewijanie odbywa się wyłącznie za pomocą strzałek i kresek. Maksymalnie 30. |
+| Sekundy na slajd | Domyślnie ustawiono `5`. `0` zatrzymuje scenę; wtedy przewijanie odbywa się wyłącznie za pomocą strzałek i kresek. Maksymalnie 30. |
+| Położenie względem ścieżki nawigacyjnej | Domyślnym ustawieniem jest `Po ścieżce nawigacyjnej`: scena zaczyna się poniżej linii ścieżki nawigacyjnej. `Przed ścieżką nawigacyjną` umieszcza ją równo pod menu i przesuwa ścieżkę nawigacyjną poniżej. Działa tylko wtedy, gdy scena znajduje się u góry strony i strona w ogóle posiada ścieżkę nawigacyjną. |
+| Pokaż elementy sterujące | Gdy opcja jest włączona (ustawienie domyślne), pojawiają się strzałki i kreski. Po wyłączeniu oba elementy znikają; przewijanie odbywa się nadal za pomocą gestu przesuwania i klawiszy strzałek, a ustawiony czas na każdy slajd pozostaje niezmieniony. |
 
 ## Rodzaje wpisów
 
 | Rodzaj | Opis |
 | --- | --- |
 | Slajd | Ręcznie edytowany slajd: obraz, nagłówek, podtytuł, przycisk. |
-| Artykuł z aktualności | Konkretny artykuł jako slajd. Treść i link docelowy pochodzą z artykułu. |
-| Kanał aktualności | Cały kanał, jeden slajd na artykuł. Nowe wpisy pojawiają się bez dodatkowych czynności. |
+| Wpis z aktualności | Konkretny wpis jako slajd. Treść i link docelowy pochodzą z tego wpisu. |
+| Kanał aktualności | Cały kanał, jeden slajd na każdy wpis. Nowe wpisy pojawiają się bez dodatkowych czynności. |
 
 Wszystkie trzy rodzaje wpisów znajdują się na tej samej liście, można je mieszać i sortować za pomocą przycisków **↑** oraz
 **↓**. Łącznie scena wyświetla maksymalnie osiem slajdów — przy czym
@@ -27,10 +29,10 @@ wpis kanału liczy się wraz ze wszystkimi slajdami, które wnosi.
 | Adres | Zamiast biblioteki multimediów: adres `https` zdjęcia lub wideo. Inne adresy nie są akceptowane. |
 | Typ | Obraz lub wideo. Ustalany automatycznie na podstawie rozszerzenia adresu (`.mp4`, `.webm`, `.mov` to pliki wideo); ręcznie wybieraj tylko w przypadku adresów bez rozszerzenia. |
 | Opis obrazu lub wideo | Co jest widoczne. Pole pozostawić puste tylko w przypadku obrazów i filmów pełniących wyłącznie funkcję dekoracyjną — czytniki ekranu odczytują to pole. |
-| Obraz lub film w orientacji pionowej | Opcjonalnie. Wyświetlane na wąskich ekranach pionowych. Jeśli brakuje, wszędzie stosowany jest kadr poziomy. |
+| Obraz lub film w orientacji pionowej | Opcjonalnie. Wyświetlane na wąskich ekranach pionowych. Jeśli brakuje, wszędzie stosowany jest kadr w orientacji poziomej. |
 | Nagłówek | Należy zachować zwięzłość: do około 24 znaków, dzięki czemu zmieści się w jednym wierszu. |
-| Podtytuł | Opcjonalne, od jednego do dwóch wierszy. |
-| Przycisk | Opcjonalne. Pojawia się tylko wtedy, gdy wypełniono etykietę i adres docelowy. Najwyżej jeden na slajd. |
+| Podtytuł | Opcjonalne, jeden do dwóch wierszy. |
+| Przycisk | Opcjonalne. Pojawia się tylko wtedy, gdy wypełniono etykietę i adres docelowy. Maksymalnie jeden na slajd. |
 | Otwórz w nowej karcie | Otwiera miejsce docelowe przycisku w nowej karcie. Typowe dla miejsc docelowych zewnętrznych. |
 
 ## Pola wpisu w serwisie informacyjnym
@@ -42,8 +44,8 @@ wpis kanału liczy się wraz ze wszystkimi slajdami, które wnosi.
 | Zastąp nagłówek | Opcjonalne. Pozostaw puste, aby przejąć tytuł wpisu. |
 | Pokaż teaser jako podtytuł | Domyślnie włączone. Teaser jest skracany do 240 znaków. |
 | Etykieta przycisku | Domyślnie `Dowiedz się więcej`. Pozostaw puste, aby pominąć przycisk; miejscem docelowym jest zawsze wpis. |
-| Zastąp obraz sceny | Opcjonalne. Przydatne, gdy obraz wpisu jest zbyt wąski dla sceny. |
-| Obraz dla formatu pionowego | Opcjonalne. Wyświetlany na wąskich, pionowych ekranach. |
+| Zastąp obraz sceny | Opcjonalnie. Przydatne, gdy obraz wpisu jest zbyt wąski dla sceny. |
+| Obraz dla formatu pionowego | Opcjonalnie. Wyświetlany na wąskich, pionowych ekranach. |
 
 ## Pola kanału wiadomości
 

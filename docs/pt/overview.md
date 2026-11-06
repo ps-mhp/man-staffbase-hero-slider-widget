@@ -32,8 +32,8 @@ notícias de um canal.
   linha vertical que o cabeçalho, o menu e o texto abaixo da área de exibição. Não
   fica, de forma expressa, colado à margem da imagem.
 - O texto encontra-se no canto inferior esquerdo, sobre um gradiente escuro que se estende de baixo para
-  cima. Em ecrãs largos, é adicionado um segundo gradiente a partir da esquerda
-  , para que o texto claro permaneça legível sobre um fundo claro.
+  cima. Em ecrãs largos, é adicionado um segundo gradiente a partir da esquerda,
+  para que o texto claro permaneça legível sobre um fundo claro.
 - No caso de vários slides: setas à esquerda e à direita, com uma linha entre elas por cada slide.
   A linha do slide atual é vermelha.
 - A transição mantém-se enquanto o rato estiver sobre o palco ou o foco estiver
@@ -55,4 +55,4 @@ O editor mostra a área de visualização dentro da coluna de conteúdo, ou seja
 página publicada**. A extensão real da imagem e a localização do texto
 só podem ser avaliadas na pré-visualização ou na página publicada
 . Verifique sempre, pelo menos uma vez, com a largura da janela reduzida
-— é aí que se aplica o recorte em formato vertical.
+— é aí que se aplica o recorte na orientação vertical.

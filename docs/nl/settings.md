@@ -4,14 +4,16 @@
 | --- | --- |
 | Items | De inhoud van het podium: eigen dia's, afzonderlijke nieuwsberichten en complete nieuwskanalen. Wordt beheerd via de editor, die automatisch verschijnt wanneer je de instellingen opent. Het tekstveld eronder is de ruwe versie en hoeft niet te worden aangepast. |
 | Hoogte | `Standaard (420–560 px)` is de standaardinstelling. Daarnaast `Laag (320–420 px)`, `Hoog (560–720 px)` en `Schermhoogte`. |
-| Over de volledige breedte weergeven | Indien ingeschakeld (standaardinstelling) strekt de afbeelding zich uit over de volledige breedte van het venster, terwijl de tekst binnen de uitlijningslijn van de pagina blijft. Indien uitgeschakeld blijft het podium binnen de inhoudskolom. |
-| Seconden per dia | `5` is de standaardinstelling. Bij `0` wordt het podium gepauzeerd; dan wordt er alleen met pijltjes en streepjes doorgebladerd. Maximaal 30. |
+| Over de volledige breedte weergeven | Ingeschakeld (standaardinstelling) loopt de afbeelding over de volledige vensterbreedte, terwijl de tekst op de uitlijningslijn van de pagina blijft. Uitgeschakeld blijft het podium in de inhoudskolom. |
+| Seconden per dia | `5` is de standaardinstelling. `0` zet het podium stil; dan wordt er alleen met pijltjes en streepjes doorgebladerd. Maximaal 30. |
+| Positie ten opzichte van de broodkruimels | `Na de broodkruimels` is de standaardinstelling: het podium begint onder de broodkruimelregel. `Vóór de broodkruimels` plaatst het vlak onder het menu en verschuift de broodkruimels eronder. Werkt alleen als het podium bovenaan de pagina staat en de pagina überhaupt broodkruimels heeft. |
+| Bedieningselementen weergeven | Ingeschakeld (standaardinstelling) verschijnen pijltjes en streepjes. Uitgeschakeld verdwijnen beide; je bladert verder met vegen en de pijltjestoetsen, en de ingestelde tijd per dia blijft ongewijzigd. |
 
 ## Soorten items
 
 | Soort | Beschrijving |
 | --- | --- |
-| Dia | Een handmatig onderhouden dia: afbeelding, kop, ondertitel, knop. |
+| Dia | Een handmatig bewerkte dia: afbeelding, kop, ondertitel, knop. |
 | Nieuwsbericht | Een specifiek bericht als één dia. Inhoud en bestemming komen uit het bericht. |
 | Nieuwskanaal | Een heel kanaal, één dia per bericht. Nieuwe berichten verschijnen zonder verdere handelingen. |
 
@@ -61,8 +63,8 @@ kanaalvermelding telt daarbij mee met alle dia’s die het bijdraagt.
 ## Opmerkingen
 
 - **Hoogte** fungeert als grens, niet als vaste hoogte: het podium past zich aan op brede
-  21:9-schermen en op smalle 4:3-schermen en wordt alleen vastgezet aan de randen van het
-  geselecteerde niveau.
+  21:9-schermen en op smalle 4:3-schermen en wordt alleen aan de randen van het
+  geselecteerde niveau vastgezet.
 - `Schermhoogte` vult de zichtbare zijde minus de koptekst,
   maar minimaal 420 px.
 - **Seconden per dia** is pas vanaf de tweede dia van kracht.
