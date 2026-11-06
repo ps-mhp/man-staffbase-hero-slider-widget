@@ -204,6 +204,13 @@ export function HeroSlider({
   // Inhaltsspalte gemessen. Läge die Messung an der Bühne, misse sie ihre
   // eigene Verschiebung mit.
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
+  // Gemessen werden zwei verschiedene Kästen, und das mit Absicht: der Anker
+  // für die Breite der Inhaltsspalte, die Bühne für ihre Unterkante. Der
+  // Anker enthält auch den Platzhalter für die verschobenen Brotkrumen —
+  // hinge `usePageTop` an ihm, läge seine Unterkante um die Höhe des
+  // Platzhalters zu tief, und die Brotkrumen rutschten um genau diese Höhe
+  // unter die Bühne. Nicht zu einem Ref zusammenfassen.
+  const [stage, setStage] = useState<HTMLElement | null>(null);
   const touchStartX = useRef<number | null>(null);
 
   const { index, playing, goTo, next, previous, setPaused, swipe, reducedMotion } = useSlider({
@@ -234,7 +241,7 @@ export function HeroSlider({
   // Der Beginn der Seite, solange eine Bühne auf ihr liegt: unter den
   // Brotkrumen, wenn es welche gibt, sonst bündig am Menü — und im Modus
   // `pre` umgekehrt, mit den Brotkrumen unter der Bühne (siehe `page-top.ts`).
-  usePageTop({ position, host: anchor, onLayout });
+  usePageTop({ position, host: stage, onLayout });
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -301,6 +308,7 @@ export function HeroSlider({
           .filter(Boolean)
           .join(" ")}
         style={vars}
+        ref={setStage}
         data-testid="hero-slider"
         aria-roledescription={many ? "carousel" : undefined}
         onMouseEnter={() => setPaused(true)}
@@ -438,6 +446,11 @@ export function HeroSlider({
         // Die Brotkrumen liegen aus dem Fluss: verschoben überdecken sie den
         // Inhalt unter der Bühne, statt ihn zu schieben. Dieser Platzhalter
         // ist der Platz, den sie sich nicht selbst nehmen können.
+        //
+        // Bekannte Lücke: in `man-hero-host--fill` gibt der Abschnitt die
+        // Höhe des Wirtskastens vor (`height: 100%`). Der Platzhalter hält
+        // dort nichts frei, sondern läuft nur über den unteren Rand hinaus.
+        // Hier bewusst nicht behoben.
         <div
           className="man-hero__crumb-space"
           style={{ height: `${layout.breadcrumbsHeight}px` }}

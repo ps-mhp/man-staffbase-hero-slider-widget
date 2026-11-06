@@ -677,6 +677,18 @@ describe("holdPageTop — Meldung je Bühne", () => {
     // `post` angemeldet hat, bekommt genau das, was er wollte.
     expect(seen.at(-1)).toEqual({ applied: true, breadcrumbsHeight: 0 });
   });
+
+  it("meldet den Rückfall auch auf einer Seite ohne Seitenrahmen", () => {
+    // Ohne `#wrapper` greift der Eingriff nirgends — und gerade dort muss
+    // eine Bühne in `pre` erfahren, dass sie ihre Lage nicht bekommt.
+    // Schwiege die Messung, bliebe es bei der Anfangsannahme, und im Editor
+    // käme kein Hinweis.
+    addChrome(100);
+    const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    hold({ position: "pre", onLayout: (layout) => seen.push(layout) });
+
+    expect(seen.at(-1)).toEqual({ applied: false, breadcrumbsHeight: 0 });
+  });
 });
 
 /** Ein ResizeObserver, der nur meldet, was er auch beobachtet. */

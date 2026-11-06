@@ -360,7 +360,15 @@ function notify(layout: PageTopLayout): void {
 
 function write(doc: Document): void {
   const wrapper = doc.querySelector<HTMLElement>(WRAPPER_SELECTOR);
-  if (wrapper === null) return;
+  if (wrapper === null) {
+    // Dieselbe Regel wie bei einer Messung, die nichts ergibt: ohne
+    // Seitenrahmen greift der Eingriff nirgends, und eine Bühne in `pre`
+    // bekommt ihre Lage nicht. Schwiege es hier, bliebe sie bei ihrer
+    // Anfangsannahme — und im Editor käme kein Hinweis, ausgerechnet auf
+    // der Seite, auf der `pre` gar nicht gehen kann.
+    notify({ applied: mode !== "pre", breadcrumbsHeight: 0 });
+    return;
+  }
 
   const applied = mode === "pre" ? canPlacePreBreadcrumbs(doc, anchorHost) : true;
 
