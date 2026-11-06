@@ -514,4 +514,66 @@ describe("HeroSlider", () => {
       expect(screen.getByTestId("hero-live")).toHaveTextContent("Folie 2 von 2");
     });
   });
+
+  describe("Lage zu den Brotkrumen", () => {
+    /**
+     * Der Seitenrahmen der Wirtsseite. Ohne ihn misst `page-top.ts` gar
+     * nicht erst und meldet der Bühne deshalb auch keine Lage — der Hinweis
+     * hinge dann an einer Messung, die nie stattgefunden hat.
+     */
+    function mountPageFrame(): void {
+      const wrapper = document.createElement("div");
+      wrapper.id = "wrapper";
+      document.body.appendChild(wrapper);
+    }
+
+    /**
+     * Der Zustand des klassischen Editors (`EDITOR_MARKER_SELECTOR` in
+     * `editor-context.ts`). Die kontextuelle Werkzeugleiste taugt dafür
+     * ausdrücklich nicht: sie steht auch auf der gelesenen Seite.
+     */
+    function openEditor(): void {
+      const marker = document.createElement("div");
+      marker.setAttribute("data-react-values", "{}");
+      document.body.appendChild(marker);
+    }
+
+    afterEach(() => {
+      document.body.innerHTML = "";
+    });
+
+    it("zeigt im Lesemodus keinen Hinweis, wenn die Lage nicht anwendbar ist", () => {
+      // Ohne Brotkrumen kommt die Lage nicht zustande. Leser:innen können
+      // daran nichts ändern — ein Streifen über dem Bild sähe aus wie ein
+      // Fehler der Seite.
+      mountPageFrame();
+      render(<HeroSlider slides={two} position="pre" />);
+
+      expect(screen.queryByTestId("hero-position-notice")).toBeNull();
+    });
+
+    it("zeigt den Hinweis im Editor, wenn die Lage nicht anwendbar ist", () => {
+      mountPageFrame();
+      openEditor();
+      render(<HeroSlider slides={two} position="pre" />);
+
+      expect(screen.getByTestId("hero-position-notice")).toHaveTextContent("nicht anwendbar");
+    });
+
+    it("zeigt den Hinweis nicht, wenn die Lage gar nicht angefordert ist", () => {
+      mountPageFrame();
+      openEditor();
+      render(<HeroSlider slides={two} position="post" />);
+
+      expect(screen.queryByTestId("hero-position-notice")).toBeNull();
+    });
+
+    it("hält im Editor keinen Platz frei, solange nichts verschoben ist", () => {
+      mountPageFrame();
+      openEditor();
+      const { container } = render(<HeroSlider slides={two} position="pre" />);
+
+      expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
+    });
+  });
 });

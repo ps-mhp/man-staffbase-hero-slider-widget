@@ -24,7 +24,9 @@ import * as React from "react";
 import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useHotStyle } from "@shared/hot-style";
 import { useFullBleed } from "./full-bleed";
-import { usePageTop } from "./page-top";
+import { PageTopLayout, usePageTop } from "./page-top";
+import { HeroPosition } from "./attributes";
+import { isEditor } from "./editor-context";
 import { Slide, SlideImage, firstFrameUrl, isVideo } from "./slides-model";
 import { DEFAULT_AUTOPLAY_DELAY_MS, useSlider } from "./use-slider";
 import heroSliderCss from "./styles/hero-slider.scss";
@@ -50,6 +52,8 @@ export interface HeroSliderProps {
   fullBleed?: boolean;
   /** Millisekunden je Slide; `0` schaltet das Weiterlaufen ab. */
   autoplayDelayMs?: number;
+  /** Lage zu den Brotkrumen der Wirtsseite; Vorgabe ist darunter. */
+  position?: HeroPosition;
 }
 
 /** Ob eine Medienabfrage gerade zutrifft; ohne `matchMedia` nie. */
@@ -193,6 +197,7 @@ export function HeroSlider({
   height = "section",
   fullBleed = true,
   autoplayDelayMs = DEFAULT_AUTOPLAY_DELAY_MS,
+  position = "post",
 }: HeroSliderProps): ReactElement | null {
   const hotCss = useHotStyle(heroSliderCss, "hero-slider-widget", "styles/hero-slider.scss");
   // Der Anker bricht selbst nie aus — an ihm wird die ungestörte Kante der
@@ -209,10 +214,27 @@ export function HeroSlider({
   const { metrics: bleed, filled } = useFullBleed(anchor, fullBleed, height === "section");
   const portrait = useMediaQuery(PORTRAIT_MEDIA);
 
+  const [layout, setLayout] = useState<PageTopLayout>({
+    applied: true,
+    breadcrumbsHeight: 0,
+  });
+
+  // Gemeldet wird nach *jeder* Messung, und gemessen wird in jedem Bild, in
+  // dem sich die Seite rührt. Ein neues Objekt je Meldung setzte den Zustand
+  // auch dann neu, wenn sich nichts geändert hat — und jedes Neuzeichnen
+  // löste die nächste Messung aus. Deshalb wird verglichen, nicht ersetzt.
+  const onLayout = useCallback((next: PageTopLayout) => {
+    setLayout((current) =>
+      current.applied === next.applied && current.breadcrumbsHeight === next.breadcrumbsHeight
+        ? current
+        : next,
+    );
+  }, []);
+
   // Der Beginn der Seite, solange eine Bühne auf ihr liegt: unter den
-  // Brotkrumen, wenn es welche gibt, sonst bündig am Menü (siehe
-  // `page-top.ts`).
-  usePageTop();
+  // Brotkrumen, wenn es welche gibt, sonst bündig am Menü — und im Modus
+  // `pre` umgekehrt, mit den Brotkrumen unter der Bühne (siehe `page-top.ts`).
+  usePageTop({ position, host: anchor, onLayout });
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -234,6 +256,11 @@ export function HeroSlider({
   if (slides.length === 0) return null;
 
   const many = slides.length > 1;
+
+  // Nur Redakteur:innen können an der Einstellung etwas ändern; auf der
+  // fertigen Seite bleibt der Rückfall auf „nach den Brotkrumen“ stumm.
+  const showNotice =
+    position === "pre" && !layout.applied && anchor !== null && isEditor(anchor);
 
   // Die Variablen tragen alles, was nur gemessen werden kann. `--man-hero-vw`
   // fehlt bewusst, solange kein Ausbruch zustande kam: dann greift die Klasse
@@ -257,6 +284,12 @@ export function HeroSlider({
       className={`man-hero-host${filled ? " man-hero-host--fill" : ""}`}
       ref={setAnchor}
     >
+      {showNotice && (
+        <p className="man-hero__notice" role="status" data-testid="hero-position-notice">
+          Lage „vor den Brotkrumen“ ist hier nicht anwendbar; die Bühne steht unter den
+          Brotkrumen.
+        </p>
+      )}
       <div
         className={[
           "man-hero",
@@ -400,6 +433,17 @@ export function HeroSlider({
         </div>
       )}
       </div>
+
+      {layout.breadcrumbsHeight > 0 && (
+        // Die Brotkrumen liegen aus dem Fluss: verschoben überdecken sie den
+        // Inhalt unter der Bühne, statt ihn zu schieben. Dieser Platzhalter
+        // ist der Platz, den sie sich nicht selbst nehmen können.
+        <div
+          className="man-hero__crumb-space"
+          style={{ height: `${layout.breadcrumbsHeight}px` }}
+          aria-hidden
+        />
+      )}
     </div>
   );
 }

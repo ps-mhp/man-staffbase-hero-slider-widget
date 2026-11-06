@@ -705,3 +705,22 @@
   border: 0;
   clip-path: inset(50%);
 }
+
+// Der Platzhalter für die verschobenen Brotkrumen. Seine Höhe setzt die
+// Komponente inline — sie ist gemessen, nicht gestaltet.
+.man-hero__crumb-space {
+  display: block;
+}
+
+// Der Hinweis auf eine Einstellung, die auf dieser Seite nicht greift. Er
+// erscheint nur im Editor (siehe `editor-context.ts`) und steht im Fluss über
+// der Bühne, damit er keine Folie verdeckt.
+.man-hero__notice {
+  margin: 0 0 man("space-2");
+  padding: man("space-2") man("space-3");
+  border-left: 3px solid man("warning-border");
+  background: man("warning");
+  color: man("warning-ink");
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
