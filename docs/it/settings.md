@@ -3,8 +3,8 @@
 | Impostazione | Descrizione |
 | --- | --- |
 | Voci | Il contenuto della pagina: diapositive personalizzate, singoli articoli di notizie e interi canali di notizie. Viene gestito tramite l'editor, che si apre automaticamente all'apertura delle impostazioni. Il campo di testo sottostante contiene il testo grezzo e non deve essere modificato. |
-| Altezza | `Standard (420–560 px)` è l’impostazione predefinita. Accanto ad essa sono disponibili `Bassa (320–420 px)`, `Alta (560–720 px)` e `Altezza schermo`. |
-| Mostra a tutta larghezza | Se attivata (impostazione predefinita), l’immagine si estende per l’intera larghezza della finestra, mentre il testo rimane allineato al margine della pagina. Se disattivata, il palcoscenico rimane nella colonna dei contenuti. |
+| Altezza | `Standard (420–560 px)` è l'impostazione predefinita. Accanto ad essa sono disponibili `Bassa (320–420 px)`, `Alta (560–720 px)` e `Altezza schermo`. |
+| Mostra a tutta larghezza | Se attivata (impostazione predefinita), l’immagine si estende per l’intera larghezza della finestra, mentre il testo rimane allineato al margine della pagina. Se disattivata, il palco rimane nella colonna dei contenuti. |
 | Secondi per diapositiva | Il valore predefinito è `5`. Impostando `0`, il palcoscenico si ferma; in questo caso lo scorrimento avviene solo tramite frecce e linee — e, se i controlli sono disattivati, solo con il gesto di scorrimento e i tasti freccia. Massimo 30. |
 | Posizione rispetto al percorso di navigazione | L’impostazione predefinita è `Dopo il percorso di navigazione`: la presentazione inizia sotto la riga del percorso di navigazione. `Prima del percorso di navigazione` la posiziona a filo sotto il menu e sposta il percorso di navigazione sotto di essa. Funziona solo se la scena si trova nella parte superiore della pagina e se la pagina dispone effettivamente di una barra di navigazione. |
 | Mostra elementi di controllo | Se attivata (impostazione predefinita), compaiono frecce e linee. Se disattivata, entrambe scompaiono; la navigazione prosegue tramite scorrimento e tasti freccia, e il tempo impostato per ogni diapositiva rimane invariato. |
@@ -18,7 +18,7 @@
 | Articolo di attualità | Un articolo specifico come diapositiva. Il contenuto e la destinazione provengono dall’articolo. |
 | Canale di attualità | Un intero canale, una diapositiva per ogni articolo. I nuovi articoli appaiono automaticamente senza ulteriori interventi. |
 
-Tutti e tre compaiono nello stesso elenco, possono essere mescolati e ordinati tramite **↑** e
+Tutti e tre compaiono nella stessa lista, possono essere mescolati e ordinati tramite **↑** e
 **↓**. In totale, il palco mostra al massimo otto diapositive — una
 voce del canale conta con tutte le diapositive che apporta.
 
@@ -56,34 +56,38 @@ voce del canale conta con tutte le diapositive che apporta.
 | Numero di diapositive | Impostazione predefinita `3`, massimo otto. |
 | Ordine | `Più recenti prima` (impostazione predefinita) o `Più vecchie prima`. |
 | Solo post in evidenza | Disattivato per impostazione predefinita. Limitato a ciò che è fissato in primo piano nelle notizie. |
-| Solo post con immagine | Attivato per impostazione predefinita. Senza immagine, la diapositiva risulterebbe solo una superficie scura con del testo. |
-| Parole chiave | Opzionale, più parole separate da virgola. È sufficiente un post che ne contenga almeno una. |
+| Solo post con immagine | Attivato per impostazione predefinita. Senza immagine, la diapositiva sarebbe solo una superficie scura con del testo. |
+| Parole chiave | Opzionale, più parole separate da virgole. È sufficiente un solo post se contiene una di queste parole. |
 | Mostra teaser come sottotitolo | Attivato per impostazione predefinita. |
 | Etichetta del pulsante | Vale per tutte le diapositive del canale. Lasciare vuoto per omettere il pulsante. |
 
 ## Note
 
 - **Altezza** funge da limite, non da altezza fissa: il palco si adatta a schermi larghi
-  e su schermi stretti 4:3 e viene allineata solo ai bordi del
+  e su schermi stretti 4:3 e viene semplicemente agganciata ai bordi del
   livello selezionato.
 - `Altezza schermo` riempie l’area visibile al netto dell’intestazione,
   ma con un minimo di 420 px.
 - **Secondi per diapositiva** ha effetto solo a partire dalla seconda diapositiva.
 - Chi ha impostato «Riduci movimento» nel sistema operativo non vedrà alcun
-  cambio di per sé — indipendentemente da questa impostazione.
-- In alto, il palco si allinea sempre perfettamente — alle briciole di navigazione o, in caso di
-  «Prima delle briciole di navigazione», al menu. Compensa invece la distanza interna che la sezione mantiene
-  rispetto al suo primo blocco. Ciò avviene solo se
-  non vi è altro contenuto sopra il palco.
+  cambio automaticamente — indipendentemente da questa impostazione.
+- In alto, il palco si allinea sempre perfettamente — al percorso di navigazione o, nel caso
+  «Prima del percorso di navigazione», al menu. Compensa invece la distanza interna che la sezione mantiene
+  sopra il suo primo blocco. Ciò avviene solo se
+  non c’è altro contenuto sopra il palco.
 - **Distanza verso il basso** elimina la distanza tra i blocchi, non la
-  distanza interna alla fine di una sezione. Se il palco è l’ultimo blocco nella
-  sua sezione, la sua distanza verso il basso rimane invariata.
+  spazio interno alla fine di una sezione. Se il palco è l’ultimo blocco nella
+  sua sezione, la sua distanza verso il basso rimane invariata — tranne nel caso dell’
+  altezza `Altezza sezione`: in quel caso la sezione termina comunque a filo.
+- Con `Altezza sezione`, la scena occupa l’altezza della sezione solo se
+  si trova da sola al suo interno. Se nella stessa sezione sono presenti altri blocchi, mantiene
+  le sue proporzioni e i blocchi si avvicinano ad essa senza lasciare spazio.
 - I comandi compaiono solo a partire dalla seconda diapositiva. Sugli schermi stretti
-  le frecce sono nascoste; in quel caso si scorre con il dito.
+  le frecce vengono nascoste; in quel caso si utilizza il gesto di scorrimento.
 - Un contributo che viene cancellato o che non è visibile al lettore
-  porta con sé solo la propria diapositiva. Le restanti diapositive rimangono al loro posto.
-- Le diapositive delle notizie seguono la lingua del lettore, a condizione che il contributo
+  porta con sé solo la propria diapositiva. Le altre diapositive rimangono al loro posto.
+- Le diapositive delle notizie seguono la lingua del lettore, purché il contributo
   sia tradotto; in caso contrario, seguono la prima versione disponibile.
 - L’**anteprima** nell’editor segue le stesse regole della
-  pagina pubblicata. Ciò che non è presente lì, non appare nemmeno sul palco
- .
+  pagina pubblicata. Ciò che non è presente lì non apparirà nemmeno sulla pagina
+  pubblicata.

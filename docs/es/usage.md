@@ -32,7 +32,7 @@
 
 ## Crear varias diapositivas
 
-1. Abre los ajustes y, con ello, el editor.
+1. Abre la configuración y, con ello, el editor.
 2. Para cada diapositiva adicional, selecciona en **Nuevo +** la opción **Diapositiva** y
    rellénala como se ha indicado anteriormente. No es posible tener más de ocho diapositivas: nadie se desplaza
    tanto.
@@ -51,7 +51,7 @@
 4. En **Entrada**, selecciona la entrada deseada. Puedes elegir entre
    las cincuenta entradas más recientes del canal, ordenadas de más reciente a más antigua.
 5. Comprueba la **vista previa** que aparece debajo: muestra la imagen, el título y
-   el resumen tal y como se verá la diapositiva posteriormente.
+   el resumen tal y como se verá la diapositiva más adelante.
 6. Opcional: **sobrescribir el título**, **mostrar el resumen como subtítulo**
    o cambiar el **texto del botón**. El destino del
    botón es siempre la propia publicación.
@@ -62,13 +62,13 @@
 ## Mostrar todas las publicaciones de un canal
 
 1. Abre la configuración y, con ello, el editor.
-2. Haz clic en **Nuevo +**, encima de la lista, y selecciona **Canal de noticias**.
+2. Haz clic en **Nuevo +**, situado encima de la lista, y selecciona **Canal de noticias**.
    A la izquierda aparecerá una entrada con la etiqueta **Canal**.
 3. En **Canal**, selecciona el canal de noticias.
 4. Configura el **número de diapositivas** (valor predeterminado `3`, máximo ocho).
 5. Selecciona el **orden**: `Más recientes primero` o `Más antiguos primero`.
 6. Si es necesario, aplica **filtros**:
-   - **Solo entradas destacadas**: se limita a lo que está
+   - **Solo publicaciones destacadas**: se limita a lo que está
      fijado en las noticias.
    - **Solo publicaciones con imagen**: activado por defecto. Sin imagen,
      la diapositiva solo mostraría un área oscura con texto.
@@ -80,7 +80,7 @@
 
 La entrada cuenta como **una** en la lista, pero incluye varias diapositivas.
 En total, el escenario nunca muestra más de ocho diapositivas; lo que exceda este número,
-se omite al final.
+queda omitido.
 
 ## Mostrar un vídeo como escenario
 
@@ -93,9 +93,9 @@ se omite al final.
 3. Si el vídeo se encuentra en otro lugar: introduce en su lugar su dirección en
    **O dirección de una imagen o un vídeo**. Debe comenzar por `https://`
    , y todos los lectores deben poder acceder al vídeo sin necesidad de registrarse
-  . Si termina en `.mp4`, `.webm` o `.mov`, **Tipo** cambia
+  . Si termina en `.mp4`, `.webm` o `.mov`, el **Tipo** cambia
    automáticamente a **Vídeo**; en caso contrario, cámbielo manualmente.
-4. En **Descripción del vídeo**, indique lo que se ve, o deje
+4. En **Descripción del vídeo**, indique qué se ve en él o deje
    el campo en blanco si el vídeo es meramente decorativo.
 5. **Aplicar**, guardar y comprobar en la vista previa.
 

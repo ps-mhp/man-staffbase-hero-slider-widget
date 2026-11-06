@@ -11,7 +11,7 @@ Não é necessário atualizar manualmente um slide. Além dos próprios slides, 
 página inicial também pode apresentar **artigos das notícias**:
 
 - **Artigo de notícias** — um artigo específico como um slide. A imagem, o título
-  e o teaser provêm do artigo, e o botão remete para o mesmo.
+  e o teaser provêm do artigo, e o botão redireciona para ele.
 - **Canal de notícias** — um canal completo, um slide por artigo. É possível definir quantos, em
   que ordem e de acordo com que filtros. Se surgir um novo artigo no
   canal, este aparece automaticamente no palco sem necessidade de intervenção adicional.

@@ -53,7 +53,7 @@ entrada de canal conta com todos os diapositivos que contribui.
 | Campo | Descrição |
 | --- | --- |
 | Canal | Obrigatório. Todos os slides desta publicação provêm deste canal. |
-| Número de slides | Predefinido para `3`, máximo de oito. |
+| Número de slides | Predefinido como `3`, no máximo oito. |
 | Ordem | `Mais recentes primeiro` (predefinição) ou `Mais antigos primeiro`. |
 | Apenas publicações em destaque | Desativado por predefinição. Limita-se ao que está fixado nas notícias. |
 | Apenas publicações com imagem | Ativado por predefinição. Sem imagem, o slide ficaria reduzido a uma área escura com texto. |
@@ -64,20 +64,24 @@ entrada de canal conta com todos os diapositivos que contribui.
 ## Notas
 
 - **Altura** funciona como um limite, não como uma altura fixa: o palco adapta-se a ecrãs largos
-  ecrãs 21:9 e em ecrãs estreitos 4:3, e é apenas fixada nos limites do
+  ecrãs 21:9 e em ecrãs estreitos 4:3, e é apenas ajustada aos limites do
   nível selecionado.
 - `Altura do ecrã` preenche a área visível, deduzindo o cabeçalho,
   mas com um mínimo de 420 px.
 - **Segundos por diapositivo** só tem efeito a partir do segundo diapositivo.
 - Quem tiver definido «Reduzir movimento» no sistema operativo não verá
-  a mudança por si só — independentemente desta definição.
-- Na parte superior, o palco alinha-se sempre perfeitamente — com as «migalhas de pão» ou, no caso de
-  «À frente das migalhas de pão», com o menu. Compensa, assim, o espaço interno que a secção mantém
+  a mudança por si próprio — independentemente desta configuração.
+- Na parte superior, o palco alinha-se sempre — com o caminho de navegação ou, no caso
+  «À frente das migalhas de navegação», ao menu. Compensa, assim, o espaçamento interno que a secção mantém
   acima do seu primeiro bloco. Isto só acontece se
   não houver outro conteúdo acima do palco.
-- **Espaço para baixo** elimina o espaço entre os blocos, não o
+- **Espaço para baixo** elimina o espaçamento entre os blocos, não o
   espaço interno no final de uma secção. Se o palco for o último bloco na
-  sua secção, o seu espaço para baixo é mantido.
+  sua secção, o seu espaço para baixo é mantido — exceto no caso da
+  altura `Altura da secção`: aí, a secção termina alinhada de qualquer forma.
+- Com `altura da secção`, o palco ocupa a altura da secção apenas se
+  estiver sozinho nessa secção. Se houver outros blocos na mesma secção, mantém
+  a sua proporção, e os blocos aproximam-se dele sem espaço.
 - Os elementos de controlo só aparecem a partir do segundo slide. Em ecrãs estreitos,
   as setas ficam ocultas; nesses casos, utiliza-se o gesto de deslizar.
 - Uma publicação que seja eliminada ou que não esteja visível para o leitor
@@ -85,5 +89,5 @@ entrada de canal conta com todos os diapositivos que contribui.
 - Os slides de notícias seguem o idioma do leitor, desde que a publicação
   esteja traduzida; caso contrário, seguem a primeira versão disponível.
 - A **pré-visualização** no editor segue as mesmas regras que a
-  página publicada. O que não estiver lá também não aparecerá no palco
- .
+  página publicada. O que não estiver lá também não aparecerá na
+  página final.

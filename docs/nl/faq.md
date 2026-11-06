@@ -2,7 +2,7 @@
 
 **Vraag:** Ik heb een dia aangemaakt, maar het podium blijft leeg.
 
-Antwoord: De dia mist de afbeelding. Dia’s zonder afbeelding worden niet weergegeven — een
+Antwoord: De dia mist de afbeelding. Dia’s zonder afbeelding worden niet getoond — een
 leeg, donker vlak zou op de pagina niet te onderscheiden zijn van een fout.
 Open de editor en selecteer onder **Afbeelding of video** een afbeelding
 of voer een adres in.
@@ -80,7 +80,7 @@ niet zichtbaar. Alleen deze ene dia is verdwenen; de overige blijven staan.
 
 **Vraag:** Mijn kanaalvermelding toont minder dia’s dan is ingesteld.
 
-Antwoord: Meestal zijn de filters te streng ingesteld. **Alleen berichten met afbeelding** is
+Antwoord: Meestal zijn de filters te streng. **Alleen berichten met afbeelding** is
 de standaardinstelling — een kanaal zonder afbeeldingen levert dus niets op. Controleer het
 voorbeeld in de editor: dit toont precies wat er op het scherm zal verschijnen.
 
@@ -136,11 +136,12 @@ een ander blok staat, blijft de afstand zoals de pagina die instelt.
 **Vraag:** Ik heb „Geen afstand“ gekozen, maar onder het podium is nog ruimte.
 
 Antwoord: „Geen afstand“ verwijdert de afstand tussen twee blokken. Als het
-podium het laatste blok van de paragraaf is, volgt daaronder de interne afstand van de
-sectie en het begin van de volgende — beide behoren tot de pagina. Plaatst u de
+podium het laatste blok van de alinea is, volgt daaronder de interne afstand van de
+alinea en het begin van de volgende — beide behoren tot de pagina. Met de hoogte
+„Sectiehoogte“ vervalt de interne afstand van de sectie; anders plaatst u de
 volgende inhoud in dezelfde sectie, dan sluit deze direct aan.
 
-**Vraag:** Zonder bedieningselementen — hoe bladert u dan?
+**Vraag:** Zonder bedieningselementen — hoe bladert men dan?
 
 Antwoord: Veeg met je vinger, blader met de pijltjestoetsen, of automatisch:
 de ingestelde tijd per dia blijft ongewijzigd. Voor het toetsenbord wordt het

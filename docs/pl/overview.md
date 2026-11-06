@@ -1,8 +1,8 @@
 # Hero-Slider
 
-Hero-Slider to **scena** u góry strony: duże zdjęcie zajmujące
+Hero-Slider to **sekcja** u góry strony: duże zdjęcie zajmujące
 całą szerokość okna, nad nim nagłówek, opcjonalnie podtytuł oraz
-przycisk. Wzorem jest scena na stronie man.eu.
+przycisk. Wzorem jest sekcja na stronie man.eu.
 
 Jeśli utworzy się kilka slajdów, pojawi się przełącznik: slajdy
 przechodzą płynnie jeden w drugi, a przewijanie odbywa się za pomocą strzałek i kresek w lewym dolnym rogu.
@@ -12,8 +12,8 @@ strona główna może również wyświetlać **wpisy z aktualności**:
 
 - **Wpis z aktualności** — konkretny wpis jako slajd. Zdjęcie, nagłówek
   i zapowiedź pochodzą z wpisu, a przycisk prowadzi do niego.
-- **Kanał wiadomości** — cały kanał, jeden slajd na każdy wpis. Liczbę slajdów,
-  kolejność oraz filtry można dostosować. Gdy w
+- **Kanał wiadomości** — cały kanał, jedna slajd na każdy wpis. Liczbę,
+  kolejność i filtry można dostosować. Gdy w
   kanale pojawi się nowy wpis, automatycznie trafia on na scenę.
 
 Te trzy rodzaje znajdują się na tej samej liście i można je dowolnie łączyć oraz
@@ -31,8 +31,8 @@ artykuły z kanału.
 - **Tekst pozostaje na linii bazowej strony**: zaczyna się na tej samej
   pionowej linii co nagłówek, menu i tekst poniżej obszaru obrazu. Nie
   przylega on w żadnym wypadku do krawędzi obrazu.
-- Tekst znajduje się w lewym dolnym rogu, na ciemnym gradientem, który rozciąga się od dołu do
-  góry. Na szerokich ekranach dodawany jest drugi gradient z lewej strony,
+- Tekst znajduje się w lewym dolnym rogu, na ciemnym gradientem, który rozciąga się od dołu
+  do góry. Na szerokich ekranach dodawany jest drugi gradient z lewej strony,
   aby jasny tekst pozostawał czytelny na jasnym tle.
 - W przypadku wielu slajdów: strzałki po lewej i prawej stronie, a pomiędzy nimi kreska dla każdego slajdu.
   Kreska bieżącego slajdu jest czerwona.
@@ -51,7 +51,7 @@ artykuły z kanału.
 
 ## Co widać w edytorze CMS
 
-Edytor wyświetla obszar roboczy w obrębie kolumny treści, a więc **węższy niż na
+Edytor wyświetla obszar roboczy w obrębie kolumny treści, czyli **węższy niż na
 opublikowanej stronie**. Jak daleko faktycznie sięga obraz i gdzie znajduje się tekst,
 można ocenić jedynie w podglądzie lub na opublikowanej stronie.
 Zawsze należy tam sprawdzić przynajmniej raz przy wąskiej Zawsze sprawdź to tam przynajmniej raz przy wąskiej

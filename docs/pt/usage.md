@@ -13,7 +13,7 @@
 4. Clique em **Novo +** acima da lista e selecione **Slide**.
 5. Clique na área tracejada **Imagem
    ou vídeo**, em baixo de **Imagem ou vídeo**, e selecione a imagem da biblioteca — ou insira
-  , em baixo, o endereço de uma imagem ou vídeo. Sem imagem, o
+   abaixo o endereço de uma imagem ou vídeo. Sem imagem, o
    slide não será apresentado.
 6. Em **Descrição da imagem**, indique o que se vê. Deixe o
    campo em branco apenas se a imagem for meramente decorativa.
@@ -57,7 +57,7 @@
    botão é sempre a própria publicação.
 7. Opcional: **Substituir imagem de destaque**. A imagem da publicação é recortada para o feed
    e nem sempre apresenta um destaque adequado.
-8. **Aplicar**, guardar, verificar na pré-visualização.
+8. **Aplicar**, guardar e verificar na pré-visualização.
 
 ## Mostrar todas as publicações de um canal
 

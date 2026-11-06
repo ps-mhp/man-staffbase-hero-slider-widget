@@ -11,9 +11,9 @@
 3. Otwórz ustawienia widżetu. Edytor otworzy się
    automatycznie.
 4. Kliknij nad listą **Nowy +** i wybierz **Slajd**.
-5. Pod opcją **Obraz lub wideo** kliknij na obszar z linią przerywaną **Wybierz obraz
+5. Pod opcją **Obraz lub wideo** kliknij na przerywaną powierzchnię **Wybierz obraz
    lub wideo** i wybierz obraz z biblioteki multimediów — lub wpisz
-   poniżej adres obrazu lub filmu. Bez obrazu
+   poniżej adres obrazu lub wideo. Bez obrazu
    slajd nie zostanie wyświetlony.
 6. W polu **Opis obrazu** wpisz, co jest na nim widoczne. Pozostaw to
    pole puste tylko wtedy, gdy obraz ma charakter wyłącznie dekoracyjny.
@@ -22,8 +22,8 @@
 8. Opcjonalnie: **podtytuł** i **przycisk**. Przycisk pojawi się
    tylko wtedy, gdy wypełnione są zarówno etykieta, **jak i** miejsce docelowe. Na telefonie
    scena nie wyświetla żadnego z tych elementów: pokazuje tam tylko nagłówek, a
-   cały slajd prowadzi do miejsca docelowego przycisku. Dlatego to, co znajduje się w podtytule,
-   nie powinno zawierać informacji, które koniecznie muszą zostać przeczytane.
+   cały slajd prowadzi do miejsca docelowego przycisku. To, co znajduje się w podtytule,
+   nie powinno więc zawierać treści, którą koniecznie trzeba przeczytać.
 9. Kliknij **Zastosuj**.
 10. Ustaw **Sekundy na slajd** na `0` — w przypadku pojedynczego slajdu
     nie ma czego zmieniać.
@@ -44,7 +44,7 @@
 ## Wyświetlenie pojedynczego wpisu z aktualności na scenie
 
 1. Otwórz ustawienia, a tym samym edytor.
-2. Kliknij nad listą **Nowy +** i wybierz **Wpis z aktualności**.
+2. Kliknij **Nowy +** nad listą i wybierz **Wpis z aktualności**.
    Po lewej stronie pojawi się wpis oznaczony symbolem **Post**.
 3. W sekcji **Kanał** wybierz kanał wiadomości. Dopiero wtedy będzie można
    wybrać wpis.
@@ -72,8 +72,8 @@
      w aktualnościach.
    - **Tylko posty ze zdjęciem** — domyślnie włączone. Bez zdjęcia
      slajd byłby tylko ciemnym polem z tekstem.
-   - **Słowa kluczowe** — oddziel je przecinkami; wystarczy jeden post, jeśli
-     zawiera którekolwiek z nich.
+   - **Słowa kluczowe** — oddziel je przecinkami; wystarczy jeden post, jeśli zawiera
+     którekolwiek z nich.
 7. Sprawdź **podgląd**: pokazuje on dokładnie te wpisy, które pozostały po zastosowaniu filtrów
   . Jeśli pozostaje pusty, filtry są zbyt wąskie.
 8. **Zastosuj**, zapisz, sprawdź w podglądzie.
@@ -100,8 +100,8 @@ zostaje pominięte.
 5. **Zastosuj**, zapisz, sprawdź w podglądzie.
 
 Film odtwarza się bez dźwięku i w pętli, i to tylko tak długo, jak długo jego slajd znajduje się
-na pierwszym miejscu. Użytkownicy, którzy w systemie ustawili mniejszą liczbę odświeżeń, zobaczą swój pierwszy obraz
-w zawieszeniu. Plik powinien być niewielki — kilka megabajtów na kilka sekund —,
+na pierwszym miejscu. Użytkownicy, którzy w systemie ustawili mniejszą liczbę zmian, zobaczą swój pierwszy obraz
+w postaci statycznego zdjęcia. Plik powinien być niewielki — kilka megabajtów na kilka sekund —,
 ponieważ jest on ładowany przy każdym wywołaniu strony.
 
 ## Dodaj obraz w orientacji pionowej
@@ -131,7 +131,7 @@ ponieważ jest on ładowany przy każdym wywołaniu strony.
 1. **Scena pozostaje pusta.** Brakuje co najmniej jednego obrazu: slajdy bez obrazu
    nie są wyświetlane. Otwórz edytor i sprawdź, czy każdy wpis zawiera
    obraz — w przypadku wpisów z kategorii „Aktualności” sprawdź to w podglądzie.
-2. **Obraz nie zajmuje całej szerokości.** Czy widget znajduje się w
+2. **Obraz nie zajmuje całej szerokości.** Czy widżet znajduje się w
    kolumnie obok innych treści? W takim razie umieść go w osobnym wierszu.
    W przeciwnym razie sprawdź, czy opcja **Wyświetlaj na całej szerokości** jest włączona
   .
@@ -150,5 +150,5 @@ ponieważ jest on ładowany przy każdym wywołaniu strony.
   przeniesiony lub jest niewidoczny dla czytelnika. Pozostałe slajdy
   pozostają nienaruszone. Sprawdź wpis w podglądzie edytora.
 7. **Wpis w kanale zawiera mniej slajdów niż ustawiono.** Filtry są
-  zbyt wąskie — najczęściej **Tylko wpisy ze zdjęciami** w kanale bez zdjęć — lub
+  zbyt wąskie — zazwyczaj **Tylko wpisy ze zdjęciami** w kanale bez zdjęć — lub
   scena jest już zapełniona ośmioma slajdami.

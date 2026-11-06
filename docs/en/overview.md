@@ -12,8 +12,8 @@ stage can also display **posts from the news**:
 
 - **News post** — a specific post as a single slide. The image, headline,
   and teaser come from the post, and the button links to it.
-- **News Channel** — an entire channel, with one slide per post. You can configure how many,
-  in what order, and based on which filters. When a new post appears in
+- **News channel** — an entire channel, with one slide per post. You can configure how many,
+  in what order, and according to which filters. When a new post appears in
   the channel, it automatically appears on the stage without any further action.
 
 The three types appear in the same list and can be freely mixed and
@@ -25,8 +25,8 @@ articles from a channel.
 - The image spans the full width of the window—even if the page
   itself has a narrower content column.
 - The stage is positioned **flush at the top**: If the page has a breadcrumb trail,
-  the stage appears immediately below it; if it doesn’t, it adjoins the
-  menu directly. The empty white strip that the page would otherwise leave above the first
+  the stage appears immediately below it; if it doesn’t, it connects directly to the
+  menu. The empty white strip that the page would otherwise leave above the first
   piece of content is omitted.
 - The **text remains aligned with the page’s baseline**: it begins on the same
   vertical line as the header, the menu, and the text below the stage. It
@@ -39,7 +39,7 @@ articles from a channel.
 - The transition continues as long as the mouse hovers over the stage or the focus is
   on it. On a phone, you swipe; the arrows are hidden there.
 - **On a phone** (less than 768 pixels wide), only the headline appears
-  on the image, up to four lines long; anything beyond that ends with “…”.
+  on the image, up to four lines long; anything beyond that ends with “...”.
   The subtitle and button are hidden there—instead, tapping
   anywhere on the slide takes you to the button’s destination. For screen readers,
   the button’s label remains the name of this link. If a slide has no destination, it
@@ -52,6 +52,6 @@ articles from a channel.
 ## What You See in the CMS Editor
 
 The editor displays the stage within the content column, meaning it’s **narrower than on
-the published page**. You can only assess how far the image actually extends and where the text
-is positioned in the preview or on the published page. Always check there at least once in a narrow
+the published page**. How far the image actually extends and where the text
+is positioned can only be assessed in the preview or on the published page. Always check there at least once in a narrow
 window width—that’s where the portrait-orientation cropping takes effect.

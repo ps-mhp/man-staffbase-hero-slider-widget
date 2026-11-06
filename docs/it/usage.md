@@ -32,9 +32,9 @@
 
 ## Creare più diapositive
 
-1. Aprite le impostazioni e quindi l’editor.
-2. Per ogni diapositiva aggiuntiva, selezionate **Nuovo +** e poi **Diapositiva** e
-   compilatela come indicato sopra. Non è possibile inserire più di otto diapositive — nessuno scorre
+1. Apri le impostazioni e quindi l’editor.
+2. Per ogni diapositiva aggiuntiva, sotto **Nuovo +** seleziona la voce **Diapositiva** e
+   compila i campi come indicato sopra. Non è possibile inserire più di otto diapositive — nessuno scorre
    così a lungo.
 3. Ordinate le diapositive utilizzando le frecce **↑** e **↓** in alto a destra. La prima diapositiva
    è quella che si vede al caricamento della pagina.
@@ -50,8 +50,8 @@
    selezionare l’articolo.
 4. Sotto **Articolo**, selezionate l’articolo desiderato. È possibile scegliere tra
    i cinquanta articoli più recenti del canale, con i più recenti in primo piano.
-5. Controllate l’**anteprima** sottostante: mostra l’immagine, il titolo e
-   il teaser esattamente come appariranno successivamente nella diapositiva.
+5. Controllate l’**anteprima** sottostante: mostra l’immagine, il titolo e il
+   teaser esattamente come appariranno successivamente nella diapositiva.
 6. Opzionale: **sovrascrivere il titolo**, **mostrare il teaser come sottotitolo**
    o modificare la **didascalia del pulsante**. La destinazione del
    pulsante è sempre il post stesso.
@@ -72,8 +72,8 @@
      appuntato nelle notizie.
    - **Solo post con immagine** — attivato per impostazione predefinita. Senza immagine,
      la diapositiva risulterebbe solo una superficie scura con del testo.
-   - **Parole chiave** — separarle con una virgola; è sufficiente un post se contiene
-     una di esse.
+   - **Parole chiave** — separarle con una virgola; è sufficiente un solo post se
+     contiene una di queste parole.
 7. Controllate l’**anteprima**: mostra esattamente i post che i filtri
    lasciano passare. Se rimane vuota, i filtri sono troppo restrittivi.
 8. **Applicate**, salvate, controllate nell’anteprima.
@@ -99,8 +99,8 @@ viene tralasciato.
    il campo vuoto se il video è puramente decorativo.
 5. **Applica**, salva, controlla nell’anteprima.
 
-Il video viene riprodotto in silenzio e in loop, e solo finché la relativa diapositiva è in primo
-piano. Chi ha impostato una animazione ridotta nel sistema vedrà la prima immagine
+Il video viene riprodotto in silenzio e in loop, e solo finché la relativa diapositiva è in primo piano
+. Chi ha impostato una animazione ridotta nel sistema vedrà la prima immagine
 fissa. Mantenete il file di piccole dimensioni — pochi megabyte per alcuni secondi —,
 poiché verrà caricato ad ogni visualizzazione della pagina.
 
@@ -132,8 +132,8 @@ poiché verrà caricato ad ogni visualizzazione della pagina.
    non vengono visualizzate. Aprite l’editor e controllate che ogni voce contenga
    un’immagine — per le notizie, controllate nell’anteprima.
 2. **L’immagine non occupa l’intera larghezza.** Il widget si trova in una
-   colonna accanto ad altri contenuti? In tal caso, inseriscilo in una riga a sé stante.
-   Altrimenti, verifica che l’opzione **Mostra a tutta larghezza** sia attivata
+   colonna accanto ad altri contenuti? In tal caso, inseritelo in una riga a sé stante.
+   Altrimenti, verificate che l’opzione **Mostra a tutta larghezza** sia attivata
   .
 3. **Il testo non è allineato alla linea di riferimento.** Ciò può essere dovuto a una
    larghezza del contenuto della pagina non corrispondente. Segnalate il caso indicando l’

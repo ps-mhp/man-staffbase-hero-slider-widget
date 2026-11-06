@@ -13,7 +13,7 @@ une zone sombre.
 Réponse : La plupart du temps, la vidéo n’est pas accessible sans connexion, ou le **Type** est
 réglé sur **Image**, car l’adresse ne comporte pas d’extension. Ouvrez l’adresse dans
 une fenêtre de navigateur privée : si elle ne fonctionne pas là-bas, les
-lecteurs ne la verront pas non plus. Un message situé juste en dessous du champ indique que l’adresse
+lecteurs et lectrices ne la verront pas non plus. Un message apparaissant juste en dessous du champ indique que l’adresse
 n’a pas été prise en compte — elle doit commencer par `https://`.
 
 **Question :** J’ai saisi un libellé pour le bouton, mais
@@ -39,7 +39,7 @@ accolades.
 Réponse : L’éditeur n’a pas pu s’intégrer à la boîte de dialogue. Fermez
 les paramètres et rouvrez-les. Le texte dans le champ correspond à la
 version brute des entrées ; ne le modifiez pas manuellement — une faute de frappe
-dans ce texte ferait disparaître toutes les diapositives.
+dans ce champ ferait disparaître toutes les diapositives.
 
 **Question :** La scène ne change pas automatiquement.
 
@@ -55,9 +55,9 @@ lignes sous le texte indiquent toujours quelle diapositive est actuellement au p
 
 **Question :** Mon motif est rogné sur les bords.
 
-Réponse : La scène recadre l’image au format 21:9 ou 4:3 en fonction de la largeur de la fenêtre. Choisissez
-une image laissant un espace autour du motif, ou définissez sous **Image pour
-format portrait** votre propre recadrage à la verticale.
+Réponse : La scène recadre en 21:9 ou 4:3 selon la largeur de la fenêtre. Choisissez
+une image laissant un espace autour du motif, ou ajoutez sous **Image pour
+format portrait** votre propre recadrage orienté à la verticale.
 
 **Question :** Puis-je créer plus de huit diapositives ?
 
@@ -69,8 +69,8 @@ ne permet d’ajouter que trois diapositives supplémentaires.
 **Question :** Dois-je mettre à jour la scène lorsqu’un nouvel article
 paraît dans les actualités ?
 
-Réponse : Pas dans le cas d’une entrée **de chaîne d’actualités** — celle-ci affiche toujours les
-articles actuels de la chaîne selon les filtres définis. Une entrée de type **« publication d’actualité »**,
+Réponse : Pas dans le cas d’une entrée de **canal d’actualités** — celle-ci affiche toujours les
+articles actuels du canal selon les filtres définis. Une entrée de type **« publication d’actualité »**,
 en revanche, reste associée à la publication que vous avez sélectionnée.
 
 **Question :** Une diapositive issue des actualités a soudainement disparu.
@@ -94,8 +94,8 @@ dans l’adresse de la chaîne dans le CMS.
 cadrée de manière étrange sur la scène ?
 
 Réponse : Les images des articles sont recadrées pour le format de flux, et non pour une
-scène occupant toute la hauteur de l'écran. Dans l'entrée, sous **Remplacer l'image de la scène**,
-enregistrez votre propre image, au format paysage et d'au moins 1920 px de large.
+scène occupant toute la hauteur de l’écran. Dans l’entrée, sous **Remplacer l’image de la scène**,
+enregistrez votre propre image, au format paysage et d’au moins 1920 px de large.
 
 **Question :** Que devient la scène lors de la traduction automatique de la
 page ?
@@ -106,12 +106,12 @@ ainsi que le titre personnalisé et le libellé d’une actualité.
 Les images, les liens, les chaînes, les filtres et l’ordre restent inchangés.
 
 **Question :** Un article d’actualité affiche, sur la page traduite, des textes différents de ceux de
-la langue d’origine — s’agit-il d’une erreur ?
+la langue source — s’agit-il d’une erreur ?
 
 Réponse : Non. Le titre et le résumé d’un article d’actualité proviennent de l’article
 lui-même, et ceux-ci s’affichent dans la langue que le lecteur a sélectionnée dans l’application
 . Seul ce que vous avez écrit dans l’article lui-même est traduit.
-Si aucune version linguistique de l’article n’est disponible, c’est la version existante qui s’affiche, plutôt que
+Si aucune version linguistique de l’article n’est disponible, c’est celle qui existe qui s’affiche, plutôt que
 de laisser la diapositive vide.
 
 **Question :** J’ai sélectionné « Avant le fil d’Ariane », mais rien ne change.
@@ -135,12 +135,13 @@ un autre bloc au-dessus d’elle, l’espacement reste tel que défini par la pa
 **Question :** J’ai sélectionné « Aucun espacement », mais il reste de l’espace sous la scène.
 
 Réponse : « Aucun espacement » supprime l’espacement entre deux blocs. Si la
-scène est le dernier bloc de son paragraphe, l’espacement interne du
-section et le début de la suivante — les deux faisant partie de la page. Si vous placez le
-contenu suivant dans la même section, il s’y raccorde directement.
+scène est le dernier bloc de son paragraphe, l’espacement intérieur du
+paragraphe et le début du paragraphe suivant apparaissent en dessous — les deux font partie de la page. Avec la hauteur
+« Hauteur de la section », l’espacement interne de la section est supprimé ; sinon, placez le
+contenu suivant dans la même section, il s’y raccordera alors directement.
 
-**Question :** Sans boutons de commande — comment faire défiler les diapos ?
+**Question :** Sans commandes — comment faire défiler les diapos ?
 
 Réponse : En balayant avec le doigt, en utilisant les touches fléchées, ou automatiquement :
-le temps défini par diapositive s'écoule sans changement. Pour le clavier, la
+le temps défini par diapositive s’écoule sans changement. Pour le clavier, la
 scène elle-même devient sélectionnable dès que les commandes sont absentes.

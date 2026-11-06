@@ -10,9 +10,9 @@ o introduce una dirección.
 **Pregunta:** He introducido una dirección de vídeo, pero la diapositiva solo muestra
 un área oscura.
 
-Respuesta: Por lo general, el vídeo no se puede reproducir sin iniciar sesión, o bien el **Tipo** está
-configurado en **Imagen** porque la dirección no tiene extensión. Abre la dirección en
-una ventana privada del navegador: si no se reproduce allí, los
+Respuesta: Por lo general, el vídeo no se puede reproducir sin iniciar sesión, o bien **Tipo** aparece
+como **Imagen** porque la dirección no tiene extensión. Abre la dirección en
+una ventana privada del navegador: si allí no se reproduce, los
 lectores tampoco lo verán. Un mensaje justo debajo del campo indica que la dirección
 no se ha aceptado; debe comenzar por `https://`.
 
@@ -95,7 +95,7 @@ recortada de forma extraña en el escenario?
 
 Respuesta: Las imágenes de las noticias están recortadas para el formato de feed, no para un
 escenario a altura de pantalla. En la entrada, en **Sobrescribir imagen del escenario**,
-añade una propia, en horizontal y con un ancho mínimo de 1920 píxeles.
+añade una propia, en formato apaisado y con un ancho mínimo de 1920 píxeles.
 
 **Pregunta:** ¿Qué ocurre con el escenario cuando se traduce automáticamente la
 página?
@@ -127,20 +127,21 @@ no se puede modificar la configuración.
 **Pregunta:** Antes había una franja blanca encima del escenario. ¿Dónde está?
 
 Respuesta: La sección en la que se encuentra el escenario mantiene un
-espacio interior por encima de su primer bloque. Sobre un texto esto es correcto, pero sobre un escenario
-se crea así una franja blanca entre el menú o la ruta de navegación y la imagen. El escenario
+espacio interior por encima de su primer bloque. Sobre un texto, esto es correcto; sobre un escenario, sin embargo,
+se crea una franja blanca entre el menú o la ruta de navegación y la imagen. El escenario
 compensa este espacio por sí mismo en cuanto se sitúa en la parte superior. Si hay
-otro bloque por encima, el espacio se mantiene tal y como lo establece la página.
+otro bloque encima, el espacio se mantiene tal y como lo establece la página.
 
 **Pregunta:** He seleccionado «Sin espacio», pero sigue habiendo espacio debajo del escenario.
 
 Respuesta: «Sin espacio» elimina el espacio entre dos bloques. Si el
 escenario es el último bloque de su sección, a continuación aparece el espacio interior de la
-sección y el inicio de la siguiente; ambos forman parte de la página. Si coloca el
-contenido siguiente en la misma sección, se unirá directamente a él.
+sección y el inicio de la siguiente; ambos forman parte de la página. Con la altura
+«Altura de sección», se elimina el espaciado interior de la sección; de lo contrario, coloque el
+contenido siguiente en la misma sección y así quedará alineado directamente.
 
-**Pregunta:** Sin elementos de control, ¿cómo se pasa de una diapositiva a otra?
+**Pregunta:** Sin controles de navegación, ¿cómo se pasa de una diapositiva a otra?
 
 Respuesta: Deslizando el dedo, con las teclas de flecha o de forma automática:
-el tiempo configurado por diapositiva transcurre sin cambios. En cuanto al teclado, el
+el tiempo configurado por diapositiva se mantiene sin cambios. En cuanto al teclado, el
 escenario se puede seleccionar directamente en cuanto faltan los elementos de control.

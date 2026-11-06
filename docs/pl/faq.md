@@ -7,8 +7,8 @@ pusta, ciemna powierzchnia nie dałaby się odróżnić od błędu na stronie.
 Otwórz edytor i w sekcji **Obraz lub wideo** wybierz obraz
 lub wprowadź adres.
 
-**Pytanie:** Wpisałem adres wideo, ale slajd wyświetla tylko
-ciemny obszar.
+**Pytanie:** Wpisałem adres filmu, ale slajd wyświetla tylko
+ciemną powierzchnię.
 
 Odpowiedź: Najczęściej film jest niedostępny bez logowania lub **Typ** jest ustawiony
 na **Obraz**, ponieważ adres nie zawiera rozszerzenia. Otwórz adres w
@@ -80,8 +80,8 @@ czytającej. Zniknęła tylko ta jedna slajda; pozostałe pozostają na swoim mi
 
 **Pytanie:** Mój wpis kanału wyświetla mniej slajdów niż zostało ustawione.
 
-Odpowiedź: Najczęściej filtry są zbyt wąskie. **Tylko wpisy ze zdjęciami** jest
-ustawieniem domyślnym — kanał bez zdjęć nie wyświetla w ten sposób żadnych treści. Sprawdź
+Odpowiedź: Najczęściej filtry są zbyt wąskie. Domyślnym ustawieniem jest **tylko wpisy ze zdjęciami** —
+kanał bez zdjęć nie wyświetla w ten sposób żadnych treści. Sprawdź
 podgląd w edytorze: pokazuje on dokładnie to, co pojawi się na scenie.
 
 **Pytanie:** W wyborze kanałów nie ma ani jednego kanału, zamiast tego pojawia się
@@ -94,14 +94,14 @@ w adresie kanału w systemie CMS.
 **Pytanie:** Dlaczego zdjęcie wpisu z aktualnościami na scenie jest nieostre lub
 dziwnie przycięte?
 
-Odpowiedź: Zdjęcia artykułów są przycięte pod kątem formatu kanału, a nie pod kątem
+Odpowiedź: Zdjęcia do artykułów są przycięte pod kątem formatu kanału informacyjnego, a nie pod kątem
 ekranu o pełnej wysokości. W wpisie w sekcji **Zastąp obraz sceny**
 przeznacz własny obraz, w orientacji poziomej i o szerokości co najmniej 1920 px.
 
 **Pytanie:** Co dzieje się z ramką podczas automatycznego tłumaczenia
 strony?
 
-Odpowiedź: Tłumaczone są wszystkie teksty napisane samodzielnie: nagłówek,
+Odpowiedź: Tłumaczone są wszystkie teksty wpisane samodzielnie: nagłówek,
 podtytuł, etykieta przycisku i opis obrazu na slajdzie,
 a także nadpisany tytuł i etykieta wpisu z aktualnościami.
 Obrazy, linki, kanały, filtry i kolejność pozostają niezmienione.
@@ -113,13 +113,13 @@ Odpowiedź: Nie. Tytuł i tekst zapowiedzi wpisu w sekcji aktualności pochodzą
 wpisu, a ten jest wyświetlany w języku, który czytelnik ustawił w aplikacji.
 Tłumaczone jest tylko to, co sam wpisałeś Tłumaczone jest tylko to, co napisałeś w samym wpisie.
 Jeśli brakuje wersji językowej wpisu, wyświetlana jest ta dostępna, zamiast
-pozostawiać puste miejsce.
+pozostawiać puste pole.
 
 **Pytanie:** Wybrałem opcję „Przed ścieżką nawigacyjną”, ale nic się nie zmienia.
 
 Odpowiedź: Ta opcja działa tylko wtedy, gdy spełnione są trzy warunki: strona posiada
 w ogóle pasek nawigacyjny, obszar wyświetlania znajduje się na samym górze strony oraz
-nad nim nie ma żadnej innej treści. Jeśli którykolwiek z tych warunków nie jest spełniony,
+nad nim nie ma żadnej innej treści. Jeśli któryś z tych warunków nie jest spełniony,
 scena poniżej ścieżki nawigacyjnej — umieszczenie ścieżki nawigacyjnej na środku strony byłoby
 gorsze niż brak jakiejkolwiek zmiany. W edytorze w takim przypadku pojawia się wskazówka
 nad sceną. Na opublikowanej stronie nie jest ona widoczna; tam
@@ -128,7 +128,7 @@ nie można zmienić tego ustawienia.
 **Pytanie:** Dawniej nad sceną znajdował się biały pasek. Gdzie się podział?
 
 Odpowiedź: Sekcja, w której znajduje się scena, zachowuje nad swoim pierwszym blokiem
-odstęp wewnętrzny. W przypadku tekstu jest to prawidłowe, natomiast nad sceną powoduje to
+odstęp wewnętrzny. W przypadku tekstu jest to prawidłowe, ale nad sceną powoduje to
 powstanie białego paska między menu lub ścieżką nawigacyjną a obrazem. Scena
 sama wyrównuje ten odstęp, gdy tylko znajdzie się na samym szczycie. Jeśli nad nią
 znajduje się inny blok, odstęp pozostaje taki, jak ustalono na stronie.
@@ -136,12 +136,13 @@ znajduje się inny blok, odstęp pozostaje taki, jak ustalono na stronie.
 **Pytanie:** Wybrałem opcję „Brak odstępu”, ale pod sceną nadal jest miejsce.
 
 Odpowiedź: Opcja „Brak odstępu” usuwa odstęp między dwoma blokami. Jeśli
-scena jest ostatnim blokiem w sekcji, poniżej niej pojawia się odstęp wewnętrzny
-sekcji i początek następnej — obie należą do strony. Jeśli umieścisz
-kolejną treść w tej samej sekcji, będzie ona bezpośrednio przylegać.
+scena jest ostatnim blokiem w akapicie, poniżej niej pojawia się odstęp wewnętrzny
+akapitu oraz początek następnego — oba należą do strony. W przypadku ustawienia wysokości
+„Wysokość sekcji” odstęp wewnętrzny sekcji nie jest stosowany; w przeciwnym razie należy umieścić
+kolejną treść w tej samej sekcji, a wtedy będzie ona bezpośrednio przylegać.
 
-**Pytanie:** Bez elementów sterujących — jak wtedy przewijać?
+**Pytanie:** Bez elementów sterujących — jak w takim razie przewijać?
 
 Odpowiedź: Przesuwając palcem, za pomocą klawiszy strzałek lub automatycznie:
-ustawiony czas wyświetlania każdej slajdu pozostaje niezmieniony. W przypadku klawiatury
+ustawiony czas wyświetlania każdego slajdu pozostaje niezmieniony. W przypadku klawiatury
 sama scena staje się elementem nawigacyjnym, gdy tylko brakuje elementów sterujących.

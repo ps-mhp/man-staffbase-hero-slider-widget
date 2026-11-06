@@ -12,9 +12,9 @@ pagina iniziale può mostrare anche **articoli dalle notizie**:
 
 - **Articolo** — un determinato articolo come diapositiva. Immagine, titolo
   e anteprima provengono dall’articolo, il pulsante rimanda ad esso.
-- **Canale di notizie** — un intero canale, una diapositiva per ogni articolo. È possibile impostare il numero,
+- **Canale di notizie** — un intero canale, una diapositiva per ogni contributo. È possibile impostare il numero,
   l’ordine e i filtri. Se nel
-  canale viene pubblicato un nuovo articolo, questo appare automaticamente sul palco senza alcun intervento.
+  canale viene pubblicato un nuovo contributo, questo appare automaticamente sul palco senza alcun intervento.
 
 I tre tipi figurano nello stesso elenco e possono essere liberamente combinati e
 ordinati — ad esempio, una diapositiva dedicata come articolo di apertura, seguita dai tre articoli più recenti

@@ -19,9 +19,9 @@
    veld alleen leeg als de afbeelding puur decoratief is.
 7. Voer de **Kop** in. Houd deze kort: tot ongeveer
    24 tekens blijft deze op één regel.
-8. Optioneel: **Ondertitel** en **Knop**. De knop verschijnt
+8. Optioneel: **ondertitel** en **knop**. De knop verschijnt
    alleen als de tekst **en** de bestemming zijn ingevuld. Op de telefoon geeft
-   het podium geen van beide weer: daar wordt alleen de kop weergegeven en de
+   het podium geen van beide weer: daar wordt alleen de titel weergegeven en de
    hele dia leidt naar de bestemming van de knop. Wat er in de ondertitel staat,
    mag daarom niets zijn dat per se gelezen moet worden.
 9. Klik op **Toepassen**.
@@ -74,8 +74,8 @@
      de dia slechts een donker vlak met tekst zijn.
    - **Trefwoorden** — scheid meerdere trefwoorden met een komma; één bericht is voldoende als het
      een van deze trefwoorden bevat.
-7. Controleer het **voorbeeld**: dit toont precies de berichten die de filters
-   overhouden. Als het leeg blijft, zijn de filters te streng ingesteld.
+7. Bekijk het **voorbeeld**: dit toont precies de berichten die na toepassing van de filters
+   overblijven. Als het leeg blijft, zijn de filters te streng ingesteld.
 8. **Toepassen**, opslaan, controleren in het voorbeeld.
 
 Het item telt in de lijst als **één**, maar omvat meerdere dia’s.
@@ -88,12 +88,12 @@ wordt achterwege gelaten.
 2. Klik onder **Afbeelding of video** op **Afbeelding of video selecteren** en
    selecteer de video uit de mediabibliotheek. Video’s zijn daar gemarkeerd met
    hun formaat (bijvoorbeeld `MP4`). De door Staffbase geconverteerde
-   versie overgenomen — deze speelt in elke browser af en is meestal aanzienlijk kleiner dan het
+   versie overgenomen — deze speelt af in elke browser en is meestal aanzienlijk kleiner dan het
    origineel.
 3. Staat de video ergens anders: voer dan in plaats daarvan het adres in onder
    **Of adres van een afbeelding of video**. Het moet beginnen met `https://`
-   beginnen, en alle lezers moeten de video zonder aanmelding kunnen bekijken
-  . Eindigt het op `.mp4`, `.webm` of `.mov`, dan springt **Type** van
+   beginnen, en alle lezers moeten de video zonder aanmelding kunnen
+   bekijken. Eindigt het op `.mp4`, `.webm` of `.mov`, dan springt **Type** van
   zelf naar **Video**; anders moet u dit daar handmatig aanpassen.
 4. Vul onder **Videobeschrijving** in wat er te zien is, of laat
    het veld leeg als de video puur decoratief is.
@@ -118,9 +118,9 @@ want het wordt bij elke paginaweergave geladen.
 
 1. Open de instellingen van de widget; de editor wordt geopend met de
    bestaande vermeldingen.
-2. Selecteer links het item dat je wilt wijzigen. Het icoontje boven de titel geeft aan
-   om welk type het gaat: **Dia**, **Bericht** of **Kanaal**.
-3. Wijzig de velden aan de rechterkant. Via **Dupliceren** maak je een kopie van het
+2. Selecteer links de vermelding die je wilt wijzigen. Het icoontje boven de titel geeft aan
+   om welk type het gaat: **dia**, **bericht** of **kanaal**.
+3. Wijzig de velden aan de rechterkant. Via **Dupliceren** maak je een kopie van de
    geselecteerde item direct erachter; via **Verwijderen** verdwijnt het. Pijltjes,
    Dupliceren en Verwijderen gelden voor alle drie de soorten op dezelfde manier.
 4. **Toepassen** slaat de wijzigingen op in de widget — pas daarna wordt

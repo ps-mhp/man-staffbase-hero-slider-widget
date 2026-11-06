@@ -91,7 +91,7 @@ box. If that doesn’t help, enter the channel ID manually; you’ll find it
 in the channel’s URL in the CMS.
 
 **Question:** Why is the image of a news post on the stage blurry or
-cropped strangely?
+strangely cropped?
 
 Answer: Article images are cropped for the feed format, not for a
 full-screen stage. In the entry, under **Override Stage Image**,
@@ -136,11 +136,12 @@ another block above it, the spacing remains as set by the page.
 
 Answer: “No Spacing” removes the spacing between two blocks. If the
 stage is the last block in its section, the inner spacing of the
-section and the start of the next one—both of which belong to the page. If you place the
-following content in the same section, it will align directly with it.
+section and the start of the next section follow below it—both belong to the page. If you set the height
+to “Section Height,” the section’s internal spacing is removed; otherwise, place the
+following content in the same section, and it will align directly with it.
 
 **Question:** Without controls—how do you turn the pages?
 
-Answer: Swipe with your finger, use the arrow keys to navigate, or let it run automatically:
+Answer: Swipe with your finger, use the arrow keys to scroll, or let it run automatically:
 the set time per slide remains unchanged. For the keyboard, the
-slide itself becomes selectable as soon as the controls are missing.
+stage itself becomes selectable as soon as the controls are missing.

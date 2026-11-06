@@ -68,22 +68,26 @@ kanaalvermelding telt daarbij mee met alle dia’s die het bijdraagt.
   geselecteerde niveau vastgezet.
 - `Schermhoogte` vult de zichtbare zijde minus de koptekst,
   maar minimaal 420 px.
-- **Seconden per dia** geldt pas vanaf de tweede dia.
+- **Seconden per dia** werkt pas vanaf de tweede dia.
 - Wie in het besturingssysteem „Beweging verminderen“ heeft ingesteld, ziet geen
   overgang vanzelf — ongeacht deze instelling.
-- Bovenaan sluit het podium altijd gelijk aan — aan de broodkruimels of, bij
-  „Voor de broodkruimels“, aan het menu. De binnenafstand die de sectie boven
-  zijn eerste blok aanhoudt, compenseert het daarvoor. Dit gebeurt alleen als
+- Bovenaan sluit het podium altijd gelijkmatig aan — op de broodkruimels of, bij
+  „Voor de broodkruimels”, aan het menu. De binnenafstand die de sectie boven
+  zijn eerste blok aanhoudt, wordt hiervoor gecompenseerd. Dit gebeurt alleen als
   er geen andere inhoud boven het podium staat.
 - **Afstand naar beneden** verwijdert de afstand tussen de blokken, niet de
-  binnenafstand aan het einde van een sectie. Als het podium als laatste blok in
-  zijn sectie staat, blijft de afstand naar beneden behouden.
+  binnenafstand aan het einde van een paragraaf. Als het podium als laatste blok in
+  zijn paragraaf staat, blijft de afstand naar beneden behouden — behalve bij de
+  hoogte `Paragraafhoogte`: daar sluit de paragraaf sowieso gelijk af.
+- Bij `paragraafhoogte` neemt het podium alleen de hoogte van de paragraaf in als
+  het daarin alleen staat. Met andere blokken in dezelfde paragraaf behoudt het
+  zijn beeldverhouding, en de blokken schuiven zonder afstand tegen het podium aan.
 - De bedieningselementen verschijnen pas vanaf de tweede dia. Op smalle
   schermen worden de pijltjes verborgen; daar wordt geveegd.
-- Een bijdrage die wordt verwijderd of niet zichtbaar is voor de lezer,
-  neemt alleen zijn eigen dia mee. De overige dia’s blijven staan.
+- Een bijdrage die wordt verwijderd of die niet zichtbaar is
+  voor de lezer, neemt alleen zijn eigen dia mee. De overige dia’s blijven staan.
 - Nieuwsdia’s volgen de taal van de lezer, voor zover het bericht
-  vertaald is; anders de eerste beschikbare versie.
+  is vertaald; anders de eerste beschikbare versie.
 - Het **voorbeeld** in de editor hanteert dezelfde regels als de
-  gepubliceerde pagina. Wat daar niet staat, verschijnt ook niet op het podium
- .
+  gepubliceerde pagina. Wat daar niet staat, verschijnt ook niet op het scherm
+  .

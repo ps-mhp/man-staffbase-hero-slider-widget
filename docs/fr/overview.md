@@ -11,13 +11,13 @@ Il n’est pas nécessaire de gérer manuellement une diapositive. Outre vos pro
 page d’accueil peut également afficher des **articles issus de l’actualité** :
 
 - **Article d’actualité** — un article spécifique sous forme de diapositive. L’image, le titre
-  et le teaser proviennent de l’article, le bouton y renvoie.
-- **Chaîne d'actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
-  ordre et les filtres applicables sont paramétrables. Lorsqu’un nouvel article paraît dans la
-  chaîne, il s’affiche automatiquement sur la scène sans intervention supplémentaire.
+  et le teaser proviennent de l’article, le bouton renvoie vers celui-ci.
+- **Chaîne d’actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
+  ordre et les filtres sont paramétrables. Lorsqu’un nouvel article paraît dans la
+  chaîne, il s’affiche automatiquement sur la scène.
 
 Ces trois types figurent dans la même liste et peuvent être librement combinés et
-triés — par exemple, une diapositive personnalisée en tête, suivie des trois derniers
+triés — par exemple, une diapositive dédiée en tête, suivie des trois derniers
 articles d’une rubrique.
 
 ## Ce que voient les lectrices et lecteurs
@@ -30,11 +30,11 @@ articles d’une rubrique.
   contenu est supprimée.
 - Le **texte reste aligné sur la ligne de repère de la page** : il commence sur la même
   ligne verticale que l’en-tête, le menu et le texte situé sous la zone d’affichage. Il
-  n’est expressément pas aligné sur le bord de l’image.
+  n’est expressément pas collé au bord de l’image.
 - Le texte se trouve en bas à gauche, sur un dégradé sombre qui s'estompe de bas en
-  haut. Sur les écrans larges, un deuxième dégradé s'ajoute à partir de la gauche
+  haut. Sur les écrans larges, un deuxième dégradé s'ajoute depuis la gauche
   afin que le texte clair reste lisible sur un fond clair.
-- En cas de plusieurs diapositives : des flèches à gauche et à droite, avec un trait entre les deux pour chaque diapositive.
+- En cas de plusieurs diapositives : des flèches à gauche et à droite, avec un trait entre chacune d’elles pour chaque diapositive.
   Le trait de la diapositive actuelle est rouge.
 - Le changement se poursuit tant que la souris survole la scène ou que le focus se trouve
   sur celle-ci. Sur le téléphone, on fait glisser le doigt ; les flèches y sont masquées.

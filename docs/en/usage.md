@@ -2,8 +2,8 @@
 
 ## Setting Up a Stage with an Image
 
-1. Upload the image to the Staffbase media library beforehand. Landscape orientation, at least
-   1920 px wide; the stage will crop it to a 21:9 or
+1. First, upload the image to the Staffbase media library. Landscape orientation, at least
+   1920 px wide; depending on the window width, the stage will crop it to a 21:9 or
    4:3 — so the image should not extend all the way to the edges.
 2. Place the **Hero Slider** widget at the top of the page, in a row
    with no other widgets next to it. If it’s placed in a column next to other
@@ -36,7 +36,7 @@
 2. For each additional slide, select **Slide** under **New +** and
    fill it out as described above. You cannot have more than eight slides—no one scrolls
    that far.
-3. Sort the slides using the **↑** and **↓** arrows in the upper-right corner. The first slide
+3. Sort the slides using the **↑** and **↓** arrows in the upper right corner. The first slide
    is the one that appears when the page loads.
 4. Make sure that **Seconds per Slide** is set to `5` (default).
 5. **Apply**, save, and check the preview.
@@ -59,13 +59,13 @@
    and may not always include a prominent background.
 8. **Apply**, save, and check the preview.
 
-## Show all posts from a channel
+## Show All Posts from a Channel
 
 1. Open the settings to access the editor.
 2. Click **New +** above the list and select **News Channel**.
    An entry labeled **Channel** will appear on the left.
 3. Under **Channel**, select the news channel.
-4. Set the **Number of Slides** (default `3`, maximum eight).
+4. Set the **Number of Slides** (default `3`, maximum of eight).
 5. Select the **Order**: `Newest first` or `Oldest first`.
 6. Set **Filters** as needed:
    - **Featured posts only** — limited to what is pinned in the News
@@ -133,12 +133,12 @@ since it loads every time the page is viewed.
    an image—for news entries, check the preview.
 2. **The image does not span the full width.** Is the widget located in a
    column next to other content? If so, place it on its own line.
-   Otherwise, check whether **Display full width** is enabled
+   Otherwise, check whether **Show full width** is enabled
   .
-3. **The text isn’t aligned with the guide line.** This may be due to a
+3. **The text isn’t aligned to the baseline.** This may be due to a
    different content width on the page. Report the issue with the
-   page URL—the stage adjusts to the width that the page itself
-   reports.
+   page URL—the stage adjusts to the width reported by the page itself
+  .
 4. **Instead of the editor, you see a “Entries” text field with JSON.** The
    editor was unable to load. Reload the dialog. Do not edit
    the text manually.
