@@ -44,6 +44,7 @@
  * deshalb nicht selbst hochschaukeln.
  */
 
+import { flushTopBox, startsContent } from "./host-boxes";
 import { useEffect, useRef } from "react";
 
 import type { HeroPosition } from "./attributes";
@@ -239,6 +240,18 @@ export interface PageTopOptions {
   position?: HeroPosition;
   /** Die Bühne selbst; im Modus `pre` trägt ihre Unterkante die Brotkrumen. */
   host?: HTMLElement | null;
+  /**
+   * Der äusserste Kasten des Widgets — der, der im Modus `pre` bündig unter
+   * den festen Leisten stehen soll.
+   *
+   * Zwischen der Innenkante des Seitenrahmens und der Bühne liegen die
+   * Abstände des Wirts: der Content Designer polstert seinen ersten Abschnitt
+   * (`--sb-section-safe-inset-top`), der Rahmen darin polstert noch einmal.
+   * Sie werden hier ausgeglichen. Es ist bewusst nicht `host`: der Ausgleich
+   * muss am äussersten Kasten sitzen, sonst ragte die Bühne nur aus ihm
+   * heraus und sein Platz bliebe als Lücke stehen.
+   */
+  outerHost?: HTMLElement | null;
   /** Wird nach jeder Messung gerufen. */
   onLayout?: (layout: PageTopLayout) => void;
 }
@@ -255,6 +268,7 @@ export interface PageTopOptions {
 interface Holder {
   position: HeroPosition;
   host: HTMLElement | null;
+  outerHost: HTMLElement | null;
   /** Wer über das Ergebnis jeder Messung unterrichtet werden will. */
   onLayout?: (layout: PageTopLayout) => void;
 }
@@ -263,11 +277,17 @@ const holders: Holder[] = [];
 let saved: SavedPadding | null = null;
 /** Der Vorzustand des Brotkrumen-Kastens, solange er verschoben ist. */
 let savedCrumbs: SavedPadding | null = null;
+/** Der Vorzustand des äusseren Kastens, solange die Bühne hochgezogen ist. */
+let savedOffset: SavedPadding | null = null;
 /** Der Modus, den der erste noch stehende Halter angemeldet hat. */
 let mode: HeroPosition = "post";
 /** Die Bühne des ersten noch stehenden Halters; sie trägt die Brotkrumen. */
 let anchorHost: HTMLElement | null = null;
+/** Der äussere Kasten des ersten noch stehenden Halters. */
+let anchorOuter: HTMLElement | null = null;
 let resizeObserver: ResizeObserver | null = null;
+/** Die Brotkrumen, die der Grössenbeobachter gerade beobachtet. */
+let watchedCrumbs: HTMLElement | null = null;
 let mutationObserver: MutationObserver | null = null;
 let frame: number | null = null;
 /**
@@ -291,6 +311,70 @@ function restore(): void {
   saved = null;
   restoreSaved(savedCrumbs);
   savedCrumbs = null;
+  restoreSaved(savedOffset);
+  savedOffset = null;
+}
+
+/**
+ * Zieht den äusseren Kasten des Widgets an die Innenkante des Seitenrahmens.
+ *
+ * Der Kopfabstand des `#wrapper` allein macht die Bühne noch nicht bündig:
+ * zwischen seiner Innenkante und dem Widget liegen die Abstände des Wirts.
+ * Auf einer modernen Seite sind das der Sicherheitsabstand des ersten
+ * Abschnitts (`--sb-section-safe-inset-top`, gemessen 48px) und der Abstand
+ * des Rahmens darin (gemessen 40px) — zusammen 88px Weissraum über einer
+ * Bühne, die am Menü kleben soll.
+ *
+ * Sie lassen sich nicht per Stilregel abräumen: das Widget rendert in einem
+ * eigenen Schattenbaum, und seine Regeln reichen nicht an die Abschnitte des
+ * Wirts darüber heran. Ihre Summe ist ausserdem nicht fest — sie hängt an
+ * Seitentyp und Fensterbreite. Also wird sie gemessen und als negativer
+ * Aussenabstand ausgeglichen.
+ *
+ * Gemessen wird immer die ungestörte Lage: der eigene Ausgleich kommt vorher
+ * weg. Sonst läse der zweite Durchlauf die Kante, die der erste gesetzt hat,
+ * fände keine Lücke mehr und nähme den Ausgleich wieder zurück — die Bühne
+ * spränge bei jeder Messung.
+ */
+function alignToPageTop(wrapper: HTMLElement, outer: HTMLElement): void {
+  // Erst den eigenen Ausgleich wegnehmen, dann messen. Das deckt auch den
+  // Seitenwechsel der Einzelseitenanwendung ab: dort ist `outer` ein neuer
+  // Kasten, und der alte behielte sonst unseren Aussenabstand für immer.
+  // Struktur- und Grössenbeobachter sehen das Zurücksetzen nicht — es ändert
+  // weder Knoten noch Kastengrösse —, es stösst also keine neue Messung an.
+  restoreSaved(savedOffset);
+  savedOffset = null;
+
+  const scroller = wrapper.ownerDocument.scrollingElement ?? wrapper.ownerDocument.documentElement;
+  const padding = Number.parseFloat(getComputedStyle(wrapper).paddingTop);
+  const inner =
+    wrapper.getBoundingClientRect().top + scroller.scrollTop + (Number.isNaN(padding) ? 0 : padding);
+  const gap = outer.getBoundingClientRect().top + scroller.scrollTop - inner;
+
+  // Nur Lücken werden geschlossen. Eine negative Spanne hiesse, die Bühne
+  // läge bereits über der Innenkante — sie herunterzuschieben wäre ein
+  // Eingriff, um den niemand gebeten hat.
+  if (gap <= TOP_TOLERANCE) return;
+
+  const box = flushTopBox(wrapper, outer);
+  // Steht vor der Bühne schon etwas, ist die Lücke darüber Inhalt und keine
+  // Polsterung des Wirts. Sie zu schliessen zöge die Bühne über ihn.
+  if (!startsContent(wrapper, box)) return;
+  savedOffset = {
+    element: box,
+    property: "margin-top",
+    value: box.style.getPropertyValue("margin-top"),
+    priority: box.style.getPropertyPriority("margin-top"),
+  };
+
+  // Der Aussenabstand, den der Kasten von sich aus hat, bleibt erhalten: der
+  // Ausgleich zieht von ihm ab, statt ihn zu ersetzen.
+  const natural = Number.parseFloat(getComputedStyle(box).marginTop);
+  box.style.setProperty(
+    "margin-top",
+    `${(Number.isNaN(natural) ? 0 : natural) - gap}px`,
+    "important",
+  );
 }
 
 /**
@@ -393,7 +477,25 @@ function notify(layout: PageTopLayout): void {
   }
 }
 
+/**
+ * Hält den Grössenbeobachter an den Brotkrumen.
+ *
+ * Staffbase blendet sie erst nach dem Aufbau ein, ohne die Seite umzubauen:
+ * der Strukturbeobachter sieht das nicht. Gemessen an der leeren Liste stünde
+ * der Kopfabstand auf den Leisten, und die daran ausgeglichene Bühne lägen
+ * die Brotkrumen später quer darüber (live gesehen 06.11.2026 auf truck).
+ */
+function watchCrumbs(doc: Document): void {
+  if (resizeObserver === null) return;
+  const crumbs = doc.querySelector<HTMLElement>(BREADCRUMBS_SELECTOR);
+  if (crumbs === watchedCrumbs) return;
+  if (watchedCrumbs !== null) resizeObserver.unobserve(watchedCrumbs);
+  if (crumbs !== null) resizeObserver.observe(crumbs);
+  watchedCrumbs = crumbs;
+}
+
 function write(doc: Document): void {
+  watchCrumbs(doc);
   const wrapper = doc.querySelector<HTMLElement>(WRAPPER_SELECTOR);
   if (wrapper === null) {
     // Dieselbe Regel wie bei einer Messung, die nichts ergibt: ohne
@@ -416,6 +518,10 @@ function write(doc: Document): void {
   if (!applied || mode !== "pre") {
     restoreSaved(savedCrumbs);
     savedCrumbs = null;
+    // Derselbe Grund: bleibt die Bühne hochgezogen, während sie wieder unter
+    // die Brotkrumen gehört, läge sie quer über ihnen.
+    restoreSaved(savedOffset);
+    savedOffset = null;
   }
 
   const top = measurePageTop(doc, applied ? mode : "post");
@@ -452,7 +558,17 @@ function write(doc: Document): void {
 
   let breadcrumbsHeight = 0;
   let placed = applied;
-  if (applied && mode === "pre" && anchorHost !== null) {
+  if (!(applied && mode === "pre")) {
+    // Unter den Brotkrumen: die Innenkante ist ihre Unterkante, und der
+    // Weissraum des Wirts zwischen ihr und der Bühne gehört geschlossen wie
+    // in `pre`.
+    if (anchorOuter !== null) alignToPageTop(wrapper, anchorOuter);
+  } else if (anchorHost !== null) {
+    // Vor den Brotkrumen: erst die Bühne an die Innenkante ziehen, dann die
+    // Brotkrumen unter sie legen. Andersherum bezögen sich die Brotkrumen auf
+    // eine Unterkante, die der Ausgleich gleich darauf verschiebt.
+    if (anchorOuter !== null) alignToPageTop(wrapper, anchorOuter);
+
     const height = placeBreadcrumbs(doc, wrapper, anchorHost);
     if (height === null) {
       // Der Kasten liess sich nicht unter die Bühne bringen und steht wieder
@@ -461,12 +577,17 @@ function write(doc: Document): void {
       // Brotkrumen. Jetzt gilt die Regel von `post`; gemessen wird erst nach
       // dem Zurückstellen, nie an einer Kante aus eigener Hand.
       placed = false;
+      // Mit der Lage fällt auch ihr Ausgleich weg: eine Bühne, die am Menü
+      // klebt, während die Brotkrumen wieder darüber stehen, verdeckte sie.
+      restoreSaved(savedOffset);
+      savedOffset = null;
       const postTop = measurePageTop(doc, "post");
       if (postTop === null) {
         restoreSaved(saved);
         saved = null;
       } else {
         wrapper.style.setProperty("padding-top", `${postTop}px`, "important");
+        if (anchorOuter !== null) alignToPageTop(wrapper, anchorOuter);
       }
     } else {
       breadcrumbsHeight = height;
@@ -494,13 +615,14 @@ function write(doc: Document): void {
  * Zustand der Wirtsseite wieder her.
  */
 export function holdPageTop(doc: Document = document, options: PageTopOptions = {}): () => void {
-  const { position = "post", host = null, onLayout } = options;
+  const { position = "post", host = null, outerHost = null, onLayout } = options;
 
-  const entry: Holder = { position, host, onLayout };
+  const entry: Holder = { position, host, outerHost, onLayout };
   holders.push(entry);
   if (holders.length === 1) {
     mode = position;
     anchorHost = host;
+    anchorOuter = outerHost;
   }
   write(doc);
 
@@ -522,6 +644,7 @@ export function holdPageTop(doc: Document = document, options: PageTopOptions = 
       // Die Unterkante der Bühne wandert mit ihrer Höhe; im Modus `pre` hängen
       // die Brotkrumen daran.
       if (host !== null) resizeObserver.observe(host);
+      watchCrumbs(doc);
     }
 
     if (typeof view.MutationObserver !== "undefined") {
@@ -545,6 +668,12 @@ export function holdPageTop(doc: Document = document, options: PageTopOptions = 
       const next = holders[0];
       mode = next.position;
       anchorHost = next.host;
+      // Der Ausgleich gehört zur Bühne, die ihn bekommen hat. Bliebe der alte
+      // Kasten eingetragen, trüge er den Aussenabstand weiter, während die
+      // nachgerückte Bühne ihn nie bekäme.
+      restoreSaved(savedOffset);
+      savedOffset = null;
+      anchorOuter = next.outerHost;
       // Beobachtet wurde bisher die Bühne des gegangenen Halters. Bliebe es
       // dabei, fiele jede Höhenänderung der nachgerückten unbemerkt durch —
       // eine spät geladene Schrift, ein Bild, ein Übergang —, und die
@@ -561,6 +690,7 @@ export function holdPageTop(doc: Document = document, options: PageTopOptions = 
     scheduled = null;
     resizeObserver?.disconnect();
     resizeObserver = null;
+    watchedCrumbs = null;
     mutationObserver?.disconnect();
     mutationObserver = null;
     if (frame !== null && view !== null) {
@@ -569,13 +699,14 @@ export function holdPageTop(doc: Document = document, options: PageTopOptions = 
     }
     mode = "post";
     anchorHost = null;
+    anchorOuter = null;
     restore();
   };
 }
 
 /** {@link holdPageTop} an der Lebensdauer einer Komponente. */
 export function usePageTop(options: PageTopOptions = {}): void {
-  const { position = "post", host = null, onLayout } = options;
+  const { position = "post", host = null, outerHost = null, onLayout } = options;
   // Der natürliche Aufrufer übergibt eine frisch erzeugte Funktion. Hinge der
   // Effekt an ihr, risse jeder Bildaufbau den Halter ab und baute ihn neu
   // auf: Abstand und Brotkrumen zurückgestellt, Beobachter getrennt, alles
@@ -590,8 +721,9 @@ export function usePageTop(options: PageTopOptions = {}): void {
       holdPageTop(document, {
         position,
         host,
+        outerHost,
         onLayout: (layout) => latest.current?.(layout),
       }),
-    [position, host],
+    [position, host, outerHost],
   );
 }

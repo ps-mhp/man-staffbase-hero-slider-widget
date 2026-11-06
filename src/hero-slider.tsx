@@ -250,7 +250,12 @@ export function HeroSlider({
   // erst, wenn es etwas zu messen gab. Sonst blitzte der Hinweis im Editor
   // bei jedem Aufbau einmal auf, auch dort, wo `pre` anschliessend zustande
   // kommt.
-  usePageTop({ position, host: stage, onLayout: stage === null ? undefined : onLayout });
+  usePageTop({
+    position,
+    host: stage,
+    outerHost: anchor,
+    onLayout: stage === null ? undefined : onLayout,
+  });
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {

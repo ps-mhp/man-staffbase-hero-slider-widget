@@ -832,6 +832,39 @@ describe("holdPageTop — Beobachtung der Bühne", () => {
   });
 });
 
+describe("holdPageTop — Brotkrumen, die nach der ersten Messung erscheinen", () => {
+  beforeEach(() => {
+    FakeResizeObserver.instances = [];
+    (window as unknown as { ResizeObserver: unknown }).ResizeObserver = FakeResizeObserver;
+  });
+
+  afterEach(() => {
+    delete (window as unknown as { ResizeObserver?: unknown }).ResizeObserver;
+  });
+
+  it("misst neu, sobald die Brotkrumen ihre Höhe bekommen", async () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    const { crumbs } = addBreadcrumbs(wrapper, 150);
+    // Staffbase zeigt die Brotkrumen erst nach dem Aufbau. Gemessen an der
+    // leeren Liste, stünde der Kopfabstand auf den Leisten — und die Bühne,
+    // daran ausgeglichen, rutschte unter die Brotkrumen, sobald sie kommen.
+    setRect(crumbs, { top: 150, bottom: 150, height: 0 });
+    const outer = addOuterHost(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+
+    hold({ position: "post", host: stage, outerHost: outer });
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("111px");
+
+    setRect(crumbs, { top: 130, bottom: 150, height: 20 });
+    FakeResizeObserver.resize(crumbs);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("150px");
+    expect(outer.getBoundingClientRect().top).toBe(150);
+  });
+});
+
 describe("usePageTop", () => {
   it("baut den Halter nicht bei jedem Bildaufbau neu auf", () => {
     addChrome(136);
@@ -852,5 +885,292 @@ describe("usePageTop", () => {
     expect(wrapper.style.getPropertyValue("padding-top")).toBe("136px");
 
     unmount();
+  });
+});
+
+/**
+ * Der äussere Kasten des Widgets, der bündig unter den Leisten stehen soll.
+ *
+ * jsdom rechnet kein Layout: ein geschriebener Aussenabstand bewegte ihn
+ * nicht. Hier folgt er ihm, wie er es im Browser täte — sonst wäre der
+ * Ausgleich an einem Kasten geprüft, den es so nicht gibt.
+ */
+function addOuterHost(wrapper: HTMLElement, naturalTop: number, height: number): HTMLElement {
+  const outer = document.createElement("div");
+  outer.className = "man-hero-host";
+  outer.getBoundingClientRect = () => {
+    const shift = Number.parseFloat(outer.style.getPropertyValue("margin-top"));
+    const top = naturalTop + (Number.isNaN(shift) ? 0 : shift);
+    return { top, left: 0, right: 0, bottom: top + height, width: 0, height, x: 0, y: top } as DOMRect;
+  };
+  wrapper.appendChild(outer);
+  return outer;
+}
+
+describe("Ausgleich der Abstände über der Bühne", () => {
+  it("zieht die Bühne an die Innenkante des Seitenrahmens", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    // Der Abschnitt des Content Designers polstert seinen ersten Block, und
+    // der Rahmen darin polstert noch einmal: zusammen 88px, um die die Bühne
+    // zu tief läge.
+    const outer = addOuterHost(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+
+    hold({ position: "pre", host: stage, outerHost: outer });
+
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("111px");
+    expect(outer.style.getPropertyValue("margin-top")).toBe("-88px");
+    expect(outer.getBoundingClientRect().top).toBe(111);
+  });
+
+  it("misst die ungestörte Lage, nicht die eigene Verschiebung", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    const outer = addOuterHost(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+
+    hold({ position: "pre", host: stage, outerHost: outer });
+    expect(outer.style.getPropertyValue("margin-top")).toBe("-88px");
+
+    // Eine zweite Bühne meldet sich an und löst damit eine zweite Messung
+    // aus. Läse die den Ausgleich der ersten als Teil der Lücke mit, zöge
+    // sie die Bühne noch einmal um 88px hoch — und bei jeder weiteren
+    // Messung erneut.
+    const second = addHost(wrapper, 900, 1000);
+    hold({ position: "pre", host: second, outerHost: addOuterHost(wrapper, 900, 100) });
+
+    expect(outer.style.getPropertyValue("margin-top")).toBe("-88px");
+    expect(outer.getBoundingClientRect().top).toBe(111);
+  });
+
+  it("folgt einer Lücke, die sich nach dem Ausgleich ändert", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    let naturalTop = 199;
+    const outer = addOuterHost(wrapper, 199, 630);
+    outer.getBoundingClientRect = () => {
+      const shift = Number.parseFloat(outer.style.getPropertyValue("margin-top"));
+      const top = naturalTop + (Number.isNaN(shift) ? 0 : shift);
+      return { top, left: 0, right: 0, bottom: top + 630, width: 0, height: 630, x: 0, y: top } as DOMRect;
+    };
+    const stage = addHost(wrapper, 199, 799);
+
+    const release = hold({ position: "pre", host: stage, outerHost: outer });
+    expect(outer.style.getPropertyValue("margin-top")).toBe("-88px");
+
+    // Schmaleres Fenster: der Wirt polstert weniger. Die nächste Messung muss
+    // die ungestörte Lage sehen — mit dem alten Ausgleich darin stünde die
+    // Bühne 28px über der Innenkante, und es gäbe keine Lücke mehr zu messen.
+    naturalTop = 171;
+    const releaseSecond = hold({ position: "pre", host: addHost(wrapper, 900, 1000), outerHost: null });
+
+    expect(outer.style.getPropertyValue("margin-top")).toBe("-60px");
+    expect(outer.getBoundingClientRect().top).toBe(111);
+
+    // Und der Vorzustand bleibt über mehrere Messungen gemerkt.
+    releaseSecond();
+    release();
+    expect(outer.style.getPropertyValue("margin-top")).toBe("");
+  });
+
+  it("zieht die Bühne in der Lage unter den Brotkrumen bündig an sie heran", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    const outer = addOuterHost(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+
+    hold({ position: "post", host: stage, outerHost: outer });
+
+    // In `post` ist die Innenkante die Unterkante der Brotkrumen. Der
+    // Weissraum zwischen ihnen und der Bühne kommt vom Wirt, nicht von der
+    // Seite — er gehört genauso geschlossen wie in `pre`.
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("150px");
+    expect(outer.style.getPropertyValue("margin-top")).toBe("-49px");
+    expect(outer.getBoundingClientRect().top).toBe(150);
+  });
+
+  it("lässt eine Bühne stehen, vor der schon etwas gerendert ist", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    // Ein Textblock steht vor der Bühne. Die Lücke darüber ist dann keine
+    // Polsterung des Wirts, sondern Inhalt — sie zu schliessen zöge die
+    // Bühne über ihn.
+    const before = document.createElement("div");
+    setRect(before, { top: 238, bottom: 338, height: 100 });
+    wrapper.appendChild(before);
+    const outer = addOuterHost(wrapper, 370, 630);
+    const stage = addHost(wrapper, 370, 1000);
+
+    hold({ position: "post", host: stage, outerHost: outer });
+
+    expect(outer.style.getPropertyValue("margin-top")).toBe("");
+  });
+
+  it("nimmt den Ausgleich beim Freigeben zurück", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    const outer = addOuterHost(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+
+    const release = hold({ position: "pre", host: stage, outerHost: outer });
+    expect(outer.style.getPropertyValue("margin-top")).toBe("-88px");
+
+    release();
+
+    expect(outer.style.getPropertyValue("margin-top")).toBe("");
+  });
+
+  it("lässt eine Bühne in Ruhe, die schon bündig steht", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    const outer = addOuterHost(wrapper, 111, 630);
+    const stage = addHost(wrapper, 111, 711);
+
+    hold({ position: "pre", host: stage, outerHost: outer });
+
+    expect(outer.style.getPropertyValue("margin-top")).toBe("");
+  });
+
+  it("schiebt eine Bühne nicht nach unten, die über der Innenkante liegt", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    // Eine negative Lücke käme von einem fremden Eingriff; sie aufzufüllen
+    // hiesse, die Bühne nach unten zu schieben — das will niemand.
+    const outer = addOuterHost(wrapper, 80, 630);
+    const stage = addHost(wrapper, 80, 680);
+
+    hold({ position: "pre", host: stage, outerHost: outer });
+
+    expect(outer.style.getPropertyValue("margin-top")).toBe("");
+  });
+});
+
+describe("usePageTop und der äussere Kasten", () => {
+  it("reicht den äusseren Kasten an die Messung weiter", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    const outer = addOuterHost(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+
+    // Fehlt der Kasten auf dem Weg durch den Hook, bleibt der Weissraum über
+    // der Bühne stehen, obwohl `holdPageTop` selbst richtig ausgleicht.
+    const { unmount } = renderHook(() => usePageTop({ position: "pre", host: stage, outerHost: outer }));
+
+    expect(outer.style.getPropertyValue("margin-top")).toBe("-88px");
+
+    unmount();
+    expect(outer.style.getPropertyValue("margin-top")).toBe("");
+  });
+
+  it("meldet den Halter neu an, wenn der äussere Kasten später kommt", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    const outer = addOuterHost(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+
+    // React setzt die Ref des äusseren Kastens per Zustand: im ersten
+    // Bildaufbau ist er noch `null`.
+    const { rerender, unmount } = renderHook(
+      ({ box }: { box: HTMLElement | null }) => usePageTop({ position: "pre", host: stage, outerHost: box }),
+      { initialProps: { box: null as HTMLElement | null } },
+    );
+    expect(outer.style.getPropertyValue("margin-top")).toBe("");
+
+    rerender({ box: outer });
+    expect(outer.style.getPropertyValue("margin-top")).toBe("-88px");
+
+    unmount();
+  });
+});
+
+describe("Ausgleich ausserhalb beschneidender Vorfahren", () => {
+  /**
+   * Der Aufbau eines Content-Designer-Blocks: der Container der Zeile, darin
+   * ein Kasten mit `overflow: hidden`, darin der Schattenwirt des Widgets,
+   * hinter der Schattengrenze Attrappen mit `display: contents` und zuletzt
+   * der äussere Kasten des Widgets. Alle beginnen auf derselben Höhe.
+   *
+   * Jeder Kasten folgt dem Aussenabstand jedes Vorfahren in der Kette, wie im
+   * Browser — sonst prüfte der Test eine Verschiebung, die es nicht gibt.
+   */
+  function addBlock(wrapper: HTMLElement, naturalTop: number, height: number) {
+    const container = document.createElement("div");
+    const clip = document.createElement("div");
+    clip.style.overflow = "hidden";
+    const shadowHost = document.createElement("div");
+    const root = shadowHost.attachShadow({ mode: "open" });
+    const copy = document.createElement("div");
+    copy.style.display = "contents";
+    const outer = document.createElement("div");
+    outer.className = "man-hero-host";
+
+    wrapper.appendChild(container);
+    container.appendChild(clip);
+    clip.appendChild(shadowHost);
+    root.appendChild(copy);
+    copy.appendChild(outer);
+
+    const shiftOf = (el: HTMLElement): number => {
+      const value = Number.parseFloat(el.style.getPropertyValue("margin-top"));
+      return Number.isNaN(value) ? 0 : value;
+    };
+    const chain = [container, clip, shadowHost, outer];
+    for (const [index, el] of chain.entries()) {
+      el.getBoundingClientRect = () => {
+        const top = naturalTop + chain.slice(0, index + 1).reduce((sum, a) => sum + shiftOf(a), 0);
+        return { top, left: 0, right: 0, bottom: top + height, width: 0, height, x: 0, y: top } as DOMRect;
+      };
+    }
+    return { container, clip, shadowHost, outer };
+  }
+
+  it("setzt den Ausgleich an den obersten bündigen Vorfahren, nicht unter den Beschnitt", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    const { container, clip, outer } = addBlock(wrapper, 199, 630);
+    const stage = addHost(wrapper, 199, 799);
+
+    const release = hold({ position: "pre", host: stage, outerHost: outer });
+
+    // Sässe der Ausgleich unter dem Kasten mit `overflow: hidden`, schnitte
+    // der die oberen 88px der Bühne ab — gemessen bündig, zu sehen Weissraum.
+    expect(container.style.getPropertyValue("margin-top")).toBe("-88px");
+    expect(clip.style.getPropertyValue("margin-top")).toBe("");
+    expect(outer.style.getPropertyValue("margin-top")).toBe("");
+    expect(outer.getBoundingClientRect().top).toBe(111);
+
+    release();
+    expect(container.style.getPropertyValue("margin-top")).toBe("");
+  });
+
+  it("steigt nicht über einen Vorfahren hinaus, der höher beginnt", () => {
+    addChrome(111);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 150);
+    const { container, clip, outer } = addBlock(wrapper, 199, 630);
+    // Über der Bühne steht in derselben Zeile noch etwas: der Container
+    // beginnt höher. Ihn zu verschieben zöge dieses Etwas mit unter die
+    // Leisten — dann bleibt der Ausgleich am Kasten, der mit der Bühne beginnt.
+    setRect(container, { top: 149, bottom: 829, height: 680 });
+    const stage = addHost(wrapper, 199, 799);
+
+    hold({ position: "pre", host: stage, outerHost: outer });
+
+    expect(container.style.getPropertyValue("margin-top")).toBe("");
+    // Der Kasten mit `overflow: hidden` beginnt mit der Bühne; ihn selbst zu
+    // verschieben nimmt seinen Inhalt mit, statt ihn zu beschneiden.
+    expect(clip.style.getPropertyValue("margin-top")).toBe("-88px");
   });
 });
