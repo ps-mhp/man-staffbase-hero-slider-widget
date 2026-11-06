@@ -93,7 +93,41 @@ describe("HeroSlider — was gemessen wird", () => {
   });
 });
 
+describe("HeroSlider — Hinweis im Editor", () => {
+  /** Der Zustand des klassischen Editors (`EDITOR_MARKER_SELECTOR`). */
+  function openEditor(): void {
+    const marker = document.createElement("div");
+    marker.setAttribute("data-react-values", "{}");
+    document.body.appendChild(marker);
+  }
+
+  it("macht aus einer Messung ohne Bühne keinen Rückfall", () => {
+    openEditor();
+    render(<HeroSlider slides={two} position="pre" />);
+
+    // Vor dem ersten Bildaufbau gibt es die Bühne noch nicht; die Messung
+    // läuft dann ohne Kasten und meldet zwangsläufig einen Rückfall.
+    const first = usePageTop.mock.calls[0][0];
+    expect(first.host).toBeNull();
+    act(() => first.onLayout?.({ applied: false, breadcrumbsHeight: 0 }));
+    expect(screen.queryByTestId("hero-position-notice")).toBeNull();
+
+    // Mit Bühne zählt dieselbe Meldung.
+    report({ applied: false, breadcrumbsHeight: 0 });
+    expect(screen.getByTestId("hero-position-notice")).toBeInTheDocument();
+  });
+});
+
 describe("HeroSlider — Platz für die verschobenen Brotkrumen", () => {
+  /** Ein Abschnitt des neuen Editors; nur in ihm nimmt die Bühne dessen Höhe. */
+  function addSection(): HTMLElement {
+    const section = document.createElement("div");
+    section.dataset.c13yComponent = "section-block";
+    section.appendChild(document.createElement("div"));
+    document.body.appendChild(section);
+    return section.firstElementChild as HTMLElement;
+  }
+
   it("hält die gemeldete Höhe frei und gibt sie wieder her", () => {
     const { container } = render(<HeroSlider slides={two} position="pre" />);
 
@@ -104,5 +138,33 @@ describe("HeroSlider — Platz für die verschobenen Brotkrumen", () => {
 
     report({ applied: true, breadcrumbsHeight: 0 });
     expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
+  });
+
+  it("hält den Platz im Abschnitt am Wirtskasten frei, nicht in ihm", () => {
+    const { container } = render(<HeroSlider slides={two} position="pre" height="section" />, {
+      container: addSection(),
+    });
+
+    report({ applied: true, breadcrumbsHeight: 48 });
+
+    // Der Wirtskasten steht hier auf der Höhe des Abschnitts; ein Platzhalter
+    // in ihm hielte nichts frei, sondern liefe über seine Unterkante hinaus.
+    const host = container.querySelector<HTMLElement>(".man-hero-host");
+    expect(host).toHaveClass("man-hero-host--fill");
+    expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
+    expect(host?.style.marginBottom).toBe("48px");
+
+    // Der Abstand darf nicht in die Messung zurücklaufen: gemessen wird die
+    // Bühne, und die liegt im Wirtskasten, nicht an seiner Aussenkante.
+    expect(lastOptions().host).not.toBe(host);
+
+    report({ applied: true, breadcrumbsHeight: 0 });
+    expect(host?.style.marginBottom).toBe("");
+  });
+
+  it("lässt den Wirtskasten ohne Brotkrumen unangetastet", () => {
+    const { container } = render(<HeroSlider slides={two} />, { container: addSection() });
+
+    expect(container.querySelector(".man-hero-host")?.getAttribute("style")).toBeNull();
   });
 });

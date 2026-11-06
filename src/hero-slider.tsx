@@ -25,7 +25,7 @@ import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useHotStyle } from "@shared/hot-style";
 import { useFullBleed } from "./full-bleed";
 import { PageTopLayout, usePageTop } from "./page-top";
-import { HeroPosition } from "./attributes";
+import type { HeroPosition } from "./attributes";
 import { isEditor } from "./editor-context";
 import { Slide, SlideImage, firstFrameUrl, isVideo } from "./slides-model";
 import { DEFAULT_AUTOPLAY_DELAY_MS, useSlider } from "./use-slider";
@@ -244,7 +244,13 @@ export function HeroSlider({
   // Der Beginn der Seite, solange eine Bühne auf ihr liegt: unter den
   // Brotkrumen, wenn es welche gibt, sonst bündig am Menü — und im Modus
   // `pre` umgekehrt, mit den Brotkrumen unter der Bühne (siehe `page-top.ts`).
-  usePageTop({ position, host: stage, onLayout });
+  //
+  // Vor dem ersten Bildaufbau gibt es die Bühne noch nicht. Die Messung läuft
+  // dann ohne Kasten und meldet zwangsläufig einen Rückfall — zugehört wird
+  // erst, wenn es etwas zu messen gab. Sonst blitzte der Hinweis im Editor
+  // bei jedem Aufbau einmal auf, auch dort, wo `pre` anschliessend zustande
+  // kommt.
+  usePageTop({ position, host: stage, onLayout: stage === null ? undefined : onLayout });
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -290,12 +296,27 @@ export function HeroSlider({
     vars["--man-hero-header"] = `${bleed.headerHeight}px`;
   }
 
+  // Der Platz für die verschobenen Brotkrumen — auf zwei Wegen, weil der
+  // Wirtskasten in `man-hero-host--fill` auf `height: 100%` steht und ein
+  // Platzhalter in ihm nichts freihielte, sondern über seine Unterkante
+  // hinausliefe. Dort kommt der Platz deshalb als Aussenabstand des
+  // Wirtskastens; inline, weil er die Regel `man-outshine-host {
+  // margin-bottom: 0 }` schlagen muss.
+  //
+  // Auf die Messung wirkt er nicht zurück: gemessen wird die innere
+  // `.man-hero` (`setStage`), und ein Aussenabstand des äusseren Kastens
+  // verschiebt deren Unterkante nicht.
+  const crumbSpace = layout.breadcrumbsHeight;
+  const hostStyle =
+    crumbSpace > 0 && filled ? { marginBottom: `${crumbSpace}px` } : undefined;
+
   return (
     // Der äussere Kasten bleibt immer in der Inhaltsspalte; nur der innere
     // bricht aus. Ohne diese Trennung gäbe es keinen festen Punkt, an dem sich
     // die Kante der Spalte messen liesse.
     <div
       className={`man-hero-host${filled ? " man-hero-host--fill" : ""}`}
+      style={hostStyle}
       ref={setAnchor}
     >
       {showNotice && (
@@ -345,8 +366,8 @@ export function HeroSlider({
 
       <div className="man-hero__frame">
         <div className="man-hero__slides">
-          {slides.map((slide, position) => {
-            const active = position === index;
+          {slides.map((slide, at) => {
+            const active = at === index;
             return (
               <div
                 key={slide.id}
@@ -357,7 +378,7 @@ export function HeroSlider({
                 role={many ? (controls ? "tabpanel" : "group") : undefined}
                 id={many ? `hero-slide-${slide.id}` : undefined}
                 aria-roledescription={many ? "Folie" : undefined}
-                aria-label={many ? `Folie ${position + 1} von ${slides.length}` : undefined}
+                aria-label={many ? `Folie ${at + 1} von ${slides.length}` : undefined}
                 // Verborgene Slides sind für Hilfsmittel nicht vorhanden und
                 // liegen nicht in der Tabreihenfolge — sonst führte die
                 // Tabulatortaste in unsichtbare Schaltflächen.
@@ -367,7 +388,7 @@ export function HeroSlider({
                 <div className="man-hero__media">
                   <SlideMedia
                     slide={slide}
-                    eager={position === 0}
+                    eager={at === 0}
                     play={active && !reducedMotion}
                     portrait={portrait}
                   />
@@ -418,17 +439,17 @@ export function HeroSlider({
               />
 
               <div className="man-hero__dots">
-                {slides.map((slide, position) => (
+                {slides.map((slide, at) => (
                   <button
                     key={slide.id}
                     type="button"
-                    className={`man-hero__dot${position === index ? " man-hero__dot--active" : ""}`}
+                    className={`man-hero__dot${at === index ? " man-hero__dot--active" : ""}`}
                     data-testid={`hero-dot-${slide.id}`}
                     role="tab"
-                    aria-selected={position === index}
+                    aria-selected={at === index}
                     aria-controls={`hero-slide-${slide.id}`}
-                    aria-label={`Folie ${position + 1} von ${slides.length}`}
-                    onClick={() => goTo(position)}
+                    aria-label={`Folie ${at + 1} von ${slides.length}`}
+                    onClick={() => goTo(at)}
                   />
                 ))}
               </div>
@@ -456,18 +477,17 @@ export function HeroSlider({
       )}
       </div>
 
-      {layout.breadcrumbsHeight > 0 && (
+      {crumbSpace > 0 && !filled && (
         // Die Brotkrumen liegen aus dem Fluss: verschoben überdecken sie den
         // Inhalt unter der Bühne, statt ihn zu schieben. Dieser Platzhalter
         // ist der Platz, den sie sich nicht selbst nehmen können.
         //
-        // Bekannte Lücke: in `man-hero-host--fill` gibt der Abschnitt die
-        // Höhe des Wirtskastens vor (`height: 100%`). Der Platzhalter hält
-        // dort nichts frei, sondern läuft nur über den unteren Rand hinaus.
-        // Hier bewusst nicht behoben.
+        // Nur hier, wo der Wirtskasten seine Höhe aus seinem Inhalt bezieht.
+        // In `man-hero-host--fill` steht sie fest, und der Platz kommt als
+        // Aussenabstand des Wirtskastens (siehe `hostStyle`).
         <div
           className="man-hero__crumb-space"
-          style={{ height: `${layout.breadcrumbsHeight}px` }}
+          style={{ height: `${crumbSpace}px` }}
           aria-hidden
         />
       )}

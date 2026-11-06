@@ -156,6 +156,10 @@
 
   // Die Luft nach unten gehört hier dem Abschnitt. Bliebe sie stehen, wäre
   // sie genau die Lücke, um die es geht.
+  //
+  // Den Platz für verschobene Brotkrumen setzt die Bühne in dieser Stufe als
+  // Inline-Aussenabstand (siehe `hero-slider.tsx`); der schlägt diese Regel,
+  // und ein Platzhalter im Kasten wäre hier wirkungslos.
   @include man-outshine-host {
     margin-bottom: 0;
   }
