@@ -22,6 +22,7 @@
  * wäre für Leser:innen unerklärlich.
  */
 
+import type { BottomSpacing } from "./bottom-spacing";
 import { HERO_HEIGHTS, HeroHeight } from "./hero-slider";
 import { DEFAULT_AUTOPLAY_DELAY_MS } from "./use-slider";
 
@@ -70,4 +71,12 @@ export function readAutoplayDelayMs(raw: unknown): number {
  */
 export function readPosition(raw: unknown): HeroPosition {
   return raw === "pre" ? "pre" : "post";
+}
+
+/**
+ * Der Blockabstand unter der Bühne fällt nur auf ausdrückliche Ansage weg.
+ * Alles andere behält den Abstand, den die Seite zwischen ihre Blöcke setzt.
+ */
+export function readBottomSpacing(raw: unknown): BottomSpacing {
+  return raw === "none" ? "none" : "default";
 }

@@ -125,6 +125,21 @@ schlechter als gar keine Änderung. Im Editor steht in diesem Fall ein Hinweis
 über der Bühne. Auf der veröffentlichten Seite erscheint er nicht; dort lässt
 sich an der Einstellung nichts ändern.
 
+**Frage:** Über der Bühne war früher ein weisser Streifen. Wo ist er hin?
+
+Antwort: Der Abschnitt, in dem die Bühne steht, hält über seinem ersten Block
+einen Innenabstand. Über einem Text ist das richtig, über einer Bühne entsteht
+dadurch ein weisser Streifen zwischen Menü oder Brotkrumen und Bild. Die Bühne
+gleicht diesen Abstand selbst aus, sobald sie ganz oben steht. Steht über ihr
+ein anderer Block, bleibt der Abstand, wie die Seite ihn setzt.
+
+**Frage:** Ich habe „Kein Abstand“ gewählt, unter der Bühne ist aber noch Platz.
+
+Antwort: „Kein Abstand“ nimmt den Abstand zwischen zwei Blöcken weg. Ist die
+Bühne der letzte Block ihres Abschnitts, folgt darunter der Innenabstand des
+Abschnitts und der Beginn des nächsten — beide gehören zur Seite. Legen Sie den
+folgenden Inhalt in denselben Abschnitt, dann schliesst er direkt an.
+
 **Frage:** Ohne Bedienelemente — wie blättert man dann?
 
 Antwort: Mit dem Finger wischen, mit den Pfeiltasten blättern, oder von selbst:

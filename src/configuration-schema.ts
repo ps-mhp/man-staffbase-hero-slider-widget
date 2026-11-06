@@ -20,6 +20,7 @@ export const FULL_BLEED_ATTRIBUTE = "full-bleed";
 export const AUTOPLAY_DELAY_ATTRIBUTE = "autoplay-delay";
 export const POSITION_ATTRIBUTE = "position";
 export const CONTROLS_ATTRIBUTE = "controls";
+export const BOTTOM_SPACING_ATTRIBUTE = "bottom-spacing";
 
 /**
  * Das Schema des Konfigurationsdialogs.
@@ -78,6 +79,15 @@ export const configurationSchema: JSONSchema7 = {
       title: "Bedienelemente zeigen",
       default: true,
     },
+    [BOTTOM_SPACING_ATTRIBUTE]: {
+      type: "string",
+      title: "Abstand nach unten",
+      default: "default",
+      oneOf: [
+        { const: "default", title: "Standard (Vorgabe)" },
+        { const: "none", title: "Kein Abstand" },
+      ],
+    },
   },
 };
 
@@ -120,5 +130,11 @@ export const uiSchema: UiSchema = {
     "ui:help":
       "Blendet Pfeile und Striche aus. Geblättert wird weiter mit Wischen und den " +
       "Pfeiltasten, und die eingestellte Zeit je Folie läuft unverändert.",
+  },
+  [BOTTOM_SPACING_ATTRIBUTE]: {
+    "ui:help":
+      "„Standard“ hält unter der Bühne den Abstand, den die Seite zwischen ihre Blöcke setzt. " +
+      "„Kein Abstand“ lässt den folgenden Block direkt anschliessen — bei „vor den Brotkrumen“ " +
+      "direkt unter den Brotkrumen. Der Innenabstand am Ende eines Abschnitts bleibt.",
   },
 };

@@ -13,6 +13,7 @@
 
 import {
   readAutoplayDelayMs,
+  readBottomSpacing,
   readFlag,
   readHeight,
   readPosition,
@@ -72,5 +73,18 @@ describe("readPosition", () => {
     expect(readPosition(undefined)).toBe("post");
     expect(readPosition("")).toBe("post");
     expect(readPosition("oben")).toBe("post");
+  });
+});
+
+describe("readBottomSpacing", () => {
+  it("nimmt den Abstand nur auf ausdrückliche Ansage weg", () => {
+    expect(readBottomSpacing("none")).toBe("none");
+  });
+
+  it("lässt alles andere beim Blockabstand der Seite", () => {
+    // Bestandsseiten tragen das Attribut nicht und dürfen sich nicht ändern.
+    expect(readBottomSpacing(undefined)).toBe("default");
+    expect(readBottomSpacing("")).toBe("default");
+    expect(readBottomSpacing("0")).toBe("default");
   });
 });

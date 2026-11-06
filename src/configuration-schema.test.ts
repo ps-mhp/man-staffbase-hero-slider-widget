@@ -13,6 +13,7 @@
 
 import {
   AUTOPLAY_DELAY_ATTRIBUTE,
+  BOTTOM_SPACING_ATTRIBUTE,
   CONTROLS_ATTRIBUTE,
   configurationSchema,
   FULL_BLEED_ATTRIBUTE,
@@ -29,6 +30,7 @@ const ATTRIBUTE_NAMES = [
   AUTOPLAY_DELAY_ATTRIBUTE,
   POSITION_ATTRIBUTE,
   CONTROLS_ATTRIBUTE,
+  BOTTOM_SPACING_ATTRIBUTE,
 ];
 
 describe("configurationSchema", () => {
@@ -48,6 +50,21 @@ describe("configurationSchema", () => {
   it("gibt für die Bedienelemente den abwärtskompatiblen Vorgabewert an", () => {
     const property = configurationSchema.properties?.[CONTROLS_ATTRIBUTE];
     expect(property).toMatchObject({ default: true });
+  });
+});
+
+describe("Abstand nach unten", () => {
+  it("lässt Bestandsseiten beim Blockabstand der Seite", () => {
+    const property = configurationSchema.properties?.[BOTTOM_SPACING_ATTRIBUTE];
+    expect(property).toMatchObject({ default: "default" });
+  });
+
+  it("bietet genau Standard und keinen Abstand an", () => {
+    const property = configurationSchema.properties?.[BOTTOM_SPACING_ATTRIBUTE] as {
+      oneOf: { const: string }[];
+    };
+    expect(property.oneOf.map((option) => option.const)).toEqual(["default", "none"]);
+    expect(uiSchema).toHaveProperty([BOTTOM_SPACING_ATTRIBUTE, "ui:help"]);
   });
 });
 

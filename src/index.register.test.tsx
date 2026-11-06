@@ -25,6 +25,7 @@ import type { BlockDefinition, ExternalBlockDefinition } from "widget-sdk";
 
 import {
   AUTOPLAY_DELAY_ATTRIBUTE,
+  BOTTOM_SPACING_ATTRIBUTE,
   CONTROLS_ATTRIBUTE,
   FULL_BLEED_ATTRIBUTE,
   HEIGHT_ATTRIBUTE,
@@ -176,9 +177,10 @@ describe("Anmeldung des Widgets", () => {
         AUTOPLAY_DELAY_ATTRIBUTE,
         POSITION_ATTRIBUTE,
         CONTROLS_ATTRIBUTE,
+        BOTTOM_SPACING_ATTRIBUTE,
       ]),
     );
-    expect(definition.attributes).toHaveLength(6);
+    expect(definition.attributes).toHaveLength(7);
   });
 
   it("beobachtet genau die angemeldeten Attribute", async () => {
@@ -208,6 +210,7 @@ describe("Attribute an der Bühne", () => {
       autoplayDelayMs: DEFAULT_AUTOPLAY_DELAY_MS,
       position: "post",
       controls: true,
+      bottomSpacing: "default",
     });
   });
 
@@ -221,6 +224,7 @@ describe("Attribute an der Bühne", () => {
       [AUTOPLAY_DELAY_ATTRIBUTE]: 0,
       [POSITION_ATTRIBUTE]: "pre",
       [CONTROLS_ATTRIBUTE]: false,
+      [BOTTOM_SPACING_ATTRIBUTE]: "none",
     });
 
     expect(props).toMatchObject({
@@ -229,6 +233,7 @@ describe("Attribute an der Bühne", () => {
       autoplayDelayMs: 0,
       position: "pre",
       controls: false,
+      bottomSpacing: "none",
     });
   });
 

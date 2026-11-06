@@ -25,6 +25,7 @@ import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useHotStyle } from "@shared/hot-style";
 import { useFullBleed } from "./full-bleed";
 import { PageTopLayout, usePageTop } from "./page-top";
+import { BottomSpacing, useBottomSpacing } from "./bottom-spacing";
 import type { HeroPosition } from "./attributes";
 import { isEditor } from "./editor-context";
 import { Slide, SlideImage, firstFrameUrl, isVideo } from "./slides-model";
@@ -56,6 +57,8 @@ export interface HeroSliderProps {
   position?: HeroPosition;
   /** Pfeile und Striche zeigen; Vorgabe an. Wischen und Pfeiltasten bleiben. */
   controls?: boolean;
+  /** Blockabstand der Seite unter der Bühne; Vorgabe ist der der Seite. */
+  bottomSpacing?: BottomSpacing;
 }
 
 /** Ob eine Medienabfrage gerade zutrifft; ohne `matchMedia` nie. */
@@ -201,6 +204,7 @@ export function HeroSlider({
   autoplayDelayMs = DEFAULT_AUTOPLAY_DELAY_MS,
   position = "post",
   controls = true,
+  bottomSpacing = "default",
 }: HeroSliderProps): ReactElement | null {
   const hotCss = useHotStyle(heroSliderCss, "hero-slider-widget", "styles/hero-slider.scss");
   // Der Anker bricht selbst nie aus — an ihm wird die ungestörte Kante der
@@ -256,6 +260,10 @@ export function HeroSlider({
     outerHost: anchor,
     onLayout: stage === null ? undefined : onLayout,
   });
+
+  // Unter dem äusseren Kasten, weil er bei „vor den Brotkrumen“ auch den
+  // Platz für sie trägt: der folgende Block schliesst dann an die Brotkrumen an.
+  useBottomSpacing(anchor, bottomSpacing);
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {

@@ -24,6 +24,7 @@ import { startWidget } from "@shared/dev-mode/start-widget";
 import { getTranslationRegistry } from "@shared/translation/registry";
 import {
   AUTOPLAY_DELAY_ATTRIBUTE,
+  BOTTOM_SPACING_ATTRIBUTE,
   CONTROLS_ATTRIBUTE,
   FULL_BLEED_ATTRIBUTE,
   HEIGHT_ATTRIBUTE,
@@ -35,7 +36,13 @@ import {
 import { HeroSlider } from "./hero-slider";
 import { HeroSliderLoader } from "./hero-slider-loader";
 import { startSlideEditorInjector } from "./slide-editor-injector";
-import { readAutoplayDelayMs, readFlag, readHeight, readPosition } from "./attributes";
+import {
+  readAutoplayDelayMs,
+  readBottomSpacing,
+  readFlag,
+  readHeight,
+  readPosition,
+} from "./attributes";
 import { isSlideItem, parseHeroItems } from "./hero-items";
 import { heroSliderTranslationProvider } from "./translation-provider";
 import icon from "../resources/hero-slider-widget.svg";
@@ -49,6 +56,7 @@ const widgetAttributes: string[] = [
   AUTOPLAY_DELAY_ATTRIBUTE,
   POSITION_ATTRIBUTE,
   CONTROLS_ATTRIBUTE,
+  BOTTOM_SPACING_ATTRIBUTE,
 ];
 
 let stopInjector: (() => void) | null = null;
@@ -84,6 +92,7 @@ const factory: BlockFactory = (BaseBlockClass, _widgetApi) => {
         autoplayDelayMs: readAutoplayDelayMs(attrs[AUTOPLAY_DELAY_ATTRIBUTE]),
         position: readPosition(attrs[POSITION_ATTRIBUTE]),
         controls: readFlag(attrs[CONTROLS_ATTRIBUTE]),
+        bottomSpacing: readBottomSpacing(attrs[BOTTOM_SPACING_ATTRIBUTE]),
       };
 
       this._root ??= ReactDOM.createRoot(container);

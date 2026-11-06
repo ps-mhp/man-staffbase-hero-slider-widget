@@ -8,6 +8,7 @@
 | Sekunden je Folie | `5` ist voreingestellt. `0` hält die Bühne an; dann wird nur über Pfeile und Striche geblättert — und wenn die Bedienelemente abgeschaltet sind, nur noch mit Wischen und den Pfeiltasten. Höchstens 30. |
 | Lage zu den Brotkrumen | `Nach den Brotkrumen` ist voreingestellt: die Bühne beginnt unter der Brotkrumen-Zeile. `Vor den Brotkrumen` setzt sie bündig unter das Menü und rückt die Brotkrumen darunter. Greift nur, wenn die Bühne oben auf der Seite steht und die Seite überhaupt Brotkrumen hat. |
 | Bedienelemente zeigen | Eingeschaltet (Voreinstellung) erscheinen Pfeile und Striche. Ausgeschaltet verschwinden beide; geblättert wird weiter mit Wischen und den Pfeiltasten, und die eingestellte Zeit je Folie läuft unverändert. |
+| Abstand nach unten | `Standard` ist voreingestellt: unter der Bühne bleibt der Abstand, den die Seite zwischen ihre Blöcke setzt. `Kein Abstand` lässt den folgenden Block direkt anschliessen — bei „Vor den Brotkrumen“ direkt unter den Brotkrumen. |
 
 ## Sorten von Einträgen
 
@@ -70,6 +71,13 @@ Kanal-Eintrag zählt dabei mit allen Folien, die er beisteuert.
 - **Sekunden je Folie** wirkt erst ab der zweiten Folie.
 - Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, sieht keinen
   Wechsel von selbst — unabhängig von dieser Einstellung.
+- Oben schliesst die Bühne immer bündig an — an die Brotkrumen oder, bei
+  „Vor den Brotkrumen“, an das Menü. Den Innenabstand, den der Abschnitt über
+  seinem ersten Block hält, gleicht sie dafür aus. Das geschieht nur, wenn
+  über der Bühne kein anderer Inhalt steht.
+- **Abstand nach unten** nimmt den Abstand zwischen den Blöcken weg, nicht den
+  Innenabstand am Ende eines Abschnitts. Steht die Bühne als letzter Block in
+  ihrem Abschnitt, bleibt dessen Abstand nach unten erhalten.
 - Die Bedienelemente erscheinen erst ab der zweiten Folie. Auf schmalen
   Bildschirmen sind die Pfeile ausgeblendet; dort wird gewischt.
 - Ein Beitrag, der gelöscht wird oder für die lesende Person nicht sichtbar
