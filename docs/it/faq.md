@@ -4,7 +4,7 @@
 
 Risposta: Alla diapositiva manca l'immagine. Le diapositive senza immagine non vengono visualizzate: una
 superficie vuota e scura non sarebbe distinguibile da un errore sulla pagina.
-Apri l’editor e seleziona un’immagine alla voce **Immagine o video**
+Apri l’editor e seleziona un’immagine nella sezione **Immagine o video**
 oppure inserisci un indirizzo.
 
 **Domanda:** Ho inserito l’indirizzo di un video, ma la diapositiva mostra solo
@@ -12,7 +12,7 @@ una superficie scura.
 
 Risposta: Di solito il video non è accessibile senza registrazione, oppure **Tipo** è impostato
 su **Immagine** perché l’indirizzo non ha un’estensione. Apri l’indirizzo in
-una finestra privata del browser: se non funziona lì, non lo vedranno nemmeno i
+una finestra privata del browser: se lì non funziona, non lo vedranno nemmeno i
 lettori. Un messaggio proprio sotto il campo indica che l’indirizzo
 non è stato accettato — deve iniziare con `https://`.
 
@@ -41,7 +41,7 @@ le impostazioni e le riapra. Il testo nel campo è la
 bozza delle voci; non lo modifichi manualmente — un errore di battitura
 al suo interno fa scomparire tutte le diapositive.
 
-**Domanda:** La scena non cambia automaticamente.
+**Domanda:** Lo schermo non cambia automaticamente.
 
 Risposta: Tre possibili cause: c’è una sola diapositiva; **Secondi per diapositiva**
 è impostato su `0`; oppure nel sistema operativo è attivata l’opzione «Riduci movimento».
@@ -53,7 +53,7 @@ e le linee.
 Risposta: È previsto così. Sugli schermi stretti si scorre con il dito; le
 linee sotto il testo continuano a indicare quale diapositiva è attualmente in primo piano.
 
-**Domanda:** La mia immagine è tagliata ai bordi.
+**Domanda:** Il mio soggetto è tagliato ai bordi.
 
 Risposta: A seconda della larghezza della finestra, l’area di visualizzazione ritaglia l’immagine in formato 21:9 o 4:3. Scegliete
 un’immagine con un margine intorno al soggetto, oppure inserite in **Immagine per
@@ -63,7 +63,7 @@ formato verticale** un vostro ritaglio ritagliato in verticale.
 
 Risposta: No. Con cinque secondi per diapositiva, un ciclo completo dura già
 quaranta secondi con otto diapositive — nessuno rimane su un palcoscenico così a lungo.
-Il numero otto si applica a tutte le diapositive insieme: una voce del canale con cinque contributi
+L’otto si riferisce a tutte le diapositive insieme: una voce del canale con cinque contributi
 consente di affiancarle solo altre tre diapositive.
 
 **Domanda:** Devo aggiornare il palco quando nelle Notizie appare un nuovo
@@ -110,7 +110,7 @@ Le immagini, i link di destinazione, i canali, i filtri e l’ordine rimangono i
 lingua di origine — si tratta di un errore?
 
 Risposta: No. Il titolo e il testo di anteprima di un articolo di notizie provengono dall’articolo
-stesso, che viene visualizzato nella lingua che il lettore ha impostato nell’app
+stesso, che viene visualizzato nella lingua impostata dal lettore nell’app
 . Viene tradotto solo ciò che avete scritto nella voce stessa
 . Se manca una versione linguistica della notizia, viene visualizzata quella disponibile, invece di
 lasciare la schermata vuota.
@@ -119,7 +119,7 @@ lasciare la schermata vuota.
 
 Risposta: L’impostazione ha effetto solo se si verificano tre condizioni: la pagina ha
 effettivamente una barra di navigazione, la barra si trova nella parte superiore della pagina e
-non vi è altro contenuto sopra di essa. Se una di queste condizioni non è soddisfatta, la
+non c’è altro contenuto sopra di essa. Se una di queste condizioni non è soddisfatta, la
 palcoscenico sotto la barra di navigazione — una barra di navigazione al centro della pagina sarebbe
 peggiore che non avere alcuna modifica. Nell’editor, in questo caso, compare un avviso
 sopra il palcoscenico. Nella pagina pubblicata non compare; lì
@@ -128,21 +128,22 @@ non è possibile modificare l’impostazione.
 **Domanda:** Prima c’era una striscia bianca sopra il riquadro. Dove è finita?
 
 Risposta: La sezione in cui si trova il riquadro mantiene una distanza interna
-sopra il suo primo blocco. Sopra un testo questo è corretto, ma sopra un’area di lavoro
-si crea così una striscia bianca tra il menu o il percorso di navigazione e l’immagine. L’area di lavoro
+sopra il suo primo blocco. Sopra un testo questo è corretto, ma sopra un’area di lavoro si crea
+così una striscia bianca tra il menu o il percorso di navigazione e l’immagine. L’area di lavoro
 compensa automaticamente questa distanza non appena si trova in cima alla pagina. Se sopra di essa
 c’è un altro blocco, la distanza rimane quella impostata dalla pagina.
 
-**Domanda:** Ho selezionato «Nessuna spaziatura», ma sotto il palco c’è ancora spazio.
+**Domanda:** Ho selezionato «Nessuna distanza», ma sotto il palco c’è ancora spazio.
 
-Risposta: «Nessuna spaziatura» elimina la spaziatura tra due blocchi. Se il
-palco è l’ultimo blocco del suo paragrafo, sotto di esso segue la spaziatura interna del
-paragrafo e l’inizio di quello successivo — entrambi appartengono alla pagina. Con l’altezza
-«Altezza sezione» la distanza interna della sezione viene eliminata; altrimenti inserite il
-contenuto successivo nella stessa sezione, in modo che si allinei direttamente.
+Risposta: «Nessuna distanza» elimina la distanza dal blocco successivo nella stessa
+sezione. Se il palco è l’ultimo blocco della sua sezione, la
+sezione termina comunque con esso. Lo spazio che rimane è la distanza interna
+della sezione successiva — appartiene a quest’ultima e può essere modificata nelle sue
+impostazioni di sezione. Se il contenuto successivo si trova nella stessa sezione
+del palco, con «Nessuna distanza» si collega direttamente ad esso.
 
-**Domanda:** Senza elementi di controllo — come si sfoglia allora?
+**Domanda:** Senza elementi di controllo — come si fa allora a scorrere le diapositive?
 
-Risposta: Scorrendo con il dito, utilizzando i tasti freccia o automaticamente:
-il tempo impostato per ogni diapositiva rimane invariato. Per la tastiera, il
-palcoscenico stesso diventa selezionabile non appena mancano i comandi.
+Risposta: Scorrendo con il dito, utilizzando i tasti freccia o in modo automatico:
+il tempo impostato per ogni diapositiva scorre senza variazioni. Per la tastiera, la
+diapositiva stessa diventa selezionabile non appena mancano gli elementi di controllo.

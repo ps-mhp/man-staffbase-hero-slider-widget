@@ -23,7 +23,7 @@
    tylko wtedy, gdy wypełnione są zarówno etykieta, **jak i** miejsce docelowe. Na telefonie
    scena nie wyświetla żadnego z tych elementów: pokazuje tam tylko nagłówek, a
    cały slajd prowadzi do miejsca docelowego przycisku. To, co znajduje się w podtytule,
-   nie powinno więc zawierać treści, którą koniecznie trzeba przeczytać.
+   nie powinno więc zawierać informacji, które koniecznie muszą zostać przeczytane.
 9. Kliknij **Zastosuj**.
 10. Ustaw **Sekundy na slajd** na `0` — w przypadku pojedynczego slajdu
     nie ma czego zmieniać.
@@ -38,7 +38,7 @@
    aż tak daleko.
 3. Sortuj za pomocą strzałek **↑** i **↓** w prawym górnym rogu. Pierwszy slajd
    to ten, który jest widoczny po załadowaniu strony.
-4. Sprawdź, czy w polu **Sekundy na slajd** ustawiona jest wartość `5` (ustawienie domyślne).
+4. Sprawdź, czy opcja **Sekundy na slajd** jest ustawiona na `5` (ustawienie domyślne).
 5. **Zastosuj**, zapisz i sprawdź w podglądzie.
 
 ## Wyświetlenie pojedynczego wpisu z aktualności na scenie
@@ -72,8 +72,8 @@
      w aktualnościach.
    - **Tylko posty ze zdjęciem** — domyślnie włączone. Bez zdjęcia
      slajd byłby tylko ciemnym polem z tekstem.
-   - **Słowa kluczowe** — oddziel je przecinkami; wystarczy jeden post, jeśli zawiera
-     którekolwiek z nich.
+   - **Słowa kluczowe** — oddziel je przecinkami; wystarczy jeden post, jeśli
+     zawiera którekolwiek z nich.
 7. Sprawdź **podgląd**: pokazuje on dokładnie te wpisy, które pozostały po zastosowaniu filtrów
   . Jeśli pozostaje pusty, filtry są zbyt wąskie.
 8. **Zastosuj**, zapisz, sprawdź w podglądzie.
@@ -131,7 +131,7 @@ ponieważ jest on ładowany przy każdym wywołaniu strony.
 1. **Scena pozostaje pusta.** Brakuje co najmniej jednego obrazu: slajdy bez obrazu
    nie są wyświetlane. Otwórz edytor i sprawdź, czy każdy wpis zawiera
    obraz — w przypadku wpisów z kategorii „Aktualności” sprawdź to w podglądzie.
-2. **Obraz nie zajmuje całej szerokości.** Czy widżet znajduje się w
+2. **Obraz nie zajmuje całej szerokości.** Czy widget znajduje się w
    kolumnie obok innych treści? W takim razie umieść go w osobnym wierszu.
    W przeciwnym razie sprawdź, czy opcja **Wyświetlaj na całej szerokości** jest włączona
   .
@@ -150,5 +150,5 @@ ponieważ jest on ładowany przy każdym wywołaniu strony.
   przeniesiony lub jest niewidoczny dla czytelnika. Pozostałe slajdy
   pozostają nienaruszone. Sprawdź wpis w podglądzie edytora.
 7. **Wpis w kanale zawiera mniej slajdów niż ustawiono.** Filtry są
-  zbyt wąskie — zazwyczaj **Tylko wpisy ze zdjęciami** w kanale bez zdjęć — lub
-  scena jest już zapełniona ośmioma slajdami.
+   zbyt wąskie — zazwyczaj **Tylko wpisy ze zdjęciami** w kanale bez zdjęć — lub
+   scena jest już zapełniona ośmioma slajdami.

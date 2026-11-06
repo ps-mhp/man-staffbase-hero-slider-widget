@@ -21,14 +21,14 @@
    24 characters, and it will remain on one line.
 8. Optional: **Caption** and **Button**. The button appears
    only if both the label **and** the destination are filled in. On a phone,
-   the stage doesn’t display either of these: it only shows the headline, and the
+   the stage does not display either of these: it shows only the headline, and the
    entire slide leads to the button’s destination. Therefore, whatever is in the subtitle
-   shouldn’t be anything that absolutely needs to be read.
+   should not be something that absolutely needs to be read.
 9. Click **Apply**.
 10. Set **Seconds per Slide** to `0`—with a single slide, there’s
     nothing to change.
-11. Save the page and preview it, once in full-width
-    mode and once in a narrow window.
+11. Save the page and preview it, once in full width
+    and once in a narrow window.
 
 ## Creating Multiple Slides
 
@@ -59,7 +59,7 @@
    and may not always include a prominent background.
 8. **Apply**, save, and check the preview.
 
-## Show All Posts from a Channel
+## Show all posts from a channel
 
 1. Open the settings to access the editor.
 2. Click **New +** above the list and select **News Channel**.
@@ -111,7 +111,7 @@ since it loads every time the page is viewed.
 2. Select the relevant slide in the editor.
 3. Under **Image or Video for Portrait Orientation**, click **Select Image or Video**
    or enter a URL below it.
-4. Click **Apply**, save, and check the result in a narrow window or on your
+4. Click **Apply**, save, and preview in a narrow window or on the
    phone.
 
 ## Make Changes Later

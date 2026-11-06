@@ -7,17 +7,17 @@ d'un bouton. Il s'inspire de la scène du site man.eu.
 Si vous créez plusieurs diapositives, vous obtenez un diaporama : les diapositives s’affichent
 les unes après les autres, et on peut les faire défiler à l’aide des flèches et des traits situés en bas à gauche.
 
-Il n’est pas nécessaire de gérer manuellement une diapositive. Outre vos propres diapositives, la
+Il n’est pas nécessaire de mettre à jour une diapositive manuellement. Outre vos propres diapositives, la
 page d’accueil peut également afficher des **articles issus de l’actualité** :
 
 - **Article d’actualité** — un article spécifique sous forme de diapositive. L’image, le titre
-  et le teaser proviennent de l’article, le bouton renvoie vers celui-ci.
+  et le teaser proviennent de l’article, le bouton y renvoie.
 - **Chaîne d’actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
   ordre et les filtres sont paramétrables. Lorsqu’un nouvel article paraît dans la
   chaîne, il s’affiche automatiquement sur la scène.
 
 Ces trois types figurent dans la même liste et peuvent être librement combinés et
-triés — par exemple, une diapositive dédiée en tête, suivie des trois derniers
+triés — par exemple, une diapositive personnalisée en tête, suivie des trois derniers
 articles d’une rubrique.
 
 ## Ce que voient les lectrices et lecteurs

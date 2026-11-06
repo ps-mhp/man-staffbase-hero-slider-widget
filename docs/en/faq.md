@@ -50,7 +50,7 @@ and lines.
 
 **Question:** I don’t see any arrows on my phone.
 
-Answer: This is by design. On narrow screens, you swipe; the
+Answer: That’s by design. On narrow screens, you swipe; the
 lines below the text still indicate which slide is currently on top.
 
 **Question:** My image is cropped at the edge.
@@ -134,14 +134,15 @@ another block above it, the spacing remains as set by the page.
 
 **Question:** I selected “No Spacing,” but there’s still space below the stage.
 
-Answer: “No Spacing” removes the spacing between two blocks. If the
-stage is the last block in its section, the inner spacing of the
-section and the start of the next section follow below it—both belong to the page. If you set the height
-to “Section Height,” the section’s internal spacing is removed; otherwise, place the
-following content in the same section, and it will align directly with it.
+Answer: “No Spacing” removes the spacing from the next block in the same
+section. If the stage is the last block in its section, the
+section ends with it anyway. Any space that remains is the internal spacing
+of the following section—it belongs to that section and can be adjusted in its
+section settings. If the following content is in the same section
+as the stage, it will connect directly to it with “No Spacing.”
 
-**Question:** Without controls—how do you turn the pages?
+**Question:** Without controls—how do you navigate then?
 
-Answer: Swipe with your finger, use the arrow keys to scroll, or let it run automatically:
-the set time per slide remains unchanged. For the keyboard, the
-stage itself becomes selectable as soon as the controls are missing.
+Answer: Swipe with your finger, use the arrow keys to navigate, or let it run automatically:
+the set time per slide remains unchanged. For keyboard navigation, the
+slide itself becomes selectable as soon as the controls are missing.

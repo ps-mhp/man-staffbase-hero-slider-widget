@@ -20,7 +20,7 @@ nie został zaakceptowany — musi zaczynać się od `https://`.
 nie pojawia się ona.
 
 Odpowiedź: Przycisk wymaga **obu** elementów — etykiety i adresu docelowego. Dopóki
-jedno z pól jest puste, przycisk nie będzie wyświetlany.
+jedno z pól jest puste, przycisk nie jest wyświetlany.
 
 **Pytanie:** Obraz nie zajmuje całej szerokości okna.
 
@@ -34,7 +34,7 @@ Odpowiedź: Obszar edycji dostosowuje się do szerokości treści zgłaszanej pr
 Jeśli się różni, zgłoś ten przypadek, podając adres strony.
 
 **Pytanie:** Zamiast edytora widzę pole tekstowe „Wpisy” z nawiasami
-falkowymi w środku.
+falistymi w środku.
 
 Odpowiedź: Edytor nie mógł połączyć się z oknem dialogowym. Zamknij
 ustawienia i otwórz je ponownie. Tekst w polu to
@@ -94,8 +94,8 @@ w adresie kanału w systemie CMS.
 **Pytanie:** Dlaczego zdjęcie wpisu z aktualnościami na scenie jest nieostre lub
 dziwnie przycięte?
 
-Odpowiedź: Zdjęcia do artykułów są przycięte pod kątem formatu kanału informacyjnego, a nie pod kątem
-ekranu o pełnej wysokości. W wpisie w sekcji **Zastąp obraz sceny**
+Odpowiedź: Zdjęcia artykułów są przycięte pod format kanału informacyjnego, a nie pod
+ekran o wysokości sceny. W wpisie w sekcji **Zastąp obraz sceny**
 przeznacz własny obraz, w orientacji poziomej i o szerokości co najmniej 1920 px.
 
 **Pytanie:** Co dzieje się z ramką podczas automatycznego tłumaczenia
@@ -106,20 +106,20 @@ podtytuł, etykieta przycisku i opis obrazu na slajdzie,
 a także nadpisany tytuł i etykieta wpisu z aktualnościami.
 Obrazy, linki, kanały, filtry i kolejność pozostają niezmienione.
 
-**Pytanie:** W przetłumaczonej wersji strony wpis z aktualności zawiera inne teksty niż w
+**Pytanie:** Wpisy w sekcji aktualności na przetłumaczonej stronie zawierają inne teksty niż w
 języku źródłowym — czy to błąd?
 
 Odpowiedź: Nie. Tytuł i tekst zapowiedzi wpisu w sekcji aktualności pochodzą z samego
 wpisu, a ten jest wyświetlany w języku, który czytelnik ustawił w aplikacji.
 Tłumaczone jest tylko to, co sam wpisałeś Tłumaczone jest tylko to, co napisałeś w samym wpisie.
-Jeśli brakuje wersji językowej wpisu, wyświetlana jest ta dostępna, zamiast
-pozostawiać puste pole.
+Jeśli brakuje wersji językowej wpisu, wyświetlana jest ta, która jest dostępna, zamiast
+pozostawiać puste miejsce.
 
 **Pytanie:** Wybrałem opcję „Przed ścieżką nawigacyjną”, ale nic się nie zmienia.
 
 Odpowiedź: Ta opcja działa tylko wtedy, gdy spełnione są trzy warunki: strona posiada
 w ogóle pasek nawigacyjny, obszar wyświetlania znajduje się na samym górze strony oraz
-nad nim nie ma żadnej innej treści. Jeśli któryś z tych warunków nie jest spełniony,
+nad nim nie ma żadnej innej treści. Jeśli którykolwiek z tych warunków nie jest spełniony,
 scena poniżej ścieżki nawigacyjnej — umieszczenie ścieżki nawigacyjnej na środku strony byłoby
 gorsze niż brak jakiejkolwiek zmiany. W edytorze w takim przypadku pojawia się wskazówka
 nad sceną. Na opublikowanej stronie nie jest ona widoczna; tam
@@ -135,14 +135,15 @@ znajduje się inny blok, odstęp pozostaje taki, jak ustalono na stronie.
 
 **Pytanie:** Wybrałem opcję „Brak odstępu”, ale pod sceną nadal jest miejsce.
 
-Odpowiedź: Opcja „Brak odstępu” usuwa odstęp między dwoma blokami. Jeśli
-scena jest ostatnim blokiem w akapicie, poniżej niej pojawia się odstęp wewnętrzny
-akapitu oraz początek następnego — oba należą do strony. W przypadku ustawienia wysokości
-„Wysokość sekcji” odstęp wewnętrzny sekcji nie jest stosowany; w przeciwnym razie należy umieścić
-kolejną treść w tej samej sekcji, a wtedy będzie ona bezpośrednio przylegać.
+Odpowiedź: Opcja „Brak odstępu” usuwa odstęp od następnego bloku w tym samym
+akapicie. Jeśli scena jest ostatnim blokiem swojego akapitu, to
+akapit i tak kończy się wraz z nią. Miejsce, które pozostaje, to odstęp wewnętrzny
+kolejnej sekcji — należy on do niej i można go zmienić w jej
+ustawieniach sekcji. Jeśli następująca treść znajduje się w tej samej sekcji
+co scena, przy „Brak odstępu” przylega do niej bezpośrednio.
 
-**Pytanie:** Bez elementów sterujących — jak w takim razie przewijać?
+**Pytanie:** Bez elementów sterujących — jak wtedy przewijać?
 
 Odpowiedź: Przesuwając palcem, za pomocą klawiszy strzałek lub automatycznie:
-ustawiony czas wyświetlania każdego slajdu pozostaje niezmieniony. W przypadku klawiatury
-sama scena staje się elementem nawigacyjnym, gdy tylko brakuje elementów sterujących.
+ustawiony czas na każdy slajd przebiega niezmiennie. W przypadku klawiatury
+sama scena staje się elementem sterującym, gdy tylko brakuje elementów sterujących.

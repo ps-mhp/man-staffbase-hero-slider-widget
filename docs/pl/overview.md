@@ -31,8 +31,8 @@ artykuły z kanału.
 - **Tekst pozostaje na linii bazowej strony**: zaczyna się na tej samej
   pionowej linii co nagłówek, menu i tekst poniżej obszaru obrazu. Nie
   przylega on w żadnym wypadku do krawędzi obrazu.
-- Tekst znajduje się w lewym dolnym rogu, na ciemnym gradientem, który rozciąga się od dołu
-  do góry. Na szerokich ekranach dodawany jest drugi gradient z lewej strony,
+- Tekst znajduje się w lewym dolnym rogu, na ciemnym gradientem, który rozciąga się od dołu do
+  góry. Na szerokich ekranach dodawany jest drugi gradient z lewej strony,
   aby jasny tekst pozostawał czytelny na jasnym tle.
 - W przypadku wielu slajdów: strzałki po lewej i prawej stronie, a pomiędzy nimi kreska dla każdego slajdu.
   Kreska bieżącego slajdu jest czerwona.
@@ -45,13 +45,13 @@ artykuły z kanału.
   ich etykietą pozostaje nazwa tego linku. Jeśli slajd nie ma celu, nie można
   go dotknąć.
 - Użytkownicy, którzy w systemie operacyjnym włączyli opcję „Ogranicz ruchy”, nie widzą
-  samoczynnej zmiany slajdów ani przejścia — widzą jedynie elementy sterujące.
+  samoczynnej zmiany slajdów ani przejścia — widzą tylko elementy sterujące.
 - Slajdy z sekcji aktualności wyglądają jak każdy inny slajd. Z zewnątrz nie da się rozpoznać, że treść pochodzi
   z artykułu.
 
 ## Co widać w edytorze CMS
 
-Edytor wyświetla obszar roboczy w obrębie kolumny treści, czyli **węższy niż na
+Edytor wyświetla obszar roboczy w obrębie kolumny treści, a więc **węższy niż na
 opublikowanej stronie**. Jak daleko faktycznie sięga obraz i gdzie znajduje się tekst,
 można ocenić jedynie w podglądzie lub na opublikowanej stronie.
 Zawsze należy tam sprawdzić przynajmniej raz przy wąskiej Zawsze sprawdź to tam przynajmniej raz przy wąskiej

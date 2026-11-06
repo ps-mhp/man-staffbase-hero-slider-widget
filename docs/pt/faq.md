@@ -1,4 +1,4 @@
-# Perguntas Frequentes
+# Perguntas frequentes
 
 **Pergunta:** Criei um slide, mas o palco permanece vazio.
 
@@ -79,7 +79,7 @@ Resposta: A publicação foi eliminada, movida ou não está visível para o lei
 
 **Pergunta:** A minha entrada do canal mostra menos slides do que os definidos.
 
-Resposta: Na maioria das vezes, os filtros são demasiado restritivos. **Apenas publicações com imagem** é
+Resposta: Na maioria das vezes, os filtros estão demasiado restritos. **Apenas publicações com imagem** é
 a predefinição — um canal sem imagens não apresenta, portanto, nada. Verifique a
 pré-visualização no editor: mostra exatamente o que irá aparecer no palco.
 
@@ -102,7 +102,7 @@ página?
 
 Resposta: São traduzidos todos os textos escritos pelo utilizador: título,
 subtítulo, legenda do botão e descrição da imagem de um slide,
-bem como o título substituído e a legenda de uma notícia.
+bem como o título substituído e a legenda de uma entrada de notícia.
 As imagens, os destinos dos links, os canais, os filtros e a ordem permanecem inalterados.
 
 **Pergunta:** Uma notícia apresenta, na página traduzida, textos diferentes dos da
@@ -128,19 +128,20 @@ não é possível alterar essa configuração.
 Resposta: A secção onde se encontra a área de trabalho mantém um
 espaçamento interno acima do seu primeiro bloco. Acima de um texto, isso está correto; acima de um palco, isso cria
 uma faixa branca entre o menu ou a trilha de navegação e a imagem. O palco
-compensa essa margem por si próprio, assim que fica na parte superior. Se houver
-outro bloco acima dele, a margem mantém-se tal como definida pela página.
+compensa essa distância por si próprio, assim que estiver na parte superior. Se houver
+outro bloco acima dele, a distância mantém-se tal como definida pela página.
 
-**Pergunta:** Escolhi «Sem espaçamento», mas ainda há espaço por baixo do palco.
+**Pergunta:** Selecionei «Sem espaçamento», mas ainda há espaço por baixo do palco.
 
-Resposta: «Sem espaçamento» elimina o espaçamento entre dois blocos. Se o
-palco for o último bloco da sua secção, segue-se abaixo dele o espaçamento interno da
-secção e o início da seguinte — ambos pertencem à página. Com a altura
-«Altura da secção», o espaçamento interno da secção é eliminado; caso contrário, coloque o
-conteúdo seguinte na mesma secção, para que este se encaixe diretamente.
+Resposta: «Sem espaçamento» elimina o espaçamento em relação ao bloco seguinte na mesma
+secção. Se o palco for o último bloco da sua secção, a
+secção termina de qualquer forma com ele. O espaço que ainda resta é o espaçamento interno
+da secção seguinte — esse espaço pertence-lhe e pode ser alterado nas suas
+configurações de secção. Se o conteúdo seguinte estiver na mesma secção
+que o palco, ele encosta diretamente a ele com a opção «Sem espaçamento».
 
-**Pergunta:** Sem elementos de controlo — como se passa de página?
+**Pergunta:** Sem elementos de controlo — como é que se passa de página?
 
 Resposta: Deslizando o dedo, utilizando as setas do teclado ou automaticamente:
-o tempo definido por cada diapositivo decorre sem alterações. No que diz respeito ao teclado, o
+o tempo definido por cada diapositivo decorre normalmente. No que diz respeito ao teclado, o
 próprio palco fica selecionável assim que os elementos de controlo não estiverem presentes.

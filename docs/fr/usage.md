@@ -27,7 +27,7 @@
 9. Cliquez sur **Appliquer**.
 10. Réglez **Secondes par diapositive** sur `0` — dans le cas d’une seule diapositive,
     il n’y a rien à modifier.
-11. Enregistrez la page et vérifiez-la dans l’aperçu, une fois en mode large
+11. Enregistrez la page et vérifiez-la dans l’aperçu, une fois en mode plein écran
     et une fois dans une fenêtre étroite.
 
 ## Créer plusieurs diapositives
@@ -101,7 +101,7 @@ est supprimé.
 
 La vidéo est lue en boucle et sans son, et uniquement tant que sa diapositive est
 affichée en premier. Si l’utilisateur a réduit l’animation dans le système, il verra sa première image
-fixe. Veillez à ce que le fichier soit léger — quelques mégaoctets pour quelques secondes —,
+figer. Veillez à ce que le fichier soit léger — quelques mégaoctets pour quelques secondes —,
 car il sera chargé à chaque consultation de la page.
 
 ## Ajouter une image pour le format portrait
@@ -111,12 +111,12 @@ car il sera chargé à chaque consultation de la page.
 2. Sélectionnez la diapositive concernée dans l’éditeur.
 3. Sous **Image ou vidéo pour le format portrait**, cliquez sur **Sélectionner une image ou une vidéo**
    ou saisissez une adresse en dessous.
-4. **Appliquer**, enregistrez, puis vérifiez le résultat dans une fenêtre étroite ou sur le
+4. Cliquez sur **Appliquer**, enregistrez, puis vérifiez le résultat dans une fenêtre étroite ou sur le
    téléphone.
 
 ## Modifier ultérieurement
 
-1. Ouvrez les paramètres du widget ; l'éditeur s'ouvre avec les
+1. Ouvrez les paramètres du widget ; l’éditeur s’ouvre avec les
    entrées existantes.
 2. Sélectionnez à gauche l’entrée à modifier. L’icône au-dessus du titre indique
    de quel type il s’agit : **Diapositive**, **Publication** ou **Chaîne**.

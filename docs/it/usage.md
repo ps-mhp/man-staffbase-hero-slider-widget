@@ -72,8 +72,8 @@
      appuntato nelle notizie.
    - **Solo post con immagine** — attivato per impostazione predefinita. Senza immagine,
      la diapositiva risulterebbe solo una superficie scura con del testo.
-   - **Parole chiave** — separarle con una virgola; è sufficiente un solo post se
-     contiene una di queste parole.
+   - **Parole chiave** — separarle con una virgola; è sufficiente un post se contiene
+     una di esse.
 7. Controllate l’**anteprima**: mostra esattamente i post che i filtri
    lasciano passare. Se rimane vuota, i filtri sono troppo restrittivi.
 8. **Applicate**, salvate, controllate nell’anteprima.
@@ -99,8 +99,8 @@ viene tralasciato.
    il campo vuoto se il video è puramente decorativo.
 5. **Applica**, salva, controlla nell’anteprima.
 
-Il video viene riprodotto in silenzio e in loop, e solo finché la relativa diapositiva è in primo piano
-. Chi ha impostato una animazione ridotta nel sistema vedrà la prima immagine
+Il video viene riprodotto in silenzio e in loop, e solo finché la relativa diapositiva è in primo
+piano. Chi ha impostato una animazione ridotta nel sistema vedrà la prima immagine
 fissa. Mantenete il file di piccole dimensioni — pochi megabyte per alcuni secondi —,
 poiché verrà caricato ad ogni visualizzazione della pagina.
 
@@ -121,7 +121,7 @@ poiché verrà caricato ad ogni visualizzazione della pagina.
 2. Selezionate a sinistra la voce da modificare. L’icona sopra il titolo indica
    di quale tipo si tratta: **Diapositiva**, **Post** o **Canale**.
 3. Modificate i campi a destra. Con **Duplica** si crea una copia della
-   voce selezionata direttamente accanto ad essa, mentre con **Elimina** la si rimuove. Le frecce,
+   voce selezionata direttamente accanto ad essa, mentre con **Elimina** la voce scompare. Le frecce,
    Duplica ed Elimina valgono allo stesso modo per tutti e tre i tipi.
 4. **Applica** salva le modifiche nel widget — solo dopo
    viene salvata la pagina.
@@ -132,15 +132,15 @@ poiché verrà caricato ad ogni visualizzazione della pagina.
    non vengono visualizzate. Aprite l’editor e controllate che ogni voce contenga
    un’immagine — per le notizie, controllate nell’anteprima.
 2. **L’immagine non occupa l’intera larghezza.** Il widget si trova in una
-   colonna accanto ad altri contenuti? In tal caso, inseritelo in una riga a sé stante.
-   Altrimenti, verificate che l’opzione **Mostra a tutta larghezza** sia attivata
+   colonna accanto ad altri contenuti? In tal caso, inseriscilo in una riga a sé stante.
+   Altrimenti, verifica che l’opzione **Mostra a tutta larghezza** sia attivata
   .
 3. **Il testo non è allineato alla linea di riferimento.** Ciò può essere dovuto a una
    larghezza del contenuto della pagina non corrispondente. Segnalate il caso indicando l’
    indirizzo della pagina — la piattaforma si basa sulla larghezza che la pagina stessa
    riporta.
 4. **Al posto dell’editor vedete un campo di testo «Voci» con JSON.** L’
-  editor non è riuscito a collegarsi. Ricaricate la finestra di dialogo. Non modificate
+  editor non è riuscito a caricarsi. Ricaricate la finestra di dialogo. Non modificate
   il testo manualmente.
 5. **La selezione dei canali rimane vuota e compare un campo di testo per un
    identificativo.** L’elenco dei canali di notizie non era raggiungibile. Ricaricate la

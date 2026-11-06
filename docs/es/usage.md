@@ -62,7 +62,7 @@
 ## Mostrar todas las publicaciones de un canal
 
 1. Abre la configuración y, con ello, el editor.
-2. Haz clic en **Nuevo +**, situado encima de la lista, y selecciona **Canal de noticias**.
+2. Haz clic en **Nuevo +**, encima de la lista, y selecciona **Canal de noticias**.
    A la izquierda aparecerá una entrada con la etiqueta **Canal**.
 3. En **Canal**, selecciona el canal de noticias.
 4. Configura el **número de diapositivas** (valor predeterminado `3`, máximo ocho).
@@ -71,7 +71,7 @@
    - **Solo publicaciones destacadas**: se limita a lo que está
      fijado en las noticias.
    - **Solo publicaciones con imagen**: activado por defecto. Sin imagen,
-     la diapositiva solo mostraría un área oscura con texto.
+     la diapositiva se vería como un área oscura con texto.
    - **Palabras clave**: sepáralas con comas; basta con que una publicación
      contenga una de ellas.
 7. Comprueba la **vista previa**: muestra exactamente las entradas que quedan
@@ -93,8 +93,8 @@ queda omitido.
 3. Si el vídeo se encuentra en otro lugar: introduce en su lugar su dirección en
    **O dirección de una imagen o un vídeo**. Debe comenzar por `https://`
    , y todos los lectores deben poder acceder al vídeo sin necesidad de registrarse
-  . Si termina en `.mp4`, `.webm` o `.mov`, el **Tipo** cambia
-   automáticamente a **Vídeo**; en caso contrario, cámbielo manualmente.
+  . Si termina en `.mp4`, `.webm` o `.mov`, **Tipo** cambia
+   automáticamente a **Vídeo**; de lo contrario, cámbielo manualmente.
 4. En **Descripción del vídeo**, indique qué se ve en él o deje
    el campo en blanco si el vídeo es meramente decorativo.
 5. **Aplicar**, guardar y comprobar en la vista previa.
@@ -118,9 +118,9 @@ ya que se carga cada vez que se visita la página.
 
 1. Abre la configuración del widget; se abrirá el editor con las
    entradas existentes.
-2. Selecciona a la izquierda la entrada que deseas modificar. La marca situada encima del título indica
+2. Selecciona a la izquierda la entrada que deseas modificar. El indicador situado encima del título indica
   de qué tipo se trata: **Diapositiva**, **Publicación** o **Canal**.
-3. Modifica los campos de la derecha. Al pulsar **Duplicar** se crea una copia de la
+3. Modifica los campos de la derecha. Al hacer clic en **Duplicar** se crea una copia de la
    entrada seleccionada justo detrás; con **Eliminar**, esta desaparece. Las flechas,
    **Duplicar** y **Eliminar** se aplican por igual a los tres tipos.
 4. **Aplicar** guarda los cambios en el widget; solo entonces

@@ -13,7 +13,7 @@
 4. Clique em **Novo +** acima da lista e selecione **Slide**.
 5. Clique na área tracejada **Imagem
    ou vídeo**, em baixo de **Imagem ou vídeo**, e selecione a imagem da biblioteca — ou insira
-   abaixo o endereço de uma imagem ou vídeo. Sem imagem, o
+  , em baixo, o endereço de uma imagem ou vídeo. Sem imagem, o
    slide não será apresentado.
 6. Em **Descrição da imagem**, indique o que se vê. Deixe o
    campo em branco apenas se a imagem for meramente decorativa.
@@ -27,8 +27,8 @@
 9. Clique em **Aplicar**.
 10. Defina **Segundos por diapositivo** para `0` — no caso de um único diapositivo,
     não há nada para alterar.
-11. Guarde a página e verifique-a na pré-visualização, uma vez em ecrã inteiro
-    e outra vez numa janela estreita.
+11. Guarde a página e verifique-a na pré-visualização, uma vez em ecrã
+    largo e outra vez numa janela estreita.
 
 ## Criar vários slides
 
@@ -37,7 +37,7 @@
    preencha-o como indicado acima. Não é possível ter mais de oito diapositivos — ninguém percorre
    a página até lá.
 3. Ordene utilizando as setas **↑** e **↓** no canto superior direito. O primeiro diapositivo
-   é aquele que aparece quando a página é carregada.
+   é aquele que aparece ao carregar a página.
 4. Verifique se **Segundos por diapositivo** está definido em `5` (predefinição).
 5. **Aplicar**, guardar, verificar na pré-visualização.
 
@@ -72,8 +72,8 @@
      fixado nas notícias.
    - **Apenas publicações com imagem** — ativado por predefinição. Sem imagem,
      o slide ficaria apenas com uma área escura com texto.
-   - **Palavras-chave** — separe várias com vírgulas; basta uma publicação, desde que
-     contenha uma delas.
+   - **Palavras-chave** — separe várias com vírgulas; basta uma publicação se esta
+     contiver uma delas.
 7. Verifique a **pré-visualização**: mostra exatamente as publicações que os filtros
    deixam passar. Se ficar vazia, os filtros estão demasiado restritivos.
 8. **Aplicar**, guardar, verificar na pré-visualização.

@@ -39,7 +39,7 @@ noticias de un canal.
 - El cambio se mantiene mientras el ratón se encuentra sobre el escenario o el foco está
   en él. En el teléfono se desliza el dedo; allí las flechas están ocultas.
 - **En el móvil** (con un ancho inferior a 768 píxeles), solo aparece el título en
-  la imagen, con un máximo de cuatro líneas; lo que sobre de ahí termina en «…».
+  la imagen, con un máximo de cuatro líneas; lo que sobrepase este límite termina en «…».
   La línea inferior y el botón quedan ocultos; en su lugar, al pulsar
   en cualquier punto de la diapositiva se accede al destino del botón. Para los lectores de pantalla,
   su etiqueta sigue siendo el nombre de este enlace. Si una diapositiva no tiene destino,

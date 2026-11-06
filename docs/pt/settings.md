@@ -30,7 +30,7 @@ entrada de canal conta com todos os diapositivos que contribui.
 | Endereço | Em vez da biblioteca multimédia: o endereço `https` de uma imagem ou vídeo. Outros endereços não são aceites. |
 | Tipo | Imagem ou vídeo. É definido automaticamente pela extensão do endereço (`.mp4`, `.webm`, `.mov` são vídeos); selecionar manualmente apenas em endereços sem extensão. |
 | Descrição da imagem ou do vídeo | O que se vê. Deixe em branco apenas no caso de imagens e vídeos meramente decorativos — os leitores de ecrã leem este campo em voz alta. |
-| Imagem ou vídeo para formato vertical | Opcional. É apresentado em ecrãs estreitos e verticais. Se não estiver presente, é utilizada a versão horizontal em todos os casos. |
+| Imagem ou vídeo para formato vertical | Opcional. É apresentado em ecrãs estreitos e verticais. Se não for indicado, é utilizada a versão horizontal em todos os casos. |
 | Título | Seja breve: até cerca de 24 caracteres, permanece numa única linha. |
 | Subtítulo | Opcional, uma a duas linhas. |
 | Botão | Opcional. Aparece apenas se o texto e o destino estiverem preenchidos. No máximo um por diapositivo. |
@@ -52,35 +52,37 @@ entrada de canal conta com todos os diapositivos que contribui.
 
 | Campo | Descrição |
 | --- | --- |
-| Canal | Obrigatório. Todos os slides desta publicação provêm deste canal. |
+| Canal | Obrigatório. Todos os slides desta entrada provêm deste canal. |
 | Número de slides | Predefinido como `3`, no máximo oito. |
-| Ordem | `Mais recentes primeiro` (predefinição) ou `Mais antigos primeiro`. |
+| Ordem | `Mais recentes primeiro` (predefinição) ou `Mais antigas primeiro`. |
 | Apenas publicações em destaque | Desativado por predefinição. Limita-se ao que está fixado nas notícias. |
 | Apenas publicações com imagem | Ativado por predefinição. Sem imagem, o slide ficaria reduzido a uma área escura com texto. |
-| Palavras-chave | Opcional, várias separadas por vírgulas. Basta uma publicação conter uma delas. |
+| Palavras-chave | Opcional, várias separadas por vírgulas. Basta que uma publicação contenha uma delas. |
 | Mostrar teaser como subtítulo | Ativado por predefinição. |
 | Texto do botão | Aplica-se a todos os slides do canal. Deixe em branco para omitir o botão. |
 
 ## Notas
 
-- **Altura** funciona como um limite, não como uma altura fixa: o palco adapta-se a ecrãs largos
-  ecrãs 21:9 e em ecrãs estreitos 4:3, e é apenas ajustada aos limites do
+- **Altura** funciona como um limite, não como uma altura fixa: a área de exibição é de 21:9 em
+  ecrãs largos e de 4:3 em ecrãs estreitos, sendo apenas ajustada aos limites do
   nível selecionado.
-- `Altura do ecrã` preenche a área visível, deduzindo o cabeçalho,
+- `Altura do ecrã` preenche a área visível, excluindo o cabeçalho,
   mas com um mínimo de 420 px.
-- **Segundos por diapositivo** só tem efeito a partir do segundo diapositivo.
+- **Segundos por diapositivo** só se aplica a partir do segundo diapositivo.
 - Quem tiver definido «Reduzir movimento» no sistema operativo não verá
-  a mudança por si próprio — independentemente desta configuração.
-- Na parte superior, o palco alinha-se sempre — com o caminho de navegação ou, no caso
-  «À frente das migalhas de navegação», ao menu. Compensa, assim, o espaçamento interno que a secção mantém
+  a mudança por si só — independentemente desta configuração.
+- Na parte superior, o palco alinha-se sempre — com as migalhas de navegação ou, no caso de
+  «À frente das migalhas de navegação», com o menu. Em contrapartida, compensa o espaçamento interno que a secção mantém
   acima do seu primeiro bloco. Isto só acontece se
   não houver outro conteúdo acima do palco.
-- **Espaço para baixo** elimina o espaçamento entre os blocos, não o
-  espaço interno no final de uma secção. Se o palco for o último bloco na
-  sua secção, o seu espaço para baixo é mantido — exceto no caso da
-  altura `Altura da secção`: aí, a secção termina alinhada de qualquer forma.
-- Com `altura da secção`, o palco ocupa a altura da secção apenas se
-  estiver sozinho nessa secção. Se houver outros blocos na mesma secção, mantém
+- Se o palco for o último bloco da sua secção, a secção termina
+  com ele — independentemente da altura. Com um nível fixo, a secção adapta-se ao
+  palco; com `Altura da secção`, o palco adapta-se à secção.
+- **Espaço para baixo** regula o espaço em relação ao bloco seguinte na mesma
+  secção. O espaçamento interno de uma secção seguinte pertence a esta e
+  permanece.
+- Com a `altura da secção`, o palco ocupa a altura da secção apenas se
+  estiver sozinho nela. Com outros blocos na mesma secção, mantém
   a sua proporção, e os blocos aproximam-se dele sem espaço.
 - Os elementos de controlo só aparecem a partir do segundo slide. Em ecrãs estreitos,
   as setas ficam ocultas; nesses casos, utiliza-se o gesto de deslizar.

@@ -11,7 +11,7 @@ Não é necessário atualizar manualmente um slide. Além dos próprios slides, 
 página inicial também pode apresentar **artigos das notícias**:
 
 - **Artigo de notícias** — um artigo específico como um slide. A imagem, o título
-  e o teaser provêm do artigo, e o botão redireciona para ele.
+  e o teaser provêm do artigo, e o botão remete para o mesmo.
 - **Canal de notícias** — um canal completo, um slide por artigo. É possível definir quantos, em
   que ordem e de acordo com que filtros. Se surgir um novo artigo no
   canal, este aparece automaticamente no palco sem necessidade de intervenção adicional.
@@ -25,15 +25,15 @@ notícias de um canal.
 - A imagem ocupa toda a largura da janela — mesmo que a própria página
   tenha uma coluna de conteúdo mais estreita.
 - O palco fica **alinhado na parte superior**: se a página tiver uma barra de navegação,
-  o palco fica imediatamente abaixo dela; se não tiver, fica diretamente ao lado do
+  o palco fica imediatamente abaixo dela; se não tiver, fica diretamente junto ao
   menu. A faixa branca vazia que a página normalmente mantém acima do primeiro
   conteúdo é eliminada.
 - O **texto mantém-se na linha de alinhamento da página**: começa na mesma
   linha vertical que o cabeçalho, o menu e o texto abaixo da área de exibição. Não
   fica, de forma expressa, colado à margem da imagem.
 - O texto encontra-se no canto inferior esquerdo, sobre um gradiente escuro que se estende de baixo para
-  cima. Em ecrãs largos, é adicionado um segundo gradiente a partir da esquerda
-  , para que o texto claro permaneça legível sobre um fundo claro.
+  cima. Em ecrãs largos, é adicionado um segundo gradiente a partir da esquerda,
+  para que o texto claro permaneça legível sobre um fundo claro.
 - No caso de vários slides: setas à esquerda e à direita, com uma linha entre elas por cada slide.
   A linha do slide atual é vermelha.
 - A transição mantém-se enquanto o rato estiver sobre o palco ou o foco estiver

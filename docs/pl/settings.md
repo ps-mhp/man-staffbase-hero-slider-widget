@@ -20,21 +20,21 @@
 
 Wszystkie trzy rodzaje znajdują się na tej samej liście, można je mieszać i sortować za pomocą **↑** oraz
 **↓**. Łącznie scena wyświetla maksymalnie osiem slajdów — przy czym
-jeden wpis kanału liczy się wraz ze wszystkimi slajdami, które dostarcza.
+jeden wpis kanału liczy się jako wszystkie slajdy, które wnosi.
 
 ## Pola slajdu
 
 | Pole | Opis |
 | --- | --- |
-| Zdjęcie lub wideo | Pole obowiązkowe. Z biblioteki multimediów lub poprzez adres (`https://…`). Poziome, o szerokości co najmniej 1920 pikseli. Bez zdjęcia lub wideo slajd nie zostanie wyświetlony. |
-| Adres | Zamiast biblioteki multimediów: adres `https` zdjęcia lub wideo. Inne adresy nie są akceptowane. |
+| Obraz lub wideo | Pole obowiązkowe. Z biblioteki multimediów lub poprzez adres (`https://…`). Poziomy, szerokość co najmniej 1920 px. Bez obrazu lub wideo slajd nie zostanie wyświetlony. |
+| Adres | Zamiast biblioteki multimediów: adres `https` obrazu lub wideo. Inne adresy nie są akceptowane. |
 | Typ | Obraz lub wideo. Ustalany automatycznie na podstawie rozszerzenia adresu (`.mp4`, `.webm`, `.mov` to pliki wideo); ręcznie wybieraj tylko w przypadku adresów bez rozszerzenia. |
 | Opis obrazu lub wideo | Co jest widoczne. Pole pozostawić puste tylko w przypadku obrazów i filmów pełniących wyłącznie funkcję dekoracyjną — czytniki ekranu odczytują to pole. |
-| Obraz lub film w orientacji pionowej | Opcjonalnie. Wyświetlane na wąskich ekranach pionowych. Jeśli brakuje, wszędzie stosowany jest kadr w orientacji poziomej. |
+| Obraz lub film w orientacji pionowej | Opcjonalnie. Wyświetlany na wąskich ekranach pionowych. Jeśli brakuje, wszędzie stosowany jest kadr w orientacji poziomej. |
 | Nagłówek | Należy zachować zwięzłość: do około 24 znaków, dzięki czemu zmieści się w jednym wierszu. |
 | Podtytuł | Opcjonalne, od jednego do dwóch wierszy. |
-| Przycisk | Opcjonalne. Pojawia się tylko wtedy, gdy wypełniono etykietę i adres docelowy. Najwyżej jeden na slajd. |
-| Otwórz w nowej karcie | Otwiera miejsce docelowe przycisku w nowej karcie. Stosowane zazwyczaj w przypadku miejsc docelowych zewnętrznych. |
+| Przycisk | Opcjonalne. Pojawia się tylko wtedy, gdy wypełniono etykietę i adres docelowy. Maksymalnie jeden na slajd. |
+| Otwórz w nowej karcie | Otwiera miejsce docelowe przycisku w nowej karcie. Typowe dla miejsc docelowych zewnętrznych. |
 
 ## Pola wpisu w serwisie informacyjnym
 
@@ -56,34 +56,36 @@ jeden wpis kanału liczy się wraz ze wszystkimi slajdami, które dostarcza.
 | Liczba slajdów | Domyślnie `3`, maksymalnie osiem. |
 | Kolejność | `Najnowsze najpierw` (ustawienie domyślne) lub `Najstarsze najpierw`. |
 | Tylko wyróżnione wpisy | Domyślnie wyłączone. Ogranicza wyświetlanie do wpisów przypiętych w sekcji aktualności. |
-| Tylko wpisy ze zdjęciem | Domyślnie włączone. Bez zdjęcia slajd byłby tylko ciemnym polem z tekstem. |
-| Słowa kluczowe | Opcjonalne, wiele słów oddzielonych przecinkami. Wystarczy jeden wpis, jeśli zawiera jedno z nich. |
-| Pokaż zwiastun jako podtytuł | Domyślnie włączone. |
+| Tylko posty ze zdjęciem | Domyślnie włączone. Bez zdjęcia slajd byłby tylko ciemnym polem z tekstem. |
+| Słowa kluczowe | Opcjonalne, wiele słów oddzielonych przecinkami. Wystarczy jeden post, jeśli zawiera jedno z nich. |
+| Pokaż teaser jako podtytuł | Domyślnie włączone. |
 | Etykieta przycisku | Dotyczy wszystkich slajdów kanału. Pozostaw puste, aby pominąć przycisk. |
 
 ## Uwagi
 
-- **Wysokość** działa jako ograniczenie, a nie jako stała wysokość: scena jest dostosowana do szerokich
-  ekranach 21:9 i wąskich 4:3 i jest przytrzymywana tylko na granicach
+- **Wysokość** działa jako ograniczenie, a nie jako stała wysokość: obszar wyświetlania ma proporcje 21:9 na szerokich
+  ekranach i 4:3 na wąskich i jest przycinany tylko do granic
   wybranego poziomu.
 - `Wysokość ekranu` wypełnia widoczną stronę pomniejszoną o nagłówek,
   ale co najmniej 420 px.
 - **Sekundy na slajd** działają dopiero od drugiego slajdu.
-- Użytkownicy, którzy w systemie operacyjnym włączyli opcję „Ogranicz ruchy”, nie zobaczą
+- Użytkownicy, którzy w systemie operacyjnym włączyli opcję „Ogranicz ruch”, nie widzą
   zmiany automatycznie — niezależnie od tego ustawienia.
 - U góry scena zawsze przylega równo — do ścieżki nawigacyjnej lub, w przypadku
-  „Przed ścieżką nawigacyjną” — do menu. W zamian za to wyrównuje wewnętrzny odstęp, jaki sekcja zachowuje
+  opcji „Przed ścieżką nawigacyjną”, do menu. W zamian za to wyrównuje ona odstęp wewnętrzny, jaki sekcja zachowuje
   nad swoim pierwszym blokiem. Dzieje się to tylko wtedy, gdy
   nad sceną nie ma żadnej innej treści.
-- **Odstęp w dół** usuwa odstęp między blokami, a nie
-  odstęp wewnętrzny na końcu sekcji. Jeśli scena jest ostatnim blokiem w
-  swojej sekcji, jej odstęp w dół pozostaje zachowany — z wyjątkiem
-  wysokości `Wysokość sekcji`: w tym przypadku sekcja i tak kończy się równo z krawędzią.
-- W przypadku `wysokości sekcji` scena zajmuje wysokość sekcji tylko wtedy, gdy
-  znajduje się w niej sama. Jeśli w tej samej sekcji znajdują się inne bloki, zachowuje
+- Jeśli scena jest ostatnim blokiem w swojej sekcji, sekcja kończy się
+  wraz z nią — niezależnie od wysokości. W przypadku stałego poziomu sekcja dostosowuje się do
+  sceny, a w przypadku `wysokości sekcji` scena dostosowuje się do sekcji.
+- **Odstęp w dół** reguluje odstęp od następnego bloku w tej samej
+  sekcji. Odstęp wewnętrzny następnej sekcji należy do niej i
+  pozostaje niezmieniony.
+- W przypadku ustawienia `wysokość sekcji` scena zajmuje wysokość sekcji tylko wtedy, gdy
+  znajduje się w niej samodzielnie. Jeśli w tej samej sekcji znajdują się inne bloki, zachowuje
   swoje proporcje, a bloki przylegają do niej bez odstępu.
 - Elementy sterujące pojawiają się dopiero od drugiego slajdu. Na wąskich
-  ekranach strzałki są ukryte; w tym przypadku używa się gestu przesuwania palcem.
+  ekranach strzałki są ukryte; w tym przypadku należy przesuwać palcem.
 - Artykuł, który zostanie usunięty lub nie jest widoczny dla czytelnika,
   zabiera ze sobą tylko swój własny slajd. Pozostałe slajdy pozostają na miejscu.
 - Slajdy z wiadomościami dostosowują się do języka osoby czytającej, o ile wpis

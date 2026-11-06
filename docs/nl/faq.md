@@ -2,7 +2,7 @@
 
 **Vraag:** Ik heb een dia aangemaakt, maar het podium blijft leeg.
 
-Antwoord: De dia mist de afbeelding. Dia’s zonder afbeelding worden niet getoond — een
+Antwoord: De dia mist de afbeelding. Dia’s zonder afbeelding worden niet weergegeven — een
 leeg, donker vlak zou op de pagina niet te onderscheiden zijn van een fout.
 Open de editor en selecteer onder **Afbeelding of video** een afbeelding
 of voer een adres in.
@@ -36,7 +36,7 @@ Als deze afwijkt, meld dit dan samen met het pagina-adres.
 **Vraag:** In plaats van de editor zie ik een tekstveld „Invoer“ met accolades
 erin.
 
-Antwoord: De editor kon geen verbinding maken met het dialoogvenster. Sluit
+Antwoord: De editor kon niet in het dialoogvenster worden geïntegreerd. Sluit
 de instellingen en open ze opnieuw. De tekst in het veld is de
 ruwe versie van de vermeldingen; bewerk deze niet handmatig — één typefout
 daarin zorgt ervoor dat alle dia’s verdwijnen.
@@ -51,7 +51,7 @@ en streepjes.
 **Vraag:** Ik zie geen pijltjes op de telefoon.
 
 Antwoord: Dat is zo bedoeld. Op smalle schermen wordt geveegd; de
-streepjes onder de tekst geven nog steeds aan welke dia op dat moment op de voorgrond staat.
+streepjes onder de tekst geven nog steeds aan welke dia momenteel op de voorgrond staat.
 
 **Vraag:** Mijn afbeelding is aan de rand afgesneden.
 
@@ -96,7 +96,7 @@ vreemd bijgesneden?
 
 Antwoord: Afbeeldingen bij berichten zijn bijgesneden voor het feed-formaat, niet voor een
 podium dat de volledige schermhoogte beslaat. Voeg in het item onder **Podiumafbeelding
-overschrijven** een eigen afbeelding toe, in liggende stand en minimaal 1920 px breed.
+overschrijven** een eigen afbeelding toe, in liggend formaat en minimaal 1920 px breed.
 
 **Vraag:** Wat gebeurt er met het podium bij de automatische vertaling van de
 pagina?
@@ -122,27 +122,28 @@ Antwoord: De instelling werkt alleen als aan drie voorwaarden is voldaan: de pag
 er staat geen andere inhoud boven. Als aan één van deze voorwaarden niet is voldaan, blijft de
 podium onder de broodkruimels — een broodkruimelbalk midden op de pagina zou
 erger zijn dan helemaal geen verandering. In de editor staat in dit geval een opmerking
-boven het podium. Op de gepubliceerde pagina verschijnt deze niet; daar
-kan de instelling niet worden gewijzigd.
+boven het podium. Op de gepubliceerde pagina verschijnt deze niet; daar kan
+de instelling niet worden gewijzigd.
 
 **Vraag:** Vroeger stond er een witte strook boven het podium. Waar is die gebleven?
 
 Antwoord: Het gedeelte waarin het podium staat, houdt boven het eerste blok
-een interne afstand aan. Boven tekst is dat correct, maar boven een podium ontstaat
+een binnenafstand aan. Boven tekst is dat correct, maar boven een podium ontstaat
 daardoor een witte strook tussen het menu of de broodkruimels en de afbeelding. Het podium
 compenseert deze afstand zelf zodra het helemaal bovenaan staat. Als er boven het podium
 een ander blok staat, blijft de afstand zoals de pagina die instelt.
 
 **Vraag:** Ik heb „Geen afstand“ gekozen, maar onder het podium is nog ruimte.
 
-Antwoord: „Geen afstand“ verwijdert de afstand tussen twee blokken. Als het
-podium het laatste blok van de alinea is, volgt daaronder de interne afstand van de
-alinea en het begin van de volgende — beide behoren tot de pagina. Met de hoogte
-„Sectiehoogte“ vervalt de interne afstand van de sectie; anders plaatst u de
-volgende inhoud in dezelfde sectie, dan sluit deze direct aan.
+Antwoord: „Geen afstand“ verwijdert de afstand tot het volgende blok in dezelfde
+paragraaf. Is het podium het laatste blok van zijn paragraaf, dan eindigt de
+paragraaf sowieso met het podium. De ruimte die dan nog overblijft, is de interne afstand
+van de volgende paragraaf — die hoort bij die paragraaf en kan worden aangepast in de
+paragraafinstellingen. Als de volgende inhoud in dezelfde paragraaf staat
+als het podium, sluit deze bij „Geen afstand“ direct aan.
 
-**Vraag:** Zonder bedieningselementen — hoe bladert men dan?
+**Vraag:** Zonder bedieningselementen — hoe blader je dan?
 
-Antwoord: Veeg met je vinger, blader met de pijltjestoetsen, of automatisch:
+Antwoord: Met je vinger vegen, met de pijltjestoetsen bladeren, of vanzelf:
 de ingestelde tijd per dia blijft ongewijzigd. Voor het toetsenbord wordt het
 podium zelf selecteerbaar zodra de bedieningselementen ontbreken.

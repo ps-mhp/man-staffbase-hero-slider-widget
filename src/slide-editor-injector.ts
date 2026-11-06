@@ -45,7 +45,7 @@ export function startSlideEditorInjector(root: ParentNode = document): () => voi
     // Der Editor zeichnet seinen eigenen Rahmen: Liste, Formular und Fußzeile
     // teilen sich Kanten, die der Formular-Innenabstand des Panels nur von
     // ihnen wegschöbe.
-    panelStyle: { padding: "0px" },
+    panelClassName: "p-0",
     render: ({ value, onChange, onSave, onClose, dirty }) =>
       React.createElement(SlideEditor, { value, onChange, onSave, onClose, dirty }),
   });

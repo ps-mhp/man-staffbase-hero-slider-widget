@@ -63,7 +63,7 @@
 
 1. Open de instellingen en daarmee de editor.
 2. Klik boven de lijst op **Nieuw +** en selecteer **Nieuws-kanaal**.
-   Aan de linkerkant verschijnt een vermelding met het label **Kanaal**.
+   Aan de linkerkant verschijnt een item met het label **Kanaal**.
 3. Selecteer onder **Kanaal** het nieuws-kanaal.
 4. Stel het **Aantal dia’s** in (standaard `3`, maximaal acht).
 5. Kies de **volgorde**: `Nieuwste eerst` of `Oudste eerst`.
@@ -72,10 +72,10 @@
      is vastgezet.
    - **Alleen berichten met afbeelding** — standaard ingeschakeld. Zonder afbeelding zou
      de dia slechts een donker vlak met tekst zijn.
-   - **Trefwoorden** — scheid meerdere trefwoorden met een komma; één bericht is voldoende als het
+   - **Trefwoorden** — scheid meerdere trefwoorden met een komma; één bericht volstaat als het
      een van deze trefwoorden bevat.
-7. Bekijk het **voorbeeld**: dit toont precies de berichten die na toepassing van de filters
-   overblijven. Als het leeg blijft, zijn de filters te streng ingesteld.
+7. Controleer het **voorbeeld**: dit toont precies de berichten die de filters
+   overhouden. Als het leeg blijft, zijn de filters te streng ingesteld.
 8. **Toepassen**, opslaan, controleren in het voorbeeld.
 
 Het item telt in de lijst als **één**, maar omvat meerdere dia’s.
@@ -92,8 +92,8 @@ wordt achterwege gelaten.
    origineel.
 3. Staat de video ergens anders: voer dan in plaats daarvan het adres in onder
    **Of adres van een afbeelding of video**. Het moet beginnen met `https://`
-   beginnen, en alle lezers moeten de video zonder aanmelding kunnen
-   bekijken. Eindigt het op `.mp4`, `.webm` of `.mov`, dan springt **Type** van
+   beginnen, en alle lezers moeten de video zonder aanmelding kunnen bekijken
+  . Eindigt het op `.mp4`, `.webm` of `.mov`, dan springt **Type** van
   zelf naar **Video**; anders moet u dit daar handmatig aanpassen.
 4. Vul onder **Videobeschrijving** in wat er te zien is, of laat
    het veld leeg als de video puur decoratief is.
@@ -101,7 +101,7 @@ wordt achterwege gelaten.
 
 De video wordt zonder geluid en in een lus afgespeeld, en alleen zolang de bijbehorende dia
 vooraan staat. Wie in het systeem minder beweging heeft ingesteld, ziet het eerste beeld
-stil staan. Houd het bestand klein — enkele megabytes voor een paar seconden —,
+stilstaan. Houd het bestand klein — enkele megabytes voor een paar seconden —,
 want het wordt bij elke paginaweergave geladen.
 
 ## Een afbeelding voor staand formaat toevoegen
@@ -118,11 +118,11 @@ want het wordt bij elke paginaweergave geladen.
 
 1. Open de instellingen van de widget; de editor wordt geopend met de
    bestaande vermeldingen.
-2. Selecteer links de vermelding die je wilt wijzigen. Het icoontje boven de titel geeft aan
-   om welk type het gaat: **dia**, **bericht** of **kanaal**.
-3. Wijzig de velden aan de rechterkant. Via **Dupliceren** maak je een kopie van de
+2. Selecteer links het item dat je wilt wijzigen. Het icoontje boven de titel geeft aan
+   om welk type het gaat: **Dia**, **Bericht** of **Kanaal**.
+3. Wijzig de velden aan de rechterkant. Via **Dupliceren** maak je een kopie van het
    geselecteerde item direct erachter; via **Verwijderen** verdwijnt het. Pijltjes,
-   Dupliceren en Verwijderen gelden voor alle drie de soorten op dezelfde manier.
+   **Dupliceren** en **Verwijderen** gelden voor alle drie de soorten op dezelfde manier.
 4. **Toepassen** slaat de wijzigingen op in de widget — pas daarna wordt
    de pagina opgeslagen.
 

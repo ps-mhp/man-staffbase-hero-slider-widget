@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Zmieniające się folie, na całej wysokości ekranu",
+      "title": "Zmieniające się grafiki, na całej wysokości ekranu",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,
