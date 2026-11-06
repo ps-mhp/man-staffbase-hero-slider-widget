@@ -46,7 +46,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { HeroPosition } from "./attributes";
+import type { HeroPosition } from "./attributes";
 
 /** Der Seitenrahmen, dessen Kopfabstand den Beginn des Inhalts setzt. */
 export const WRAPPER_SELECTOR = "#wrapper";
@@ -69,6 +69,14 @@ export const CHROME_SELECTOR = "#header, #mega-menu, #contextual-action-toolbar"
  * schöbe. Im Zweifel bleibt der Abstand, den Staffbase selbst setzt.
  */
 export const MAX_PLAUSIBLE_TOP = 320;
+
+/**
+ * Wie weit der Kasten nach dem Schreiben noch danebenliegen darf.
+ *
+ * Gemessene Kanten sind Bruchzahlen; ein Bildschirmpunkt Abweichung ist
+ * Rundung, keine fremde Regel.
+ */
+const TOP_TOLERANCE = 1;
 
 /** Sichtbar heisst: gerendert und mit eigener Höhe. */
 function isVisible(element: HTMLElement): boolean {
@@ -294,9 +302,24 @@ function restore(): void {
  * genommen ist. Die Messkette ist damit azyklisch und kann sich nicht selbst
  * hochschaukeln.
  *
- * @returns die Höhe des Kastens, die die Bühne unter sich freihalten muss.
+ * Geschrieben wird nicht blind: nach dem Setzen wird die tatsächliche
+ * Oberkante des Kastens nachgemessen und die Abweichung aufgeschlagen. Ein
+ * eigener Aussenabstand des Kastens — `resources/css/app.css` führt für
+ * `#wrapper#wrapper.is-content-document-page div:has(#breadcrumbs)` ein
+ * `margin-top: -3%` — oder ein näherer positionierter Vorfahr verschöbe ihn
+ * sonst gegenüber jedem Wert, den wir schreiben, und die Brotkrumen lägen
+ * quer über der Bühne.
+ *
+ * @returns die Höhe des Kastens, die die Bühne unter sich freihalten muss,
+ * oder `null`, wenn der Kasten auch nach der Korrektur nicht dort liegt, wo
+ * er liegen soll. Dann ist er zurückgestellt und die Lage kommt nicht
+ * zustande.
  */
-function placeBreadcrumbs(doc: Document, wrapper: HTMLElement, host: HTMLElement): number {
+function placeBreadcrumbs(
+  doc: Document,
+  wrapper: HTMLElement,
+  host: HTMLElement,
+): number | null {
   const crumbs = doc.querySelector<HTMLElement>(BREADCRUMBS_SELECTOR);
   if (crumbs === null) return 0;
   const box = outOfFlowBox(crumbs, wrapper);
@@ -322,17 +345,29 @@ function placeBreadcrumbs(doc: Document, wrapper: HTMLElement, host: HTMLElement
   };
 
   // Angenommen wird, dass der Bezug des Kastens die Polsterkante des
-  // `#wrapper` ist und der Kasten selbst keinen Aussenabstand hat. Das trifft
-  // auf die bekannten Varianten zu, aber nicht auf alle ausgelieferten:
-  // `resources/css/app.css` führt für
-  // `#wrapper#wrapper.is-content-document-page div:has(#breadcrumbs)` ein
-  // `margin-top: -3%`, und ein eigener Aussenabstand des Kastens verschiebt
-  // ihn gegenüber jedem `top`, das wir schreiben — hier um 3% der Breite des
-  // Bezugsrahmens. Ebenso versetzt ihn ein näherer positionierter Vorfahre,
-  // der dann den Bezug stellt. (Der Aussenabstand des `#wrapper` ist dagegen
-  // unschädlich: `getBoundingClientRect().top` zählt ihn ohnehin nicht mit.)
-  // Bekannte Lücke, hier bewusst nicht behoben.
-  box.style.setProperty("top", `${hostBottom - wrapperTop}px`, "important");
+  // `#wrapper` ist und der Kasten selbst keinen Aussenabstand hat. Angenommen
+  // bleibt es nicht: was der Kasten daraus macht, wird nachgemessen. Der
+  // Aussenabstand des `#wrapper` ist dabei unschädlich —
+  // `getBoundingClientRect().top` zählt ihn ohnehin nicht mit.
+  const target = hostBottom - wrapperTop;
+  box.style.setProperty("top", `${target}px`, "important");
+
+  const actualTop = (): number =>
+    box.getBoundingClientRect().top + scroller.scrollTop - wrapperTop;
+
+  const drift = target - actualTop();
+  if (Math.abs(drift) > TOP_TOLERANCE) {
+    // Der Aufschlag kann sich nicht aufschaukeln: der Kasten liegt aus dem
+    // Fluss, ihn zu verschieben rührt die Unterkante der Bühne nicht an.
+    box.style.setProperty("top", `${target + drift}px`, "important");
+    if (Math.abs(target - actualTop()) > TOP_TOLERANCE) {
+      // Was sich nicht treffen lässt, wird nicht halb getroffen: lieber die
+      // Brotkrumen dort, wo die Seite sie hatte, und die Bühne unter ihnen.
+      restoreSaved(savedCrumbs);
+      savedCrumbs = null;
+      return null;
+    }
+  }
   return box.getBoundingClientRect().height;
 }
 
@@ -416,11 +451,29 @@ function write(doc: Document): void {
   wrapper.style.setProperty("padding-top", `${top}px`, "important");
 
   let breadcrumbsHeight = 0;
+  let placed = applied;
   if (applied && mode === "pre" && anchorHost !== null) {
-    breadcrumbsHeight = placeBreadcrumbs(doc, wrapper, anchorHost);
+    const height = placeBreadcrumbs(doc, wrapper, anchorHost);
+    if (height === null) {
+      // Der Kasten liess sich nicht unter die Bühne bringen und steht wieder
+      // dort, wo die Seite ihn hatte. Der Kopfabstand steht aber noch auf
+      // `pre` — bliebe er, läge die Bühne unter den zurückgestellten
+      // Brotkrumen. Jetzt gilt die Regel von `post`; gemessen wird erst nach
+      // dem Zurückstellen, nie an einer Kante aus eigener Hand.
+      placed = false;
+      const postTop = measurePageTop(doc, "post");
+      if (postTop === null) {
+        restoreSaved(saved);
+        saved = null;
+      } else {
+        wrapper.style.setProperty("padding-top", `${postTop}px`, "important");
+      }
+    } else {
+      breadcrumbsHeight = height;
+    }
   }
 
-  notify({ applied, breadcrumbsHeight });
+  notify({ applied: placed, breadcrumbsHeight });
 }
 
 /**

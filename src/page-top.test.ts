@@ -62,7 +62,16 @@ function addBreadcrumbs(
 ): { box: HTMLElement; crumbs: HTMLElement } {
   const box = document.createElement("div");
   if (positioned) box.style.position = "absolute";
-  setRect(box, { top: bottom - 20, bottom, height: 20 });
+  // jsdom rechnet kein Layout: ein geschriebenes `top` bewegte den Kasten
+  // nicht, und er meldete für immer seine Ausgangskante. Hier folgt er ihm,
+  // wie er es im Browser täte — ohne das wäre jede Messung des Geschriebenen
+  // an einem Kasten geprüft, den es so nicht gibt.
+  const height = 20;
+  box.getBoundingClientRect = () => {
+    const written = Number.parseFloat(box.style.getPropertyValue("top"));
+    const edge = Number.isNaN(written) ? bottom - height : written;
+    return { top: edge, left: 0, right: 0, bottom: edge + height, width: 0, height, x: 0, y: edge } as DOMRect;
+  };
   const crumbs = document.createElement("nav");
   crumbs.id = "breadcrumbs";
   setRect(crumbs, { top: bottom - 20, bottom, height: 20 });
@@ -324,6 +333,55 @@ describe("canPlacePreBreadcrumbs", () => {
 });
 
 describe("holdPageTop — Lage vor den Brotkrumen", () => {
+  /**
+   * Lässt den Kasten melden, wo er nach einem geschriebenen `top`
+   * tatsächlich liegt: um `drift` daneben, wie unter dem `margin-top: -3%`,
+   * das `resources/css/app.css` für `.is-content-document-page` führt.
+   */
+  function driftBy(box: HTMLElement, drift: number, height = 20): void {
+    box.getBoundingClientRect = () => {
+      const written = Number.parseFloat(box.style.getPropertyValue("top"));
+      const top = (Number.isNaN(written) ? 0 : written) + drift;
+      return { top, bottom: top + height, height, left: 0, right: 0, width: 0, x: 0, y: top } as DOMRect;
+    };
+  }
+
+  it("gleicht einen eigenen Versatz des Kastens aus", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const { box } = addBreadcrumbs(wrapper, 186);
+    driftBy(box, -30);
+    const host = addHost(wrapper, 136, 636);
+
+    const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    hold({ position: "pre", host, onLayout: (layout) => seen.push(layout) });
+
+    // Nicht das gerechnete `636px`: so läge der Kasten bei 606 und damit quer
+    // unter der Bühne. Geschrieben wird, was ihn tatsächlich dorthin bringt.
+    expect(box.getBoundingClientRect().top).toBe(636);
+    expect(seen.at(-1)).toEqual({ applied: true, breadcrumbsHeight: 20 });
+  });
+
+  it("stellt den Kasten zurück und fällt zurück, wenn er sich nicht treffen lässt", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    const { box } = addBreadcrumbs(wrapper, 186);
+    // Ein Kasten, dem das geschriebene `top` gleichgültig ist — etwa weil ein
+    // näherer positionierter Vorfahre den Bezug stellt.
+    box.getBoundingClientRect = () =>
+      ({ top: 166, bottom: 186, height: 20, left: 0, right: 0, width: 0, x: 0, y: 166 }) as DOMRect;
+    const host = addHost(wrapper, 136, 636);
+
+    const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    hold({ position: "pre", host, onLayout: (layout) => seen.push(layout) });
+
+    // Lieber die Brotkrumen dort, wo die Seite sie hatte, und die Bühne
+    // darunter — im Editor kommt dazu der Hinweis.
+    expect(seen.at(-1)).toEqual({ applied: false, breadcrumbsHeight: 0 });
+    expect(box.style.getPropertyValue("top")).toBe("");
+    expect(wrapper.style.getPropertyValue("padding-top")).toBe("186px");
+  });
+
   it("setzt die Bühne ans Menü und die Brotkrumen unter sie", () => {
     addChrome(136);
     const wrapper = addWrapper();
