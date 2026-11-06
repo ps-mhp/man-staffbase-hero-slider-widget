@@ -576,4 +576,57 @@ describe("HeroSlider", () => {
       expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
     });
   });
+
+  describe("Bedienelemente abschalten", () => {
+    it("zeigt ohne Bedienelemente weder Pfeile noch Striche", () => {
+      const { container } = render(<HeroSlider slides={two} controls={false} />);
+
+      expect(screen.queryByTestId("hero-prev")).toBeNull();
+      expect(screen.queryByTestId("hero-next")).toBeNull();
+      expect(container.querySelector(".man-hero__dots")).toBeNull();
+    });
+
+    it("macht die Bühne selbst erreichbar, wenn die Bedienelemente fehlen", () => {
+      const { container } = render(<HeroSlider slides={two} controls={false} />);
+      const hero = container.querySelector(".man-hero") as HTMLElement;
+
+      // Der Fokus kam bisher nur über die Schaltflächen herein. Ohne sie wären
+      // die Pfeiltasten für Tastaturnutzer:innen unerreichbar.
+      expect(hero).toHaveAttribute("tabindex", "0");
+      expect(hero).toHaveAttribute("role", "group");
+      expect(hero).toHaveAccessibleName("Bühne, 2 Folien — mit den Pfeiltasten blättern");
+    });
+
+    it("blättert ohne Bedienelemente weiter mit den Pfeiltasten", () => {
+      const { container } = render(<HeroSlider slides={two} controls={false} />);
+      const hero = container.querySelector(".man-hero") as HTMLElement;
+
+      fireEvent.keyDown(hero, { key: "ArrowRight" });
+
+      expect(screen.getByTestId("hero-slide-b")).not.toHaveAttribute("aria-hidden");
+    });
+
+    it("lässt die Folien ohne Tabliste nicht als Tabpanel zurück", () => {
+      render(<HeroSlider slides={two} controls={false} />);
+
+      // Ein `tabpanel` ohne `tablist` ist für Hilfsmittel verwaist.
+      expect(screen.getByTestId("hero-slide-a")).toHaveAttribute("role", "group");
+    });
+
+    it("macht eine einzelne Folie nicht erreichbar", () => {
+      const { container } = render(<HeroSlider slides={[slide("a")]} controls={false} />);
+      const hero = container.querySelector(".man-hero") as HTMLElement;
+
+      // Dort gibt es nichts zu blättern; ein fokussierbarer Kasten ohne
+      // Funktion wäre eine leere Station in der Tabreihenfolge.
+      expect(hero).not.toHaveAttribute("tabindex");
+    });
+
+    it("zeigt die Bedienelemente, solange sie niemand abschaltet", () => {
+      render(<HeroSlider slides={two} />);
+
+      expect(screen.getByTestId("hero-prev")).toBeInTheDocument();
+      expect(screen.getByTestId("hero-dot-a")).toBeInTheDocument();
+    });
+  });
 });

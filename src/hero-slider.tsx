@@ -54,6 +54,8 @@ export interface HeroSliderProps {
   autoplayDelayMs?: number;
   /** Lage zu den Brotkrumen der Wirtsseite; Vorgabe ist darunter. */
   position?: HeroPosition;
+  /** Pfeile und Striche zeigen; Vorgabe an. Wischen und Pfeiltasten bleiben. */
+  controls?: boolean;
 }
 
 /** Ob eine Medienabfrage gerade zutrifft; ohne `matchMedia` nie. */
@@ -198,6 +200,7 @@ export function HeroSlider({
   fullBleed = true,
   autoplayDelayMs = DEFAULT_AUTOPLAY_DELAY_MS,
   position = "post",
+  controls = true,
 }: HeroSliderProps): ReactElement | null {
   const hotCss = useHotStyle(heroSliderCss, "hero-slider-widget", "styles/hero-slider.scss");
   // Der Anker bricht selbst nie aus — an ihm wird die ungestörte Kante der
@@ -264,6 +267,10 @@ export function HeroSlider({
 
   const many = slides.length > 1;
 
+  // Ohne Bedienelemente ist die Bühne selbst die Station in der
+  // Tabreihenfolge: der Fokus kam bisher nur über die Schaltflächen herein.
+  const selfFocus = many && !controls;
+
   // Nur Redakteur:innen können an der Einstellung etwas ändern; auf der
   // fertigen Seite bleibt der Rückfall auf „nach den Brotkrumen“ stumm.
   const showNotice =
@@ -311,6 +318,11 @@ export function HeroSlider({
         ref={setStage}
         data-testid="hero-slider"
         aria-roledescription={many ? "carousel" : undefined}
+        tabIndex={selfFocus ? 0 : undefined}
+        role={selfFocus ? "group" : undefined}
+        aria-label={
+          selfFocus ? `Bühne, ${slides.length} Folien — mit den Pfeiltasten blättern` : undefined
+        }
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
@@ -340,7 +352,9 @@ export function HeroSlider({
                 key={slide.id}
                 className={`man-hero__slide${active ? " man-hero__slide--active" : ""}`}
                 data-testid={`hero-slide-${slide.id}`}
-                role={many ? "tabpanel" : undefined}
+                // Ohne Tabliste wäre ein `tabpanel` verwaist; dann ist die
+                // Folie eine Gruppe wie jede andere.
+                role={many ? (controls ? "tabpanel" : "group") : undefined}
                 id={many ? `hero-slide-${slide.id}` : undefined}
                 aria-roledescription={many ? "Folie" : undefined}
                 aria-label={many ? `Folie ${position + 1} von ${slides.length}` : undefined}
@@ -392,7 +406,7 @@ export function HeroSlider({
           })}
         </div>
 
-        {many && (
+        {many && controls && (
           <div className="man-hero__inner">
             <div className="man-hero__controls" role="tablist" aria-label="Folien der Bühne">
               <button

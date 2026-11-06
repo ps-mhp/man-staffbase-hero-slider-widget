@@ -688,6 +688,9 @@
 // Bedienung steht im dunklen Teil des Verlaufs; gegen `surface-invers` hält
 // das Blau 3,1:1, über sehr hellen Motiven scheint der Verlauf aber durch und
 // es wird knapper. Die Schaltfläche bringt den Ring mit `man-button` mit.
+// Ohne Bedienelemente ist die Bühne selbst die Station in der Tabreihenfolge
+// und braucht denselben sichtbaren Ring wie die Schaltflächen.
+.man-hero:focus-visible,
 .man-hero__arrow:focus-visible,
 .man-hero__dot:focus-visible {
   @include man-focus-ring;
