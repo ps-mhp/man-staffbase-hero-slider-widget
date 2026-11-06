@@ -210,9 +210,12 @@ export interface PageTopLayout {
    * Ob die Lage `pre` für **diese** Bühne zustande kam. `false` heisst, dass
    * es für sie bei der Lage unter den Brotkrumen bleibt — entweder weil `pre`
    * auf dieser Seite nicht anwendbar ist, oder weil eine früher angemeldete
-   * Bühne den Kopfabstand führt und diese ihm nur folgt. Eine Bühne in `post`
-   * sieht `false` deshalb nur im zweiten Fall; eine Messung, die nichts
-   * ergibt, ändert für sie nichts und wird auch nicht als Rückfall gemeldet.
+   * Bühne den Kopfabstand führt und diese ihm nur folgt.
+   *
+   * Eine Bühne in `post` sieht `false` nie: sie hat die Lage bekommen, die
+   * sie wollte. `applied` heisst damit überall dasselbe — `pre` angefordert
+   * und nicht bekommen — und taugt für sich allein als Anlass für den
+   * Hinweis im Editor.
    */
   applied: boolean;
   /**
@@ -344,7 +347,14 @@ function placeBreadcrumbs(doc: Document, wrapper: HTMLElement, host: HTMLElement
  */
 function notify(layout: PageTopLayout): void {
   for (const [index, holder] of holders.entries()) {
-    holder.onLayout?.(index === 0 ? layout : { applied: false, breadcrumbsHeight: 0 });
+    if (index === 0) {
+      holder.onLayout?.(layout);
+      continue;
+    }
+    // Dieselbe Regel wie bei einer Messung, die nichts ergibt: ein Rückfall
+    // ist es nur für `pre`. Wer `post` wollte, bekommt `post` — ob er den
+    // Kopfabstand führt oder einer früheren Bühne folgt, ändert daran nichts.
+    holder.onLayout?.({ applied: holder.position !== "pre", breadcrumbsHeight: 0 });
   }
 }
 

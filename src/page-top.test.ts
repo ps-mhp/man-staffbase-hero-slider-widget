@@ -650,6 +650,22 @@ describe("holdPageTop — Meldung je Bühne", () => {
     expect(seenSecond.at(-1)).toEqual({ applied: false, breadcrumbsHeight: 0 });
   });
 
+  it("meldet einer nachrangigen Bühne in post keinen Rückfall", () => {
+    addChrome(136);
+    const wrapper = addWrapper();
+    addBreadcrumbs(wrapper, 186);
+    const first = addHost(wrapper, 136, 636);
+    const second = addHost(wrapper, 636, 1136);
+
+    const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
+    hold({ position: "pre", host: first });
+    hold({ position: "post", host: second, onLayout: (layout) => seen.push(layout) });
+
+    // Sie folgt dem Kopfabstand der ersten Bühne, wollte aber ohnehin nur
+    // unter den Brotkrumen stehen — ein Rückfall ist das nicht.
+    expect(seen.at(-1)).toEqual({ applied: true, breadcrumbsHeight: 0 });
+  });
+
   it("meldet einer Bühne in post keinen Rückfall, wenn die Messung nichts ergibt", () => {
     // Ohne feste Leiste ist nichts zu messen; der Abstand von Staffbase
     // bleibt stehen.
@@ -718,6 +734,15 @@ describe("holdPageTop — Beobachtung der Bühne", () => {
     // Bühne, hingen die Brotkrumen auf der alten Kante fest.
     setRect(second, { top: 136, bottom: 700, height: 564 });
     FakeResizeObserver.resize(second);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(box.style.getPropertyValue("top")).toBe("700px");
+
+    // Umgekehrt darf die abgemeldete Bühne den Beobachter nicht mehr
+    // beschäftigen: sie hängt nicht mehr am Dokument, und was sie meldet,
+    // geht die Seite nichts mehr an.
+    setRect(first, { top: 136, bottom: 900, height: 764 });
+    FakeResizeObserver.resize(first);
     await new Promise((resolve) => setTimeout(resolve, 50));
 
     expect(box.style.getPropertyValue("top")).toBe("700px");
