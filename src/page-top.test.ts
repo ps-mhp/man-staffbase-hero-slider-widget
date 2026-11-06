@@ -363,14 +363,23 @@ describe("holdPageTop — Lage vor den Brotkrumen", () => {
   });
 
   it("stellt den Kasten zurück und fällt zurück, wenn er sich nicht treffen lässt", () => {
-    addChrome(136);
-    const wrapper = addWrapper();
-    const { box } = addBreadcrumbs(wrapper, 186);
-    // Ein Kasten, dem das geschriebene `top` gleichgültig ist — etwa weil ein
-    // näherer positionierter Vorfahre den Bezug stellt.
-    box.getBoundingClientRect = () =>
-      ({ top: 166, bottom: 186, height: 20, left: 0, right: 0, width: 0, x: 0, y: 166 }) as DOMRect;
-    const host = addHost(wrapper, 136, 636);
+    // Der abgeleitete Aufbau statt fester Kanten: nur in ihm folgt auch die
+    // innere `nav#breadcrumbs` dem geschriebenen `top`. An einer festen Kante
+    // läse `measurePageTop(doc, "post")` immer denselben Wert, und ob der
+    // Kasten vor der Messung zurückgestellt wurde, bliebe ungeprüft.
+    const { wrapper, box, host } = addDerivedPage();
+    const crumbs = box.firstElementChild as HTMLElement;
+
+    // Ein Kasten, der dem geschriebenen `top` nur gedämpft folgt: der
+    // Aufschlag aus dem ersten Versatz trifft ihn wieder daneben. Ein fester
+    // Versatz liesse sich in einem Schritt einfangen, dieser nicht.
+    const damped = (): DOMRect => {
+      const written = Number.parseFloat(box.style.getPropertyValue("top"));
+      const top = Number.isNaN(written) ? 166 : written * 1.1;
+      return { top, bottom: top + 20, height: 20, left: 0, right: 0, width: 0, x: 0, y: top } as DOMRect;
+    };
+    box.getBoundingClientRect = damped;
+    crumbs.getBoundingClientRect = damped;
 
     const seen: { applied: boolean; breadcrumbsHeight: number }[] = [];
     hold({ position: "pre", host, onLayout: (layout) => seen.push(layout) });
@@ -379,6 +388,10 @@ describe("holdPageTop — Lage vor den Brotkrumen", () => {
     // darunter — im Editor kommt dazu der Hinweis.
     expect(seen.at(-1)).toEqual({ applied: false, breadcrumbsHeight: 0 });
     expect(box.style.getPropertyValue("top")).toBe("");
+    // Der Beweis für „erst zurückstellen, dann messen": stünde der Kasten bei
+    // der Messung noch verschoben, läse sie seine Unterkante weit über
+    // `MAX_PLAUSIBLE_TOP`, verwürfe sich, und der Kopfabstand verschwände
+    // ganz, statt auf den Wert von `post` zu fallen.
     expect(wrapper.style.getPropertyValue("padding-top")).toBe("186px");
   });
 
