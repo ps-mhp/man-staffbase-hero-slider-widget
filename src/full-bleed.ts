@@ -165,6 +165,16 @@ export function openClippingAncestors(element: HTMLElement): ClipOpening {
 const SECTION_BLOCK = '[data-c13y-component="section-block"]';
 
 /**
+ * Die Attrappen, die `custom-block.mjs` ab 10.0.12 in den Schattenbaum jedes
+ * Bausteins legt: Kopien seiner Vorfahren mit `display: contents` und
+ * denselben `data-c13y-*`-Attributen, auch eine des Abschnitts. Sie haben
+ * keinen Kasten; was man an ihnen einstellt, wirkt nirgends. Die Suche muss
+ * an ihnen vorbei bis zum echten Abschnitt (siehe `content-tabs`,
+ * `section-scan.ts`, gleicher Fehler in 0.4.0-rc.3 behoben).
+ */
+const ANCESTOR_COPY = "[data-sb-c13y-ancestor-copy]";
+
+/**
  * Der Abschnitt, in dem die Bühne steckt — oder `null` im klassischen Editor.
  *
  * Die Suche überquert Shadow-Root-Grenzen (`parentOf`) und endet spätestens
@@ -175,7 +185,7 @@ const SECTION_BLOCK = '[data-c13y-component="section-block"]';
 export function findSection(element: HTMLElement): HTMLElement | null {
   let node: HTMLElement | null = parentOf(element);
   while (node !== null && node !== document.body && node !== document.documentElement) {
-    if (node.matches(SECTION_BLOCK)) return node;
+    if (node.matches(SECTION_BLOCK) && !node.matches(ANCESTOR_COPY)) return node;
     node = parentOf(node);
   }
   return null;
@@ -227,6 +237,41 @@ type FillProperty =
   | "padding-bottom"
   | "height"
   | "display";
+
+/** Elemente, die nie einen Kasten neben der Bühne aufspannen. */
+const NOT_RENDERED = new Set(["STYLE", "LINK", "SCRIPT", "TEMPLATE", "META"]);
+
+/** Ob `node` neben der Bühne als Inhalt zählt. */
+function isNeighbour(node: Element): boolean {
+  if (NOT_RENDERED.has(node.tagName)) return false;
+  const { display, position } = getComputedStyle(node);
+  return display !== "none" && position !== "absolute" && position !== "fixed";
+}
+
+/**
+ * Ob die Bühne in ihrem Abschnitt allein steht: auf dem Weg nach oben hat
+ * kein Vorfahr ein weiteres Kind, das Platz einnimmt.
+ *
+ * Nur dann darf die Höhe des Abschnitts zu ihr durchgereicht werden. Steht in
+ * derselben Spalte noch ein Baustein, löste `height: 100%` die Bühne auf die
+ * volle Spaltenhöhe auf, und der andere ragte unten heraus — live gesehen
+ * 06.11.2026 auf truck mit einem Navigationsblock. Gezählt wird, was im DOM
+ * steht, nicht was schon eine Höhe hat: ein Nachbar, der noch lädt, wäre beim
+ * ersten Bild 0px hoch und hinterher trotzdem im Weg.
+ */
+export function standsAlone(element: HTMLElement): boolean {
+  const section = findSection(element);
+  if (section === null) return false;
+  let child: HTMLElement = element;
+  for (let node = parentOf(element); node !== null; node = parentOf(node)) {
+    for (const other of node.children) {
+      if (other !== child && isNeighbour(other)) return false;
+    }
+    if (node === section) return true;
+    child = node;
+  }
+  return false;
+}
 
 /**
  * Lässt die Bühne die Höhe ihres Abschnitts einnehmen.
@@ -294,9 +339,13 @@ export function stretchToSection(element: HTMLElement): () => void {
     node = parentOf(node);
   }
 
+  // Die Abstände fallen immer, die Höhe nur, wenn die Bühne allein steht —
+  // neben einem weiteren Baustein bliebe für ihn sonst kein Platz.
+  const alone = standsAlone(element);
   for (const ancestor of chain) {
     force(ancestor, "margin-top", "0px");
     force(ancestor, "margin-bottom", "0px");
+    if (!alone) continue;
     force(ancestor, "height", "100%");
     // `sb-custom-block` ist ein unbekanntes Element und damit `inline`; eine
     // Höhe greift daran nicht. Gemessen am 15.10.2026: `display: inline` bei
@@ -406,7 +455,9 @@ export function useFullBleed(
 
     // Nicht der Wunsch zählt, sondern der Befund: ohne Abschnitt hat
     // `stretchToSection` nichts angefasst, und die Bühne muss sich wie die
-    // Vorgabestufe verhalten.
+    // Vorgabestufe verhalten. Neben einem weiteren Baustein bleibt sie im
+    // Abschnittsmodus — nur die Höhe des Abschnitts wird ihr dann nicht
+    // aufgezwungen (siehe `standsAlone`).
     setFilled(fill && findSection(anchor) !== null);
 
     // Rücknahme in umgekehrter Reihenfolge des Eingriffs.

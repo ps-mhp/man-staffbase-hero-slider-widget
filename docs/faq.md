@@ -137,7 +137,8 @@ ein anderer Block, bleibt der Abstand, wie die Seite ihn setzt.
 
 Antwort: „Kein Abstand“ nimmt den Abstand zwischen zwei Blöcken weg. Ist die
 Bühne der letzte Block ihres Abschnitts, folgt darunter der Innenabstand des
-Abschnitts und der Beginn des nächsten — beide gehören zur Seite. Legen Sie den
+Abschnitts und der Beginn des nächsten — beide gehören zur Seite. Mit der Höhe
+„Abschnittshöhe“ entfällt der Innenabstand des Abschnitts; sonst legen Sie den
 folgenden Inhalt in denselben Abschnitt, dann schliesst er direkt an.
 
 **Frage:** Ohne Bedienelemente — wie blättert man dann?

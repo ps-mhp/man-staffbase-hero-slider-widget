@@ -77,7 +77,11 @@ Kanal-Eintrag zählt dabei mit allen Folien, die er beisteuert.
   über der Bühne kein anderer Inhalt steht.
 - **Abstand nach unten** nimmt den Abstand zwischen den Blöcken weg, nicht den
   Innenabstand am Ende eines Abschnitts. Steht die Bühne als letzter Block in
-  ihrem Abschnitt, bleibt dessen Abstand nach unten erhalten.
+  ihrem Abschnitt, bleibt dessen Abstand nach unten erhalten — ausser bei der
+  Höhe `Abschnittshöhe`: dort schliesst der Abschnitt ohnehin bündig ab.
+- Bei `Abschnittshöhe` nimmt die Bühne die Höhe des Abschnitts nur ein, wenn
+  sie allein darin steht. Mit weiteren Blöcken im selben Abschnitt behält sie
+  ihr Seitenverhältnis, und die Blöcke rücken ohne Abstand an sie heran.
 - Die Bedienelemente erscheinen erst ab der zweiten Folie. Auf schmalen
   Bildschirmen sind die Pfeile ausgeblendet; dort wird gewischt.
 - Ein Beitrag, der gelöscht wird oder für die lesende Person nicht sichtbar

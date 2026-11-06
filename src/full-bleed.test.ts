@@ -12,6 +12,8 @@
  */
 
 import {
+  findSection,
+  standsAlone,
   FALLBACK_HEADER_HEIGHT,
   measureBleed,
   openClippingAncestors,
@@ -462,5 +464,104 @@ describe("measureBleed", () => {
     setRect(anchor, { left: 0, top: -600 });
 
     expect(measureBleed(anchor).headerHeight).toBe(FALLBACK_HEADER_HEIGHT);
+  });
+});
+
+/**
+ * Ein Baustein, wie `custom-block.mjs` ab 10.0.12 ihn rendert: in der echten
+ * Spalte ein Schattenwirt, darin Kopien der Vorfahren mit `display: contents`
+ * und denselben `data-c13y-*`-Attributen — auch eine Kopie des Abschnitts.
+ */
+function buildIsolatedChain(): ReturnType<typeof buildChain> & {
+  sectionCopy: HTMLElement;
+  frameCopy: HTMLElement;
+  widget: HTMLElement;
+} {
+  const chain = buildChain();
+  const shadowHost = document.createElement("div");
+  shadowHost.setAttribute("data-sb-custom-block-widget-host", "");
+  chain.host.appendChild(shadowHost);
+  const root = shadowHost.attachShadow({ mode: "open" });
+
+  const sectionCopy = document.createElement("div");
+  sectionCopy.dataset.c13yComponent = "section-block";
+  sectionCopy.setAttribute("data-sb-c13y-ancestor-copy", "");
+  sectionCopy.style.display = "contents";
+  const frameCopy = document.createElement("div");
+  frameCopy.setAttribute("data-sb-c13y-ancestor-copy", "");
+  frameCopy.style.display = "contents";
+  const widget = document.createElement("div");
+
+  root.appendChild(sectionCopy);
+  sectionCopy.appendChild(frameCopy);
+  frameCopy.appendChild(widget);
+  return { ...chain, sectionCopy, frameCopy, widget };
+}
+
+describe("Abschnitt hinter den Attrappen des Content Designers", () => {
+  it("findet den echten Abschnitt, nicht seine Kopie", () => {
+    const { section, widget } = buildIsolatedChain();
+
+    // Die Kopie trägt dieselben Attribute, hat aber keinen Kasten. Bliebe die
+    // Suche an ihr hängen, griffe jeder Eingriff ins Leere — gemessen am
+    // 06.11.2026 auf truck: Kopie `padding: 0 !important`, echter Abschnitt
+    // unverändert 48/24px, Rahmen 40/40px.
+    expect(findSection(widget)).toBe(section);
+  });
+
+  it("nimmt dem echten Rahmen den senkrechten Innenabstand", () => {
+    const { padded, frameCopy, widget } = buildIsolatedChain();
+
+    openSectionPadding(widget);
+
+    expect(padded.style.paddingTop).toBe("0px");
+    expect(padded.style.paddingBottom).toBe("0px");
+    expect(frameCopy.getAttribute("style")).toBe("display: contents;");
+  });
+
+  it("nimmt dem echten Abschnitt und der echten Kette die Abstände", () => {
+    const { section, container, widget } = buildIsolatedChain();
+
+    stretchToSection(widget);
+
+    expect(section.style.paddingTop).toBe("0px");
+    expect(section.style.paddingBottom).toBe("0px");
+    expect(container.style.marginBottom).toBe("0px");
+  });
+});
+
+describe("Abschnittshöhe neben weiteren Blöcken", () => {
+  it("reicht die Höhe nicht durch, wenn in der Spalte noch etwas steht", () => {
+    const { container, block, host, widget } = buildIsolatedChain();
+    // Ein zweiter Baustein unter der Bühne, in derselben Spalte. Bekäme die
+    // Bühne die volle Spaltenhöhe, ragte er unten aus der Spalte heraus —
+    // live gesehen 06.11.2026 auf truck mit einem Navigationsblock.
+    const sibling = document.createElement("div");
+    container.appendChild(sibling);
+
+    expect(standsAlone(widget)).toBe(false);
+    stretchToSection(widget);
+
+    expect([block, host].map((el) => el.style.height)).toEqual(["", ""]);
+    // Die Abstände fallen trotzdem: um sie ging es von Anfang an.
+    expect(container.style.marginBottom).toBe("0px");
+  });
+
+  it("zählt Stile und Verborgenes nicht als Nachbarn", () => {
+    const { container, widget } = buildIsolatedChain();
+    container.appendChild(document.createElement("style"));
+    const hidden = document.createElement("div");
+    hidden.style.display = "none";
+    container.appendChild(hidden);
+
+    expect(standsAlone(widget)).toBe(true);
+  });
+
+  it("steht allein, wenn nur die Bühne in der Kette steckt", () => {
+    const { block, widget } = buildIsolatedChain();
+
+    expect(standsAlone(widget)).toBe(true);
+    stretchToSection(widget);
+    expect(block.style.height).toBe("100%");
   });
 });

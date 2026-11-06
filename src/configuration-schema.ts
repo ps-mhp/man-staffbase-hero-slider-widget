@@ -107,8 +107,8 @@ export const uiSchema: UiSchema = {
       "„Bildschirmhoch“ füllt die sichtbare Seite abzüglich der Kopfzeile. " +
       "Die Vorgabe „Abschnittshöhe“ lässt die Bühne im neuen Editor oben und unten bündig mit dem " +
       "Abschnitt abschliessen und dessen Höhe einnehmen; steht noch etwas anderes im selben Abschnitt, " +
-      "rückt es näher an die Bühne. Im klassischen Editor gibt es keinen Abschnitt — dort verhält sie " +
-      "sich wie „Mittel“.",
+      "rückt es ohne Abstand an die Bühne, und die Bühne behält ihr Seitenverhältnis. Im klassischen " +
+      "Editor gibt es keinen Abschnitt — dort verhält sie sich wie „Mittel“.",
   },
   [FULL_BLEED_ATTRIBUTE]: {
     "ui:help":
