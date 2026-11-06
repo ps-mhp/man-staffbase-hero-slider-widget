@@ -5,7 +5,7 @@ intera larghezza della finestra, con sopra un titolo, eventualmente una didascal
 un pulsante. Il modello di riferimento è il palcoscenico su man.eu.
 
 Chi crea più diapositive ottiene un carrello: le diapositive si
-sfogliano l’una nell’altra, la navigazione avviene tramite le frecce e le linee in basso a sinistra.
+succedono in dissolvenza, mentre la navigazione avviene tramite le frecce e le linee in basso a sinistra.
 
 Non è necessario aggiornare manualmente una diapositiva. Oltre alle diapositive personalizzate, la
 pagina iniziale può mostrare anche **articoli dalle notizie**:

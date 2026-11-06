@@ -11,9 +11,9 @@
 3. Otwórz ustawienia widżetu. Edytor otworzy się
    automatycznie.
 4. Kliknij nad listą **Nowy +** i wybierz **Slajd**.
-5. Pod opcją **Obraz lub wideo** kliknij na przerywaną powierzchnię **Wybierz obraz
-   lub wideo** i wybierz obraz z biblioteki multimediów — lub wpisz
-   poniżej adres obrazu lub wideo. Bez obrazu
+5. Pod opcją **Zdjęcie lub wideo** kliknij na przerywaną powierzchnię **Wybierz zdjęcie
+   lub wideo** i wybierz zdjęcie z biblioteki multimediów — lub wpisz
+   poniżej adres zdjęcia lub filmu. Bez zdjęcia
    slajd nie zostanie wyświetlony.
 6. W polu **Opis obrazu** wpisz, co jest na nim widoczne. Pozostaw to
    pole puste tylko wtedy, gdy obraz ma charakter wyłącznie dekoracyjny.
@@ -150,5 +150,5 @@ ponieważ jest on ładowany przy każdym wywołaniu strony.
   przeniesiony lub jest niewidoczny dla czytelnika. Pozostałe slajdy
   pozostają nienaruszone. Sprawdź wpis w podglądzie edytora.
 7. **Wpis w kanale zawiera mniej slajdów niż ustawiono.** Filtry są
-   zbyt wąskie — zazwyczaj **Tylko wpisy ze zdjęciami** w kanale bez zdjęć — lub
-   scena jest już zapełniona ośmioma slajdami.
+  zbyt wąskie — najczęściej **Tylko wpisy ze zdjęciami** w kanale bez zdjęć — lub
+  scena jest już zapełniona ośmioma slajdami.

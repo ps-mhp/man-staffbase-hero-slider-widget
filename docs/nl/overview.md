@@ -7,8 +7,8 @@ een knop. Het voorbeeld hiervoor is het podium op man.eu.
 Als je meerdere dia’s aanmaakt, krijg je een diavoorstelling: de dia’s
 vloeien in elkaar over, en je bladert met pijltjes en de streepjes linksonder.
 
-Een dia hoeft niet handmatig te worden bijgewerkt. Naast eigen dia’s kan het
-startscherm ook **berichten uit het nieuws** weergeven:
+Een dia hoeft niet handmatig te worden bijgewerkt. Naast eigen dia’s kan de
+pagina ook **berichten uit het nieuws** weergeven:
 
 - **Nieuwsbericht** — een specifiek bericht als dia. Afbeelding, kop
   en teaser komen uit het bericht, de knop leidt ernaartoe.
@@ -47,7 +47,7 @@ berichten van een kanaal.
 - Wie in het besturingssysteem „Beweging verminderen“ heeft ingesteld, ziet geen
   overgang en geen overgangseffect — alleen nog de bedieningselementen.
 - Dia’s uit het nieuws zien eruit als elke andere dia. Dat de inhoud uit
-  een artikel komt, is van buitenaf niet te zien.
+  een artikel komt, is van buitenaf niet te herkennen.
 
 ## Wat u in de CMS-editor ziet
 

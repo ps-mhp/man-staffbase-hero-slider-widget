@@ -101,13 +101,13 @@ est supprimé.
 
 La vidéo est lue en boucle et sans son, et uniquement tant que sa diapositive est
 affichée en premier. Si l’utilisateur a réduit l’animation dans le système, il verra sa première image
-figer. Veillez à ce que le fichier soit léger — quelques mégaoctets pour quelques secondes —,
+fixe. Veillez à ce que le fichier soit léger — quelques mégaoctets pour quelques secondes —,
 car il sera chargé à chaque consultation de la page.
 
 ## Ajouter une image pour le format portrait
 
 1. Enregistrez dans la
-   médiathèque un extrait du même motif recadré en format portrait.
+   médiathèque un recadrage au format portrait du même motif.
 2. Sélectionnez la diapositive concernée dans l’éditeur.
 3. Sous **Image ou vidéo pour le format portrait**, cliquez sur **Sélectionner une image ou une vidéo**
    ou saisissez une adresse en dessous.

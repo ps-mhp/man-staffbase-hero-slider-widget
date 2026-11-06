@@ -13,7 +13,7 @@ une zone sombre.
 Réponse : La plupart du temps, la vidéo n’est pas accessible sans connexion, ou le **Type** est
 réglé sur **Image**, car l’adresse ne comporte pas d’extension. Ouvrez l’adresse dans
 une fenêtre de navigateur privée : si elle ne fonctionne pas là-bas, les
-lecteurs ne la verront pas non plus. Un message apparaissant juste en dessous du champ indique que l’adresse
+lecteurs ne la verront pas non plus. Un message situé juste en dessous du champ indique que l’adresse
 n’a pas été prise en compte — elle doit commencer par `https://`.
 
 **Question :** J’ai saisi un libellé pour le bouton, mais
@@ -31,7 +31,7 @@ Placez-le sur une ligne distincte en haut de la page.
 **Question :** Le texte ne se trouve pas à l’endroit où commence le reste du contenu de la page.
 
 Réponse : La zone d’édition s’adapte à la largeur de contenu indiquée par la page.
-Si celle-ci diffère, signalez le problème en précisant l’adresse de la page.
+Si celle-ci diffère, signalez le problème en indiquant l’adresse de la page.
 
 **Question :** À la place de l’éditeur, je vois un champ de texte « Entrées » contenant des
 accolades.
@@ -56,8 +56,8 @@ lignes sous le texte indiquent toujours quelle diapositive est actuellement au p
 **Question :** Mon motif est rogné sur les bords.
 
 Réponse : La scène recadre l’image au format 21:9 ou 4:3 en fonction de la largeur de la fenêtre. Choisissez
-une image laissant un espace autour du motif, ou définissez sous **Image pour
-format portrait** votre propre recadrage à la verticale.
+une image laissant un espace autour du motif, ou ajoutez sous **Image pour
+format portrait** votre propre recadrage orienté à la verticale.
 
 **Question :** Puis-je créer plus de huit diapositives ?
 

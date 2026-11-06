@@ -4,9 +4,9 @@
 | --- | --- |
 | Entradas | El contenido del escenario: diapositivas propias, noticias individuales y canales de noticias completos. Se gestiona a través del editor, que aparece automáticamente al abrir la configuración. El campo de texto que hay debajo es el borrador y no es necesario modificarlo. |
 | Altura | `Estándar (420–560 px)` es la opción predeterminada. Junto a ella, `Baja (320–420 px)`, `Alta (560–720 px)` y `Altura de pantalla`. |
-| Mostrar a todo lo ancho | Si está activado (configuración predeterminada), la imagen ocupa todo el ancho de la ventana, mientras que el texto se mantiene alineado con la línea de flujo de la página. Si está desactivado, el escenario permanece dentro de la columna de contenido. |
-| Segundos por diapositiva | El valor predeterminado es `5`. `0` detiene el escenario; en ese caso, solo se puede avanzar mediante flechas y líneas. Máximo 30. |
-| Posición respecto a la ruta de navegación | `Después de la ruta de navegación` es el valor predeterminado: el escenario comienza debajo de la línea de la ruta de navegación. `Antes de la ruta de navegación` la coloca alineada justo debajo del menú y desplaza la ruta de navegación hacia abajo. Solo se aplica si la diapositiva se encuentra en la parte superior de la página y esta tiene ruta de navegación. |
+| Mostrar a todo lo ancho | Si está activado (ajuste predeterminado), la imagen ocupa todo el ancho de la ventana, mientras que el texto se mantiene alineado con el margen de la página. Si está desactivado, el escenario permanece dentro de la columna de contenido. |
+| Segundos por diapositiva | El valor predeterminado es `5`. El valor `0` detiene el escenario; en ese caso, solo se puede avanzar mediante flechas y líneas, y si los controles están desactivados, únicamente con gestos de deslizamiento y las teclas de flecha. Máximo 30. |
+| Posición respecto a la ruta de navegación | El valor predeterminado es `Después de la ruta de navegación`: el escenario comienza debajo de la línea de la ruta de navegación. `Antes de la ruta de navegación` lo coloca alineado justo debajo del menú y desplaza la ruta de navegación hacia abajo. Solo es válido si la diapositiva se encuentra en la parte superior de la página y esta tiene una ruta de navegación. |
 | Mostrar controles | Si está activado (ajuste predeterminado), aparecen flechas y líneas. Si está desactivado, ambos desaparecen; se sigue pasando de diapositiva a diapositiva deslizando el dedo o con las teclas de flecha, y el tiempo establecido por diapositiva transcurre sin cambios. |
 
 ## Tipos de entradas
@@ -77,5 +77,5 @@ entrada de canal cuenta con todas las diapositivas que aporta.
 - Las diapositivas de noticias se adaptan al idioma del lector, siempre que la publicación
   esté traducida; en caso contrario, se muestra la primera versión disponible.
 - La **vista previa** del editor sigue las mismas reglas que la
-  página publicada. Lo que no aparezca allí, tampoco aparecerá en la pantalla
+  página publicada. Lo que no aparezca allí tampoco aparecerá en la pantalla
   .

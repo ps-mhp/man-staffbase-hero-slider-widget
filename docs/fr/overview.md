@@ -12,7 +12,7 @@ page d’accueil peut également afficher des **articles issus de l’actualité
 
 - **Article d’actualité** — un article spécifique sous forme de diapositive. L’image, le titre
   et le teaser proviennent de l’article, le bouton renvoie vers celui-ci.
-- **Chaîne d'actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
+- **Chaîne d’actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
   ordre et les filtres sont paramétrables. Lorsqu’un nouvel article paraît dans la
   chaîne, il s’affiche automatiquement sur la scène.
 
@@ -30,7 +30,7 @@ articles d’une rubrique.
   contenu est supprimée.
 - Le **texte reste aligné sur la ligne de repère de la page** : il commence sur la même
   ligne verticale que l’en-tête, le menu et le texte situé sous la zone d’affichage. Il
-  n’est expressément pas aligné sur le bord de l’image.
+  n’est expressément pas collé au bord de l’image.
 - Le texte se trouve en bas à gauche, sur un dégradé sombre qui s'estompe de bas en
   haut. Sur les écrans larges, un deuxième dégradé s'ajoute depuis la gauche
   afin que le texte clair reste lisible sur un fond clair.
@@ -51,7 +51,7 @@ articles d’une rubrique.
 
 ## Ce que vous voyez dans l’éditeur CMS
 
-L’éditeur affiche la scène à l’intérieur de la colonne de contenu, c’est-à-dire **plus étroite que sur
+L’éditeur affiche la mise en page dans la colonne de contenu, c’est-à-dire **plus étroite que sur
 la page publiée**. L’étendue réelle de l’image et l’emplacement du texte
 ne peuvent être évalués que dans l’aperçu ou sur la page publiée
 . Vérifiez-le toujours au moins une fois avec une

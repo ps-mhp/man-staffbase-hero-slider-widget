@@ -2,7 +2,7 @@
 
 **Domanda:** Ho creato una diapositiva, ma lo schermo rimane vuoto.
 
-Risposta: Alla diapositiva manca l’immagine. Le diapositive senza immagine non vengono visualizzate: una
+Risposta: Alla diapositiva manca l'immagine. Le diapositive senza immagine non vengono visualizzate: una
 superficie vuota e scura non sarebbe distinguibile da un errore sulla pagina.
 Apri l’editor e seleziona un’immagine nella sezione **Immagine o video**
 oppure inserisci un indirizzo.
@@ -12,7 +12,7 @@ una superficie scura.
 
 Risposta: Di solito il video non è accessibile senza registrazione, oppure **Tipo** è impostato
 su **Immagine** perché l’indirizzo non ha un’estensione. Apri l’indirizzo in
-una finestra privata del browser: se lì non funziona, non lo vedranno nemmeno i
+una finestra privata del browser: se non funziona lì, non lo vedranno nemmeno i
 lettori. Un messaggio proprio sotto il campo indica che l’indirizzo
 non è stato accettato — deve iniziare con `https://`.
 
@@ -45,15 +45,15 @@ al suo interno fa scomparire tutte le diapositive.
 
 Risposta: Tre possibili cause: c’è una sola diapositiva; **Secondi per diapositiva**
 è impostato su `0`; oppure nel sistema operativo è attivata l’opzione «Riduci movimento».
-In quest’ultimo caso è intenzionale: è comunque possibile sfogliare le diapositive tramite le frecce
+In quest’ultimo caso è intenzionale: è comunque possibile scorrere le diapositive tramite le frecce
 e le linee.
 
 **Domanda:** Sul telefono non vedo le frecce.
 
-Risposta: È previsto così. Sugli schermi stretti si scorre con il dito; le
+Risposta: È previsto così. Sugli schermi stretti si scorre con un gesto; le
 linee sotto il testo continuano a indicare quale diapositiva è attualmente in primo piano.
 
-**Domanda:** Il mio soggetto è tagliato ai bordi.
+**Domanda:** La mia immagine è tagliata ai bordi.
 
 Risposta: A seconda della larghezza della finestra, l’area di visualizzazione ritaglia l’immagine in formato 21:9 o 4:3. Scegliete
 un’immagine con un margine intorno al soggetto, oppure inserite in **Immagine per
@@ -63,7 +63,7 @@ formato verticale** un vostro ritaglio ritagliato in verticale.
 
 Risposta: No. Con cinque secondi per diapositiva, un ciclo completo dura già
 quaranta secondi con otto diapositive — nessuno rimane su un palcoscenico così a lungo.
-L’otto si riferisce a tutte le diapositive insieme: una voce del canale con cinque contributi
+Il numero otto si applica a tutte le diapositive insieme: una voce del canale con cinque contributi
 consente di affiancarle solo altre tre diapositive.
 
 **Domanda:** Devo aggiornare il palco quando nelle Notizie appare un nuovo
@@ -81,7 +81,7 @@ Risposta: L’articolo è stato cancellato, spostato o non è visibile per il le
 **Domanda:** La mia voce del canale mostra meno diapositive di quelle impostate.
 
 Risposta: Di solito i filtri sono troppo restrittivi. **Solo contributi con immagine** è
-l’impostazione predefinita — un canale senza immagini non mostra quindi nulla. Controllate l’
+l’impostazione predefinita — un canale senza immagini non mostra quindi nulla. Controlli l’
 anteprima nell’editor: mostra esattamente ciò che apparirà sullo schermo.
 
 **Domanda:** Nella selezione dei canali non compare nessun canale, ma solo un
@@ -91,8 +91,8 @@ Risposta: L’elenco dei canali di notizie non era accessibile. Ricaricate la fi
 Se ciò non basta, inserite manualmente l’identificativo del canale; lo trovate
 nell’indirizzo del canale nel CMS.
 
-**Domanda:** Perché l’immagine di un post di notizie sul palco risulta sfocata o
-stranamente ritagliata?
+**Domanda:** Perché l’immagine di un post di notizie sul palco è sfocata o
+ritagliata in modo strano?
 
 Risposta: Le immagini degli articoli sono ritagliate per il formato feed, non per un
 palcoscenico a tutta schermata. Nella voce **Sovrascrivi immagine del palcoscenico**,
@@ -101,7 +101,7 @@ inserite un’immagine personalizzata, in formato orizzontale e larga almeno 192
 **Domanda:** Cosa succede alla pagina durante la traduzione automatica della
 pagina?
 
-Risposta: Vengono tradotti tutti i testi scritti manualmente: titolo,
+Risposta: Vengono tradotti tutti i testi scritti dall’utente: titolo,
 sottotitolo, etichetta del pulsante e descrizione dell’immagine di una diapositiva,
 nonché il titolo sovrascritto e l’etichetta di una voce di notizie.
 Le immagini, i link di destinazione, i canali, i filtri e l’ordine rimangono invariati.
@@ -110,8 +110,8 @@ Le immagini, i link di destinazione, i canali, i filtri e l’ordine rimangono i
 lingua di origine — si tratta di un errore?
 
 Risposta: No. Il titolo e il testo di anteprima di un articolo di notizie provengono dall’articolo
-stesso, che viene visualizzato nella lingua che il lettore ha
-impostato nell’app. Viene tradotto solo ciò che avete scritto nella voce stessa
+stesso, che viene visualizzato nella lingua che il lettore ha impostato nell’app
+. Viene tradotto solo ciò che avete scritto nella voce stessa
 . Se manca una versione linguistica della notizia, viene visualizzata quella disponibile, invece di
 lasciare la schermata vuota.
 
@@ -121,7 +121,7 @@ Risposta: L’impostazione ha effetto solo se si verificano tre condizioni: la p
 effettivamente una barra di navigazione, la barra si trova nella parte superiore della pagina e
 non c’è altro contenuto sopra di essa. Se una di queste condizioni non è soddisfatta, la
 pagina sotto la barra di navigazione — una barra di navigazione al centro della pagina sarebbe
-peggiore che non avere alcuna modifica. Nell’editor, in questo caso, compare un avviso
+peggio che non avere alcuna modifica. Nell’editor, in questo caso, compare un avviso
 sopra la pagina. Sulla pagina pubblicata non compare; lì
 non è possibile modificare l’impostazione.
 

@@ -4,9 +4,9 @@
 | --- | --- |
 | Items | De inhoud van het podium: eigen dia's, afzonderlijke nieuwsberichten en complete nieuwskanalen. Wordt beheerd via de editor, die automatisch verschijnt wanneer je de instellingen opent. Het tekstveld eronder is de ruwe versie en hoeft niet te worden aangepast. |
 | Hoogte | `Standaard (420–560 px)` is de standaardinstelling. Daarnaast `Laag (320–420 px)`, `Hoog (560–720 px)` en `Schermhoogte`. |
-| Over de volledige breedte weergeven | Ingeschakeld (standaardinstelling) loopt de afbeelding over de volledige vensterbreedte, terwijl de tekst op de uitlijningslijn van de pagina blijft. Uitgeschakeld blijft het podium in de inhoudskolom. |
-| Seconden per dia | `5` is de standaardinstelling. `0` zet het podium stil; dan wordt er alleen met pijltjes en streepjes doorgebladerd. Maximaal 30. |
-| Positie ten opzichte van de broodkruimels | `Na de broodkruimels` is de standaardinstelling: het podium begint onder de broodkruimelregel. `Vóór de broodkruimels` plaatst het vlak onder het menu en verschuift de broodkruimels eronder. Werkt alleen als het podium bovenaan de pagina staat en de pagina überhaupt broodkruimels heeft. |
+| Over de volledige breedte weergeven | Indien ingeschakeld (standaardinstelling) strekt de afbeelding zich uit over de volledige breedte van het venster, terwijl de tekst binnen de uitlijningslijn van de pagina blijft. Indien uitgeschakeld blijft het podium binnen de inhoudskolom. |
+| Seconden per dia | `5` is de standaardinstelling. Bij `0` wordt het podium gepauzeerd; dan kan alleen met pijltjes en streepjes worden gebladerd — en als de bedieningselementen zijn uitgeschakeld, alleen nog met vegen en de pijltjestoetsen. Maximaal 30. |
+| Positie ten opzichte van de broodkruimels | `Na de broodkruimels` is de standaardinstelling: het podium begint onder de broodkruimelregel. `Voor de broodkruimels` plaatst het podium gelijk met het menu en verschuift de broodkruimels eronder. Dit werkt alleen als het podium bovenaan de pagina staat en de pagina überhaupt broodkruimels heeft. |
 | Bedieningselementen weergeven | Ingeschakeld (standaardinstelling) verschijnen pijltjes en streepjes. Uitgeschakeld verdwijnen beide; je bladert verder met vegen en de pijltjestoetsen, en de ingestelde tijd per dia blijft ongewijzigd. |
 
 ## Soorten items

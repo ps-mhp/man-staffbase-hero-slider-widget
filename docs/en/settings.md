@@ -5,9 +5,9 @@
 | Entries | The content of the stage: custom slides, individual news posts, and entire news channels. Managed via the editor, which appears automatically when you open the settings. The text field below is the draft and does not need to be edited. |
 | Height | `Standard (420–560 px)` is the default. Other options include `Low (320–420 px)`, `High (560–720 px)`, and `Screen Height`. |
 | Show full width | When enabled (default), the image spans the full width of the window, while the text remains aligned with the page’s margin. When disabled, the stage remains within the content column. |
-| Seconds per slide | `5` is the default. `0` pauses the stage; scrolling is then done only using arrows and lines. Maximum value is 30. |
-| Position relative to the breadcrumbs | `After the breadcrumbs` is the default: the stage begins below the breadcrumb line. `Before the breadcrumbs` places it flush below the menu and moves the breadcrumbs below it. This only applies if the stage is at the top of the page and the page has breadcrumbs at all. |
-| Show controls | When enabled (default), arrows and dashes appear. When turned off, both disappear; you continue navigating by swiping or using the arrow keys, and the set time per slide remains unchanged. |
+| Seconds per slide | `5` is the default. `0` pauses the stage; then you can only navigate using arrows and lines—and if the controls are disabled, only by swiping and using the arrow keys. Maximum of 30. |
+| Position relative to the breadcrumbs | `After the breadcrumbs` is the default: the stage begins below the breadcrumb line. `Before the breadcrumbs` places it flush with the menu and moves the breadcrumbs below it. This only applies if the stage is at the top of the page and the page has breadcrumbs at all. |
+| Show Controls | When enabled (default), arrows and dashes appear. When turned off, both disappear; you continue navigating by swiping or using the arrow keys, and the set time per slide remains unchanged. |
 
 ## Types of Entries
 
@@ -19,7 +19,7 @@
 
 All three appear in the same list; they can be mixed and sorted using **↑** and
 **↓**. In total, the stage displays a maximum of eight slides—a
-channel entry counts as one, including all the slides it contributes.
+channel entry counts toward this total with all the slides it contributes.
 
 ## Fields on a Slide
 
@@ -30,7 +30,7 @@ channel entry counts as one, including all the slides it contributes.
 | Type | Image or video. Determined automatically by the file extension (`.mp4`, `.webm`, `.mov` are videos); select manually only for URLs without an extension. |
 | Image or Video Description | What is shown. Leave blank only for purely decorative images and videos—screen readers will read this field aloud. |
 | Image or Video for Portrait Orientation | Optional. Displayed on narrow, portrait-oriented screens. If missing, the landscape crop is used everywhere. |
-| Heading | Keep it short: up to about 24 characters to keep it on one line. |
+| Headline | Keep it short: up to about 24 characters to keep it on one line. |
 | Subheading | Optional, one to two lines. |
 | Button | Optional. Appears only if the label and destination are filled in. At most one per slide. |
 | Open in a new tab | Opens the button’s destination in a new tab. Common for external destinations. |

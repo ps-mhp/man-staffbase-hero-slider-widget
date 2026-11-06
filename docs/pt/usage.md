@@ -57,7 +57,7 @@
    botão é sempre a própria publicação.
 7. Opcional: **Substituir imagem de fundo**. A imagem da publicação é recortada para o feed
    e nem sempre suporta um fundo alto.
-8. **Aplicar**, guardar e verificar na pré-visualização.
+8. **Aplicar**, guardar, verificar na pré-visualização.
 
 ## Mostrar todas as publicações de um canal
 

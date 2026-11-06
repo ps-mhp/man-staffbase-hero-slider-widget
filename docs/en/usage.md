@@ -21,9 +21,9 @@
    24 characters, and it will remain on one line.
 8. Optional: **Caption** and **Button**. The button appears
    only if both the label **and** the destination are filled in. On a phone,
-   the stage does not display either of these: it shows only the headline, and the
+   the stage doesn’t display either of these: it only shows the headline, and the
    entire slide leads to the button’s destination. Therefore, whatever is in the subtitle
-   should not be something that absolutely needs to be read.
+   shouldn’t be anything that absolutely needs to be read.
 9. Click **Apply**.
 10. Set **Seconds per Slide** to `0`—with a single slide, there’s
     nothing to change.

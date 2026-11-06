@@ -7,7 +7,7 @@ leeg, donker vlak zou op de pagina niet te onderscheiden zijn van een fout.
 Open de editor en selecteer onder **Afbeelding of video** een afbeelding
 of voer een adres in.
 
-**Vraag:** Ik heb een video-adres ingevoerd, maar de dia toont alleen
+**Vraag:** Ik heb een videoadres ingevoerd, maar de dia toont alleen
 een donker vlak.
 
 Antwoord: Meestal is de video zonder aanmelding niet beschikbaar, of staat **Type** ingesteld
@@ -36,7 +36,7 @@ Als deze afwijkt, meld dit dan samen met het pagina-adres.
 **Vraag:** In plaats van de editor zie ik een tekstveld „Invoer“ met accolades
 erin.
 
-Antwoord: De editor kon geen verbinding maken met het dialoogvenster. Sluit
+Antwoord: De editor kon niet in het dialoogvenster worden geïntegreerd. Sluit
 de instellingen en open ze opnieuw. De tekst in het veld is de
 ruwe versie van de vermeldingen; bewerk deze niet handmatig — één typefout
 daarin zorgt ervoor dat alle dia’s verdwijnen.
@@ -48,7 +48,7 @@ staat op `0`; of in het besturingssysteem is „Beweging verminderen“ ingescha
 In het laatste geval is dit de bedoeling — je kunt nog steeds bladeren met pijltjes
 en streepjes.
 
-**Vraag:** Ik zie geen pijltjes op de telefoon.
+**Vraag:** Ik zie geen pijltjes op mijn telefoon.
 
 Antwoord: Dat is zo bedoeld. Op smalle schermen wordt geveegd; de
 streepjes onder de tekst geven nog steeds aan welke dia op dat moment op de voorgrond staat.

@@ -7,7 +7,7 @@ pusta, ciemna powierzchnia nie dałaby się odróżnić od błędu na stronie.
 Otwórz edytor i w sekcji **Obraz lub wideo** wybierz obraz
 lub wprowadź adres.
 
-**Pytanie:** Wpisałem adres filmu, ale slajd wyświetla tylko
+**Pytanie:** Wpisałem adres wideo, ale slajd wyświetla tylko
 ciemny obszar.
 
 Odpowiedź: Najczęściej film jest niedostępny bez logowania lub **Typ** jest ustawiony
@@ -96,7 +96,7 @@ dziwnie przycięte?
 
 Odpowiedź: Zdjęcia artykułów są przycięte pod format kanału informacyjnego, a nie pod
 ekran o wysokości sceny. W wpisie w sekcji **Zastąp obraz sceny**
-przeznacz własny obraz, w formacie poziomym i o szerokości co najmniej 1920 px.
+przeznacz własny obraz, w orientacji poziomej i o szerokości co najmniej 1920 px.
 
 **Pytanie:** Co dzieje się z ramką podczas automatycznego tłumaczenia
 strony?
@@ -106,13 +106,13 @@ podtytuł, etykieta przycisku i opis obrazu na slajdzie,
 a także nadpisany tytuł i etykieta wpisu z aktualnościami.
 Obrazy, linki, kanały, filtry i kolejność pozostają niezmienione.
 
-**Pytanie:** W przetłumaczonej wersji strony wpis w sekcji aktualności zawiera inne teksty niż w
+**Pytanie:** W przetłumaczonej wersji strony wpis z aktualności zawiera inne teksty niż w
 języku źródłowym — czy to błąd?
 
 Odpowiedź: Nie. Tytuł i tekst zapowiedzi wpisu w sekcji aktualności pochodzą z samego
 wpisu, a ten jest wyświetlany w języku, który czytelnik ustawił w aplikacji.
 Tłumaczone jest tylko to, co sam wpisałeś Tłumaczone jest tylko to, co napisałeś w samym wpisie.
-Jeśli brakuje wersji językowej wpisu, wyświetla się ta, która jest dostępna, zamiast
+Jeśli brakuje wersji językowej wpisu, wyświetlana jest ta dostępna, zamiast
 pozostawiać puste pole.
 
 **Pytanie:** Wybrałem opcję „Przed ścieżką nawigacyjną”, ale nic się nie zmienia.

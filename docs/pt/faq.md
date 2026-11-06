@@ -10,7 +10,7 @@ ou introduza um endereço.
 **Pergunta:** Introduzi um endereço de vídeo, mas o slide mostra apenas
 uma área escura.
 
-Resposta: Na maioria das vezes, o vídeo não está disponível sem autenticação, ou o **Tipo** está
+Resposta: Na maioria das vezes, o vídeo não está disponível sem início de sessão, ou **Tipo** está
 definido como **Imagem**, porque o endereço não tem extensão. Abra o endereço numa
 janela privada do navegador: se não funcionar aí, os
 leitores também não o verão. Uma mensagem logo abaixo do campo indica que o endereço
@@ -57,7 +57,7 @@ linhas por baixo do texto continuam a indicar qual é o slide que está atualmen
 
 Resposta: A área de apresentação ajusta-se para 21:9 ou 4:3, dependendo da largura da janela. Escolha
 uma imagem com espaço em torno do motivo ou defina, em **Imagem para
-formato vertical**, um recorte próprio cortado na vertical.
+formato vertical**, um recorte próprio, cortado na vertical.
 
 **Pergunta:** Posso criar mais de oito diapositivos?
 
@@ -77,14 +77,14 @@ por outro lado, permanece na publicação que selecionou.
 
 Resposta: A publicação foi eliminada, movida ou não está visível para o leitor. Apenas este slide desaparece; os restantes permanecem.
 
-**Pergunta:** A minha entrada do canal mostra menos slides do que os definidos.
+**Pergunta:** A minha entrada do canal mostra menos slides do que os configurados.
 
 Resposta: Na maioria das vezes, os filtros são demasiado restritivos. **Apenas publicações com imagem** é
 a predefinição — um canal sem imagens não apresenta, portanto, nada. Verifique a
 pré-visualização no editor: mostra exatamente o que irá aparecer no palco.
 
-**Pergunta:** Na seleção de canais não aparece nenhum canal, mas sim um
-campo de texto para um identificador.
+**Pergunta:** Na seleção de canais não aparece nenhum canal; em vez disso, há um
+campo de texto para introduzir um identificador.
 
 Resposta: A lista de canais de notícias não estava acessível. Atualize a janela de diálogo.
 Se isso não resolver, introduza manualmente o identificador do canal; este encontra-se
@@ -100,9 +100,9 @@ palco com a altura do ecrã. Defina na entrada, em **Substituir imagem do palco
 **Pergunta:** O que acontece ao palco durante a tradução automática da
 página?
 
-Resposta: São traduzidos todos os textos escritos pelo utilizador: título,
-subtítulo, legenda do botão e descrição da imagem de um slide,
-bem como o título substituído e a legenda de uma notícia.
+Resposta: São traduzidos todos os textos escritos pelo próprio utilizador: título,
+subtítulo, texto do botão e descrição da imagem de um slide,
+bem como o título substituído e o texto de uma entrada de notícia.
 As imagens, os destinos dos links, os canais, os filtros e a ordem permanecem inalterados.
 
 **Pergunta:** Uma notícia apresenta, na página traduzida, textos diferentes dos da

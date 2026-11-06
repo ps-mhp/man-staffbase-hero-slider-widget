@@ -3,11 +3,11 @@
 | Impostazione | Descrizione |
 | --- | --- |
 | Voci | Il contenuto della pagina: diapositive personalizzate, singoli articoli di notizie e interi canali di notizie. Viene gestito tramite l'editor, che si apre automaticamente all'apertura delle impostazioni. Il campo di testo sottostante contiene il testo grezzo e non deve essere modificato. |
-| Altezza | `Standard (420–560 px)` è l’impostazione predefinita. Accanto ad essa sono disponibili `Bassa (320–420 px)`, `Alta (560–720 px)` e `Altezza schermo`. |
-| Mostra a tutta larghezza | Se attivata (impostazione predefinita), l’immagine si estende per l’intera larghezza della finestra, mentre il testo rimane allineato alla linea di guida della pagina. Se disattivata, il palco rimane nella colonna dei contenuti. |
-| Secondi per diapositiva | `5` è l’impostazione predefinita. `0` mette in pausa la diapositiva; in questo caso, lo scorrimento avviene solo tramite frecce e linee. Massimo 30. |
-| Posizione rispetto al percorso di navigazione | `Dopo il percorso di navigazione` è l’impostazione predefinita: la diapositiva inizia sotto la riga del percorso di navigazione. `Prima del percorso di navigazione` la posiziona a filo sotto il menu e sposta il percorso di navigazione sotto di essa. Funziona solo se la scena si trova nella parte superiore della pagina e se la pagina dispone effettivamente di un percorso di navigazione. |
-| Mostra elementi di controllo | Se attivata (impostazione predefinita), vengono visualizzate frecce e linee. Se disattivati, entrambi scompaiono; la navigazione prosegue con il gesto di scorrimento e i tasti freccia, e il tempo impostato per ogni diapositiva scorre invariato. |
+| Altezza | `Standard (420–560 px)` è l'impostazione predefinita. Accanto ad essa sono disponibili `Bassa (320–420 px)`, `Alta (560–720 px)` e `Altezza schermo`. |
+| Mostra a tutta larghezza | Se attivata (impostazione predefinita), l’immagine si estende per l’intera larghezza della finestra, mentre il testo rimane allineato al margine della pagina. Se disattivata, il palco rimane nella colonna dei contenuti. |
+| Secondi per diapositiva | Il valore predefinito è `5`. Impostando `0`, il palcoscenico si ferma; in questo caso lo scorrimento avviene solo tramite frecce e linee — e, se i controlli sono disattivati, solo con il gesto di scorrimento e i tasti freccia. Massimo 30. |
+| Posizione rispetto al percorso di navigazione | L’impostazione predefinita è `Dopo il percorso di navigazione`: la presentazione inizia sotto la riga del percorso di navigazione. `Prima del percorso di navigazione` la posiziona a filo sotto il menu e sposta il percorso di navigazione sotto di essa. Funziona solo se la scena si trova nella parte superiore della pagina e se la pagina dispone effettivamente di una barra di navigazione. |
+| Mostra elementi di controllo | Se attivata (impostazione predefinita), vengono visualizzate frecce e linee. Se disattivati, entrambi scompaiono; la navigazione prosegue con il gesto di scorrimento e i tasti freccia, e il tempo impostato per ogni diapositiva scorre senza variazioni. |
 
 ## Tipi di voci
 
@@ -55,7 +55,7 @@ voce di canale viene conteggiata insieme a tutte le diapositive che essa contrib
 | Numero di diapositive | Impostazione predefinita `3`, massimo otto. |
 | Ordine | `Più recenti prima` (impostazione predefinita) o `Più vecchie prima`. |
 | Solo post in evidenza | Disattivato per impostazione predefinita. Limitato a ciò che è fissato in primo piano nelle notizie. |
-| Solo post con immagine | Attivato per impostazione predefinita. Senza immagine, la diapositiva sarebbe solo una superficie scura con del testo. |
+| Solo post con immagine | Attivato per impostazione predefinita. Senza immagine, la diapositiva risulterebbe solo una superficie scura con del testo. |
 | Parole chiave | Opzionale, più parole separate da virgole. È sufficiente un solo post se contiene una di queste parole. |
 | Mostra teaser come sottotitolo | Attivato per impostazione predefinita. |
 | Etichetta del pulsante | Vale per tutte le diapositive del canale. Lasciare vuoto per omettere il pulsante. |
@@ -74,7 +74,7 @@ voce di canale viene conteggiata insieme a tutte le diapositive che essa contrib
   le frecce sono nascoste; in quel caso si scorre con il dito.
 - Un contributo che viene cancellato o che non è visibile per la persona che sta leggendo
   porta con sé solo la propria diapositiva. Le altre diapositive rimangono al loro posto.
-- Le diapositive delle notizie seguono la lingua del lettore, a condizione che il contributo
+- Le diapositive delle notizie seguono la lingua del lettore, purché il contributo
   sia tradotto; in caso contrario, seguono la prima versione disponibile.
 - L’**anteprima** nell’editor segue le stesse regole della
   pagina pubblicata. Ciò che non è presente lì, non apparirà nemmeno sulla pagina
