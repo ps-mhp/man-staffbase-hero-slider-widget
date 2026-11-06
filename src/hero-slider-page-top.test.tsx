@@ -140,59 +140,59 @@ describe("HeroSlider — Platz für die verschobenen Brotkrumen", () => {
     expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
   });
 
-  it("nimmt den Platz im Abschnitt aus der Höhe des Wirtskastens", () => {
+  it("nimmt den Platz im Abschnitt aus der Höhe der Bühne", () => {
     const { container } = render(<HeroSlider slides={two} position="pre" height="section" />, {
       container: addSection(),
     });
 
     report({ applied: true, breadcrumbsHeight: 48 });
 
-    // Der Abschnitt gibt die Gesamthöhe vor; ein Platzhalter im Wirtskasten
-    // oder ein Aussenabstand an ihm liefe über dessen Unterkante hinaus. Der
-    // Platz kommt deshalb aus der Höhe des Wirtskastens selbst.
+    // Der Abschnitt kann die Gesamthöhe vorgeben; dann muss die Kürzung von
+    // der Bühne kommen. Der Platzhalter bleibt trotzdem stehen — ob der
+    // Abschnitt wirklich eine feste Höhe hat, weiss `filled` nicht.
     const host = container.querySelector<HTMLElement>(".man-hero-host");
+    const stage = screen.getByTestId("hero-slider");
     expect(host).toHaveClass("man-hero-host--fill");
-    expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
-    expect(host?.style.height).toBe("calc(100% - 48px)");
-    expect(host?.style.marginBottom).toBe("");
+    expect(host?.getAttribute("style")).toBeNull();
+    expect(stage.style.height).toBe("calc(100% - 48px)");
+    expect(
+      container.querySelector<HTMLElement>(".man-hero__crumb-space")?.style.height,
+    ).toBe("48px");
 
-    // Gemessen wird weiter die Bühne, nicht der Wirtskasten: die gemeldete
-    // Höhe ist die des Brotkrumen-Kastens und ändert sich nicht, wenn die
-    // Bühne schrumpft — sonst schaukelte sich die Kette hoch.
-    expect(lastOptions().host).not.toBe(host);
+    // Gemessen wird die Bühne — und zwar die, die jetzt die Inline-Höhe
+    // trägt. Die gemeldete Höhe ist die des Brotkrumen-Kastens und hängt
+    // nicht von der Höhe der Bühne ab; die Kette steht deshalb still.
+    expect(lastOptions().host).toBe(stage);
 
     report({ applied: true, breadcrumbsHeight: 0 });
-    expect(host?.style.height).toBe("");
+    expect(stage.style.height).toBe("");
+    expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
   });
 
-  it("trägt den Platz je nach Stufe am Wirtskasten oder im Wirtskasten", () => {
+  it("trägt den Platz in jeder Stufe gleich", () => {
     const { container, rerender } = render(
       <HeroSlider slides={two} position="pre" height="medium" />,
       { container: addSection() },
     );
 
-    // Ohne Abschnittshöhe bezieht der Wirtskasten seine Höhe aus dem Inhalt:
-    // dort hält der Platzhalter den Streifen frei, der Wirtskasten bleibt
-    // ohne Inline-Höhe.
-    report({ applied: true, breadcrumbsHeight: 48 });
     const host = () => container.querySelector<HTMLElement>(".man-hero-host");
-    expect(host()?.style.height).toBe("");
-    expect(
-      container.querySelector<HTMLElement>(".man-hero__crumb-space")?.style.height,
-    ).toBe("48px");
+    const stage = () => screen.getByTestId("hero-slider");
+    const space = () => container.querySelector<HTMLElement>(".man-hero__crumb-space");
 
-    // Mit Abschnittshöhe kehrt sich das um: kein Platzhalter mehr, dafür die
-    // Inline-Höhe am Wirtskasten.
+    report({ applied: true, breadcrumbsHeight: 48 });
+    expect(host()?.getAttribute("style")).toBeNull();
+    expect(stage().style.height).toBe("calc(100% - 48px)");
+    expect(space()?.style.height).toBe("48px");
+
+    // Mit Abschnittshöhe bleibt es bei derselben Form: eine gekürzte Bühne
+    // und ein Platzhalter darunter. Löst sich die Kürzung mangels
+    // bestimmter Elternhöhe zu `auto` auf, hält der Platzhalter den Streifen
+    // trotzdem frei.
     rerender(<HeroSlider slides={two} position="pre" height="section" />);
     report({ applied: true, breadcrumbsHeight: 48 });
-    expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
-    expect(host()?.style.height).toBe("calc(100% - 48px)");
-
-    // Und zurück: die Inline-Höhe darf nicht am Kasten hängen bleiben.
-    rerender(<HeroSlider slides={two} position="pre" height="medium" />);
-    report({ applied: true, breadcrumbsHeight: 48 });
-    expect(host()?.style.height).toBe("");
-    expect(container.querySelector(".man-hero__crumb-space")).not.toBeNull();
+    expect(host()?.getAttribute("style")).toBeNull();
+    expect(stage().style.height).toBe("calc(100% - 48px)");
+    expect(space()?.style.height).toBe("48px");
   });
 
   // Rückwärtskompatibilität: ohne gemeldete Brotkrumen bleibt die Auszeichnung
@@ -202,5 +202,7 @@ describe("HeroSlider — Platz für die verschobenen Brotkrumen", () => {
     const { container } = render(<HeroSlider slides={two} />, { container: addSection() });
 
     expect(container.querySelector(".man-hero-host")?.getAttribute("style")).toBeNull();
+    expect(screen.getByTestId("hero-slider").style.height).toBe("");
+    expect(container.querySelector(".man-hero__crumb-space")).toBeNull();
   });
 });

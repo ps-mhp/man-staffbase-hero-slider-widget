@@ -296,31 +296,43 @@ export function HeroSlider({
     vars["--man-hero-header"] = `${bleed.headerHeight}px`;
   }
 
-  // Der Platz für die verschobenen Brotkrumen — auf zwei Wegen, weil der
-  // Wirtskasten in `man-hero-host--fill` auf `height: 100%` steht und ein
-  // Platzhalter in ihm nichts freihielte, sondern über seine Unterkante
-  // hinausliefe.
+  // Der Platz für die verschobenen Brotkrumen — eine einzige Form für beide
+  // Fälle, weil sich von aussen nicht entscheiden lässt, welcher gerade gilt.
+  // `filled` sagt nur, dass es einen Abschnitt gibt (siehe `full-bleed.ts`),
+  // nicht, dass er eine feste Höhe hat.
   //
-  // Ein Aussenabstand des Wirtskastens wäre dort genauso wirkungslos:
-  // `stretchToSection` (siehe `full-bleed.ts`) zwingt jedem Vorfahren
-  // zwischen Wirtskasten und Abschnitt `height: 100% !important` auf. Der
-  // Abstand läge dann unter einem Elter, dessen Höhe auf die des Abschnitts
-  // festgenagelt ist, und liefe über ihn hinaus — genau wie der Platzhalter.
+  // Die Inline-Höhe sitzt deshalb an der Bühne (nicht am Wirtskasten) und der
+  // Platzhalter steht immer darunter:
   //
-  // In dieser Stufe gibt der Abschnitt die Gesamthöhe vor; der Platz muss
-  // deshalb aus der Höhe der Bühne selbst kommen. Der Wirtskasten ist von der
-  // erzwungenen Kette ausgenommen (sie beginnt bei seinem Elter), eine
-  // Inline-Höhe an ihm schlägt also das `height: 100%` der Klasse.
+  // * Hat der Elter eine feste Höhe (echtes `--fill`), schrumpft die Bühne um
+  //   H, der Platzhalter nimmt H, zusammen füllen sie weiter 100% des
+  //   Abschnitts. Ein Platzhalter allein liefe über die vorgegebene
+  //   Unterkante hinaus, ein Aussenabstand ebenso: `stretchToSection` zwingt
+  //   jedem Vorfahren zwischen Wirtskasten und Abschnitt `height: 100%
+  //   !important` auf.
+  // * Hat der Elter keine feste Höhe — der gemessene Normalfall, auch mit
+  //   Abschnitt —, löst sich die ganze Kette aus `height: 100%` mangels
+  //   bestimmter Bezugshöhe zu `auto` auf. Genau das tut dann auch unser
+  //   `calc(100% - Hpx)`: ein Prozentanteil gegen eine unbestimmte Bezugshöhe
+  //   ist `auto` (CSS 2.1 §10.5). Die Bühne behält ihre Inhaltshöhe, und der
+  //   Platzhalter schlägt H auf sie auf. Nicht „vereinfachen": ohne ihn hielte
+  //   dieser Fall nichts frei.
   //
-  // Das kann sich nicht aufschaukeln: gemeldet wird in `breadcrumbsHeight`
-  // die Höhe des Brotkrumen-Kastens, nicht die der Bühne. Eine niedrigere
-  // Bühne verschiebt zwar die gemessene Unterkante nach oben — und damit das
-  // geschriebene `top` der Brotkrumen —, ändert aber deren Höhe nicht. Der
-  // gemeldete Wert bleibt also derselbe, die Inline-Höhe bleibt dieselbe, und
-  // die Kette steht nach einem Durchlauf still.
+  // Die Kette schaukelt sich nicht auf, obwohl die Inline-Höhe jetzt am
+  // *gemessenen* Kasten sitzt: `placeBreadcrumbs` (siehe `page-top.ts`) liest
+  // die Unterkante der Bühne nur, um das `top` des Brotkrumen-Kastens zu
+  // setzen, und meldet zurück dessen *Höhe*. Die hängt nicht davon ab, wohin
+  // er geschoben wurde, und damit auch nicht von der Höhe der Bühne. Die neue
+  // Bühnenhöhe ist also eine reine Funktion des gemeldeten H und nie ihrer
+  // eigenen vorigen Höhe: Durchlauf 2 meldet dasselbe H wie Durchlauf 1,
+  // `onLayout` vergleicht beide Felder und setzt den Zustand nicht neu, und
+  // Durchlauf 3 ändert nichts mehr. Auch die Nachkorrektur in
+  // `placeBreadcrumbs` misst nur die Oberkante des aus dem Fluss genommenen
+  // Kastens nach; sie rührt die Bühne nicht an. `measurePageTop("pre")` rechnet
+  // mit den festen Leisten, `canPlacePreBreadcrumbs` mit der *Ober*kante der
+  // Bühne — beide sehen die Verkürzung nach unten gar nicht.
   const crumbSpace = layout.breadcrumbsHeight;
-  const hostStyle =
-    crumbSpace > 0 && filled ? { height: `calc(100% - ${crumbSpace}px)` } : undefined;
+  if (crumbSpace > 0) vars.height = `calc(100% - ${crumbSpace}px)`;
 
   return (
     // Der äussere Kasten bleibt immer in der Inhaltsspalte; nur der innere
@@ -328,7 +340,6 @@ export function HeroSlider({
     // die Kante der Spalte messen liesse.
     <div
       className={`man-hero-host${filled ? " man-hero-host--fill" : ""}`}
-      style={hostStyle}
       ref={setAnchor}
     >
       {showNotice && (
@@ -489,14 +500,13 @@ export function HeroSlider({
       )}
       </div>
 
-      {crumbSpace > 0 && !filled && (
+      {crumbSpace > 0 && (
         // Die Brotkrumen liegen aus dem Fluss: verschoben überdecken sie den
         // Inhalt unter der Bühne, statt ihn zu schieben. Dieser Platzhalter
         // ist der Platz, den sie sich nicht selbst nehmen können.
         //
-        // Nur hier, wo der Wirtskasten seine Höhe aus seinem Inhalt bezieht.
-        // In `man-hero-host--fill` steht sie fest, und der Platz kommt aus
-        // der Höhe des Wirtskastens selbst (siehe `hostStyle`).
+        // Immer, nicht nur ohne Abschnittshöhe: zusammen mit der Inline-Höhe
+        // der Bühne trägt er beide Fälle (siehe `crumbSpace` oben).
         <div
           className="man-hero__crumb-space"
           style={{ height: `${crumbSpace}px` }}

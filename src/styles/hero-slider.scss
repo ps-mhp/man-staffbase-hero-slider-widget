@@ -157,11 +157,13 @@
   // Die Luft nach unten gehört hier dem Abschnitt. Bliebe sie stehen, wäre
   // sie genau die Lücke, um die es geht.
   //
-  // Den Platz für verschobene Brotkrumen nimmt die Bühne in dieser Stufe aus
-  // ihrer eigenen Höhe: `hero-slider.tsx` setzt dafür ein Inline-`height`,
-  // das dieses `height: 100%` schlägt. Ein Platzhalter im Kasten oder ein
-  // Aussenabstand an ihm wäre hier wirkungslos — beides liefe über die vom
-  // Abschnitt vorgegebene Unterkante hinaus.
+  // Den Platz für verschobene Brotkrumen teilen sich Bühne und Platzhalter:
+  // `hero-slider.tsx` kürzt die Bühne per Inline-`height` um deren Höhe und
+  // setzt den Platzhalter darunter. Ein Platzhalter allein wäre hier
+  // wirkungslos — er liefe über die vom Abschnitt vorgegebene Unterkante
+  // hinaus —, die Kürzung allein dagegen überall dort, wo der Abschnitt auf
+  // Inhaltshöhe steht und sich das `calc(100% - …)` genau wie dieses
+  // `height: 100%` zu `auto` auflöst.
   @include man-outshine-host {
     margin-bottom: 0;
   }
