@@ -242,7 +242,7 @@ type FillProperty =
 const NOT_RENDERED = new Set(["STYLE", "LINK", "SCRIPT", "TEMPLATE", "META"]);
 
 /** Ob `node` neben der Bühne als Inhalt zählt. */
-function isNeighbour(node: Element): boolean {
+export function isNeighbour(node: Element): boolean {
   if (NOT_RENDERED.has(node.tagName)) return false;
   const { display, position } = getComputedStyle(node);
   return display !== "none" && position !== "absolute" && position !== "fixed";

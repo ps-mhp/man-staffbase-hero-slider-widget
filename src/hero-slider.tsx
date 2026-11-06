@@ -26,6 +26,7 @@ import { useHotStyle } from "@shared/hot-style";
 import { useFullBleed } from "./full-bleed";
 import { PageTopLayout, usePageTop } from "./page-top";
 import { BottomSpacing, useBottomSpacing } from "./bottom-spacing";
+import { useSectionHug } from "./section-hug";
 import type { HeroPosition } from "./attributes";
 import { isEditor } from "./editor-context";
 import { Slide, SlideImage, firstFrameUrl, isVideo } from "./slides-model";
@@ -264,6 +265,11 @@ export function HeroSlider({
   // Unter dem äusseren Kasten, weil er bei „vor den Brotkrumen“ auch den
   // Platz für sie trägt: der folgende Block schliesst dann an die Brotkrumen an.
   useBottomSpacing(anchor, bottomSpacing);
+
+  // Bei einer festen Stufe passt sich der Abschnitt der Bühne an: steht sie
+  // als Letztes darin, endet er mit ihr. Bei „Abschnittshöhe“ ist es
+  // umgekehrt, und `useFullBleed` nimmt die Abstände (siehe `section-hug.ts`).
+  useSectionHug(anchor, height !== "section");
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {

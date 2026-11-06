@@ -75,10 +75,12 @@ Kanal-Eintrag zählt dabei mit allen Folien, die er beisteuert.
   „Vor den Brotkrumen“, an das Menü. Den Innenabstand, den der Abschnitt über
   seinem ersten Block hält, gleicht sie dafür aus. Das geschieht nur, wenn
   über der Bühne kein anderer Inhalt steht.
-- **Abstand nach unten** nimmt den Abstand zwischen den Blöcken weg, nicht den
-  Innenabstand am Ende eines Abschnitts. Steht die Bühne als letzter Block in
-  ihrem Abschnitt, bleibt dessen Abstand nach unten erhalten — ausser bei der
-  Höhe `Abschnittshöhe`: dort schliesst der Abschnitt ohnehin bündig ab.
+- Steht die Bühne als letzter Block in ihrem Abschnitt, endet der Abschnitt
+  mit ihr — bei jeder Höhe. Bei einer festen Stufe passt sich der Abschnitt der
+  Bühne an, bei `Abschnittshöhe` die Bühne dem Abschnitt.
+- **Abstand nach unten** regelt den Abstand zum nächsten Block im selben
+  Abschnitt. Der Innenabstand eines folgenden Abschnitts gehört diesem und
+  bleibt.
 - Bei `Abschnittshöhe` nimmt die Bühne die Höhe des Abschnitts nur ein, wenn
   sie allein darin steht. Mit weiteren Blöcken im selben Abschnitt behält sie
   ihr Seitenverhältnis, und die Blöcke rücken ohne Abstand an sie heran.

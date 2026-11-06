@@ -135,11 +135,12 @@ ein anderer Block, bleibt der Abstand, wie die Seite ihn setzt.
 
 **Frage:** Ich habe „Kein Abstand“ gewählt, unter der Bühne ist aber noch Platz.
 
-Antwort: „Kein Abstand“ nimmt den Abstand zwischen zwei Blöcken weg. Ist die
-Bühne der letzte Block ihres Abschnitts, folgt darunter der Innenabstand des
-Abschnitts und der Beginn des nächsten — beide gehören zur Seite. Mit der Höhe
-„Abschnittshöhe“ entfällt der Innenabstand des Abschnitts; sonst legen Sie den
-folgenden Inhalt in denselben Abschnitt, dann schliesst er direkt an.
+Antwort: „Kein Abstand“ nimmt den Abstand zum nächsten Block im selben
+Abschnitt weg. Ist die Bühne der letzte Block ihres Abschnitts, endet der
+Abschnitt ohnehin mit ihr. Was dann noch an Platz bleibt, ist der Innenabstand
+des folgenden Abschnitts — der gehört ihm und lässt sich in seinen
+Abschnittseinstellungen ändern. Liegt der folgende Inhalt im selben Abschnitt
+wie die Bühne, schliesst er mit „Kein Abstand“ direkt an.
 
 **Frage:** Ohne Bedienelemente — wie blättert man dann?
 
