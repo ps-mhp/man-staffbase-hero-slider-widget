@@ -7,14 +7,14 @@ een knop. Het voorbeeld hiervoor is het podium op man.eu.
 Als je meerdere dia’s aanmaakt, krijg je een diavoorstelling: de dia’s
 vloeien in elkaar over, en je bladert met pijltjes en de streepjes linksonder.
 
-Een dia hoeft niet handmatig te worden bijgewerkt. Naast eigen dia’s kan de
-pagina ook **berichten uit het nieuws** weergeven:
+Een dia hoeft niet handmatig te worden bijgewerkt. Naast eigen dia’s kan het
+startscherm ook **berichten uit het nieuws** weergeven:
 
 - **Nieuwsbericht** — een specifiek bericht als dia. Afbeelding, kop
   en teaser komen uit het bericht, de knop leidt ernaartoe.
 - **Nieuws-kanaal** — een heel kanaal, één dia per bericht. Hoeveel, in
-  welke volgorde en volgens welke filters, is instelbaar. Verschijnt er in
-  het kanaal een nieuw bericht, dan verschijnt dit automatisch op het podium.
+  welke volgorde en volgens welke filters, is instelbaar. Als er in het
+  kanaal een nieuw bericht verschijnt, komt dit automatisch op het podium te staan.
 
 De drie soorten staan in dezelfde lijst en kunnen vrij worden gemengd en
 gesorteerd — bijvoorbeeld een eigen dia als opener, gevolgd door de drie meest recente
@@ -36,7 +36,7 @@ berichten van een kanaal.
   bij, zodat lichte tekst op een lichte achtergrond leesbaar blijft.
 - Bij meerdere dia’s: pijlen links en rechts, met daartussen een streepje per dia.
   Het streepje van de huidige dia is rood.
-- De wisseling blijft doorgaan zolang de muis boven het podium hangt of de focus erop
+- De wisseling blijft doorgaan zolang de muis boven het podium blijft of de focus erop
   ligt. Op de telefoon wordt geveegd; de pijlen zijn daar verborgen.
 - **Op de telefoon** (bij een breedte van minder dan 768 pixels) staat alleen de koptekst op
   de afbeelding, maximaal vier regels lang; wat daarbuiten valt, eindigt met „…".
@@ -47,7 +47,7 @@ berichten van een kanaal.
 - Wie in het besturingssysteem „Beweging verminderen“ heeft ingesteld, ziet geen
   overgang en geen overgangseffect — alleen nog de bedieningselementen.
 - Dia’s uit het nieuws zien eruit als elke andere dia. Dat de inhoud uit
-  een artikel komt, is van buitenaf niet te herkennen.
+  een artikel komt, is van buitenaf niet te zien.
 
 ## Wat u in de CMS-editor ziet
 

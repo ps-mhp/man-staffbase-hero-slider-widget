@@ -55,8 +55,8 @@
 6. Opcional: **Substituir o título**, **Mostrar o teaser como subtítulo**
    ou alterar o **texto do botão**. O destino do
    botão é sempre a própria publicação.
-7. Opcional: **Substituir imagem de fundo**. A imagem da publicação é recortada para o feed
-   e nem sempre suporta um fundo alto.
+7. Opcional: **Substituir imagem de destaque**. A imagem da publicação é recortada para o feed
+   e nem sempre apresenta um destaque adequado.
 8. **Aplicar**, guardar, verificar na pré-visualização.
 
 ## Mostrar todas as publicações de um canal

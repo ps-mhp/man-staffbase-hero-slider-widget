@@ -5,21 +5,22 @@
 | Entries | The content of the stage: custom slides, individual news posts, and entire news channels. Managed via the editor, which appears automatically when you open the settings. The text field below is the draft and does not need to be edited. |
 | Height | `Standard (420–560 px)` is the default. Other options include `Low (320–420 px)`, `High (560–720 px)`, and `Screen Height`. |
 | Show full width | When enabled (default), the image spans the full width of the window, while the text remains aligned with the page’s margin. When disabled, the stage remains within the content column. |
-| Seconds per slide | `5` is the default. `0` pauses the stage; then you can only navigate using arrows and lines—and if the controls are disabled, only by swiping and using the arrow keys. Maximum of 30. |
+| Seconds per Slide | `5` is the default. `0` pauses the stage; in this case, you can only navigate using arrows and lines—and if the controls are disabled, only by swiping and using the arrow keys. Maximum of 30. |
 | Position relative to the breadcrumbs | `After the breadcrumbs` is the default: the stage begins below the breadcrumb line. `Before the breadcrumbs` places it flush with the menu and moves the breadcrumbs below it. This only applies if the stage is at the top of the page and the page has breadcrumbs at all. |
-| Show Controls | When enabled (default), arrows and dashes appear. When turned off, both disappear; you continue navigating by swiping or using the arrow keys, and the set time per slide remains unchanged. |
+| Show Controls | When enabled (default), arrows and lines appear. When disabled, both disappear; you continue scrolling by swiping or using the arrow keys, and the set time per slide remains unchanged. |
+| Spacing Below | `Standard` is the default: the spacing below the stage is the same as the spacing the page uses between its blocks. `No Spacing` places the following block directly next to it—in the case of “Before the Breadcrumbs,” directly below the breadcrumbs. |
 
 ## Types of Entries
 
 | Type | Description |
 | --- | --- |
-| Slide | A manually maintained slide: image, headline, subheading, button. |
-| News Post | A specific post as a single slide. Content and link come from the post. |
+| Slide | A manually created slide: image, heading, subheading, button. |
+| News Post | A specific post as a slide. Content and destination are taken from the post. |
 | News Channel | An entire channel, one slide per post. New posts appear automatically. |
 
-All three appear in the same list; they can be mixed and sorted using **↑** and
+All three appear in the same list, can be mixed, and sorted using **↑** and
 **↓**. In total, the stage displays a maximum of eight slides—a
-channel entry counts toward this total with all the slides it contributes.
+channel entry counts as one, including all the slides it contributes.
 
 ## Fields on a Slide
 
@@ -30,7 +31,7 @@ channel entry counts toward this total with all the slides it contributes.
 | Type | Image or video. Determined automatically by the file extension (`.mp4`, `.webm`, `.mov` are videos); select manually only for URLs without an extension. |
 | Image or Video Description | What is shown. Leave blank only for purely decorative images and videos—screen readers will read this field aloud. |
 | Image or Video for Portrait Orientation | Optional. Displayed on narrow, portrait-oriented screens. If missing, the landscape crop is used everywhere. |
-| Headline | Keep it short: up to about 24 characters to keep it on one line. |
+| Heading | Keep it short: up to about 24 characters to keep it on one line. |
 | Subheading | Optional, one to two lines. |
 | Button | Optional. Appears only if the label and destination are filled in. At most one per slide. |
 | Open in a new tab | Opens the button’s destination in a new tab. Common for external destinations. |
@@ -52,7 +53,7 @@ channel entry counts toward this total with all the slides it contributes.
 | Field | Description |
 | --- | --- |
 | Channel | Required. All slides in this entry come from this channel. |
-| Number of Slides | Default is `3`; maximum is eight. |
+| Number of Slides | Default is `3`; maximum of eight. |
 | Order | `Newest First` (default) or `Oldest First`. |
 | Featured posts only | Disabled by default. Limited to what is pinned in the news. |
 | Posts with images only | Enabled by default. Without an image, the slide would be nothing more than a dark area with text. |
@@ -63,14 +64,22 @@ channel entry counts toward this total with all the slides it contributes.
 ## Notes
 
 - **Height** acts as a limit, not a fixed height: the stage adapts to wide
-  21:9 screens and on narrow 4:3 screens and is only constrained to the boundaries of the
+  21:9 screens and on narrow 4:3 screens, and is only constrained to the boundaries of the
   selected level.
-- `ScreenHeight` fills the visible area minus the header,
+- `Screen height` fills the visible area minus the header,
   but at least 420 px.
 - **Seconds per Slide** takes effect starting with the second slide.
 - Users who have “Reduce Motion” enabled in their operating system will not see
   any changes automatically—regardless of this setting.
-- The controls do not appear until the second slide. On narrow
+- At the top, the stage always aligns flush—with the breadcrumbs or, if
+  “Before the breadcrumbs” is selected, with the menu. It compensates for the
+  inner spacing that the section maintains above
+  its first block. This only happens if
+  there is no other content above the stage.
+- **Spacing Down** removes the spacing between blocks, not the
+  internal spacing at the end of a section. If the stage is the last block in
+  its section, its spacing down is preserved.
+- The controls only appear starting with the second slide. On narrow
   screens, the arrows are hidden; on those screens, you swipe instead.
 - A post that is deleted or is not visible to the reader
   only takes its own slide with it. The remaining slides stay in place.

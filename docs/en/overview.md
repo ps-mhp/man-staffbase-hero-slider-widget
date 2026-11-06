@@ -12,8 +12,8 @@ stage can also display **posts from the news**:
 
 - **News post** — a specific post as a single slide. The image, headline,
   and teaser come from the post, and the button links to it.
-- **News channel** — an entire channel, with one slide per post. You can configure how many,
-  in what order, and according to which filters. When a new post appears in
+- **News Channel** — an entire channel, with one slide per post. You can configure how many,
+  in what order, and based on which filters. When a new post appears in
   the channel, it automatically appears on the stage without any further action.
 
 The three types appear in the same list and can be freely mixed and

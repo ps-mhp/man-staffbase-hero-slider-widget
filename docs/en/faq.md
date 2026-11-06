@@ -43,7 +43,7 @@ in it will cause all slides to disappear.
 
 **Question:** The stage doesn’t change on its own.
 
-Answer: Three possible causes: There’s only one slide; **Seconds per Slide**
+Answer: Three possible causes: There is only one slide; **Seconds per Slide**
 is set to `0`; or “Reduce motion” is enabled in the operating system.
 In the latter case, this is intentional—you can still navigate using arrows
 and lines.
@@ -91,7 +91,7 @@ box. If that doesn’t help, enter the channel ID manually; you’ll find it
 in the channel’s URL in the CMS.
 
 **Question:** Why is the image of a news post on the stage blurry or
-strangely cropped?
+cropped strangely?
 
 Answer: Article images are cropped for the feed format, not for a
 full-screen stage. In the entry, under **Override Stage Image**,
@@ -124,7 +124,22 @@ worse than no change at all. In the editor, a note appears
 above the stage in this case. It does not appear on the published page; there,
 the setting cannot be changed.
 
-**Question:** Without controls—how do you navigate then?
+**Question:** There used to be a white strip above the stage. Where did it go?
+
+Answer: The section containing the stage maintains an
+inner margin above its first block. This is correct above text, but above a stage,
+it creates a white strip between the menu or breadcrumbs and the image. The stage
+compensates for this spacing on its own as soon as it is positioned at the very top. If there is
+another block above it, the spacing remains as set by the page.
+
+**Question:** I selected “No Spacing,” but there’s still space below the stage.
+
+Answer: “No Spacing” removes the spacing between two blocks. If the
+stage is the last block in its section, the inner spacing of the
+section and the start of the next one—both of which belong to the page. If you place the
+following content in the same section, it will align directly with it.
+
+**Question:** Without controls—how do you turn the pages?
 
 Answer: Swipe with your finger, use the arrow keys to navigate, or let it run automatically:
 the set time per slide remains unchanged. For the keyboard, the

@@ -39,7 +39,7 @@ accolades.
 Réponse : L’éditeur n’a pas pu s’intégrer à la boîte de dialogue. Fermez
 les paramètres et rouvrez-les. Le texte dans le champ correspond à la
 version brute des entrées ; ne le modifiez pas manuellement — une faute de frappe
-dans ce champ ferait disparaître toutes les diapositives.
+dans ce texte ferait disparaître toutes les diapositives.
 
 **Question :** La scène ne change pas automatiquement.
 
@@ -56,8 +56,8 @@ lignes sous le texte indiquent toujours quelle diapositive est actuellement au p
 **Question :** Mon motif est rogné sur les bords.
 
 Réponse : La scène recadre l’image au format 21:9 ou 4:3 en fonction de la largeur de la fenêtre. Choisissez
-une image laissant un espace autour du motif, ou ajoutez sous **Image pour
-format portrait** votre propre recadrage orienté à la verticale.
+une image laissant un espace autour du motif, ou définissez sous **Image pour
+format portrait** votre propre recadrage à la verticale.
 
 **Question :** Puis-je créer plus de huit diapositives ?
 
@@ -69,8 +69,8 @@ ne permet d’ajouter que trois diapositives supplémentaires.
 **Question :** Dois-je mettre à jour la scène lorsqu’un nouvel article
 paraît dans les actualités ?
 
-Réponse : Pas dans le cas d’une entrée de **canal d’actualités** — celle-ci affiche toujours les
-articles actuels du canal selon les filtres définis. Une entrée de type **« publication d’actualité »**,
+Réponse : Pas dans le cas d’une entrée **de chaîne d’actualités** — celle-ci affiche toujours les
+articles actuels de la chaîne selon les filtres définis. Une entrée de type **« publication d’actualité »**,
 en revanche, reste associée à la publication que vous avez sélectionnée.
 
 **Question :** Une diapositive issue des actualités a soudainement disparu.
@@ -94,8 +94,8 @@ dans l’adresse de la chaîne dans le CMS.
 cadrée de manière étrange sur la scène ?
 
 Réponse : Les images des articles sont recadrées pour le format de flux, et non pour une
-scène occupant toute la hauteur de l’écran. Dans l’entrée, sous **Remplacer l’image de la scène**,
-enregistrez votre propre image, au format paysage et d’au moins 1920 px de large.
+scène occupant toute la hauteur de l'écran. Dans l'entrée, sous **Remplacer l'image de la scène**,
+enregistrez votre propre image, au format paysage et d'au moins 1920 px de large.
 
 **Question :** Que devient la scène lors de la traduction automatique de la
 page ?
@@ -120,12 +120,27 @@ Réponse : Cette fonctionnalité ne s’applique que si trois conditions sont re
 bien d’un fil d’Ariane, la zone d’affichage se trouve tout en haut de la page, et
 aucun autre contenu ne se trouve au-dessus. Si l’une de ces conditions n’est pas remplie, la
 scène sous le fil d’Ariane — une barre de navigation au milieu de la page serait
-pire que l’absence totale de modification. Dans l’éditeur, une remarque s’affiche dans ce cas
+pire que pas de modification du tout. Dans l’éditeur, une remarque s’affiche dans ce cas
 au-dessus de la scène. Elle n’apparaît pas sur la page publiée ; là,
 il n’est pas possible de modifier ce paramètre.
 
-**Question :** Sans boutons de commande, comment faire défiler les diapos ?
+**Question :** Il y avait auparavant une bande blanche au-dessus de la scène. Où est-elle passée ?
 
-Réponse : En balayant avec le doigt, à l’aide des touches fléchées, ou automatiquement :
-le temps défini par diapositive s’écoule sans changement. Pour le clavier, la
-scène devient sélectionnable dès que les boutons de commande sont absents.
+Réponse : La section dans laquelle se trouve la scène conserve un espacement intérieur
+au-dessus de son premier bloc. Au-dessus d’un texte, cela fonctionne correctement, mais au-dessus d’une scène, cela crée
+une bande blanche entre le menu ou le fil d’Ariane et l’image. La scène
+compense elle-même cet espacement dès qu’elle se trouve tout en haut. S’il y a
+un autre bloc au-dessus d’elle, l’espacement reste tel que défini par la page.
+
+**Question :** J’ai sélectionné « Aucun espacement », mais il reste de l’espace sous la scène.
+
+Réponse : « Aucun espacement » supprime l’espacement entre deux blocs. Si la
+scène est le dernier bloc de son paragraphe, l’espacement interne du
+section et le début de la suivante — les deux faisant partie de la page. Si vous placez le
+contenu suivant dans la même section, il s’y raccorde directement.
+
+**Question :** Sans boutons de commande — comment faire défiler les diapos ?
+
+Réponse : En balayant avec le doigt, en utilisant les touches fléchées, ou automatiquement :
+le temps défini par diapositive s'écoule sans changement. Pour le clavier, la
+scène elle-même devient sélectionnable dès que les commandes sont absentes.

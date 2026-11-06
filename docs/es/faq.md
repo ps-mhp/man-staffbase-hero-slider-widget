@@ -12,8 +12,8 @@ un área oscura.
 
 Respuesta: Por lo general, el vídeo no se puede reproducir sin iniciar sesión, o bien el **Tipo** está
 configurado en **Imagen** porque la dirección no tiene extensión. Abre la dirección en
-una ventana privada del navegador: si allí no se reproduce, los
-lectores y lectoras tampoco lo verán. Un mensaje justo debajo del campo indica que la dirección
+una ventana privada del navegador: si no se reproduce allí, los
+lectores tampoco lo verán. Un mensaje justo debajo del campo indica que la dirección
 no se ha aceptado; debe comenzar por `https://`.
 
 **Pregunta:** He introducido un texto para el botón, pero
@@ -124,8 +124,23 @@ peor que no haber realizado ningún cambio. En el editor, en este caso aparece u
 encima de la escena. En la página publicada no aparece; allí
 no se puede modificar la configuración.
 
-**Pregunta:** Sin controles: ¿cómo se pasa entonces de una diapositiva a otra?
+**Pregunta:** Antes había una franja blanca encima del escenario. ¿Dónde está?
+
+Respuesta: La sección en la que se encuentra el escenario mantiene un
+espacio interior por encima de su primer bloque. Sobre un texto esto es correcto, pero sobre un escenario
+se crea así una franja blanca entre el menú o la ruta de navegación y la imagen. El escenario
+compensa este espacio por sí mismo en cuanto se sitúa en la parte superior. Si hay
+otro bloque por encima, el espacio se mantiene tal y como lo establece la página.
+
+**Pregunta:** He seleccionado «Sin espacio», pero sigue habiendo espacio debajo del escenario.
+
+Respuesta: «Sin espacio» elimina el espacio entre dos bloques. Si el
+escenario es el último bloque de su sección, a continuación aparece el espacio interior de la
+sección y el inicio de la siguiente; ambos forman parte de la página. Si coloca el
+contenido siguiente en la misma sección, se unirá directamente a él.
+
+**Pregunta:** Sin elementos de control, ¿cómo se pasa de una diapositiva a otra?
 
 Respuesta: Deslizando el dedo, con las teclas de flecha o de forma automática:
-el tiempo configurado por diapositiva se mantiene sin cambios. En cuanto al teclado, la
-propia diapositiva se puede seleccionar en cuanto faltan los controles.
+el tiempo configurado por diapositiva transcurre sin cambios. En cuanto al teclado, el
+escenario se puede seleccionar directamente en cuanto faltan los elementos de control.

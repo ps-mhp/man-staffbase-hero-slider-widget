@@ -7,14 +7,14 @@ d'un bouton. Il s'inspire de la scène du site man.eu.
 Si vous créez plusieurs diapositives, vous obtenez un diaporama : les diapositives s’affichent
 les unes après les autres, et on peut les faire défiler à l’aide des flèches et des traits situés en bas à gauche.
 
-Il n’est pas nécessaire de mettre à jour une diapositive manuellement. Outre vos propres diapositives, la
+Il n’est pas nécessaire de gérer manuellement une diapositive. Outre vos propres diapositives, la
 page d’accueil peut également afficher des **articles issus de l’actualité** :
 
 - **Article d’actualité** — un article spécifique sous forme de diapositive. L’image, le titre
-  et le teaser proviennent de l’article, le bouton renvoie vers celui-ci.
-- **Chaîne d’actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
-  ordre et les filtres sont paramétrables. Lorsqu’un nouvel article paraît dans la
-  chaîne, il s’affiche automatiquement sur la scène.
+  et le teaser proviennent de l’article, le bouton y renvoie.
+- **Chaîne d'actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
+  ordre et les filtres applicables sont paramétrables. Lorsqu’un nouvel article paraît dans la
+  chaîne, il s’affiche automatiquement sur la scène sans intervention supplémentaire.
 
 Ces trois types figurent dans la même liste et peuvent être librement combinés et
 triés — par exemple, une diapositive personnalisée en tête, suivie des trois derniers
@@ -30,11 +30,11 @@ articles d’une rubrique.
   contenu est supprimée.
 - Le **texte reste aligné sur la ligne de repère de la page** : il commence sur la même
   ligne verticale que l’en-tête, le menu et le texte situé sous la zone d’affichage. Il
-  n’est expressément pas collé au bord de l’image.
+  n’est expressément pas aligné sur le bord de l’image.
 - Le texte se trouve en bas à gauche, sur un dégradé sombre qui s'estompe de bas en
-  haut. Sur les écrans larges, un deuxième dégradé s'ajoute depuis la gauche
+  haut. Sur les écrans larges, un deuxième dégradé s'ajoute à partir de la gauche
   afin que le texte clair reste lisible sur un fond clair.
-- En cas de plusieurs diapositives : des flèches à gauche et à droite, avec un trait entre chacune d’elles pour chaque diapositive.
+- En cas de plusieurs diapositives : des flèches à gauche et à droite, avec un trait entre les deux pour chaque diapositive.
   Le trait de la diapositive actuelle est rouge.
 - Le changement se poursuit tant que la souris survole la scène ou que le focus se trouve
   sur celle-ci. Sur le téléphone, on fait glisser le doigt ; les flèches y sont masquées.
@@ -51,7 +51,7 @@ articles d’une rubrique.
 
 ## Ce que vous voyez dans l’éditeur CMS
 
-L’éditeur affiche la mise en page dans la colonne de contenu, c’est-à-dire **plus étroite que sur
+L’éditeur affiche la scène à l’intérieur de la colonne de contenu, c’est-à-dire **plus étroite que sur
 la page publiée**. L’étendue réelle de l’image et l’emplacement du texte
 ne peuvent être évalués que dans l’aperçu ou sur la page publiée
 . Vérifiez-le toujours au moins une fois avec une

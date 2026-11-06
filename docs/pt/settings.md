@@ -6,8 +6,9 @@
 | Altura | `Padrão (420–560 px)` é a predefinição. Além disso, `Baixa (320–420 px)`, `Alta (560–720 px)` e `Altura do ecrã`. |
 | Mostrar em toda a largura | Quando ativada (predefinição), a imagem ocupa toda a largura da janela, enquanto o texto permanece alinhado à margem da página. Quando desativada, o palco permanece na coluna de conteúdo. |
 | Segundos por diapositivo | O valor predefinido é `5`. O valor `0` pára o palco; nesse caso, a navegação é feita apenas através das setas e das linhas — e, se os controlos estiverem desativados, apenas com gestos de deslizar e as teclas de seta. Máximo de 30. |
-| Posição em relação à trilha de navegação | `Após a trilha de navegação` é a predefinição: o palco começa abaixo da linha da trilha de navegação. `Antes da trilha de navegação` coloca-o alinhado com o menu e desloca a trilha de navegação para baixo. Apenas se aplica se a cena estiver na parte superior da página e se a página tiver, de facto, uma barra de navegação. |
-| Mostrar elementos de controlo | Quando ativado (predefinição), aparecem setas e linhas. Quando desativado, ambos desaparecem; a navegação continua com gestos de deslizar e as setas do teclado, e o tempo definido por slide decorre inalterado. |
+| Posição em relação à barra de navegação | `Após a barra de navegação` é a predefinição: o palco começa abaixo da linha da barra de navegação. `Antes da barra de navegação` coloca-o alinhado com o menu e desloca a barra de navegação para baixo. Apenas se aplica se a cena estiver na parte superior da página e se a página tiver, de facto, uma barra de navegação. |
+| Mostrar elementos de controlo | Quando ativado (predefinição), aparecem setas e linhas. Quando desativado, ambos desaparecem; a navegação continua através de gestos de deslizar e das setas, e o tempo definido por slide decorre inalterado. |
+| Espaço para baixo | `Padrão` é a predefinição: abaixo do palco mantém-se o espaço que a página coloca entre os seus blocos. `Sem espaço` faz com que o bloco seguinte se encaixe diretamente — no caso de «À frente da trilha de navegação», diretamente abaixo da trilha de navegação. |
 
 ## Tipos de entradas
 
@@ -15,13 +16,13 @@
 | --- | --- |
 | Slide | Um slide editado manualmente: imagem, título, subtítulo, botão. |
 | Artigo de notícias | Um artigo específico como um slide. O conteúdo e o destino provêm do artigo. |
-| Canal de notícias | Um canal inteiro, um slide por artigo. As novas publicações aparecem sem necessidade de intervenção adicional. |
+| Canal de notícias | Um canal completo, um slide por artigo. Os novos artigos aparecem sem necessidade de intervenção adicional. |
 
-As três opções constam na mesma lista, podem ser misturadas e ordenadas através de **↑** e
-**↓**. No total, o palco mostra, no máximo, oito diapositivos — uma
+Todos os três constam na mesma lista, podem ser misturados e ordenados através de **↑** e
+**↓**. No total, o palco exibe, no máximo, oito diapositivos — uma
 entrada de canal conta com todos os diapositivos que contribui.
 
-## Campos de um slide
+## Campos de um diapositivo
 
 | Campo | Descrição |
 | --- | --- |
@@ -67,15 +68,22 @@ entrada de canal conta com todos os diapositivos que contribui.
   nível selecionado.
 - `Altura do ecrã` preenche a área visível, deduzindo o cabeçalho,
   mas com um mínimo de 420 px.
-- **Segundos por diapositivo** só se aplica a partir do segundo diapositivo.
+- **Segundos por diapositivo** só tem efeito a partir do segundo diapositivo.
 - Quem tiver definido «Reduzir movimento» no sistema operativo não verá
-  a mudança por si só — independentemente desta configuração.
+  a mudança por si só — independentemente desta definição.
+- Na parte superior, o palco alinha-se sempre perfeitamente — com as «migalhas de pão» ou, no caso de
+  «À frente das migalhas de pão», com o menu. Compensa, assim, o espaço interno que a secção mantém
+  acima do seu primeiro bloco. Isto só acontece se
+  não houver outro conteúdo acima do palco.
+- **Espaço para baixo** elimina o espaço entre os blocos, não o
+  espaço interno no final de uma secção. Se o palco for o último bloco na
+  sua secção, o seu espaço para baixo é mantido.
 - Os elementos de controlo só aparecem a partir do segundo slide. Em ecrãs estreitos,
   as setas ficam ocultas; nesses casos, utiliza-se o gesto de deslizar.
-- Uma publicação que seja eliminada ou que não esteja visível para a pessoa que está a ler
-  leva apenas o seu próprio slide consigo. Os restantes slides permanecem no lugar.
+- Uma publicação que seja eliminada ou que não esteja visível para o leitor
+  leva consigo apenas o seu próprio slide. Os restantes slides permanecem no lugar.
 - Os slides de notícias seguem o idioma do leitor, desde que a publicação
   esteja traduzida; caso contrário, seguem a primeira versão disponível.
 - A **pré-visualização** no editor segue as mesmas regras que a
-  página publicada. O que não estiver lá também não aparecerá na
-  página.
+  página publicada. O que não estiver lá também não aparecerá no palco
+ .

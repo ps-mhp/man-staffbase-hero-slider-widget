@@ -7,18 +7,19 @@
 | Over de volledige breedte weergeven | Indien ingeschakeld (standaardinstelling) strekt de afbeelding zich uit over de volledige breedte van het venster, terwijl de tekst binnen de uitlijningslijn van de pagina blijft. Indien uitgeschakeld blijft het podium binnen de inhoudskolom. |
 | Seconden per dia | `5` is de standaardinstelling. Bij `0` wordt het podium gepauzeerd; dan kan alleen met pijltjes en streepjes worden gebladerd — en als de bedieningselementen zijn uitgeschakeld, alleen nog met vegen en de pijltjestoetsen. Maximaal 30. |
 | Positie ten opzichte van de broodkruimels | `Na de broodkruimels` is de standaardinstelling: het podium begint onder de broodkruimelregel. `Voor de broodkruimels` plaatst het podium gelijk met het menu en verschuift de broodkruimels eronder. Dit werkt alleen als het podium bovenaan de pagina staat en de pagina überhaupt broodkruimels heeft. |
-| Bedieningselementen weergeven | Ingeschakeld (standaardinstelling) verschijnen pijltjes en streepjes. Uitgeschakeld verdwijnen beide; je bladert verder met vegen en de pijltjestoetsen, en de ingestelde tijd per dia blijft ongewijzigd. |
+| Bedieningselementen weergeven | Ingeschakeld (standaardinstelling) verschijnen pijlen en streepjes. Uitgeschakeld verdwijnen beide; je bladert verder door te vegen en met de pijltjestoetsen, en de ingestelde tijd per dia blijft ongewijzigd. |
+| Afstand naar beneden | `Standaard` is de standaardinstelling: onder het podium blijft de afstand behouden die de pagina tussen haar blokken aanbrengt. `Geen afstand` laat het volgende blok direct aansluiten — bij „Voor de broodkruimels“ direct onder de broodkruimels. |
 
 ## Soorten items
 
 | Soort | Beschrijving |
 | --- | --- |
 | Dia | Een handmatig bewerkte dia: afbeelding, kop, ondertitel, knop. |
-| Nieuwsbericht | Een specifiek bericht als één dia. Inhoud en bestemming komen uit het bericht. |
-| Nieuwskanaal | Een heel kanaal, één dia per bericht. Nieuwe berichten verschijnen zonder verdere handelingen. |
+| Nieuwsbericht | Een specifiek bericht als dia. Inhoud en bestemming komen uit het bericht. |
+| Nieuwskanaal | Een heel kanaal, één dia per bericht. Nieuwe berichten verschijnen zonder verdere handeling. |
 
-Alle drie staan in dezelfde lijst, kunnen worden gemengd en gesorteerd met **↑** en
-**↓**. In totaal toont het podium maximaal acht dia’s — een
+Alle drie staan in dezelfde lijst, kunnen worden gemengd en via **↑** en
+**↓** gesorteerd. In totaal toont het podium maximaal acht dia’s — een
 kanaalvermelding telt daarbij mee met alle dia’s die het bijdraagt.
 
 ## Velden van een dia
@@ -67,15 +68,22 @@ kanaalvermelding telt daarbij mee met alle dia’s die het bijdraagt.
   geselecteerde niveau vastgezet.
 - `Schermhoogte` vult de zichtbare zijde minus de koptekst,
   maar minimaal 420 px.
-- **Seconden per dia** is pas vanaf de tweede dia van kracht.
+- **Seconden per dia** geldt pas vanaf de tweede dia.
 - Wie in het besturingssysteem „Beweging verminderen“ heeft ingesteld, ziet geen
   overgang vanzelf — ongeacht deze instelling.
+- Bovenaan sluit het podium altijd gelijk aan — aan de broodkruimels of, bij
+  „Voor de broodkruimels“, aan het menu. De binnenafstand die de sectie boven
+  zijn eerste blok aanhoudt, compenseert het daarvoor. Dit gebeurt alleen als
+  er geen andere inhoud boven het podium staat.
+- **Afstand naar beneden** verwijdert de afstand tussen de blokken, niet de
+  binnenafstand aan het einde van een sectie. Als het podium als laatste blok in
+  zijn sectie staat, blijft de afstand naar beneden behouden.
 - De bedieningselementen verschijnen pas vanaf de tweede dia. Op smalle
-  schermen zijn de pijltjes verborgen; daar wordt geveegd.
-- Een bijdrage die wordt verwijderd of die niet zichtbaar is voor de lezer,
+  schermen worden de pijltjes verborgen; daar wordt geveegd.
+- Een bijdrage die wordt verwijderd of niet zichtbaar is voor de lezer,
   neemt alleen zijn eigen dia mee. De overige dia’s blijven staan.
 - Nieuwsdia’s volgen de taal van de lezer, voor zover het bericht
   vertaald is; anders de eerste beschikbare versie.
 - Het **voorbeeld** in de editor hanteert dezelfde regels als de
-  gepubliceerde pagina. Wat daar niet staat, verschijnt ook niet op het scherm
-  .
+  gepubliceerde pagina. Wat daar niet staat, verschijnt ook niet op het podium
+ .

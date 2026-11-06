@@ -1,4 +1,4 @@
-# Perguntas frequentes
+# Perguntas Frequentes
 
 **Pergunta:** Criei um slide, mas o palco permanece vazio.
 
@@ -10,7 +10,7 @@ ou introduza um endereço.
 **Pergunta:** Introduzi um endereço de vídeo, mas o slide mostra apenas
 uma área escura.
 
-Resposta: Na maioria das vezes, o vídeo não está disponível sem início de sessão, ou **Tipo** está
+Resposta: Na maioria das vezes, o vídeo não está disponível sem início de sessão, ou o **Tipo** está
 definido como **Imagem**, porque o endereço não tem extensão. Abra o endereço numa
 janela privada do navegador: se não funcionar aí, os
 leitores também não o verão. Uma mensagem logo abaixo do campo indica que o endereço
@@ -55,7 +55,7 @@ linhas por baixo do texto continuam a indicar qual é o slide que está atualmen
 
 **Pergunta:** O meu motivo está cortado na margem.
 
-Resposta: A área de apresentação ajusta-se para 21:9 ou 4:3, dependendo da largura da janela. Escolha
+Resposta: O palco recorta para 21:9 ou 4:3, dependendo da largura da janela. Escolha
 uma imagem com espaço em torno do motivo ou defina, em **Imagem para
 formato vertical**, um recorte próprio, cortado na vertical.
 
@@ -77,14 +77,14 @@ por outro lado, permanece na publicação que selecionou.
 
 Resposta: A publicação foi eliminada, movida ou não está visível para o leitor. Apenas este slide desaparece; os restantes permanecem.
 
-**Pergunta:** A minha entrada do canal mostra menos slides do que os configurados.
+**Pergunta:** A minha entrada do canal mostra menos slides do que os definidos.
 
-Resposta: Na maioria das vezes, os filtros são demasiado restritivos. **Apenas publicações com imagem** é
+Resposta: Na maioria das vezes, os filtros estão demasiado restritos. **Apenas publicações com imagem** é
 a predefinição — um canal sem imagens não apresenta, portanto, nada. Verifique a
 pré-visualização no editor: mostra exatamente o que irá aparecer no palco.
 
 **Pergunta:** Na seleção de canais não aparece nenhum canal; em vez disso, há um
-campo de texto para introduzir um identificador.
+campo de texto para um identificador.
 
 Resposta: A lista de canais de notícias não estava acessível. Atualize a janela de diálogo.
 Se isso não resolver, introduza manualmente o identificador do canal; este encontra-se
@@ -100,9 +100,9 @@ palco com a altura do ecrã. Defina na entrada, em **Substituir imagem do palco
 **Pergunta:** O que acontece ao palco durante a tradução automática da
 página?
 
-Resposta: São traduzidos todos os textos escritos pelo próprio utilizador: título,
-subtítulo, texto do botão e descrição da imagem de um slide,
-bem como o título substituído e o texto de uma entrada de notícia.
+Resposta: São traduzidos todos os textos escritos pelo utilizador: título,
+subtítulo, legenda do botão e descrição da imagem de um slide,
+bem como o título substituído e a legenda de uma notícia.
 As imagens, os destinos dos links, os canais, os filtros e a ordem permanecem inalterados.
 
 **Pergunta:** Uma notícia apresenta, na página traduzida, textos diferentes dos da
@@ -121,10 +121,25 @@ não houver mais nenhum conteúdo acima dela. Se alguma destas condições não 
 palco fica por baixo da barra de navegação — uma barra de navegação no meio da página seria
 pior do que nenhuma alteração. No editor, neste caso, aparece uma nota
 acima do palco. Na página publicada, esta nota não aparece; aí,
-não é possível alterar a configuração.
+não é possível alterar essa configuração.
 
-**Pergunta:** Sem elementos de controlo — como é que se passa de página?
+**Pergunta:** Antes havia uma faixa branca por cima do palco. Para onde foi?
+
+Resposta: A secção em que o palco se encontra mantém um espaçamento interno
+acima do seu primeiro bloco. Acima de um texto, isso está correto; acima de um palco, isso cria
+uma faixa branca entre o menu ou a trilha de navegação e a imagem. O palco
+compensa essa distância por si próprio, assim que fica na parte superior. Se houver
+outro bloco acima dele, a distância mantém-se tal como definida pela página.
+
+**Pergunta:** Selecionei «Sem espaçamento», mas ainda há espaço por baixo do palco.
+
+Resposta: «Sem espaçamento» elimina o espaçamento entre dois blocos. Se o
+palco for o último bloco da sua secção, segue-se abaixo dele o espaçamento interno da
+secção e o início da seguinte — ambos pertencem à página. Se colocar o
+conteúdo seguinte na mesma secção, este encaixará diretamente a seguir.
+
+**Pergunta:** Sem elementos de controlo — como se passa de página?
 
 Resposta: Deslizando o dedo, utilizando as setas do teclado ou automaticamente:
-o tempo definido por cada diapositivo decorre normalmente. No que diz respeito ao teclado, o
+o tempo definido por diapositivo decorre sem alterações. No que diz respeito ao teclado, o
 próprio palco fica selecionável assim que os elementos de controlo não estiverem presentes.

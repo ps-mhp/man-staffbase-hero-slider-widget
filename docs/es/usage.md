@@ -32,7 +32,7 @@
 
 ## Crear varias diapositivas
 
-1. Abre la configuración y, con ello, el editor.
+1. Abre los ajustes y, con ello, el editor.
 2. Para cada diapositiva adicional, selecciona en **Nuevo +** la opción **Diapositiva** y
    rellénala como se ha indicado anteriormente. No es posible tener más de ocho diapositivas: nadie se desplaza
    tanto.
@@ -47,11 +47,11 @@
 2. Haz clic en **Nuevo +**, encima de la lista, y selecciona **Entrada de noticias**.
    A la izquierda aparecerá una entrada con la etiqueta **Publicación**.
 3. En **Canal**, selecciona el canal de noticias. Solo entonces podrás
-   seleccionar la noticia.
-4. En **Noticia**, selecciona la noticia deseada. Puedes elegir entre
-   las cincuenta noticias más recientes del canal, ordenadas de más reciente a más antigua.
+   seleccionar la entrada.
+4. En **Entrada**, selecciona la entrada deseada. Puedes elegir entre
+   las cincuenta entradas más recientes del canal, ordenadas de más reciente a más antigua.
 5. Comprueba la **vista previa** que aparece debajo: muestra la imagen, el título y
-   el resumen tal y como se verá la diapositiva más adelante.
+   el resumen tal y como se verá la diapositiva posteriormente.
 6. Opcional: **sobrescribir el título**, **mostrar el resumen como subtítulo**
    o cambiar el **texto del botón**. El destino del
    botón es siempre la propia publicación.
@@ -59,7 +59,7 @@
    y no siempre incluye una parte superior.
 8. **Aplicar**, guardar y comprobar en la vista previa.
 
-## Mostrar todas las entradas de un canal
+## Mostrar todas las publicaciones de un canal
 
 1. Abre la configuración y, con ello, el editor.
 2. Haz clic en **Nuevo +**, encima de la lista, y selecciona **Canal de noticias**.
@@ -68,10 +68,10 @@
 4. Configura el **número de diapositivas** (valor predeterminado `3`, máximo ocho).
 5. Selecciona el **orden**: `Más recientes primero` o `Más antiguos primero`.
 6. Si es necesario, aplica **filtros**:
-   - **Solo publicaciones destacadas**: se limita a lo que está
+   - **Solo entradas destacadas**: se limita a lo que está
      fijado en las noticias.
    - **Solo publicaciones con imagen**: activado por defecto. Sin imagen,
-     la diapositiva se vería como un área oscura con texto.
+     la diapositiva solo mostraría un área oscura con texto.
    - **Palabras clave**: sepáralas con comas; basta con que una publicación
      contenga una de ellas.
 7. Comprueba la **vista previa**: muestra exactamente las entradas que quedan
@@ -80,7 +80,7 @@
 
 La entrada cuenta como **una** en la lista, pero incluye varias diapositivas.
 En total, el escenario nunca muestra más de ocho diapositivas; lo que exceda este número,
-queda omitido.
+se omite al final.
 
 ## Mostrar un vídeo como escenario
 
@@ -93,16 +93,16 @@ queda omitido.
 3. Si el vídeo se encuentra en otro lugar: introduce en su lugar su dirección en
    **O dirección de una imagen o un vídeo**. Debe comenzar por `https://`
    , y todos los lectores deben poder acceder al vídeo sin necesidad de registrarse
-  . Si termina en `.mp4`, `.webm` o `.mov`, el **Tipo** cambia
+  . Si termina en `.mp4`, `.webm` o `.mov`, **Tipo** cambia
    automáticamente a **Vídeo**; en caso contrario, cámbielo manualmente.
-4. En **Descripción del vídeo**, indique qué se ve en él o deje
+4. En **Descripción del vídeo**, indique lo que se ve, o deje
    el campo en blanco si el vídeo es meramente decorativo.
 5. **Aplicar**, guardar y comprobar en la vista previa.
 
 El vídeo se reproduce sin sonido y en bucle, y solo mientras su diapositiva esté en primer
-plano. Quien tenga configurada una animaciÃ³n menor en el sistema, verÃ¡ su primera imagen
+plano. Quien haya configurado menos movimiento en el sistema, verá su primera imagen
 fija. Mantenga el archivo pequeño —unos pocos megabytes para unos segundos—,
-ya que se carga cada vez que se visita la pÃ¡gina.
+ya que se carga cada vez que se visita la página.
 
 ## Añadir una imagen para el formato vertical
 
@@ -118,9 +118,9 @@ ya que se carga cada vez que se visita la pÃ¡gina.
 
 1. Abre la configuración del widget; se abrirá el editor con las
    entradas existentes.
-2. Selecciona a la izquierda la entrada que deseas modificar. El indicador situado encima del título indica
+2. Selecciona a la izquierda la entrada que deseas modificar. La marca situada encima del título indica
   de qué tipo se trata: **Diapositiva**, **Publicación** o **Canal**.
-3. Modifica los campos de la derecha. Al hacer clic en **Duplicar** se crea una copia de la
+3. Modifica los campos de la derecha. Al pulsar **Duplicar** se crea una copia de la
    entrada seleccionada justo detrás; con **Eliminar**, esta desaparece. Las flechas,
    **Duplicar** y **Eliminar** se aplican por igual a los tres tipos.
 4. **Aplicar** guarda los cambios en el widget; solo entonces

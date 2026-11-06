@@ -21,9 +21,9 @@
    24 caractères, elle tient sur une seule ligne.
 8. Facultatif : **Sous-titre** et **Bouton**. Le bouton n’apparaît
    que si le libellé **et** la destination sont renseignés. Sur le téléphone,
-   la scène n’affiche ni l’un ni l’autre : elle n’affiche que le titre, et la
-   diapositive entière mène à la destination du bouton. Le contenu de la ligne de sous-titre
-   ne doit donc pas comporter d’informations indispensables à la lecture.
+   la scène n’affiche ni l’un ni l’autre : elle ne contient que le titre, et la
+   diapositive entière mène à la destination du bouton. Ce qui figure dans la sous-ligne
+   ne doit donc pas être une information indispensable à la lecture.
 9. Cliquez sur **Appliquer**.
 10. Réglez **Secondes par diapositive** sur `0` — dans le cas d’une seule diapositive,
     il n’y a rien à modifier.
@@ -35,7 +35,7 @@
 1. Ouvrez les paramètres et, par là même, l’éditeur.
 2. Pour chaque diapositive supplémentaire, sélectionnez **Diapositive** sous **Nouveau +** et
    remplissez-la comme indiqué ci-dessus. Il n’est pas possible d’avoir plus de huit diapositives — personne ne fait défiler
-   aussi loin.
+   la page aussi loin.
 3. Triez-les à l’aide des flèches **↑** et **↓** en haut à droite. La première diapositive
    est celle qui s’affiche au chargement de la page.
 4. Vérifiez que le paramètre **Secondes par diapositive** est réglé sur `5` (valeur par défaut).
@@ -45,7 +45,7 @@
 
 1. Ouvrez les paramètres, puis l’éditeur.
 2. Cliquez sur **Nouveau +** au-dessus de la liste et sélectionnez **Article d’actualité**.
-   Une entrée portant la mention **Post** apparaît à gauche.
+   Une entrée marquée **Post** apparaît à gauche.
 3. Sous **Chaîne**, sélectionnez la chaîne d’actualités. Ce n’est qu’ensuite que vous pourrez
    choisir l’article.
 4. Sous **Article**, sélectionnez l’article souhaité. Vous avez le choix entre
@@ -55,7 +55,7 @@
 6. Facultatif : **remplacer le titre**, **afficher le teaser en sous-titre**
    ou modifier le **libellé du bouton**. La destination du
    bouton est toujours la publication elle-même.
-7. Facultatif : **remplacer l’image de fond**. L’image de la publication est recadrée pour le fil d’actualité
+7. Facultatif : **Remplacer l’image de fond**. L’image de la publication est recadrée pour le fil d’actualité
    et ne comporte pas toujours une partie supérieure bien visible.
 8. **Appliquer**, enregistrer, vérifier dans l’aperçu.
 
@@ -116,7 +116,7 @@ car il sera chargé à chaque consultation de la page.
 
 ## Modifier ultérieurement
 
-1. Ouvrez les paramètres du widget ; l’éditeur s’ouvre avec les
+1. Ouvrez les paramètres du widget ; l'éditeur s'ouvre avec les
    entrées existantes.
 2. Sélectionnez à gauche l’entrée à modifier. L’icône au-dessus du titre indique
    de quel type il s’agit : **Diapositive**, **Publication** ou **Chaîne**.
@@ -144,8 +144,8 @@ car il sera chargé à chaque consultation de la page.
   pas le texte manuellement.
 5. **La sélection des chaînes reste vide et un champ de texte pour un
    identifiant s’affiche.** La liste des chaînes d’actualités n’était pas accessible. Rechargez la
-   boîte de dialogue ; si cela ne résout pas le problème, saisissez l’identifiant de la chaîne. Il
-   figure dans l’adresse de la chaîne dans le CMS.
+   boîte de dialogue ; si cela ne résout pas le problème, saisissez l’identifiant de la chaîne. Vous
+   le trouverez dans l’adresse de la chaîne dans le CMS.
 6. **Une diapositive d’actualité manque sur la page.** L’article a été supprimé,
    déplacé ou n’est pas visible pour le lecteur. Les autres diapositives
    ne sont pas affectées. Vérifiez l’entrée dans l’aperçu de l’éditeur.

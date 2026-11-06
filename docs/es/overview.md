@@ -11,10 +11,10 @@ No es necesario actualizar una diapositiva manualmente. Además de las diapositi
 página de inicio también puede mostrar **artículos de las noticias**:
 
 - **Artículo de noticias**: un artículo concreto como diapositiva. La imagen, el título
-  y el resumen provienen del artículo, y el botón lleva a él.
+  y el resumen proceden del artículo, y el botón lleva a él.
 - **Canal de noticias**: un canal completo, con una diapositiva por artículo. Se puede configurar el número de diapositivas,
   el orden y los filtros. Cuando aparece un nuevo artículo en
-  el canal, se muestra automáticamente en el escenario sin necesidad de intervención alguna.
+  el canal, se muestra automáticamente en el escenario sin necesidad de ninguna acción adicional.
 
 Los tres tipos aparecen en la misma lista y se pueden mezclar y
 ordenar libremente —por ejemplo, una diapositiva propia como titular, seguida de las tres últimas
@@ -26,7 +26,7 @@ noticias de un canal.
   tiene una columna de contenido más estrecha.
 - El escenario queda **alineado en la parte superior**: si la página tiene una barra de navegación,
   el escenario se sitúa justo debajo; si no la tiene, se une directamente al
-  menú. Se elimina la franja blanca vacía que la página suele dejar sobre el primer
+  menú. Se suprime la franja blanca vacía que la página suele dejar sobre el primer
   contenido.
 - El **texto se mantiene en la línea de alineación de la página**: comienza en la misma
   línea vertical que el encabezado, el menú y el texto situado debajo del escenario. No
@@ -39,7 +39,7 @@ noticias de un canal.
 - El cambio se mantiene mientras el ratón se encuentra sobre el escenario o el foco está
   en él. En el teléfono se desliza el dedo; allí las flechas están ocultas.
 - **En el móvil** (con un ancho inferior a 768 píxeles) solo aparece el título en
-  la imagen, con un máximo de cuatro líneas; lo que sobre de ahí termina en «…».
+  la imagen, con un máximo de cuatro líneas; lo que sobrepase este límite termina en «…».
   La línea inferior y el botón quedan ocultos; en su lugar, al pulsar
   en cualquier punto de la diapositiva se accede al destino del botón. Para los lectores de pantalla,
   su etiqueta sigue siendo el nombre de este enlace. Si una diapositiva no tiene destino,

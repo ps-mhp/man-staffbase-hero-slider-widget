@@ -2,12 +2,13 @@
 
 | Ajuste | Descripción |
 | --- | --- |
-| Entradas | El contenido del escenario: diapositivas propias, noticias individuales y canales de noticias completos. Se gestiona a través del editor, que aparece automáticamente al abrir la configuración. El campo de texto que hay debajo es el borrador y no es necesario modificarlo. |
+| Entradas | El contenido de la página: diapositivas propias, noticias individuales y canales de noticias completos. Se gestiona a través del editor, que aparece automáticamente al abrir la configuración. El campo de texto que hay debajo es el borrador y no es necesario modificarlo. |
 | Altura | `Estándar (420–560 px)` es la opción predeterminada. Junto a ella, `Baja (320–420 px)`, `Alta (560–720 px)` y `Altura de pantalla`. |
 | Mostrar a todo lo ancho | Si está activado (ajuste predeterminado), la imagen ocupa todo el ancho de la ventana, mientras que el texto se mantiene alineado con el margen de la página. Si está desactivado, el escenario permanece dentro de la columna de contenido. |
-| Segundos por diapositiva | El valor predeterminado es `5`. El valor `0` detiene el escenario; en ese caso, solo se puede avanzar mediante flechas y líneas, y si los controles están desactivados, únicamente con gestos de deslizamiento y las teclas de flecha. Máximo 30. |
-| Posición respecto a la ruta de navegación | El valor predeterminado es `Después de la ruta de navegación`: el escenario comienza debajo de la línea de la ruta de navegación. `Antes de la ruta de navegación` lo coloca alineado justo debajo del menú y desplaza la ruta de navegación hacia abajo. Solo es válido si la diapositiva se encuentra en la parte superior de la página y esta tiene una ruta de navegación. |
-| Mostrar controles | Si está activado (ajuste predeterminado), aparecen flechas y líneas. Si está desactivado, ambos desaparecen; se sigue pasando de diapositiva a diapositiva deslizando el dedo o con las teclas de flecha, y el tiempo establecido por diapositiva transcurre sin cambios. |
+| Segundos por diapositiva | El valor predeterminado es `5`. El valor `0` detiene el escenario; en ese caso, solo se puede avanzar mediante flechas y líneas —y, si los controles están desactivados, únicamente con gestos de deslizamiento y las teclas de flecha—. Máximo 30. |
+| Posición respecto a la ruta de navegación | El valor predeterminado es `Después de la ruta de navegación`: el escenario comienza debajo de la línea de la ruta de navegación. `Antes de la ruta de navegación` lo coloca alineado justo debajo del menú y desplaza la ruta de navegación hacia abajo. Solo es aplicable si la escena se encuentra en la parte superior de la página y si la página tiene migas de pan. |
+| Mostrar controles | Si está activado (ajuste predeterminado), aparecen flechas y líneas. Si está desactivado, ambos desaparecen; se sigue pasando de diapositiva en diapositiva deslizando el dedo y con las teclas de flecha, y el tiempo establecido por diapositiva sigue sin cambios. |
+| Espacio hacia abajo | «Estándar» es la configuración predeterminada: debajo del escenario se mantiene el espacio que la página deja entre sus bloques. «Sin espacio» hace que el bloque siguiente se una directamente; en el caso de «Delante de la ruta de navegación», justo debajo de la ruta de navegación. |
 
 ## Tipos de entradas
 
@@ -15,9 +16,9 @@
 | --- | --- |
 | Diapositiva | Una diapositiva editada manualmente: imagen, título, subtítulo, botón. |
 | Entrada de noticias | Una entrada concreta como diapositiva. El contenido y el enlace de destino proceden de la entrada. |
-| Canal de noticias | Un canal completo, una diapositiva por entrada. Las nuevas entradas aparecen sin necesidad de ninguna acción adicional. |
+| Canal de noticias | Un canal completo, una diapositiva por entrada. Las nuevas entradas aparecen sin necesidad de intervención alguna. |
 
-Las tres aparecen en la misma lista, se pueden mezclar y ordenar mediante **↑** y
+Las tres opciones aparecen en la misma lista, se pueden mezclar y ordenar mediante **↑** y
 **↓**. En total, el escenario muestra un máximo de ocho diapositivas; una
 entrada de canal cuenta con todas las diapositivas que aporta.
 
@@ -29,7 +30,7 @@ entrada de canal cuenta con todas las diapositivas que aporta.
 | Dirección | En lugar de la biblioteca multimedia: la dirección `https` de una imagen o un vídeo. No se aceptan otras direcciones. |
 | Tipo | Imagen o vídeo. Se configura automáticamente según la extensión de la dirección (`.mp4`, `.webm`, `.mov` son vídeos); solo hay que seleccionarlo manualmente en direcciones sin extensión. |
 | Descripción de la imagen o del vídeo | Lo que se ve. Délo en blanco solo en el caso de imágenes y vídeos puramente decorativos; los lectores de pantalla leen este campo en voz alta. |
-| Imagen o vídeo para formato vertical | Opcional. Se muestra en pantallas estrechas y verticales. Si falta, se utiliza el recorte horizontal en todas partes. |
+| Imagen o vídeo para formato vertical | Opcional. Se muestra en pantallas estrechas y verticales. Si no se incluye, se utilizará el recorte horizontal en todas partes. |
 | Título | Que sea breve: hasta unos 24 caracteres, así se mantendrá en una sola línea. |
 | Subtítulo | Opcional, de una a dos líneas. |
 | Botón | Opcional. Solo aparece si se han rellenado el texto y el destino. Como máximo uno por diapositiva. |
@@ -55,9 +56,9 @@ entrada de canal cuenta con todas las diapositivas que aporta.
 | Número de diapositivas | Predeterminado en `3`, con un máximo de ocho. |
 | Orden | `Las más recientes primero` (predeterminado) o `Las más antiguas primero`. |
 | Solo entradas destacadas | Desactivado por defecto. Se limita a lo que está fijado en las noticias. |
-| Solo entradas con imagen | Activado por defecto. Sin imagen, la diapositiva no sería más que un área oscura con texto. |
+| Solo entradas con imagen | Activado por defecto. Sin imagen, la diapositiva se vería como un área oscura con texto. |
 | Etiquetas | Opcional, varias separadas por comas. Basta con que una publicación contenga una de ellas. |
-| Mostrar el resumen como subtítulo | Activado por defecto. |
+| Mostrar el avance como subtítulo | Activado por defecto. |
 | Texto del botón | Se aplica a todas las diapositivas del canal. Déjalo en blanco para omitir el botón. |
 
 ## Notas
@@ -68,14 +69,21 @@ entrada de canal cuenta con todas las diapositivas que aporta.
 - `Altura de pantalla` ocupa toda la parte visible menos el encabezado,
   con un mínimo de 420 px.
 - **Segundos por diapositiva** solo se aplica a partir de la segunda diapositiva.
-- Quien tenga activada la opción «Reducir movimiento» en el sistema operativo no verá
+- Quien tenga configurada la opción «Reducir movimiento» en el sistema operativo no verá
   el cambio por sí mismo, independientemente de esta configuración.
-- Los controles solo aparecen a partir de la segunda diapositiva. En pantallas estrechas,
-  las flechas están ocultas; en ese caso, se desliza el dedo.
-- Una entrada que se elimine o que no sea visible para la persona que lee
+- En la parte superior, el escenario siempre queda alineado —con la ruta de navegación o, en el caso de
+  «Delante de la ruta de navegación», con el menú—. A cambio, compensa el espacio interior que la sección mantiene
+  por encima de su primer bloque. Esto solo ocurre si
+  no hay ningún otro contenido encima del escenario.
+- **Espacio hacia abajo** elimina el espacio entre los bloques, no el
+  espacio interior al final de una sección. Si el escenario es el último bloque de
+  su sección, se mantiene su espacio hacia abajo.
+- Los controles de navegación solo aparecen a partir de la segunda diapositiva. En pantallas estrechas
+  las flechas se ocultan; en ese caso, se desliza el dedo.
+- Una entrada que se elimine o que no sea visible para el lector
   solo se lleva consigo su propia diapositiva. El resto de diapositivas permanecen en su sitio.
-- Las diapositivas de noticias se adaptan al idioma del lector, siempre que la publicación
-  esté traducida; en caso contrario, se muestra la primera versión disponible.
+- Las diapositivas de noticias se adaptan al idioma del lector, siempre que la entrada
+  esté traducida; de lo contrario, se muestra la primera versión disponible.
 - La **vista previa** del editor sigue las mismas reglas que la
-  página publicada. Lo que no aparezca allí tampoco aparecerá en la pantalla
-  .
+  página publicada. Lo que no aparezca allí, tampoco aparecerá en el escenario
+ .

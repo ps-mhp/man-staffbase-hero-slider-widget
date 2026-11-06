@@ -1,6 +1,6 @@
 {
   "title": "Hero-Slider",
-  "summary": "Obrazy o szerokości ekranu z tekstem nad nimi — sekcja u góry strony, opcjonalnie w formie sekwencji kilku slajdów, własnych lub pochodzących bezpośrednio z aktualności.",
+  "summary": "Obrazy o szerokości ekranu z tekstem nad nimi — sekcja u góry strony, opcjonalnie jako sekwencja kilku slajdów, własne lub bezpośrednio z aktualności.",
   "icon": "🖼️",
   "pages": [
     {
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "title": "Zmieniające się folie, na całej wysokości ekranu",
+      "title": "Zmieniające się grafiki, na całej wysokości ekranu",
       "attributes": {
         "height": "viewport",
         "full-bleed": true,

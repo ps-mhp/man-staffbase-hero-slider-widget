@@ -36,7 +36,7 @@ Als deze afwijkt, meld dit dan samen met het pagina-adres.
 **Vraag:** In plaats van de editor zie ik een tekstveld „Invoer“ met accolades
 erin.
 
-Antwoord: De editor kon niet in het dialoogvenster worden geïntegreerd. Sluit
+Antwoord: De editor kon geen verbinding maken met het dialoogvenster. Sluit
 de instellingen en open ze opnieuw. De tekst in het veld is de
 ruwe versie van de vermeldingen; bewerk deze niet handmatig — één typefout
 daarin zorgt ervoor dat alle dia’s verdwijnen.
@@ -48,7 +48,7 @@ staat op `0`; of in het besturingssysteem is „Beweging verminderen“ ingescha
 In het laatste geval is dit de bedoeling — je kunt nog steeds bladeren met pijltjes
 en streepjes.
 
-**Vraag:** Ik zie geen pijltjes op mijn telefoon.
+**Vraag:** Ik zie geen pijltjes op de telefoon.
 
 Antwoord: Dat is zo bedoeld. Op smalle schermen wordt geveegd; de
 streepjes onder de tekst geven nog steeds aan welke dia op dat moment op de voorgrond staat.
@@ -80,7 +80,7 @@ niet zichtbaar. Alleen deze ene dia is verdwenen; de overige blijven staan.
 
 **Vraag:** Mijn kanaalvermelding toont minder dia’s dan is ingesteld.
 
-Antwoord: Meestal zijn de filters te streng. **Alleen berichten met afbeelding** is
+Antwoord: Meestal zijn de filters te streng ingesteld. **Alleen berichten met afbeelding** is
 de standaardinstelling — een kanaal zonder afbeeldingen levert dus niets op. Controleer het
 voorbeeld in de editor: dit toont precies wat er op het scherm zal verschijnen.
 
@@ -96,7 +96,7 @@ vreemd bijgesneden?
 
 Antwoord: Afbeeldingen bij berichten zijn bijgesneden voor het feed-formaat, niet voor een
 podium dat de volledige schermhoogte beslaat. Voeg in het item onder **Podiumafbeelding
-overschrijven** een eigen afbeelding toe, in liggend formaat en minimaal 1920 px breed.
+overschrijven** een eigen afbeelding toe, in liggende stand en minimaal 1920 px breed.
 
 **Vraag:** Wat gebeurt er met het podium bij de automatische vertaling van de
 pagina?
@@ -120,12 +120,27 @@ de dia leeg te laten.
 Antwoord: De instelling werkt alleen als aan drie voorwaarden is voldaan: de pagina heeft
 überhaupt een broodkruimelbalk, de balk staat helemaal bovenaan de pagina en
 er staat geen andere inhoud boven. Als aan één van deze voorwaarden niet is voldaan, blijft de
-podium onder de broodkruimels — een broodkruimelbalk in het midden van de pagina zou
+podium onder de broodkruimels — een broodkruimelbalk midden op de pagina zou
 erger zijn dan helemaal geen verandering. In de editor staat in dit geval een opmerking
-boven het podium. Op de gepubliceerde pagina verschijnt deze niet; daar kan
-de instelling niet worden gewijzigd.
+boven het podium. Op de gepubliceerde pagina verschijnt deze niet; daar
+kan de instelling niet worden gewijzigd.
 
-**Vraag:** Zonder bedieningselementen — hoe blader je dan?
+**Vraag:** Vroeger stond er een witte strook boven het podium. Waar is die gebleven?
+
+Antwoord: Het gedeelte waarin het podium staat, houdt boven het eerste blok
+een interne afstand aan. Boven tekst is dat correct, maar boven een podium ontstaat
+daardoor een witte strook tussen het menu of de broodkruimels en de afbeelding. Het podium
+compenseert deze afstand zelf zodra het helemaal bovenaan staat. Als er boven het podium
+een ander blok staat, blijft de afstand zoals de pagina die instelt.
+
+**Vraag:** Ik heb „Geen afstand“ gekozen, maar onder het podium is nog ruimte.
+
+Antwoord: „Geen afstand“ verwijdert de afstand tussen twee blokken. Als het
+podium het laatste blok van de paragraaf is, volgt daaronder de interne afstand van de
+sectie en het begin van de volgende — beide behoren tot de pagina. Plaatst u de
+volgende inhoud in dezelfde sectie, dan sluit deze direct aan.
+
+**Vraag:** Zonder bedieningselementen — hoe bladert u dan?
 
 Antwoord: Veeg met je vinger, blader met de pijltjestoetsen, of automatisch:
 de ingestelde tijd per dia blijft ongewijzigd. Voor het toetsenbord wordt het
