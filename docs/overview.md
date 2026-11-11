@@ -40,9 +40,10 @@ Beiträge eines Kanals.
   ihr liegt. Auf dem Telefon wird gewischt; die Pfeile sind dort ausgeblendet.
 - **Auf dem Telefon** (unter 768 Pixel Breite) steht nur die Überschrift auf
   dem Bild, höchstens vier Zeilen lang; was darüber hinausgeht, endet in „…".
-  Unterzeile und Schaltfläche treten dort zurück — stattdessen führt ein Tipp
-  irgendwo auf die Folie zum Ziel der Schaltfläche. Für Screenreader bleibt
-  ihre Beschriftung der Name dieses Links. Hat eine Folie kein Ziel, ist sie
+  Unterzeile und erste Schaltfläche treten dort zurück — stattdessen führt ein
+  Tipp irgendwo auf die Folie zum Ziel der ersten Schaltfläche. Für
+  Screenreader bleibt ihre Beschriftung der Name dieses Links. Weitere
+  Schaltflächen bleiben als Knöpfe sichtbar. Hat eine Folie kein Ziel, ist sie
   auch nicht anzutippen.
 - Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, sieht keinen
   Wechsel von selbst und keine Blende — nur noch die Bedienelemente.

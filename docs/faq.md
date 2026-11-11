@@ -20,7 +20,9 @@ nicht übernommen wurde — sie muss mit `https://` beginnen.
 sie erscheint nicht.
 
 Antwort: Die Schaltfläche braucht **beides** — Beschriftung und Ziel. Solange
-eines der Felder leer ist, wird sie nicht angezeigt.
+eines der Felder leer ist, wird sie nicht angezeigt. Bei einer freien Adresse
+zählen nur `https://…`, `mailto:…`, `tel:…` und Pfade wie `/content/…`; das
+Formular warnt, wenn eine Adresse nicht übernommen wird.
 
 **Frage:** Das Bild läuft nicht über die volle Fensterbreite.
 

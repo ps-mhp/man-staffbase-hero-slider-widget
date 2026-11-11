@@ -33,7 +33,10 @@ Kanal-Eintrag zählt dabei mit allen Folien, die er beisteuert.
 | Bild oder Video für Hochformat | Optional. Wird auf schmalen, stehenden Bildschirmen gezeigt. Fehlt es, wird überall der Querzuschnitt verwendet. |
 | Überschrift | Kurz halten: bis etwa 24 Zeichen bleibt sie einzeilig. |
 | Unterzeile | Optional, ein bis zwei Zeilen. |
-| Schaltfläche | Optional. Erscheint nur, wenn Beschriftung und Ziel ausgefüllt sind. Höchstens eine je Folie. |
+| Schaltflächen | Optional, bis zu drei je Folie, mit ↑/↓ sortierbar. Eine Schaltfläche erscheint nur, wenn Beschriftung und Ziel ausgefüllt sind. Nur bei von Hand gepflegten Folien; News-Folien bekommen ihre Schaltfläche aus dem Beitrag. |
+| Ziel | **Freie Adresse** (`https://…`, `mailto:…`, `tel:…` oder ein Pfad wie `/content/…`), **Seite aus Staffbase** oder **News-Beitrag aus Staffbase** (erst Kanal, dann Beitrag). Andere Adressen, etwa `javascript:`, werden nicht übernommen. |
+| Stil | **Rot gefüllt** (Hauptaktion, Vorgabe), **Weiß gefüllt**, **Weiße Kontur** oder **Textverweis**. Neue Schaltflächen ab der zweiten beginnen als Kontur, damit nicht zwei rote Flächen nebeneinanderstehen. |
+| Symbol | Optional: Pfeil, Winkel, externer Link, Herunterladen, Abspielen, Dokument, Kalender, E-Mail, Telefon oder Information — vor oder nach dem Text. |
 | In neuem Tab öffnen | Öffnet das Ziel der Schaltfläche in einem neuen Tab. Für externe Ziele üblich. |
 
 ## Felder eines News-Beitrags
