@@ -19,13 +19,17 @@
    pole puste tylko wtedy, gdy obraz ma charakter wyłącznie dekoracyjny.
 7. Wpisz **nagłówek**. Niech będzie krótki: do około
    24 znaków zmieści się w jednym wierszu.
-8. Opcjonalnie: **podtytuł** i **przycisk**. Przycisk pojawi się
-   tylko wtedy, gdy wypełnione są zarówno etykieta, **jak i** miejsce docelowe. Na telefonie
-   scena nie wyświetla żadnego z tych elementów: pokazuje tam tylko nagłówek, a
-   cały slajd prowadzi do miejsca docelowego przycisku. To, co znajduje się w podtytule,
-   nie powinno więc zawierać informacji, które koniecznie muszą zostać przeczytane.
+8. Opcjonalnie: **podtytuł** i maksymalnie trzy **przyciski**
+   (**Dodaj przycisk**). Dla każdego przycisku wybierz **cel** —
+   dowolny adres, stronę lub wpis w sekcji Aktualności w Staffbase —, **styl** oraz
+   w razie potrzeby **ikonę**. Przycisk pojawi się tylko wtedy, gdy
+   wypełnione są zarówno **etykieta**, **jak i** miejsce docelowe. Na telefonie scena
+   nie wyświetla podtytułu ani pierwszego przycisku: wyświetla tam nagłówek,
+   a cały slajd prowadzi do miejsca docelowego pierwszego przycisku; pozostałe
+   przyciski pozostają widoczne jako ikony. Treść podtytułu
+   nie powinna zatem zawierać informacji, które koniecznie muszą zostać przeczytane.
 9. Kliknij **Zastosuj**.
-10. Ustaw **Sekundy na slajd** na `0` — w przypadku pojedynczego slajdu
+10. Ustaw **sekundy na slajd** na `0` — w przypadku pojedynczego slajdu
     nie ma czego zmieniać.
 11. Zapisz stronę i sprawdź ją w podglądzie, raz w trybie pełnoekranowym
     i raz w wąskim oknie.
@@ -34,7 +38,7 @@
 
 1. Otwórz ustawienia, a tym samym edytor.
 2. Dla każdego kolejnego slajdu wybierz w menu **Nowy +** opcję **Slajd** i
-   wypełnij go tak jak powyżej. Nie można utworzyć więcej niż osiem slajdów — nikt nie przewija
+   wypełnij go tak, jak opisano powyżej. Nie można utworzyć więcej niż osiem slajdów — nikt nie przewija
    aż tak daleko.
 3. Sortuj za pomocą strzałek **↑** i **↓** w prawym górnym rogu. Pierwszy slajd
    to ten, który jest widoczny po załadowaniu strony.
@@ -72,8 +76,8 @@
      w aktualnościach.
    - **Tylko posty ze zdjęciem** — domyślnie włączone. Bez zdjęcia
      slajd byłby tylko ciemnym polem z tekstem.
-   - **Słowa kluczowe** — oddziel je przecinkami; wystarczy jeden post, jeśli
-     zawiera którekolwiek z nich.
+   - **Słowa kluczowe** — oddziel je przecinkami; wystarczy jeden post, jeśli zawiera
+     którekolwiek z nich.
 7. Sprawdź **podgląd**: pokazuje on dokładnie te wpisy, które pozostały po zastosowaniu filtrów
   . Jeśli pozostaje pusty, filtry są zbyt wąskie.
 8. **Zastosuj**, zapisz, sprawdź w podglądzie.
@@ -92,7 +96,7 @@ zostaje pominięte.
    oryginał.
 3. Jeśli film znajduje się gdzie indziej: zamiast tego wprowadź jego adres w polu
    **Lub adres obrazu lub filmu**. Musi on zaczynać się od `https://`
-   , a wszyscy czytelnicy muszą mieć możliwość odtworzenia pliku wideo bez logowania
+   , a wszyscy czytelnicy muszą mieć możliwość wyświetlenia pliku wideo bez logowania
   . Jeśli kończy się on na `.mp4`, `.webm` lub `.mov`, **Typ** zmienia się
   automatycznie na **Wideo**; w przeciwnym razie należy zmienić go ręcznie.
 4. W polu **Opis filmu** wpisz, co widać na filmie, lub pozostaw
@@ -131,7 +135,7 @@ ponieważ jest on ładowany przy każdym wywołaniu strony.
 1. **Scena pozostaje pusta.** Brakuje co najmniej jednego obrazu: slajdy bez obrazu
    nie są wyświetlane. Otwórz edytor i sprawdź, czy każdy wpis zawiera
    obraz — w przypadku wpisów z kategorii „Aktualności” sprawdź to w podglądzie.
-2. **Obraz nie zajmuje całej szerokości.** Czy widget znajduje się w
+2. **Obraz nie zajmuje całej szerokości.** Czy widżet znajduje się w
    kolumnie obok innych treści? W takim razie umieść go w osobnym wierszu.
    W przeciwnym razie sprawdź, czy opcja **Wyświetlaj na całej szerokości** jest włączona
   .

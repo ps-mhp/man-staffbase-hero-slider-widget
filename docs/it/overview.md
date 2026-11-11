@@ -25,7 +25,7 @@ di un canale.
 - L’immagine occupa l’intera larghezza della finestra — anche se la pagina
   stessa ha una colonna di contenuto più stretta.
 - Il «palcoscenico» è posizionato **a filo in alto**: se la pagina ha una barra di navigazione,
-  il «palcoscenico» si trova immediatamente sotto; se non ce l’ha, si collega direttamente al
+  il «palcoscenico» si trova immediatamente sotto di essa; se non ce l’ha, si collega direttamente al
   menu. La striscia bianca vuota che la pagina altrimenti lascia libera sopra il primo
   contenuto viene eliminata.
 - Il **testo rimane allineato alla linea di riferimento della pagina**: inizia sulla stessa
@@ -37,13 +37,14 @@ di un canale.
 - In caso di più diapositive: frecce a sinistra e a destra, con una linea tra di esse per ogni diapositiva.
   La linea della diapositiva corrente è rossa.
 - Il cambio rimane attivo finché il mouse si trova sopra il palco o il focus è
-  su di esso. Sul telefono si scorre con il dito; in questo caso le frecce vengono nascoste.
+  su di esso. Sul telefono si scorre con il dito; in questo caso le frecce sono nascoste.
 - **Sul telefono** (con larghezza inferiore a 768 pixel) sull’immagine compare solo il titolo,
   lungo al massimo quattro righe; ciò che va oltre termina con «…».
-  La riga inferiore e il pulsante vengono nascosti; al loro posto, un tocco
-  in un punto qualsiasi della diapositiva porta alla destinazione del pulsante. Per gli screen reader,
-  la loro etichetta rimane il nome di questo link. Se una diapositiva non ha una destinazione,
-  non è possibile toccarla.
+  La didascalia e il primo pulsante vengono nascosti — al loro posto, un
+  tocco in un punto qualsiasi della diapositiva porta alla destinazione del primo pulsante. Per gli
+  screen reader, la sua etichetta rimane il nome di questo link. Gli altri
+  pulsanti rimangono visibili come icone. Se una diapositiva non ha una destinazione,
+  non è nemmeno cliccabile.
 - Chi ha impostato «Riduci animazioni» nel sistema operativo non vede alcun
   cambio automatico né alcuna dissolvenza — solo gli elementi di controllo.
 - Le diapositive delle notizie hanno lo stesso aspetto di qualsiasi altra diapositiva. Il fatto che il contenuto provenga

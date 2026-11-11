@@ -5,7 +5,7 @@ todo el ancho de la ventana, con un título encima, opcionalmente un subtítulo 
 un botón. El modelo a seguir es el escenario de man.eu.
 
 Si se crean varias diapositivas, se obtiene un cambiador: las diapositivas se
-funden unas en otras, y se puede pasar de una a otra mediante las flechas y las líneas situadas en la esquina inferior izquierda.
+funden unas en otras, y se puede pasar de una a otra mediante las flechas y las líneas de la esquina inferior izquierda.
 
 No es necesario actualizar una diapositiva manualmente. Además de las diapositivas propias, la
 página de inicio también puede mostrar **artículos de las noticias**:
@@ -36,13 +36,14 @@ noticias de un canal.
   para que el texto claro siga siendo legible sobre un fondo claro.
 - Si hay varias diapositivas: flechas a la izquierda y a la derecha, con una línea entre ellas por cada diapositiva.
   La línea de la diapositiva actual es roja.
-- El cambio se mantiene mientras el ratón se encuentra sobre el escenario o el foco está
-  en él. En el teléfono se desliza el dedo; allí las flechas están ocultas.
+- El cambio se mantiene mientras el ratón se sitúe sobre el escenario o el foco esté
+  en él. En el teléfono se desliza el dedo; allí, las flechas se ocultan.
 - **En el móvil** (con un ancho inferior a 768 píxeles), solo aparece el título en
-  la imagen, con un máximo de cuatro líneas; lo que sobrepase este límite termina en «…».
-  La línea inferior y el botón quedan ocultos; en su lugar, al pulsar
-  en cualquier punto de la diapositiva se accede al destino del botón. Para los lectores de pantalla,
-  su etiqueta sigue siendo el nombre de este enlace. Si una diapositiva no tiene destino,
+  la imagen, con un máximo de cuatro líneas; lo que sobre de ahí termina en «…».
+  La línea inferior y el primer botón quedan ocultos; en su lugar, un
+  una sugerencia en cualquier punto de la diapositiva que lleva al destino del primer botón. Para
+  los lectores de pantalla, su etiqueta sigue siendo el nombre de este enlace. El resto de
+  botones permanecen visibles como botones. Si una diapositiva no tiene destino,
   tampoco se puede pulsar.
 - Quien tenga configurada la opción «Reducir movimiento» en el sistema operativo no verá
   ningún cambio por sí mismo ni ninguna transición; solo verá los elementos de control.

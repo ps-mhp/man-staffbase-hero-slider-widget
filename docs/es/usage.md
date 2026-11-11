@@ -2,7 +2,7 @@
 
 ## Configurar un escenario con una imagen
 
-1. Guarda primero la imagen en la biblioteca multimedia de Staffbase. En formato apaisado, con un ancho mínimo
+1. Guarda primero la imagen en la biblioteca multimedia de Staffbase. En formato horizontal, con un ancho mínimo
    de 1920 píxeles; el escenario la recortará a una proporción de 21:9 o
    4:3; por lo tanto, la imagen no debe llegar hasta los bordes.
 2. Coloca el widget **Hero-Slider** en la parte superior de la página, en una fila
@@ -19,20 +19,24 @@
    campo en blanco solo si la imagen es meramente decorativa.
 7. Introduzca el **título**. Que sea breve: hasta unos
    24 caracteres, se mantendrá en una sola línea.
-8. Opcional: **línea inferior** y **botón**. El botón solo aparecerá
-   si se han rellenado el texto **y** el destino. En el teléfono,
-   el escenario no muestra ninguno de los dos: allí solo aparece el título, y toda la
-   diapositiva lleva al destino del botón. Por lo tanto, lo que figure en el subtítulo
+8. Opcional: **subtítulo** y hasta tres **botones**
+   (**Añadir botón**). Para cada botón, selecciona el **destino** —
+   una dirección libre, una página o una noticia de Staffbase—, el **estilo** y
+  , si es necesario, un **símbolo**. Un botón solo aparecerá si
+  se han rellenado el **texto** **y** el destino. En el móvil, la pantalla
+   no muestra la línea inferior ni el primer botón: allí aparece el título,
+   y toda la diapositiva lleva al destino del primer botón; los demás
+   botones permanecen visibles. Por lo tanto, lo que figure en la línea inferior
    no debería ser nada que sea imprescindible leer.
 9. Haga clic en **Aplicar**.
 10. Establezca **Segundos por diapositiva** en `0`; si solo hay una diapositiva,
     no hay nada que cambiar.
-11. Guarde la página y compruébela en la vista previa, una vez en pantalla ancha
-    y otra vez en una ventana estrecha.
+11. Guarde la página y compruébela en la vista previa, una vez en formato ancho
+    y otra en una ventana estrecha.
 
 ## Crear varias diapositivas
 
-1. Abre la configuración y, con ello, el editor.
+1. Abre los ajustes y, con ello, el editor.
 2. Para cada diapositiva adicional, selecciona en **Nuevo +** la opción **Diapositiva** y
    rellénala como se ha indicado anteriormente. No es posible tener más de ocho diapositivas: nadie se desplaza
    tanto.
@@ -62,7 +66,7 @@
 ## Mostrar todas las publicaciones de un canal
 
 1. Abre la configuración y, con ello, el editor.
-2. Haz clic en **Nuevo +**, encima de la lista, y selecciona **Canal de noticias**.
+2. Haz clic en **Nuevo +**, situado encima de la lista, y selecciona **Canal de noticias**.
    A la izquierda aparecerá una entrada con la etiqueta **Canal**.
 3. En **Canal**, selecciona el canal de noticias.
 4. Configura el **número de diapositivas** (valor predeterminado `3`, máximo ocho).
@@ -79,8 +83,8 @@
 8. **Aplicar**, guardar y comprobar en la vista previa.
 
 La entrada cuenta como **una** en la lista, pero incluye varias diapositivas.
-En total, el escenario nunca muestra más de ocho diapositivas; lo que exceda este número,
-queda omitido.
+En total, el escenario nunca muestra más de ocho diapositivas; lo que supere ese número,
+se omite al final.
 
 ## Mostrar un vídeo como escenario
 
@@ -93,8 +97,8 @@ queda omitido.
 3. Si el vídeo se encuentra en otro lugar: introduce en su lugar su dirección en
    **O dirección de una imagen o un vídeo**. Debe comenzar por `https://`
    , y todos los lectores deben poder acceder al vídeo sin necesidad de registrarse
-  . Si termina en `.mp4`, `.webm` o `.mov`, **Tipo** cambia
-   automáticamente a **Vídeo**; de lo contrario, cámbielo manualmente.
+  . Si termina en `.mp4`, `.webm` o `.mov`, el **Tipo** cambia
+   automáticamente a **Vídeo**; en caso contrario, cámbielo manualmente.
 4. En **Descripción del vídeo**, indique qué se ve en él o deje
    el campo en blanco si el vídeo es meramente decorativo.
 5. **Aplicar**, guardar y comprobar en la vista previa.

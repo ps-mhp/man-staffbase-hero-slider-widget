@@ -20,7 +20,7 @@
 
 Wszystkie trzy rodzaje znajdują się na tej samej liście, można je mieszać i sortować za pomocą **↑** oraz
 **↓**. Łącznie scena wyświetla maksymalnie osiem slajdów — przy czym
-jeden wpis kanału liczy się jako wszystkie slajdy, które wnosi.
+jeden wpis kanału liczy się wraz ze wszystkimi slajdami, które dostarcza.
 
 ## Pola slajdu
 
@@ -29,11 +29,14 @@ jeden wpis kanału liczy się jako wszystkie slajdy, które wnosi.
 | Obraz lub wideo | Pole obowiązkowe. Z biblioteki multimediów lub poprzez adres (`https://…`). Poziomy, szerokość co najmniej 1920 px. Bez obrazu lub wideo slajd nie zostanie wyświetlony. |
 | Adres | Zamiast biblioteki multimediów: adres `https` obrazu lub wideo. Inne adresy nie są akceptowane. |
 | Typ | Obraz lub wideo. Ustalany automatycznie na podstawie rozszerzenia adresu (`.mp4`, `.webm`, `.mov` to pliki wideo); ręcznie wybieraj tylko w przypadku adresów bez rozszerzenia. |
-| Opis obrazu lub wideo | Co jest widoczne. Pole pozostawić puste tylko w przypadku obrazów i filmów pełniących wyłącznie funkcję dekoracyjną — czytniki ekranu odczytują to pole. |
-| Obraz lub film w orientacji pionowej | Opcjonalnie. Wyświetlany na wąskich ekranach pionowych. Jeśli brakuje, wszędzie stosowany jest kadr w orientacji poziomej. |
+| Opis obrazu lub wideo | Co jest widoczne. Pole to należy pozostawić puste tylko w przypadku obrazów i filmów pełniących wyłącznie funkcję dekoracyjną — czytniki ekranu odczytują tę treść. |
+| Obraz lub film w orientacji pionowej | Opcjonalne. Wyświetlane na wąskich ekranach pionowych. Jeśli brakuje tej informacji, wszędzie stosowany jest kadr w orientacji poziomej. |
 | Nagłówek | Należy zachować zwięzłość: do około 24 znaków, dzięki czemu zmieści się w jednym wierszu. |
-| Podtytuł | Opcjonalne, od jednego do dwóch wierszy. |
-| Przycisk | Opcjonalne. Pojawia się tylko wtedy, gdy wypełniono etykietę i adres docelowy. Maksymalnie jeden na slajd. |
+| Podtytuł | Opcjonalnie, od jednego do dwóch wierszy. |
+| Przyciski | Opcjonalne, maksymalnie trzy na slajd, z możliwością sortowania za pomocą ↑/↓. Przycisk pojawia się tylko wtedy, gdy wypełniono etykietę i adres docelowy. Dotyczy wyłącznie slajdów edytowanych ręcznie; slajdy z aktualnościami otrzymują przycisk z treści wpisu. |
+| Miejsce docelowe | **Dowolny adres** (`https://…`, `mailto:…`, `tel:…` lub ścieżka typu `/content/…`), **strona z Staffbase** lub **wpis z sekcji Aktualności w Staffbase** (najpierw kanał, potem wpis). Inne adresy, np. `javascript:`, nie są uwzględniane. |
+| Styl | **Wypełnienie czerwone** (główna akcja, domyślnie), **wypełnienie białe**, **biały kontur** lub **odnośnik tekstowy**. Nowe przyciski, począwszy od drugiego, mają postać konturu, aby nie pojawiły się obok siebie dwa czerwone obszary. |
+| Ikona | Opcjonalnie: strzałka, kąt, link zewnętrzny, pobieranie, odtwarzanie, dokument, kalendarz, e-mail, telefon lub informacja — przed lub po tekście. |
 | Otwórz w nowej karcie | Otwiera miejsce docelowe przycisku w nowej karcie. Typowe dla miejsc docelowych zewnętrznych. |
 
 ## Pola wpisu w serwisie informacyjnym
@@ -46,7 +49,7 @@ jeden wpis kanału liczy się jako wszystkie slajdy, które wnosi.
 | Pokaż teaser jako podtytuł | Domyślnie włączone. Teaser jest skracany do 240 znaków. |
 | Etykieta przycisku | Domyślnie `Dowiedz się więcej`. Pozostaw puste, aby pominąć przycisk; miejscem docelowym jest zawsze wpis. |
 | Zastąp obraz sceny | Opcjonalne. Przydatne, gdy obraz wpisu jest zbyt wąski dla sceny. |
-| Obraz dla formatu pionowego | Opcjonalne. Wyświetlany na wąskich, pionowych ekranach. |
+| Obraz dla orientacji pionowej | Opcjonalne. Wyświetlany na wąskich ekranach pionowych. |
 
 ## Pola kanału wiadomości
 
@@ -85,7 +88,7 @@ jeden wpis kanału liczy się jako wszystkie slajdy, które wnosi.
   znajduje się w niej samodzielnie. Jeśli w tej samej sekcji znajdują się inne bloki, zachowuje
   swoje proporcje, a bloki przylegają do niej bez odstępu.
 - Elementy sterujące pojawiają się dopiero od drugiego slajdu. Na wąskich
-  ekranach strzałki są ukryte; w tym przypadku należy przesuwać palcem.
+  ekranach strzałki są ukryte; w tym przypadku używa się gestu przesuwania palcem.
 - Artykuł, który zostanie usunięty lub nie jest widoczny dla czytelnika,
   zabiera ze sobą tylko swój własny slajd. Pozostałe slajdy pozostają na miejscu.
 - Slajdy z wiadomościami dostosowują się do języka osoby czytającej, o ile wpis

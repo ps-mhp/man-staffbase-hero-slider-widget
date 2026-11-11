@@ -20,17 +20,19 @@ não foi aceite — tem de começar por `https://`.
 este não aparece.
 
 Resposta: O botão precisa de **ambos** — texto e destino. Enquanto
-um dos campos estiver vazio, não será apresentado.
+um dos campos estiver vazio, não será apresentado. No caso de um endereço livre,
+só são válidos `https://…`, `mailto:…`, `tel:…` e caminhos como `/content/…`; o
+formulário avisa se um endereço não for aceite.
 
 **Pergunta:** A imagem não ocupa toda a largura da janela.
 
-Resposta: Duas causas possíveis. Ou a opção **Mostrar em toda a largura**
+Resposta: Há duas causas possíveis. Ou a opção **Mostrar em toda a largura**
 está desativada, ou o widget está numa coluna ao lado de outros conteúdos.
 Coloque-o numa linha própria no topo da página.
 
-**Pergunta:** O texto não está onde o resto do conteúdo da página começa.
+**Pergunta:** O texto não está onde começa o resto do conteúdo da página.
 
-Resposta: A área de trabalho adapta-se à largura do conteúdo indicada pela página.
+Resposta: A área de exibição adapta-se à largura do conteúdo que a página indica.
 Se houver alguma discrepância, comunique o caso indicando o endereço da página.
 
 **Pergunta:** Em vez do editor, vejo um campo de texto «Entradas» com
@@ -38,52 +40,53 @@ chaves no seu interior.
 
 Resposta: O editor não conseguiu integrar-se na caixa de diálogo. Feche
 as definições e volte a abri-las. O texto no campo é a
-versão bruta das entradas; não o edite manualmente — um erro ortográfico
+versão bruta das entradas; não o edite manualmente — um erro de digitação
 nesse texto faz com que todos os slides desapareçam.
 
-**Pergunta:** O palco não muda automaticamente.
+**Pergunta:** A cena não muda automaticamente.
 
 Resposta: Três causas possíveis: existe apenas um slide; **Segundos por slide**
 está definido em `0`; ou a opção «Reduzir movimento» está ativada no sistema operativo.
-Neste último caso, é intencional — continua a ser possível percorrer as diapositivas através das setas
-e das linhas.
+Neste último caso, é intencional — continua a ser possível percorrer os slides através das setas
+e dos traços.
 
 **Pergunta:** No telemóvel, não vejo setas.
 
-Resposta: É assim que deve ser. Em ecrãs estreitos, utiliza-se o gesto de deslizar; as
-linhas por baixo do texto continuam a indicar qual é o slide que está atualmente em destaque.
+Resposta: É assim que deve ser. Em ecrãs estreitos, desliza-se o dedo; as
+linhas por baixo do texto continuam a indicar qual o slide que está atualmente em destaque.
 
-**Pergunta:** O meu motivo está cortado na margem.
+**Pergunta:** A minha imagem está cortada na margem.
 
-Resposta: A área de apresentação ajusta-se para 21:9 ou 4:3, dependendo da largura da janela. Escolha
-uma imagem com espaço em torno do motivo ou defina, em **Imagem para
+Resposta: O palco recorta a imagem para 21:9 ou 4:3, dependendo da largura da janela. Escolha
+uma imagem com margem à volta do motivo ou defina, em **Imagem para
 formato vertical**, um recorte próprio, cortado na vertical.
 
 **Pergunta:** Posso criar mais de oito diapositivos?
 
-Resposta: Não. A cinco segundos por diapositivo, uma rotação completa demora, já com
-oito diapositivos, quarenta segundos — ninguém fica tanto tempo num palco.
-O número oito aplica-se ao conjunto de todos os diapositivos: uma entrada de canal com cinco publicações
-só permite mais três diapositivos adicionais.
+Resposta: Não. A cinco segundos por diapositivo, uma rotação completa demora, mesmo com
+apenas oito diapositivos, quarenta segundos — ninguém fica tanto tempo num palco.
+O limite de oito aplica-se ao conjunto de todos os slides: uma entrada de canal com cinco publicações
+só permite mais três slides adicionais.
 
 **Pergunta:** Tenho de atualizar o palco quando surge uma nova publicação
-nas Notícias?
+nas notícias?
 
-Resposta: No caso de uma entrada do **Canal de Notícias**, não — esta mostra sempre as
-publicações atuais do canal de acordo com os filtros definidos. Uma entrada de **publicação de notícias**,
-por outro lado, permanece na publicação que selecionou.
+Resposta: No caso de uma entrada do **canal de notícias**, não — esta mostra sempre as
+publicações atuais do canal de acordo com os filtros definidos. Por outro lado, uma entrada de **publicação de notícias**
+mantém-se na publicação que selecionou.
 
 **Pergunta:** Um slide das notícias desapareceu de repente.
 
-Resposta: A publicação foi eliminada, movida ou não está visível para o leitor. Apenas este slide desaparece; os restantes permanecem.
+Resposta: A publicação foi eliminada, movida ou não está visível para o leitor.
+Apenas esse slide desaparece; os restantes permanecem.
 
-**Pergunta:** A minha entrada do canal mostra menos slides do que os definidos.
+**Pergunta:** A minha entrada do canal mostra menos diapositivos do que os definidos.
 
 Resposta: Na maioria das vezes, os filtros estão demasiado restritos. **Apenas publicações com imagem** é
 a predefinição — um canal sem imagens não apresenta, portanto, nada. Verifique a
-pré-visualização no editor: mostra exatamente o que irá aparecer no palco.
+pré-visualização no editor: mostra exatamente o que irá aparecer na página.
 
-**Pergunta:** Na seleção de canais não aparece nenhum canal, mas sim um
+**Pergunta:** Na seleção de canais não aparece nenhum canal; em vez disso, há um
 campo de texto para um identificador.
 
 Resposta: A lista de canais de notícias não estava acessível. Atualize a janela de diálogo.
@@ -100,9 +103,9 @@ palco com a altura do ecrã. Defina na entrada, em **Substituir imagem do palco
 **Pergunta:** O que acontece ao palco durante a tradução automática da
 página?
 
-Resposta: São traduzidos todos os textos escritos pelo utilizador: título,
+Resposta: São traduzidos todos os textos escritos pelo próprio utilizador: título,
 subtítulo, legenda do botão e descrição da imagem de um slide,
-bem como o título substituído e a legenda de uma entrada de notícia.
+bem como o título substituído e a legenda de uma publicação de notícias.
 As imagens, os destinos dos links, os canais, os filtros e a ordem permanecem inalterados.
 
 **Pergunta:** Uma notícia apresenta, na página traduzida, textos diferentes dos da
@@ -136,9 +139,9 @@ outro bloco acima dele, a distância mantém-se tal como definida pela página.
 Resposta: «Sem espaçamento» elimina o espaçamento em relação ao bloco seguinte na mesma
 secção. Se o palco for o último bloco da sua secção, a
 secção termina de qualquer forma com ele. O espaço que ainda resta é o espaçamento interno
-da secção seguinte — esse espaço pertence-lhe e pode ser alterado nas suas
+da secção seguinte — este pertence-lhe e pode ser alterado nas suas
 configurações de secção. Se o conteúdo seguinte estiver na mesma secção
-que o palco, ele encosta diretamente a ele com a opção «Sem espaçamento».
+que o palco, ele encosta-se diretamente a ele com a opção «Sem espaçamento».
 
 **Pergunta:** Sem elementos de controlo — como é que se passa de página?
 

@@ -19,11 +19,15 @@
    field blank only if the image is purely decorative.
 7. Enter the **Headline**. Keep it short: up to about
    24 characters, and it will remain on one line.
-8. Optional: **Caption** and **Button**. The button appears
-   only if both the label **and** the destination are filled in. On a phone,
-   the stage does not display either of these: it shows only the headline, and the
-   entire slide leads to the button’s destination. Therefore, whatever is in the subtitle
-   should not be something that absolutely needs to be read.
+8. Optional: **Subtitle** and up to three **buttons**
+   (**Add button**). For each button, select the **destination**—
+   a custom URL, page, or news article from Staffbase —, the **style**, and
+   if needed, an **icon**. A button only appears if
+   both the label **and** the destination are filled in. On a phone, the stage
+   does not display the subheading or the first button: there, it displays the headline,
+   and the entire slide leads to the destination of the first button; additional
+   buttons remain visible as buttons. Therefore, the text in the subheading
+   should not contain anything that absolutely needs to be read.
 9. Click **Apply**.
 10. Set **Seconds per Slide** to `0`—with a single slide, there’s
     nothing to change.
@@ -36,7 +40,7 @@
 2. For each additional slide, select **Slide** under **New +** and
    fill it out as described above. You cannot have more than eight slides—no one scrolls
    that far.
-3. Sort the slides using the **↑** and **↓** arrows in the upper right corner. The first slide
+3. Sort the slides using the **↑** and **↓** arrows in the upper-right corner. The first slide
    is the one that appears when the page loads.
 4. Make sure that **Seconds per Slide** is set to `5` (default).
 5. **Apply**, save, and check the preview.
@@ -55,8 +59,8 @@
 6. Optional: **Override the headline**, **display the teaser as a subheading**
    or change the **button label**. The destination of the
    button is always the post itself.
-7. Optional: **Override the featured image**. The post image is cropped for the feed
-   and may not always include a prominent background.
+7. Optional: **Override the thumbnail**. The post image is cropped for the feed
+   and doesn’t always include a prominent thumbnail.
 8. **Apply**, save, and check the preview.
 
 ## Show all posts from a channel
@@ -65,7 +69,7 @@
 2. Click **New +** above the list and select **News Channel**.
    An entry labeled **Channel** will appear on the left.
 3. Under **Channel**, select the news channel.
-4. Set the **Number of Slides** (default `3`, maximum of eight).
+4. Set the **Number of Slides** (default `3`, maximum eight).
 5. Select the **Order**: `Newest first` or `Oldest first`.
 6. Set **Filters** as needed:
    - **Featured posts only** — limited to what is pinned in the News
@@ -100,8 +104,8 @@ is omitted.
 5. **Apply**, save, and check the preview.
 
 The video plays silently and on a loop, and only as long as its slide is
-displayed. Users who have set the system to show less movement will see their first frame
-static. Keep the file small—a few megabytes for a few seconds—
+displayed. Users who have set the system to show less movement will see the first frame
+stuck. Keep the file small—a few megabytes for a few seconds—
 since it loads every time the page is viewed.
 
 ## Upload an Image for Portrait Orientation
@@ -111,7 +115,7 @@ since it loads every time the page is viewed.
 2. Select the relevant slide in the editor.
 3. Under **Image or Video for Portrait Orientation**, click **Select Image or Video**
    or enter a URL below it.
-4. Click **Apply**, save, and preview in a narrow window or on the
+4. Click **Apply**, save, and check the result in a narrow window or on your
    phone.
 
 ## Make Changes Later
@@ -133,7 +137,7 @@ since it loads every time the page is viewed.
    an image—for news entries, check the preview.
 2. **The image does not span the full width.** Is the widget located in a
    column next to other content? If so, place it on its own line.
-   Otherwise, check whether **Show full width** is enabled
+   Otherwise, check whether **Display full width** is enabled
   .
 3. **The text isn’t aligned to the baseline.** This may be due to a
    different content width on the page. Report the issue with the
@@ -145,7 +149,7 @@ since it loads every time the page is viewed.
 5. **The channel selection remains empty, and a text field for an
    ID appears.** The list of news channels was unavailable. Reload the
    dialog; if that doesn’t help, enter the channel’s ID. You’ll
-   find it in the channel’s address in the CMS.
+   find it in the channel’s URL in the CMS.
 6. **A news slide is missing from the page.** The post has been deleted,
    moved, or is not visible to the reader. The remaining slides
    are not affected. Check the entry in the editor’s preview.

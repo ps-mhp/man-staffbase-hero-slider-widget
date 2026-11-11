@@ -29,12 +29,15 @@ entrada de canal conta com todos os diapositivos que contribui.
 | Imagem ou vídeo | Obrigatório. Da biblioteca multimédia ou através de um endereço (`https://…`). Horizontal, com pelo menos 1920 px de largura. Sem imagem ou vídeo, o slide não é exibido. |
 | Endereço | Em vez da biblioteca multimédia: o endereço `https` de uma imagem ou vídeo. Outros endereços não são aceites. |
 | Tipo | Imagem ou vídeo. É definido automaticamente pela extensão do endereço (`.mp4`, `.webm`, `.mov` são vídeos); selecionar manualmente apenas em endereços sem extensão. |
-| Descrição da imagem ou do vídeo | O que se vê. Deixe em branco apenas no caso de imagens e vídeos meramente decorativos — os leitores de ecrã leem este campo em voz alta. |
-| Imagem ou vídeo para formato vertical | Opcional. É apresentado em ecrãs estreitos e verticais. Se não for indicado, é utilizada a versão horizontal em todos os casos. |
+| Descrição da imagem ou do vídeo | O que se vê. Deixe em branco apenas no caso de imagens e vídeos puramente decorativos — os leitores de ecrã leem este campo em voz alta. |
+| Imagem ou vídeo para formato vertical | Opcional. É apresentado em ecrãs estreitos e verticais. Se não estiver presente, é utilizada a versão horizontal em todos os casos. |
 | Título | Seja breve: até cerca de 24 caracteres, permanece numa única linha. |
 | Subtítulo | Opcional, uma a duas linhas. |
-| Botão | Opcional. Aparece apenas se o texto e o destino estiverem preenchidos. No máximo um por diapositivo. |
-| Abrir num novo separador | Abre o destino do botão num novo separador. É habitual para destinos externos. |
+| Botões | Opcional, até três por diapositivo, ordenáveis com ↑/↓. Um botão só aparece se o texto e o destino estiverem preenchidos. Apenas em diapositivos editados manualmente; os diapositivos de notícias obtêm o seu botão a partir da publicação. |
+| Destino | **Endereço livre** (`https://…`, `mailto:…`, `tel:…` ou um caminho como `/content/…`), **página da Staffbase** ou **artigo de notícias da Staffbase** (primeiro o canal, depois o artigo). Outros endereços, como `javascript:`, não são aceites. |
+| Estilo | **Preenchido a vermelho** (ação principal, predefinição), **Preenchido a branco**, **Contorno branco** ou **Referência de texto**. Os botões a partir do segundo começam com contorno, para que não haja duas áreas vermelhas lado a lado. |
+| Ícone | Opcional: seta, ângulo, ligação externa, descarregar, reproduzir, documento, calendário, e-mail, telefone ou informação — antes ou depois do texto. |
+| Abrir numa nova aba | Abre o destino do botão numa nova aba. É habitual para destinos externos. |
 
 ## Campos de uma publicação de notícias
 
@@ -42,7 +45,7 @@ entrada de canal conta com todos os diapositivos que contribui.
 | --- | --- |
 | Canal | Obrigatório. Determina quais as publicações disponíveis para seleção. |
 | Publicação | Obrigatório. As cinquenta publicações mais recentes do canal, com as mais recentes em primeiro lugar. |
-| Substituir título | Opcional. Deixe em branco para adotar o título da publicação. |
+| Substituir título | Opcional. Deixe em branco para utilizar o título da publicação. |
 | Mostrar teaser como subtítulo | Ativado por predefinição. O teaser é reduzido para 240 caracteres. |
 | Texto do botão | `Saiba mais` por predefinição. Deixe em branco para omitir o botão; o destino é sempre a notícia. |
 | Substituir imagem de fundo | Opcional. Recomendado se a imagem da publicação estiver demasiado recortada para o fundo. |
@@ -70,7 +73,7 @@ entrada de canal conta com todos os diapositivos que contribui.
   mas com um mínimo de 420 px.
 - **Segundos por diapositivo** só se aplica a partir do segundo diapositivo.
 - Quem tiver definido «Reduzir movimento» no sistema operativo não verá
-  a mudança por si só — independentemente desta configuração.
+  a mudança por si só — independentemente desta definição.
 - Na parte superior, o palco alinha-se sempre — com as migalhas de navegação ou, no caso de
   «À frente das migalhas de navegação», com o menu. Em contrapartida, compensa o espaçamento interno que a secção mantém
   acima do seu primeiro bloco. Isto só acontece se

@@ -13,14 +13,16 @@ un área oscura.
 Respuesta: Por lo general, el vídeo no se puede reproducir sin iniciar sesión, o bien el **Tipo** está
 configurado en **Imagen** porque la dirección no tiene extensión. Abre la dirección en
 una ventana privada del navegador: si allí no se reproduce, los
-lectores y lectoras tampoco lo verán. Un mensaje justo debajo del campo indica que la dirección
+lectores tampoco lo verán. Un mensaje justo debajo del campo indica que la dirección
 no se ha aceptado; debe comenzar por `https://`.
 
 **Pregunta:** He introducido un texto para el botón, pero
 no aparece.
 
 Respuesta: El botón necesita **ambas cosas**: texto y destino. Mientras
-uno de los campos esté vacío, no se mostrará.
+uno de los campos esté vacío, no se mostrará. En el caso de una dirección libre,
+solo se admiten `https://…`, `mailto:…`, `tel:…` y rutas como `/content/…`; el
+formulario avisa si no se acepta una dirección.
 
 **Pregunta:** La imagen no ocupa todo el ancho de la ventana.
 
@@ -30,7 +32,7 @@ Colóquelo en una línea propia en la parte superior de la página.
 
 **Pregunta:** El texto no aparece donde comienza el resto del contenido de la página.
 
-Respuesta: El escenario se adapta al ancho de contenido que indica la página.
+Respuesta: El escenario se ajusta al ancho de contenido que indica la página.
 Si difiere, notifique el caso indicando la dirección de la página.
 
 **Pregunta:** En lugar del editor, veo un campo de texto «Entradas» con
@@ -41,46 +43,47 @@ la configuración y vuelva a abrirla. El texto del campo es el
 borrador de las entradas; no lo edite manualmente, ya que un error tipográfico
 en él haría que desaparecieran todas las diapositivas.
 
-**Pregunta:** El escenario no cambia por sí solo.
+**Pregunta:** El escenario no cambia automáticamente.
 
 Respuesta: Hay tres posibles causas: solo hay una diapositiva; **Segundos por diapositiva**
 está en `0`; o en el sistema operativo está activada la opción «Reducir movimiento».
 En este último caso, es intencionado: se puede seguir pasando de una diapositiva a otra mediante las flechas
 y las líneas.
 
-**Pregunta:** No veo flechas en el teléfono.
+**Pregunta:** No veo flechas en el móvil.
 
 Respuesta: Así está previsto. En pantallas estrechas se desliza el dedo; las
-líneas situadas debajo del texto siguen indicando qué diapositiva está actualmente en primer plano.
+líneas debajo del texto siguen indicando qué diapositiva está en primer plano.
 
-**Pregunta:** Mi imagen está recortada por los bordes.
+**Pregunta:** Mi imagen aparece recortada por los bordes.
 
-Respuesta: El escenario recorta la imagen a 21:9 o 4:3, dependiendo del ancho de la ventana. Elige
-una imagen con margen alrededor del motivo o añade, en **Imagen para
-formato vertical**, un recorte propio recortado en vertical.
+Respuesta: El escenario recorta la imagen a 21:9 o 4:3, dependiendo del ancho de la ventana. Elija
+una imagen con margen alrededor del motivo o, en **Imagen para
+formato vertical**, seleccione un recorte propio recortado en vertical.
 
 **Pregunta:** ¿Puedo crear más de ocho diapositivas?
 
-Respuesta: No. A cinco segundos por diapositiva, una reproducción completa ya dura, con
-ocho diapositivas, cuarenta segundos; nadie se queda tanto tiempo en un escenario.
+Respuesta: No. A cinco segundos por diapositiva, una reproducción completa de
+ocho diapositivas ya dura cuarenta segundos; nadie se queda tanto tiempo en un escenario.
 El límite de ocho se aplica al conjunto de todas las diapositivas: una entrada de canal con cinco publicaciones
-solo permite tres diapositivas más junto a ella.
+solo permite añadir tres diapositivas más.
 
-**Pregunta:** ¿Tengo que actualizar el escenario cuando aparece una nueva entrada
+**Pregunta:** ¿Tengo que actualizar el escenario cuando aparece una nueva publicación
 en las noticias?
 
-Respuesta: En el caso de una entrada del **canal de noticias**, no; siempre muestra las
-entradas actuales del canal según los filtros configurados. En cambio, una entrada de **publicación de noticias**
+Respuesta: En el caso de una entrada de **canal de noticias**, no; siempre muestra las
+publicaciones actuales del canal según los filtros configurados. En cambio, una entrada de **publicación de noticias**
 se mantiene en la publicación que hayas seleccionado.
 
 **Pregunta:** Una diapositiva de las noticias ha desaparecido de repente.
 
-Respuesta: La publicación se ha eliminado, se ha movido o no es visible para el lector. Solo desaparece esa diapositiva; el resto permanece.
+Respuesta: La entrada se ha eliminado, se ha movido o no es visible para el lector.
+Solo desaparece esa diapositiva; el resto permanece.
 
-**Pregunta:** Mi entrada de canal muestra menos diapositivas de las configuradas.
+**Pregunta:** La entrada de mi canal muestra menos diapositivas de las configuradas.
 
-Respuesta: Normalmente, los filtros son demasiado restrictivos. La opción **«Solo entradas con imagen»** está
-activada por defecto, por lo que un canal sin imágenes no mostrará nada. Comprueba la
+Respuesta: Normalmente, los filtros son demasiado restrictivos. La opción **«Solo publicaciones con imagen»** está
+activada por defecto; por lo tanto, un canal sin imágenes no mostrará nada. Comprueba la
 vista previa en el editor: muestra exactamente lo que aparecerá en la pantalla.
 
 **Pregunta:** En la selección de canales no aparece ningún canal, sino un
@@ -95,7 +98,7 @@ recortada de forma extraña en el escenario?
 
 Respuesta: Las imágenes de las noticias están recortadas para el formato de feed, no para un
 escenario a altura de pantalla. En la entrada, en **Sobrescribir imagen del escenario**,
-añade una propia, en formato horizontal y con un ancho mínimo de 1920 píxeles.
+añade una propia, en horizontal y con un ancho mínimo de 1920 píxeles.
 
 **Pregunta:** ¿Qué ocurre con el escenario cuando se traduce automáticamente la
 página?
@@ -117,8 +120,8 @@ dejar la diapositiva en blanco.
 **Pregunta:** He seleccionado «Antes de la ruta de navegación», pero no cambia nada.
 
 Respuesta: La configuración solo se aplica si se cumplen tres condiciones: la página tiene
-una barra de navegación, el escenario se encuentra en la parte superior de la página y
-no hay ningún otro contenido por encima de él. Si no se cumple alguna de estas condiciones, el
+una barra de navegación, la barra está situada en la parte superior de la página y
+no hay ningún otro contenido por encima de ella. Si no se cumple alguna de estas condiciones, la
 escena debajo de la ruta de navegación; una ruta de navegación en el centro de la página sería
 peor que no haber realizado ningún cambio. En el editor, en este caso aparece una nota
 encima de la escena. En la página publicada no aparece; allí

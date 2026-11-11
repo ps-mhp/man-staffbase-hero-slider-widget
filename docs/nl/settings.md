@@ -4,7 +4,7 @@
 | --- | --- |
 | Items | De inhoud van het podium: eigen dia's, afzonderlijke nieuwsberichten en complete nieuwskanalen. Wordt beheerd via de editor, die automatisch verschijnt wanneer je de instellingen opent. Het tekstveld eronder is de ruwe versie en hoeft niet te worden aangepast. |
 | Hoogte | `Standaard (420–560 px)` is de standaardinstelling. Daarnaast `Laag (320–420 px)`, `Hoog (560–720 px)` en `Schermhoogte`. |
-| Over de volledige breedte weergeven | Ingeschakeld (standaard) loopt de afbeelding over de volledige breedte van het venster, terwijl de tekst binnen de marges van de pagina blijft. Uitgeschakeld blijft het podium binnen de inhoudskolom. |
+| Over de volledige breedte weergeven | Indien ingeschakeld (standaardinstelling) strekt de afbeelding zich uit over de volledige breedte van het venster, terwijl de tekst binnen de uitlijningslijn van de pagina blijft. Indien uitgeschakeld blijft het podium binnen de inhoudskolom. |
 | Seconden per dia | `5` is de standaardinstelling. Bij `0` wordt het podium gepauzeerd; dan kan alleen met pijltjes en streepjes worden gebladerd — en als de bedieningselementen zijn uitgeschakeld, alleen nog met vegen en de pijltjestoetsen. Maximaal 30. |
 | Positie ten opzichte van de broodkruimels | `Na de broodkruimels` is de standaardinstelling: het podium begint onder de broodkruimelregel. `Voor de broodkruimels` plaatst het podium gelijk met het menu en verschuift de broodkruimels eronder. Dit werkt alleen als het podium bovenaan de pagina staat en de pagina überhaupt broodkruimels heeft. |
 | Bedieningselementen weergeven | Ingeschakeld (standaardinstelling) verschijnen pijlen en streepjes. Uitgeschakeld verdwijnen beide; je bladert verder door te vegen en met de pijltjestoetsen, en de ingestelde tijd per dia blijft ongewijzigd. |
@@ -29,12 +29,15 @@ kanaalvermelding telt daarbij mee met alle dia’s die het bijdraagt.
 | Afbeelding of video | Verplicht. Uit de mediabibliotheek of via een adres (`https://…`). Liggend, minimaal 1920 px breed. Zonder afbeelding of video wordt de dia niet weergegeven. |
 | Adres | In plaats van de mediabibliotheek: het `https`-adres van een afbeelding of video. Andere adressen worden niet overgenomen. |
 | Type | Afbeelding of video. Wordt automatisch ingesteld op basis van de extensie van het adres (`.mp4`, `.webm`, `.mov` zijn video’s); alleen handmatig selecteren bij adressen zonder extensie. |
-| Beschrijving van afbeelding of video | Wat er te zien is. Laat dit veld alleen leeg bij afbeeldingen en video’s die puur decoratief zijn — schermlezers lezen dit veld voor. |
+| Beschrijving van de afbeelding of video | Wat er te zien is. Laat dit veld alleen leeg bij afbeeldingen en video’s die puur decoratief zijn — schermlezers lezen dit veld voor. |
 | Afbeelding of video voor staand formaat | Optioneel. Wordt weergegeven op smalle, staande schermen. Als dit ontbreekt, wordt overal de liggende versie gebruikt. |
 | Kop | Houd het kort: tot ongeveer 24 tekens blijft het op één regel. |
 | Ondertitel | Optioneel, één tot twee regels. |
-| Knop | Optioneel. Verschijnt alleen als de tekst en de bestemming zijn ingevuld. Maximaal één per dia. |
-| In nieuw tabblad openen | Opent de bestemming van de knop in een nieuw tabblad. Gebruikelijke optie voor externe bestemmingen. |
+| Knoppen | Optioneel, maximaal drie per dia, sorteerbaar met ↑/↓. Een knop verschijnt alleen als de tekst en de bestemming zijn ingevuld. Alleen bij handmatig bewerkte dia’s; nieuwsdia’s halen hun knop uit het bericht. |
+| Bestemming | **Vrij adres** (`https://…`, `mailto:…`, `tel:…` of een pad zoals `/content/…`), **pagina uit Staffbase** of **nieuwsbericht uit Staffbase** (eerst kanaal, dan bericht). Andere adressen, zoals `javascript:`, worden niet overgenomen. |
+| Stijl | **Rood gevuld** (hoofdactie, standaard), **Wit gevuld**, **Witte omtrek** of **Tekstlink**. Nieuwe knoppen vanaf de tweede beginnen als omtrek, zodat er geen twee rode vlakken naast elkaar staan. |
+| Symbool | Optioneel: pijl, hoek, externe link, downloaden, afspelen, document, kalender, e-mail, telefoon of informatie — voor of na de tekst. |
+| Openen in nieuw tabblad | Opent de bestemming van de knop in een nieuw tabblad. Gebruikelijke instelling voor externe bestemmingen. |
 
 ## Velden van een nieuwsbericht
 

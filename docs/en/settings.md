@@ -5,7 +5,7 @@
 | Entries | The content of the stage: custom slides, individual news posts, and entire news channels. Managed via the editor, which appears automatically when you open the settings. The text field below is the draft and does not need to be edited. |
 | Height | `Standard (420–560 px)` is the default. Other options include `Low (320–420 px)`, `High (560–720 px)`, and `Screen Height`. |
 | Show full width | When enabled (default), the image spans the full width of the window, while the text remains aligned with the page’s margin. When disabled, the stage remains within the content column. |
-| Seconds per slide | `5` is the default. `0` pauses the stage; in this case, you can only navigate using arrows and lines—and if the controls are disabled, only by swiping and using the arrow keys. Maximum of 30. |
+| Seconds per slide | `5` is the default. `0` pauses the stage; then you can only navigate using arrows and lines—and if the controls are disabled, only by swiping and using the arrow keys. Maximum of 30. |
 | Position relative to the breadcrumbs | `After the breadcrumbs` is the default: the stage begins below the breadcrumb line. `Before the breadcrumbs` places it flush with the menu and moves the breadcrumbs below it. This only applies if the stage is at the top of the page and the page has breadcrumbs at all. |
 | Show Controls | When enabled (default), arrows and lines appear. When disabled, both disappear; you continue scrolling by swiping or using the arrow keys, and the set time per slide remains unchanged. |
 | Spacing Below | `Standard` is the default: the spacing below the stage is the same as the spacing the page uses between its blocks. `No Spacing` places the following block directly next to it—in the case of “Before the Breadcrumbs,” directly below the breadcrumbs. |
@@ -14,7 +14,7 @@
 
 | Type | Description |
 | --- | --- |
-| Slide | A manually edited slide: image, heading, subheading, button. |
+| Slide | A manually created slide: image, heading, subheading, button. |
 | News Post | A specific post as a slide. Content and destination are taken from the post. |
 | News Channel | An entire channel, one slide per post. New posts appear automatically. |
 
@@ -31,9 +31,12 @@ channel entry counts as one, including all the slides it contributes.
 | Type | Image or video. Determined automatically by the file extension (`.mp4`, `.webm`, `.mov` are videos); select manually only for URLs without an extension. |
 | Image or Video Description | What is shown. Leave blank only for purely decorative images and videos—screen readers will read this field aloud. |
 | Image or Video for Portrait Orientation | Optional. Displayed on narrow, portrait-oriented screens. If missing, the landscape crop is used everywhere. |
-| Headline | Keep it short: up to about 24 characters to keep it on one line. |
+| Heading | Keep it short: up to about 24 characters to keep it on one line. |
 | Subheading | Optional, one to two lines. |
-| Button | Optional. Appears only if the label and destination are filled in. At most one per slide. |
+| Buttons | Optional, up to three per slide, sortable with ↑/↓. A button appears only if the label and destination are filled in. Applies only to manually maintained slides; news slides get their button from the post. |
+| Destination | **Custom URL** (`https://…`, `mailto:…`, `tel:…`, or a path like `/content/…`), **Page from Staffbase**, or **News post from Staffbase** (first channel, then post). Other addresses, such as `javascript:`, are not accepted. |
+| Style | **Solid red** (main action, default), **Solid white**, **White outline**, or **Text link**. New buttons starting with the second one appear as outlines to avoid having two red areas next to each other. |
+| Icon | Optional: Arrow, Angle, External Link, Download, Play, Document, Calendar, Email, Phone, or Information — before or after the text. |
 | Open in a new tab | Opens the button’s destination in a new tab. Common for external destinations. |
 
 ## Fields of a News Post

@@ -30,13 +30,16 @@ entrée de chaîne compte alors pour toutes les diapositives qu’elle apporte.
 | Adresse | À la place de la médiathèque : l’adresse `https` d’une image ou d’une vidéo. Les autres adresses ne sont pas prises en compte. |
 | Type | Image ou vidéo. Se définit automatiquement en fonction de l’extension de l’adresse (`.mp4`, `.webm`, `.mov` sont des vidéos) ; à sélectionner manuellement uniquement pour les adresses sans extension. |
 | Description de l’image ou de la vidéo | Ce qui est visible. Ne laisser ce champ vide que pour les images et vidéos purement décoratives — les lecteurs d'écran lisent ce champ à voix haute. |
-| Image ou vidéo au format portrait | Facultatif. S'affiche sur les écrans étroits et verticaux. En l'absence de cette option, le recadrage en format paysage est utilisé partout. |
-| Titre | À rester concis : jusqu’à environ 24 caractères pour qu’il tienne sur une seule ligne. |
+| Image ou vidéo au format portrait | Facultatif. S'affiche sur les écrans étroits et verticaux. En l'absence de cette information, le recadrage au format paysage est utilisé partout. |
+| Titre | Restez concis : jusqu’à environ 24 caractères, il tient sur une seule ligne. |
 | Sous-titre | Facultatif, une à deux lignes. |
-| Bouton | Facultatif. N’apparaît que si le libellé et la destination sont renseignés. Un seul par diapositive au maximum. |
+| Boutons | Facultatif, jusqu’à trois par diapositive, triables avec ↑/↓. Un bouton n’apparaît que si le libellé et la destination sont renseignés. Uniquement pour les diapositives gérées manuellement ; les diapositives d’actualités récupèrent leur bouton depuis l’article. |
+| Destination | **Adresse libre** (`https://…`, `mailto:…`, `tel:…` ou un chemin tel que `/content/…`), **page de Staffbase** ou **article d’actualité de Staffbase** (d’abord la chaîne, puis l’article). Les autres adresses, telles que `javascript:`, ne sont pas prises en compte. |
+| Style | **Rempli en rouge** (action principale, par défaut), **Rempli en blanc**, **Contour blanc** ou **Lien texte**. À partir du deuxième, les nouveaux boutons s’affichent avec un contour afin d’éviter que deux zones rouges ne se trouvent côte à côte. |
+| Icône | Facultatif : flèche, angle, lien externe, téléchargement, lecture, document, calendrier, e-mail, téléphone ou information — avant ou après le texte. |
 | Ouvrir dans un nouvel onglet | Ouvre la destination du bouton dans un nouvel onglet. Couramment utilisé pour les destinations externes. |
 
-## Champs d'un article d'actualité
+## Champs d’un article d’actualité
 
 | Champ | Description |
 | --- | --- |
@@ -46,7 +49,7 @@ entrée de chaîne compte alors pour toutes les diapositives qu’elle apporte.
 | Afficher le teaser comme sous-titre | Activé par défaut. Le teaser est raccourci à 240 caractères. |
 | Libellé du bouton | « En savoir plus » par défaut. Laisser vide pour ne pas afficher le bouton ; la destination est toujours l’article. |
 | Remplacer l’image de fond | Facultatif. Utile si l’image de l’article est trop recadrée pour servir d’image de fond. |
-| Image pour le format portrait | Facultatif. Affichée sur les écrans étroits en mode portrait. |
+| Image pour format portrait | Facultatif. Affichée sur les écrans étroits en mode portrait. |
 
 ## Champs d’un canal d’actualités
 
@@ -54,8 +57,8 @@ entrée de chaîne compte alors pour toutes les diapositives qu’elle apporte.
 | --- | --- |
 | Chaîne | Obligatoire. Toutes les diapositives de cette entrée proviennent de cette chaîne. |
 | Nombre de diapositives | `3` par défaut, huit au maximum. |
-| Ordre | « Les plus récents en premier » (par défaut) ou « Les plus anciens en premier ». |
-| Uniquement les articles mis en avant | Désactivé par défaut. Limité aux articles épinglés dans les actualités. |
+| Ordre | `Les plus récents en premier` (par défaut) ou `Les plus anciens en premier`. |
+| Uniquement les publications mises en avant | Désactivé par défaut. Limité aux publications épinglées dans l’actualité. |
 | Uniquement les publications avec image | Activé par défaut. Sans image, la diapositive ne serait qu’une surface sombre avec du texte. |
 | Mots-clés | Facultatif, plusieurs séparés par des virgules. Une publication suffit si elle en comporte un. |
 | Afficher le teaser en sous-titre | Activé par défaut. |
@@ -77,8 +80,8 @@ entrée de chaîne compte alors pour toutes les diapositives qu’elle apporte.
   n’y a pas d’autre contenu au-dessus de la scène.
 - Si la scène est le dernier bloc de sa section, celle-ci se termine
   avec elle — quelle que soit sa hauteur. Avec un niveau fixe, la section s’adapte à la
-  scène ; avec `Hauteur de section`, c’est la scène qui s’adapte à la section.
-- **Espacement vers le bas** régule l’espacement par rapport au bloc suivant dans la même
+  scène ; avec `Hauteur de la section`, c’est la scène qui s’adapte à la section.
+- **Espacement vers le bas** règle la distance par rapport au bloc suivant dans la même
   section. L’espacement intérieur d’une section suivante appartient à celle-ci et
   est conservé.
 - Avec `Hauteur de la section`, la scène n’occupe la hauteur de la section que si

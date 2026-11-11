@@ -18,26 +18,30 @@
 6. Sous **Description de l’image**, indiquez ce que l’on voit. Ne laissez ce
    champ vide que si l’image est purement décorative.
 7. Saisissez le **titre**. Soyez concis : jusqu’à environ
-   24 caractères, elle tient sur une seule ligne.
-8. Facultatif : **Sous-titre** et **Bouton**. Le bouton n’apparaît
-   que si le libellé **et** la destination sont renseignés. Sur le téléphone,
-   la scène n’affiche ni l’un ni l’autre : elle n’affiche que le titre, et la
-   diapositive entière mène à la destination du bouton. Le contenu de la ligne de sous-titre
-   ne doit donc pas comporter d’informations indispensables à la lecture.
+   24 caractères, le titre tiendra sur une seule ligne.
+8. Facultatif : **sous-titre** et jusqu’à trois **boutons**
+   (**Ajouter un bouton**). Pour chaque bouton, sélectionnez la **destination** —
+   une adresse libre, une page ou un article d’actualité de Staffbase —, le **style** et
+   si nécessaire, une **icône**. Un bouton n’apparaît que si
+   le libellé **et** la destination sont renseignés. Sur le téléphone, la page d’accueil
+   n'affiche pas la sous-ligne ni le premier bouton : elle porte alors le titre,
+   et l'ensemble de la diapositive mène à la destination du premier bouton ; les autres
+   boutons restent visibles. Le contenu de la sous-ligne
+   ne doit donc pas comporter d'informations qu'il est impératif de lire.
 9. Cliquez sur **Appliquer**.
 10. Réglez **Secondes par diapositive** sur `0` — dans le cas d’une seule diapositive,
     il n’y a rien à modifier.
-11. Enregistrez la page et vérifiez-la dans l’aperçu, une fois en mode plein écran
+11. Enregistrez la page et prévisualisez-la, une fois en mode large
     et une fois dans une fenêtre étroite.
 
 ## Créer plusieurs diapositives
 
 1. Ouvrez les paramètres et, par là même, l’éditeur.
 2. Pour chaque diapositive supplémentaire, sélectionnez **Diapositive** sous **Nouveau +** et
-   remplissez-la comme indiqué ci-dessus. Il n’est pas possible d’avoir plus de huit diapositives — personne ne fait défiler
-   aussi loin.
-3. Triez-les à l’aide des flèches **↑** et **↓** en haut à droite. La première diapositive
-   est celle qui s’affiche au chargement de la page.
+   remplissez-la comme indiqué ci-dessus. Il n'est pas possible d'avoir plus de huit diapositives — personne ne fait défiler
+   la page aussi loin.
+3. Triez-les à l'aide des flèches **↑** et **↓** en haut à droite. La première diapositive
+   est celle qui s'affiche au chargement de la page.
 4. Vérifiez que le paramètre **Secondes par diapositive** est réglé sur `5` (valeur par défaut).
 5. **Appliquer**, enregistrer, vérifier dans l’aperçu.
 
@@ -101,22 +105,22 @@ est supprimé.
 
 La vidéo est lue en boucle et sans son, et uniquement tant que sa diapositive est
 affichée en premier. Si l’utilisateur a réduit l’animation dans le système, il verra sa première image
-figer. Veillez à ce que le fichier soit léger — quelques mégaoctets pour quelques secondes —,
+fixe. Veillez à ce que le fichier soit léger — quelques mégaoctets pour quelques secondes —,
 car il sera chargé à chaque consultation de la page.
 
 ## Ajouter une image pour le format portrait
 
 1. Enregistrez dans la
-   médiathèque un recadrage au format portrait du même motif.
+   médiathèque un extrait du même motif recadré en format portrait.
 2. Sélectionnez la diapositive concernée dans l’éditeur.
 3. Sous **Image ou vidéo pour le format portrait**, cliquez sur **Sélectionner une image ou une vidéo**
    ou saisissez une adresse en dessous.
-4. Cliquez sur **Appliquer**, enregistrez, puis vérifiez le résultat dans une fenêtre étroite ou sur le
+4. **Appliquer**, enregistrez, puis vérifiez le résultat dans une fenêtre étroite ou sur le
    téléphone.
 
 ## Modifier ultérieurement
 
-1. Ouvrez les paramètres du widget ; l’éditeur s’ouvre avec les
+1. Ouvrez les paramètres du widget ; l'éditeur s'ouvre avec les
    entrées existantes.
 2. Sélectionnez à gauche l’entrée à modifier. L’icône au-dessus du titre indique
    de quel type il s’agit : **Diapositive**, **Publication** ou **Chaîne**.

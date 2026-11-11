@@ -12,8 +12,8 @@ strona główna może również wyświetlać **wpisy z aktualności**:
 
 - **Wpis z aktualności** — konkretny wpis jako slajd. Zdjęcie, nagłówek
   i zapowiedź pochodzą z wpisu, a przycisk prowadzi do niego.
-- **Kanał wiadomości** — cały kanał, jedna slajd na każdy wpis. Liczbę,
-  kolejność i filtry można dostosować. Gdy w
+- **Kanał wiadomości** — cały kanał, jeden slajd na każdy wpis. Liczbę slajdów,
+  kolejność oraz filtry można dostosować. Gdy w
   kanale pojawi się nowy wpis, automatycznie trafia on na scenę.
 
 Te trzy rodzaje znajdują się na tej samej liście i można je dowolnie łączyć oraz
@@ -40,19 +40,20 @@ artykuły z kanału.
   niej. Na telefonie przesuwa się palcem; strzałki są tam ukryte.
 - **Na telefonie** (przy szerokości poniżej 768 pikseli) na
   obrazku widoczny jest tylko nagłówek o długości maksymalnie czterech wierszy; wszystko, co wykracza poza ten limit, kończy się znakiem „…”.
-  Podtytuł i przycisk są tam ukryte — zamiast tego dotknięcie
-  w dowolnym miejscu slajdu prowadzi do celu przycisku. Dla czytników ekranu
-  ich etykietą pozostaje nazwa tego linku. Jeśli slajd nie ma celu, nie można
-  go dotknąć.
+  Podtytuł i pierwszy przycisk są tam ukryte — zamiast tego
+  dotknięcie w dowolnym miejscu slajdu prowadzi do celu pierwszego przycisku. Dla
+  czytników ekranu jego etykieta pozostaje nazwą tego linku. Pozostałe
+  przyciski pozostają widoczne jako przyciski. Jeśli slajd nie ma celu, nie
+  można go również dotknąć.
 - Użytkownicy, którzy w systemie operacyjnym włączyli opcję „Ogranicz ruchy”, nie widzą
   samoczynnej zmiany slajdów ani przejścia — widzą tylko elementy sterujące.
-- Slajdy z sekcji aktualności wyglądają jak każdy inny slajd. Z zewnątrz nie da się rozpoznać, że treść pochodzi
-  z artykułu.
+- Slajdy z sekcji „Aktualności” wyglądają jak każdy inny slajd. To, że treść pochodzi
+  z artykułu, nie jest widoczne z zewnątrz.
 
 ## Co widać w edytorze CMS
 
-Edytor wyświetla obszar roboczy w obrębie kolumny treści, a więc **węższy niż na
+Edytor wyświetla obszar roboczy w kolumnie treści, czyli **węższy niż na
 opublikowanej stronie**. Jak daleko faktycznie sięga obraz i gdzie znajduje się tekst,
 można ocenić jedynie w podglądzie lub na opublikowanej stronie.
-Zawsze należy tam sprawdzić przynajmniej raz przy wąskiej Zawsze sprawdź to tam przynajmniej raz przy wąskiej
+Zawsze należy tam sprawdzić co najmniej raz przy wąskiej Zawsze sprawdź to tam przynajmniej raz przy wąskiej
 szerokości okna — tam ma zastosowanie kadrowanie w orientacji pionowej.

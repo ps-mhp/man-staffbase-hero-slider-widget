@@ -19,16 +19,20 @@
    campo em branco apenas se a imagem for meramente decorativa.
 7. Introduza o **Título**. Seja conciso: até cerca de
    24 caracteres, o título permanece numa única linha.
-8. Opcional: **Subtítulo** e **Botão**. O botão só aparece
-   se o texto **e** o destino estiverem preenchidos. No telemóvel,
-   a apresentação não mostra nenhum dos dois: aí, apresenta apenas o título, e todo o
-   slide leva ao destino do botão. O que estiver na sublinha,
-   por isso, não deve ser nada que tenha de ser lido obrigatoriamente.
+8. Opcional: **subtítulo** e até três **botões**
+   (**Adicionar botão**). Para cada botão, selecione o **destino** —
+   endereço livre, página ou notícia da Staffbase —, o **estilo** e
+  , se necessário, um **ícone**. Um botão só aparece se
+   o texto **e** o destino estiverem preenchidos. No telemóvel, a página
+   não exibe a linha inferior nem o primeiro botão: nesse caso, apresenta apenas o título,
+   e todo o slide direciona para o destino do primeiro botão; os restantes
+   botões permanecem visíveis. O que estiver na linha inferior,
+   por isso, não deve ser algo que tenha de ser lido obrigatoriamente.
 9. Clique em **Aplicar**.
 10. Defina **Segundos por diapositivo** para `0` — no caso de um único diapositivo,
     não há nada para alterar.
-11. Guarde a página e verifique-a na pré-visualização, uma vez em ecrã
-    largo e outra vez numa janela estreita.
+11. Guarde a página e verifique-a na pré-visualização, uma vez em ecrã panorâmico
+    e outra numa janela estreita.
 
 ## Criar vários slides
 
@@ -72,8 +76,8 @@
      fixado nas notícias.
    - **Apenas publicações com imagem** — ativado por predefinição. Sem imagem,
      o slide ficaria apenas com uma área escura com texto.
-   - **Palavras-chave** — separe várias com vírgulas; basta uma publicação se esta
-     contiver uma delas.
+   - **Palavras-chave** — separe várias com vírgulas; basta uma publicação, desde que
+     contenha uma delas.
 7. Verifique a **pré-visualização**: mostra exatamente as publicações que os filtros
    deixam passar. Se ficar vazia, os filtros estão demasiado restritivos.
 8. **Aplicar**, guardar, verificar na pré-visualização.

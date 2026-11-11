@@ -17,24 +17,28 @@
    diapositiva non verrà visualizzata.
 6. Inserite sotto **Descrizione immagine** ciò che si vede. Lasciate il
    campo vuoto solo se l’immagine è puramente decorativa.
-7. Inserite il **Titolo**. Siate concisi: fino a circa
-   24 caratteri, il titolo rimane su una sola riga.
-8. Opzionale: **Sottotitolo** e **Pulsante**. Il pulsante appare
-   solo se sono stati compilati sia il testo **che** la destinazione. Sul telefono
-   la piattaforma non mostra né l’uno né l’altro: lì viene visualizzato solo il titolo e l’
-  intera diapositiva rimanda alla destinazione del pulsante. Ciò che è scritto nella didascalia
-   non dovrebbe quindi essere qualcosa che debba essere necessariamente letto.
+7. Inserite il **Titolo**. Scegliete un titolo breve: fino a circa
+   24 caratteri rimarrà su una sola riga.
+8. Opzionale: **sottotitolo** e fino a tre **pulsanti**
+   (**Aggiungi pulsante**). Per ogni pulsante selezionate la **destinazione** —
+   indirizzo libero, pagina o articolo di Staffbase —, lo **stile** e
+  , se necessario, un **simbolo**. Un pulsante appare solo se
+   sono stati compilati sia l’etichetta **che** la destinazione. Sul telefono, la schermata
+   non visualizza la riga inferiore né il primo pulsante: lì compare solo il titolo,
+   e l’intera diapositiva rimanda alla destinazione del primo pulsante; gli altri
+   pulsanti rimangono visibili come icone. Il testo nella riga inferiore,
+   quindi, non dovrebbe contenere informazioni che devono essere necessariamente lette.
 9. Clicchi su **Applica**.
-10. Impostare **Secondi per diapositiva** su `0` — nel caso di una singola diapositiva non c’è
+10. Imposti **Secondi per diapositiva** su `0` — nel caso di una singola diapositiva non c’è
     nulla da modificare.
-11. Salvare la pagina e controllarla nell’anteprima, una volta a schermo intero
+11. Salvi la pagina e la controlli nell’anteprima, una volta in formato largo
     e una volta in una finestra stretta.
 
 ## Creare più diapositive
 
-1. Apri le impostazioni e quindi l’editor.
-2. Per ogni diapositiva aggiuntiva, sotto **Nuovo +** seleziona la voce **Diapositiva** e
-   compila i campi come indicato sopra. Non è possibile inserire più di otto diapositive — nessuno scorre
+1. Aprite le impostazioni e quindi l’editor.
+2. Per ogni diapositiva aggiuntiva, sotto **Nuovo +** selezionate la voce **Diapositiva** e
+   compilatela come indicato sopra. Non è possibile inserire più di otto diapositive — nessuno scorre
    così a lungo.
 3. Ordinate le diapositive utilizzando le frecce **↑** e **↓** in alto a destra. La prima diapositiva
    è quella che si vede al caricamento della pagina.
@@ -49,7 +53,7 @@
 3. Sotto **Canale**, selezionate il canale di notizie. Solo dopo sarà possibile
    selezionare l’articolo.
 4. Sotto **Articolo**, selezionate l’articolo desiderato. È possibile scegliere tra
-   i cinquanta articoli più recenti del canale, con i più recenti in primo piano.
+   i cinquanta articoli più recenti del canale, con i più recenti per primi.
 5. Controllate l’**anteprima** sottostante: mostra l’immagine, il titolo e il
    teaser esattamente come appariranno successivamente nella diapositiva.
 6. Opzionale: **sovrascrivere il titolo**, **mostrare il teaser come sottotitolo**
@@ -72,8 +76,8 @@
      appuntato nelle notizie.
    - **Solo post con immagine** — attivato per impostazione predefinita. Senza immagine,
      la diapositiva risulterebbe solo una superficie scura con del testo.
-   - **Parole chiave** — separarle con una virgola; è sufficiente un post se contiene
-     una di esse.
+   - **Parole chiave** — separarle con una virgola; è sufficiente un solo post se
+     contiene una di queste parole.
 7. Controllate l’**anteprima**: mostra esattamente i post che i filtri
    lasciano passare. Se rimane vuota, i filtri sono troppo restrittivi.
 8. **Applicate**, salvate, controllate nell’anteprima.
@@ -121,7 +125,7 @@ poiché verrà caricato ad ogni visualizzazione della pagina.
 2. Selezionate a sinistra la voce da modificare. L’icona sopra il titolo indica
    di quale tipo si tratta: **Diapositiva**, **Post** o **Canale**.
 3. Modificate i campi a destra. Con **Duplica** si crea una copia della
-   voce selezionata direttamente accanto ad essa, mentre con **Elimina** la voce scompare. Le frecce,
+   voce selezionata direttamente accanto ad essa, mentre con **Elimina** la si rimuove. Le frecce,
    Duplica ed Elimina valgono allo stesso modo per tutti e tre i tipi.
 4. **Applica** salva le modifiche nel widget — solo dopo
    viene salvata la pagina.
@@ -140,7 +144,7 @@ poiché verrà caricato ad ogni visualizzazione della pagina.
    indirizzo della pagina — la piattaforma si basa sulla larghezza che la pagina stessa
    riporta.
 4. **Al posto dell’editor vedete un campo di testo «Voci» con JSON.** L’
-  editor non è riuscito a caricarsi. Ricaricate la finestra di dialogo. Non modificate
+  editor non è riuscito a collegarsi. Ricaricate la finestra di dialogo. Non modificate
   il testo manualmente.
 5. **La selezione dei canali rimane vuota e compare un campo di testo per un
    identificativo.** L’elenco dei canali di notizie non era raggiungibile. Ricaricate la

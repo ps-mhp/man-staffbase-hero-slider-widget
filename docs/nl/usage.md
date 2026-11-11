@@ -19,10 +19,14 @@
    veld alleen leeg als de afbeelding puur decoratief is.
 7. Voer de **Kop** in. Houd deze kort: tot ongeveer
    24 tekens blijft deze op één regel.
-8. Optioneel: **ondertitel** en **knop**. De knop verschijnt
-   alleen als de tekst **en** de bestemming zijn ingevuld. Op de telefoon geeft
-   het podium geen van beide weer: daar wordt alleen de titel weergegeven en de
-   hele dia leidt naar de bestemming van de knop. Wat er in de ondertitel staat,
+8. Optioneel: **ondertitel** en maximaal drie **knoppen**
+   (**Knop toevoegen**). Kies per knop de **bestemming** —
+   vrij adres, pagina of nieuwsbericht uit Staffbase —, de **stijl** en
+   indien nodig een **pictogram**. Een knop verschijnt alleen als
+   zowel de tekst **als** de bestemming zijn ingevuld. Op de telefoon toont het scherm
+   de ondertitel en de eerste knop niet weer: daar staat de kop,
+   en de hele dia leidt naar de bestemming van de eerste knop; verdere
+   knoppen blijven zichtbaar als knoppen. Wat er in de ondertitel staat,
    mag daarom niets zijn dat per se gelezen moet worden.
 9. Klik op **Toepassen**.
 10. Stel **Seconden per dia** in op `0` — bij een enkele dia hoeft
@@ -63,7 +67,7 @@
 
 1. Open de instellingen en daarmee de editor.
 2. Klik boven de lijst op **Nieuw +** en selecteer **Nieuws-kanaal**.
-   Aan de linkerkant verschijnt een item met het label **Kanaal**.
+   Aan de linkerkant verschijnt een vermelding met het label **Kanaal**.
 3. Selecteer onder **Kanaal** het nieuws-kanaal.
 4. Stel het **Aantal dia’s** in (standaard `3`, maximaal acht).
 5. Kies de **volgorde**: `Nieuwste eerst` of `Oudste eerst`.
@@ -72,10 +76,10 @@
      is vastgezet.
    - **Alleen berichten met afbeelding** — standaard ingeschakeld. Zonder afbeelding zou
      de dia slechts een donker vlak met tekst zijn.
-   - **Trefwoorden** — scheid meerdere trefwoorden met een komma; één bericht volstaat als het
+   - **Trefwoorden** — scheid meerdere trefwoorden met een komma; één bericht is voldoende als het
      een van deze trefwoorden bevat.
-7. Controleer het **voorbeeld**: dit toont precies de berichten die de filters
-   overhouden. Als het leeg blijft, zijn de filters te streng ingesteld.
+7. Controleer het **voorbeeld**: dit toont precies de berichten die door de filters
+   overblijven. Als het leeg blijft, zijn de filters te streng ingesteld.
 8. **Toepassen**, opslaan, controleren in het voorbeeld.
 
 Het item telt in de lijst als **één**, maar omvat meerdere dia’s.

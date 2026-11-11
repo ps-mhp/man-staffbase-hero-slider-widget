@@ -20,13 +20,15 @@ niet is overgenomen — het moet beginnen met `https://`.
 deze verschijnt niet.
 
 Antwoord: De knop heeft **beide** nodig — tekst en bestemming. Zolang
-een van de velden leeg is, wordt deze niet weergegeven.
+een van de velden leeg is, wordt deze niet weergegeven. Bij een vrij adres
+tellen alleen `https://…`, `mailto:…`, `tel:…` en paden zoals `/content/…`; het
+formulier geeft een waarschuwing als een adres niet wordt geaccepteerd.
 
 **Vraag:** De afbeelding beslaat niet de volledige breedte van het venster.
 
-Antwoord: Twee mogelijke oorzaken. Ofwel is **Over de volledige breedte weergeven**
+Antwoord: Er zijn twee mogelijke oorzaken. Ofwel is **Over de volledige breedte weergeven**
 uitgeschakeld, ofwel staat de widget in een kolom naast andere inhoud.
-Plaats hem in een aparte regel bovenaan de pagina.
+Plaats het in een aparte regel bovenaan de pagina.
 
 **Vraag:** De tekst staat niet op de plek waar de rest van de pagina-inhoud begint.
 
@@ -38,7 +40,7 @@ erin.
 
 Antwoord: De editor kon niet in het dialoogvenster worden geïntegreerd. Sluit
 de instellingen en open ze opnieuw. De tekst in het veld is de
-ruwe versie van de vermeldingen; bewerk deze niet handmatig — één typefout
+ruwe versie van de items; bewerk deze niet handmatig — één typefout
 daarin zorgt ervoor dat alle dia’s verdwijnen.
 
 **Vraag:** Het podium wisselt niet vanzelf.
@@ -48,14 +50,14 @@ staat op `0`; of in het besturingssysteem is „Beweging verminderen“ ingescha
 In het laatste geval is dit de bedoeling — je kunt nog steeds bladeren met pijltjes
 en streepjes.
 
-**Vraag:** Ik zie geen pijltjes op de telefoon.
+**Vraag:** Op de telefoon zie ik geen pijltjes.
 
-Antwoord: Dat is zo bedoeld. Op smalle schermen wordt geveegd; de
-streepjes onder de tekst geven nog steeds aan welke dia momenteel op de voorgrond staat.
+Antwoord: Dat is zo bedoeld. Op smalle schermen veeg je; de
+streepjes onder de tekst geven nog steeds aan welke dia op dat moment op de voorgrond staat.
 
 **Vraag:** Mijn afbeelding is aan de rand afgesneden.
 
-Antwoord: Het podium snijdt, afhankelijk van de vensterbreedte, bij tot 21:9 of 4:3. Kies
+Antwoord: Het podium snijdt de afbeelding bij tot 21:9 of 4:3, afhankelijk van de vensterbreedte. Kies
 een afbeelding met wat ruimte rondom het motief, of voeg onder **Afbeelding voor
 staand formaat** een eigen, staand bijgesneden uitsnede toe.
 
@@ -75,12 +77,12 @@ vermelding blijft daarentegen bij het bericht dat u hebt gekozen.
 
 **Vraag:** Een dia uit het nieuws is plotseling verdwenen.
 
-Antwoord: Het bericht is verwijderd, verplaatst of is voor de lezer
-niet zichtbaar. Alleen deze ene dia is verdwenen; de overige blijven staan.
+Antwoord: Het bericht is verwijderd, verplaatst of is niet zichtbaar voor de lezer.
+Alleen deze ene dia verdwijnt; de overige blijven staan.
 
 **Vraag:** Mijn kanaalvermelding toont minder dia’s dan is ingesteld.
 
-Antwoord: Meestal zijn de filters te streng. **Alleen berichten met afbeelding** is
+Antwoord: Meestal zijn de filters te streng ingesteld. **Alleen berichten met afbeelding** is
 de standaardinstelling — een kanaal zonder afbeeldingen levert dus niets op. Controleer het
 voorbeeld in de editor: dit toont precies wat er op het scherm zal verschijnen.
 
@@ -122,13 +124,13 @@ Antwoord: De instelling werkt alleen als aan drie voorwaarden is voldaan: de pag
 er staat geen andere inhoud boven. Als aan één van deze voorwaarden niet is voldaan, blijft de
 podium onder de broodkruimels — een broodkruimelbalk midden op de pagina zou
 erger zijn dan helemaal geen verandering. In de editor staat in dit geval een opmerking
-boven het podium. Op de gepubliceerde pagina verschijnt deze niet; daar kan
-de instelling niet worden gewijzigd.
+boven het podium. Op de gepubliceerde pagina verschijnt deze niet; daar
+kan de instelling niet worden gewijzigd.
 
 **Vraag:** Vroeger stond er een witte strook boven het podium. Waar is die gebleven?
 
 Antwoord: Het gedeelte waarin het podium staat, houdt boven het eerste blok
-een binnenafstand aan. Boven tekst is dat correct, maar boven een podium ontstaat
+een interne afstand aan. Boven tekst is dat correct, maar boven een podium ontstaat
 daardoor een witte strook tussen het menu of de broodkruimels en de afbeelding. Het podium
 compenseert deze afstand zelf zodra het helemaal bovenaan staat. Als er boven het podium
 een ander blok staat, blijft de afstand zoals de pagina die instelt.
@@ -138,8 +140,8 @@ een ander blok staat, blijft de afstand zoals de pagina die instelt.
 Antwoord: „Geen afstand“ verwijdert de afstand tot het volgende blok in dezelfde
 paragraaf. Is het podium het laatste blok van zijn paragraaf, dan eindigt de
 paragraaf sowieso met het podium. De ruimte die dan nog overblijft, is de interne afstand
-van de volgende paragraaf — die hoort bij die paragraaf en kan worden aangepast in de
-paragraafinstellingen. Als de volgende inhoud in dezelfde paragraaf staat
+van de volgende sectie — die hoort bij die sectie en kan worden aangepast in de
+sectie-instellingen. Als de volgende inhoud in dezelfde sectie staat
 als het podium, sluit deze bij „Geen afstand“ direct aan.
 
 **Vraag:** Zonder bedieningselementen — hoe blader je dan?

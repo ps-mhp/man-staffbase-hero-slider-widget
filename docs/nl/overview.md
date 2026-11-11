@@ -7,8 +7,8 @@ een knop. Het voorbeeld hiervoor is het podium op man.eu.
 Wie meerdere dia’s aanmaakt, krijgt een wisselaar: de dia’s
 vloeien in elkaar over, bladeren doe je met pijltjes en de streepjes linksonder.
 
-Een dia hoeft niet handmatig te worden bijgewerkt. Naast eigen dia’s kan het
-startscherm ook **berichten uit het nieuws** weergeven:
+Een dia hoeft niet handmatig te worden bijgewerkt. Naast eigen dia’s kan de
+pagina ook **berichten uit het nieuws** weergeven:
 
 - **Nieuwsbericht** — een specifiek bericht als dia. Afbeelding, kop
   en teaser komen uit het bericht, de knop leidt ernaartoe.
@@ -30,19 +30,20 @@ berichten van een kanaal.
   inhoud vrijhoudt, valt weg.
 - De **tekst blijft op de uitlijningslijn van de pagina**: hij begint op dezelfde
   verticale lijn als de koptekst, het menu en de tekst onder het podium. Hij
-  ligt nadrukkelijk niet tegen de rand van de afbeelding aan.
+  ligt uitdrukkelijk niet tegen de rand van de afbeelding aan.
 - De tekst staat linksonder, op een donker verloop dat van onder naar
   boven loopt. Op brede schermen komt daar een tweede verloop vanaf links
   bij, zodat lichte tekst op een lichte achtergrond leesbaar blijft.
 - Bij meerdere dia’s: pijltjes links en rechts, met daartussen een streepje per dia.
   Het streepje van de huidige dia is rood.
-- De wisseling blijft doorgaan zolang de muis boven het podium blijft of de focus erop
+- De wisseling blijft zichtbaar zolang de muis boven het podium hangt of de focus erop
   ligt. Op de telefoon wordt geveegd; de pijltjes zijn daar verborgen.
 - **Op de telefoon** (bij een breedte van minder dan 768 pixels) staat alleen de koptekst op
   de afbeelding, maximaal vier regels lang; wat daarbuiten valt, eindigt met „…".
-  De ondertitel en de knop worden daar verborgen — in plaats daarvan leidt een tik
-  ergens op de dia naar de bestemming van de knop. Voor schermlezers blijft
-  de tekst ervan de naam van deze link. Als een dia geen bestemming heeft, is deze
+  De ondertitel en de eerste knop worden daar verborgen — in plaats daarvan leidt een
+  tik ergens op de dia naar de bestemming van de eerste knop. Voor
+  schermlezers blijft de tekst ervan de naam van deze link. Overige
+  knoppen blijven zichtbaar als knoppen. Heeft een dia geen bestemming, dan is deze
   ook niet aan te tikken.
 - Wie in het besturingssysteem „Beweging verminderen“ heeft ingesteld, ziet geen
   overgang en geen overgangseffect — alleen nog de bedieningselementen.
