@@ -136,11 +136,105 @@ export function mediaFromUrl(current: SlideImage | undefined, url: string): Slid
   return withMediaKind({ url, alt: current?.alt ?? "" }, kind);
 }
 
-/** Die Schaltfläche unter dem Text. Höchstens eine je Slide (siehe E6). */
+/**
+ * Wie eine Schaltfläche aussieht. `primary` ist der rote Craft-Knopf und die
+ * Vorgabe; sie wird deshalb nie geschrieben.
+ *  - `secondary`: weiß gefüllt mit anthrazitem Rand (Craft secondary),
+ *  - `outline`: durchsichtig mit weißer Kontur — für die zweite Schaltfläche
+ *    auf einem Bild, wo eine zweite Vollfläche mit der ersten konkurriert,
+ *  - `link`: reiner Textverweis in Weiß, ohne Fläche.
+ */
+export type CtaVariant = "primary" | "secondary" | "outline" | "link";
+
+export const CTA_VARIANTS: readonly CtaVariant[] = ["primary", "secondary", "outline", "link"];
+
+/** Die Symbole, die eine Schaltfläche tragen kann — bewusst eine kleine, feste Auswahl. */
+export type CtaIcon =
+  | "arrow-right"
+  | "chevron-right"
+  | "external-link"
+  | "download"
+  | "play"
+  | "file-text"
+  | "calendar"
+  | "mail"
+  | "phone"
+  | "info";
+
+export const CTA_ICONS: readonly CtaIcon[] = [
+  "arrow-right",
+  "chevron-right",
+  "external-link",
+  "download",
+  "play",
+  "file-text",
+  "calendar",
+  "mail",
+  "phone",
+  "info",
+];
+
+/** Wo das Symbol steht. `end` ist die Vorgabe und wird nicht geschrieben. */
+export type CtaIconPosition = "start" | "end";
+
+/**
+ * Woher das Ziel stammt, wenn es aus Staffbase gewählt wurde.
+ *
+ * Die fertige Adresse steht trotzdem in `href`: so braucht die Leseansicht
+ * keinen einzigen Netzaufruf, und eine ältere Bundle-Fassung, die `link`
+ * nicht kennt, führt weiterhin ans richtige Ziel. `link` ist nur für den
+ * Editor da — er stellt damit die Auswahl wieder her, statt eine nackte
+ * Adresse zu zeigen. `title` ist der Name zum Zeitpunkt der Auswahl.
+ */
+export type CtaLink =
+  | { kind: "page"; pageId: string; menuId: string; title?: string }
+  | { kind: "post"; postId: string; channelId: string; title?: string };
+
+/** Eine Schaltfläche unter dem Text. Bis zu {@link MAX_SLIDE_CTAS} je Folie. */
 export interface SlideCta {
   label: string;
   href: string;
   newTab?: boolean;
+  /** Vorgabe `primary`. */
+  variant?: CtaVariant;
+  icon?: CtaIcon;
+  /** Vorgabe `end`; ohne `icon` bedeutungslos. */
+  iconPosition?: CtaIconPosition;
+  link?: CtaLink;
+}
+
+/**
+ * Mehr Schaltflächen trägt die Bühne nicht: schon die dritte steht auf dem
+ * Schreibtisch neben einer langen Überschrift in zweiter Reihe.
+ */
+export const MAX_SLIDE_CTAS = 3;
+
+/** Protokolle, die als Ziel nichts verloren haben — sie führen Code aus oder betten Daten ein. */
+const UNSAFE_HREF = /^\s*(javascript|data|vbscript):/i;
+
+/**
+ * Ein Ziel, das Code ausführen oder Inhalte einbetten würde.
+ *
+ * Das Attribut lässt sich von Hand setzen, also wird beim Lesen geprüft, nicht
+ * nur im Formular. Bewusst nur das: bis 0.4 nahm die Bühne jedes Ziel an, und
+ * eine strengere Prüfung beim Lesen nähme bestehenden Folien still ihre
+ * Schaltfläche — etwa einer mit `www.man.eu` ohne Schema.
+ */
+export function isExecutableHref(href: string): boolean {
+  return UNSAFE_HREF.test(href);
+}
+
+/**
+ * Ob ein Ziel nach einer brauchbaren Adresse aussieht — nur für den Hinweis im
+ * Formular: absolute `https:`/`http:`-Adressen, `mailto:` und `tel:`, Pfade im
+ * selben Tenant (`/content/…`) sowie Anker (`#…`).
+ */
+export function isSafeCtaHref(href: string): boolean {
+  const trimmed = href.trim();
+  if (trimmed === "" || isExecutableHref(trimmed)) return false;
+  if (trimmed.startsWith("/") && !trimmed.startsWith("//")) return true;
+  if (trimmed.startsWith("#")) return true;
+  return /^(https?:\/\/[^\s/]+\.[^\s]*|mailto:\S+|tel:[+\d\s()/-]+)$/i.test(trimmed);
 }
 
 export interface Slide {
@@ -155,7 +249,8 @@ export interface Slide {
   imagePortrait?: SlideImage;
   headline: string;
   subline?: string;
-  cta?: SlideCta;
+  /** Die Schaltflächen in Anzeigereihenfolge; fehlt das Feld, gibt es keine. */
+  ctas?: SlideCta[];
   /**
    * Alles, was eine spätere Version geschrieben hat und diese nicht kennt.
    * Ohne diesen Beutel würde ein Redakteur, der eine alte Bundle-Version

@@ -24,7 +24,9 @@ import { ReactElement } from "react";
 
 import { SlideItem } from "../hero-items";
 import { mediaFromUrl, withMediaKind } from "../slides-model";
+import { CtaListForm } from "./cta-list-form";
 import { ImageField } from "./image-field";
+import { NewsSource } from "./news-source";
 
 /** Welches der beiden Bilder einer Folie der Picker gerade füllt. */
 export type SlidePickerTarget = "image" | "imagePortrait";
@@ -33,33 +35,11 @@ export interface SlideFormProps {
   slide: SlideItem;
   onPatch: (changes: Partial<SlideItem>) => void;
   onPick: (target: SlidePickerTarget) => void;
+  /** Für die Ziele der Schaltflächen: Seiten und Beiträge aus Staffbase. */
+  source: NewsSource;
 }
 
-export function SlideForm({ slide, onPatch, onPick }: SlideFormProps): ReactElement {
-  const cta = slide.cta;
-
-  /**
-   * Setzt ein Feld der Schaltfläche. Beide Werte müssen erhalten bleiben,
-   * solange der Dialog offen ist — sonst verschwände die halb ausgefüllte
-   * Schaltfläche unter den Händen, weil das Modell sie verwirft.
-   */
-  const patchCta = (changes: { label?: string; href?: string; newTab?: boolean }): void => {
-    const merged = {
-      label: changes.label ?? cta?.label ?? "",
-      href: changes.href ?? cta?.href ?? "",
-      newTab: changes.newTab ?? cta?.newTab ?? false,
-    };
-    if (merged.label === "" && merged.href === "") {
-      onPatch({ cta: undefined });
-      return;
-    }
-    onPatch({
-      cta: merged.newTab
-        ? { label: merged.label, href: merged.href, newTab: true }
-        : { label: merged.label, href: merged.href },
-    });
-  };
-
+export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): ReactElement {
   // Das Hauptbild ist nie `undefined` — eine leere Folie trägt `url: ""`.
   // Für die Kachel und das Adressfeld heißt das dasselbe: noch kein Medium.
   const image = slide.image.url === "" ? undefined : slide.image;
@@ -129,38 +109,11 @@ export function SlideForm({ slide, onPatch, onPick }: SlideFormProps): ReactElem
         />
       </label>
 
-      <fieldset className="man-se__field man-se__fieldset">
-        <legend className="man-se__label">Schaltfläche (optional)</legend>
-        <p className="man-se__hint">Erscheint nur, wenn Beschriftung und Ziel ausgefüllt sind.</p>
-
-        <input
-          type="text"
-          className="man-se__input"
-          data-testid="slide-cta-label"
-          value={cta?.label ?? ""}
-          onChange={(event) => patchCta({ label: event.target.value })}
-          placeholder="Beschriftung"
-          aria-label="Beschriftung der Schaltfläche"
-        />
-        <input
-          type="url"
-          className="man-se__input"
-          data-testid="slide-cta-href"
-          value={cta?.href ?? ""}
-          onChange={(event) => patchCta({ href: event.target.value })}
-          placeholder="https://…"
-          aria-label="Ziel der Schaltfläche"
-        />
-        <label className="man-se__check">
-          <input
-            type="checkbox"
-            data-testid="slide-cta-newtab"
-            checked={cta?.newTab === true}
-            onChange={(event) => patchCta({ newTab: event.target.checked })}
-          />
-          In neuem Tab öffnen
-        </label>
-      </fieldset>
+      <CtaListForm
+        ctas={slide.ctas ?? []}
+        onChange={(ctas) => onPatch({ ctas })}
+        source={source}
+      />
     </>
   );
 }

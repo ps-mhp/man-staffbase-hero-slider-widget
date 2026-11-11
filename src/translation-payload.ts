@@ -42,8 +42,14 @@ export const HERO_MARKER = "data-hs-hero";
 /** `<Nummer>.<Feld>` — das Einzige, was eine Übersetzung wieder zuordnet. */
 export const FIELD_ATTRIBUTE = "data-hs-field";
 
-/** Die Felder, die übersetzt werden. */
-type FieldName = "headline" | "subline" | "cta" | "alt" | "alt-portrait";
+/**
+ * Die Felder, die übersetzt werden. Die erste Schaltfläche heißt weiter `cta`,
+ * jede weitere `cta-2`, `cta-3` — so bleibt der Schlüssel einer Folie mit nur
+ * einer Schaltfläche derselbe wie vor den mehreren.
+ */
+type FieldName = "headline" | "subline" | "cta" | `cta-${number}` | "alt" | "alt-portrait";
+
+const ctaField = (position: number): FieldName => (position === 0 ? "cta" : `cta-${position + 1}`);
 
 interface Field {
   readonly key: string;
@@ -107,7 +113,7 @@ function itemFields(item: HeroItem, index: number): Field[] {
   return [
     ...textField(index, "headline", slide.headline),
     ...textField(index, "subline", slide.subline),
-    ...textField(index, "cta", slide.cta?.label),
+    ...(slide.ctas ?? []).flatMap((cta, position) => textField(index, ctaField(position), cta.label)),
     ...imageFields(index, slide.image, "alt"),
     ...imageFields(index, slide.imagePortrait, "alt-portrait"),
   ];
@@ -220,9 +226,14 @@ export function applyTranslatedFields(
       ...(slide.subline === undefined
         ? {}
         : { subline: pick(fields, index, "subline", slide.subline) }),
-      ...(slide.cta === undefined
+      ...(slide.ctas === undefined
         ? {}
-        : { cta: { ...slide.cta, label: pick(fields, index, "cta", slide.cta.label) } }),
+        : {
+            ctas: slide.ctas.map((cta, position) => ({
+              ...cta,
+              label: pick(fields, index, ctaField(position), cta.label),
+            })),
+          }),
       image: withAlt(slide.image, fields, index, "alt") as SlideImage,
       imagePortrait: withAlt(slide.imagePortrait, fields, index, "alt-portrait"),
     };

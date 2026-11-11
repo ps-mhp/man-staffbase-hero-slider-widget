@@ -98,9 +98,11 @@ describe("Stylesheets", () => {
         /@media \(max-width: 767px\)\s*\{\s*\.man-hero__subline\s*\{[\s\S]*?display:\s*none\s*!important/,
       );
       expect(css).toMatch(
-        /\.man-hero__cta\s*\{[\s\S]*?position:\s*absolute\s*!important;\s*inset:\s*0\s*!important/,
+        /\.man-hero__cta--lead\s*\{[\s\S]*?position:\s*absolute\s*!important;\s*inset:\s*0\s*!important/,
       );
-      expect(css).toMatch(/\.man-hero__cta-label\s*\{[\s\S]*?clip-path:\s*inset\(50%\)/);
+      expect(css).toMatch(/\.man-hero__cta--lead \.man-hero__cta-label\s*\{[\s\S]*?clip-path:\s*inset\(50%\)/);
+      // Weitere Schaltflächen bleiben Knöpfe über der Fläche der ersten.
+      expect(css).toMatch(/\.man-hero__cta--extra\s*\{[\s\S]*?position:\s*relative\s*!important/);
     });
 
     it("setzt die Schaltfläche mit erhöhter Spezifität als Craft-Knopf m primary", () => {

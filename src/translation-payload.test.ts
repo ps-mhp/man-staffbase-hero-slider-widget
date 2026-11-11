@@ -59,7 +59,10 @@ describe("heroItemsToTranslatableHtml", () => {
     const html = heroItemsToTranslatableHtml([
       slide({
         subline: "Unterzeile",
-        cta: { label: "Mehr", href: "https://example.test" },
+        ctas: [
+          { label: "Mehr", href: "https://example.test" },
+          { label: "Kontakt", href: "mailto:info@example.test", variant: "link" },
+        ],
         imagePortrait: { url: "https://example.test/h.jpg", alt: "Hochkant" },
       }),
     ]);
@@ -70,6 +73,7 @@ describe("heroItemsToTranslatableHtml", () => {
         ["0.headline", "Überschrift"],
         ["0.subline", "Unterzeile"],
         ["0.cta", "Mehr"],
+        ["0.cta-2", "Kontakt"],
         ["0.alt", "Ein Lkw"],
         ["0.alt-portrait", "Hochkant"],
       ]),
@@ -130,7 +134,7 @@ describe("isTranslatedHeroHtml", () => {
 
 describe("applyTranslatedFields", () => {
   const items: HeroItem[] = [
-    slide({ subline: "Unterzeile", cta: { label: "Mehr", href: "https://example.test" } }),
+    slide({ subline: "Unterzeile", ctas: [{ label: "Mehr", href: "https://example.test" }] }),
     post({ headline: "Eigen" }),
     channel(),
   ];
@@ -146,7 +150,7 @@ describe("applyTranslatedFields", () => {
 
     expect(first.headline).toBe("EN:Überschrift");
     expect(first.subline).toBe("EN:Unterzeile");
-    expect(first.cta?.label).toBe("EN:Mehr");
+    expect(first.ctas?.[0]?.label).toBe("EN:Mehr");
     expect(first.image.alt).toBe("EN:Ein Lkw");
   });
 
@@ -155,7 +159,7 @@ describe("applyTranslatedFields", () => {
 
     expect(first.id).toBe("a");
     expect(first.image.url).toBe("https://example.test/a.jpg");
-    expect(first.cta?.href).toBe("https://example.test");
+    expect(first.ctas?.[0]?.href).toBe("https://example.test");
   });
 
   it("übernimmt Titel und Beschriftung der News-Einträge", () => {

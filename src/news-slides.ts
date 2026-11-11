@@ -131,7 +131,7 @@ export function shortenTeaser(teaser: string, max: number = TEASER_MAX): string 
  * `openlink`, das in der App bleibt und im Browser die Webansicht öffnet).
  * Fehlt er, bleibt der bekannte Pfad der Artikelansicht.
  */
-const postHref = (post: NewsPost): string =>
+export const postHref = (post: NewsPost): string =>
   typeof post.links?.detail_view?.href === "string" && post.links.detail_view.href !== ""
     ? post.links.detail_view.href
     : `/content/news/article/${post.id}`;
@@ -159,7 +159,7 @@ export function postToSlide(
   const label = (options.ctaLabel ?? DEFAULT_CTA_LABEL).trim();
   // Ein Beitrag liegt im selben Tenant; ein neuer Tab wäre hier nur ein
   // verlorener Zurück-Knopf.
-  if (label !== "") slide.cta = { label, href: postHref(post) };
+  if (label !== "") slide.ctas = [{ label, href: postHref(post) }];
 
   return slide;
 }

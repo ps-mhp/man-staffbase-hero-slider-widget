@@ -30,7 +30,20 @@
 
 import { decodePayload, encodePayload, isPayload } from "@shared/payload";
 
-import { Slide, SlideCta, SlideImage, isVideo, newSlideId } from "./slides-model";
+import {
+  CTA_ICONS,
+  CTA_VARIANTS,
+  CtaIcon,
+  CtaLink,
+  CtaVariant,
+  MAX_SLIDE_CTAS,
+  Slide,
+  SlideCta,
+  SlideImage,
+  isExecutableHref,
+  isVideo,
+  newSlideId,
+} from "./slides-model";
 
 export type HeroItemType = "slide" | "news-post" | "news-channel";
 
@@ -114,6 +127,7 @@ const KNOWN_SLIDE_KEYS = new Set([
   "headline",
   "subline",
   "cta",
+  "ctas",
 ]);
 
 const KNOWN_POST_KEYS = new Set([
@@ -176,17 +190,65 @@ export const parseImage = (value: unknown): SlideImage | undefined => {
   return image;
 };
 
-const parseCta = (value: unknown): SlideCta | undefined => {
+const isStaffbaseRef = (value: unknown): value is string =>
+  typeof value === "string" && value.trim() !== "";
+
+const parseCtaLink = (value: unknown): CtaLink | undefined => {
+  if (!isRecord(value)) return undefined;
+  const title = asTrimmedString(value.title);
+  const withTitle = <T extends CtaLink>(link: T): T => (title === "" ? link : { ...link, title });
+  if (value.kind === "page" && isStaffbaseRef(value.pageId) && isStaffbaseRef(value.menuId)) {
+    return withTitle({ kind: "page", pageId: value.pageId.trim(), menuId: value.menuId.trim() });
+  }
+  if (value.kind === "post" && isStaffbaseRef(value.postId)) {
+    return withTitle({
+      kind: "post",
+      postId: value.postId.trim(),
+      channelId: asTrimmedString(value.channelId),
+    });
+  }
+  return undefined;
+};
+
+export const parseCta = (value: unknown): SlideCta | undefined => {
   if (!isRecord(value)) return undefined;
   const label = asTrimmedString(value.label);
   const href = asTrimmedString(value.href);
   // Eine Schaltfläche ohne Ziel führt nirgendwohin, eine ohne Beschriftung ist
   // unsichtbar. Beides ist kein Fehler, den man melden müsste — es ist ein
-  // halb ausgefülltes Formular, und die Folie steht auch ohne sie.
-  if (label === "" || href === "") return undefined;
+  // halb ausgefülltes Formular, und die Folie steht auch ohne sie. Ein Ziel,
+  // das Code ausführen würde, fällt aus demselben Grund still weg.
+  if (label === "" || href === "" || isExecutableHref(href)) return undefined;
   const cta: SlideCta = { label, href };
   if (value.newTab === true) cta.newTab = true;
+  // Unbekannte Werte aus einer neueren Fassung fallen auf die Vorgabe zurück:
+  // ein roter Knopf mit Text ist besser als keiner.
+  if (CTA_VARIANTS.includes(value.variant as CtaVariant) && value.variant !== "primary") {
+    cta.variant = value.variant as CtaVariant;
+  }
+  if (CTA_ICONS.includes(value.icon as CtaIcon)) {
+    cta.icon = value.icon as CtaIcon;
+    if (value.iconPosition === "start") cta.iconPosition = "start";
+  }
+  const link = parseCtaLink(value.link);
+  if (link !== undefined) cta.link = link;
   return cta;
+};
+
+/**
+ * Die Schaltflächen einer Folie.
+ *
+ * `ctas` gewinnt, sobald es eine Liste ist — auch eine leere: dann hat jemand
+ * alle Schaltflächen entfernt, und das alte `cta` daneben ist nur noch der
+ * Spiegel für ältere Bundle-Fassungen. Fehlt `ctas`, stammt die Folie aus der
+ * Zeit vor mehreren Schaltflächen, und ihr einziges `cta` ist die erste.
+ */
+const parseCtas = (value: Record<string, unknown>): SlideCta[] => {
+  const source = Array.isArray(value.ctas) ? value.ctas : [value.cta];
+  return source
+    .map(parseCta)
+    .filter((cta): cta is SlideCta => cta !== undefined)
+    .slice(0, MAX_SLIDE_CTAS);
 };
 
 const parseSlideItem = (value: Record<string, unknown>): SlideItem | null => {
@@ -206,8 +268,8 @@ const parseSlideItem = (value: Record<string, unknown>): SlideItem | null => {
   const subline = typeof value.subline === "string" ? value.subline : "";
   if (subline !== "") item.subline = subline;
 
-  const cta = parseCta(value.cta);
-  if (cta !== undefined) item.cta = cta;
+  const ctas = parseCtas(value);
+  if (ctas.length > 0) item.ctas = ctas;
 
   const unknown = collectUnknown(value, KNOWN_SLIDE_KEYS);
   if (unknown !== undefined) item.unknown = unknown;
@@ -386,6 +448,23 @@ const encodeImage = (image: SlideImage): Record<string, unknown> => {
   return out;
 };
 
+const encodeLegacyCta = (cta: SlideCta): Record<string, unknown> =>
+  cta.newTab === true
+    ? { label: cta.label, href: cta.href, newTab: true }
+    : { label: cta.label, href: cta.href };
+
+/** Nur, was von der Vorgabe abweicht — so bleibt das Attribut kurz. */
+export const encodeCta = (cta: SlideCta): Record<string, unknown> => {
+  const out = encodeLegacyCta(cta);
+  if (cta.variant !== undefined && cta.variant !== "primary") out.variant = cta.variant;
+  if (cta.icon !== undefined) {
+    out.icon = cta.icon;
+    if (cta.iconPosition === "start") out.iconPosition = "start";
+  }
+  if (cta.link !== undefined) out.link = { ...cta.link };
+  return out;
+};
+
 const encodeSlideItem = (item: SlideItem): Record<string, unknown> => {
   // Unbekannte Felder zuerst, damit die bekannten sie bei Namensgleichheit
   // überschreiben und nicht umgekehrt.
@@ -401,11 +480,12 @@ const encodeSlideItem = (item: SlideItem): Record<string, unknown> => {
     out.imagePortrait = isVideo(item.imagePortrait) ? { url, alt, kind: "video" } : { url, alt };
   }
   if (item.subline !== undefined && item.subline !== "") out.subline = item.subline;
-  if (item.cta !== undefined) {
-    out.cta =
-      item.cta.newTab === true
-        ? { label: item.cta.label, href: item.cta.href, newTab: true }
-        : { label: item.cta.label, href: item.cta.href };
+  const ctas = item.ctas ?? [];
+  if (ctas.length > 0) {
+    // `cta` bleibt als Spiegel der ersten Schaltfläche in ihrer alten Form
+    // stehen: eine ältere Bundle-Fassung aus dem Cache zeigt so wenigstens sie.
+    out.cta = encodeLegacyCta(ctas[0]!);
+    out.ctas = ctas.map(encodeCta);
   }
   return out;
 };

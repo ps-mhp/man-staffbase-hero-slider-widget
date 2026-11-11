@@ -331,6 +331,7 @@ export function SlideEditor({
                   slide={item}
                   onPatch={(changes: Partial<SlideItem>) => patch(changes)}
                   onPick={(target) => setPickerTarget(target)}
+                  source={source}
                 />
               )}
 

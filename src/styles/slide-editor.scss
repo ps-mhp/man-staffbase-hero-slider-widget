@@ -241,6 +241,42 @@
   margin-bottom: 8px;
 }
 
+// Eine Schaltfläche im Formular: eine eigene, gerahmte Gruppe, damit bei drei
+// Knöpfen klar bleibt, welches Feld zu welchem gehört. Die Knöpfe zum
+// Umsortieren stehen rechts neben der Legende — die muss erstes Kind des
+// `fieldset` bleiben und lässt sich deshalb nicht mit ihnen in eine Zeile
+// wickeln.
+.man-se__cta {
+  position: relative;
+  margin: 0 0 12px;
+  padding: 12px;
+  border: 1px solid chrome.$border;
+  border-radius: chrome.$radius-control;
+}
+
+.man-se__cta > .man-se__label {
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.man-se__cta-actions {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  gap: 2px;
+}
+
+.man-se__cta .man-se__field {
+  margin-bottom: 12px;
+}
+
+.man-se__cta-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0 12px;
+}
+
 .man-se__sub {
   display: block;
   margin-top: 10px;

@@ -23,6 +23,8 @@ import { useEffect, useState } from "react";
 import { Post as NewsPost, fetchPost, userLocales } from "@shared/staffbase/posts";
 
 import { NewsChannel, fetchChannelPosts, fetchNewsChannels } from "@shared/staffbase/channels";
+import { fetchEntityCatalog } from "@shared/entity-picker/entity-catalog";
+import { PageOption, pageCatalogSource } from "@shared/staffbase/pages";
 
 export interface NewsSource {
   channels: () => Promise<NewsChannel[]>;
@@ -30,13 +32,20 @@ export interface NewsSource {
   posts: (channelId: string, limit: number) => Promise<NewsPost[]>;
   post: (postId: string) => Promise<NewsPost | null>;
   locales: () => Promise<string[]>;
+  /** Die Seiten des Tenants für das Ziel einer Schaltfläche, zuletzt geänderte zuerst. */
+  pages: () => Promise<PageOption[]>;
 }
+
+/** `pageCatalogSource` liefert immer `PageOption`; der Katalog kennt nur die schmale Form. */
+const fetchPageOptions = async (): Promise<PageOption[]> =>
+  (await fetchEntityCatalog(pageCatalogSource)) as PageOption[];
 
 export const defaultNewsSource: NewsSource = {
   channels: fetchNewsChannels,
   posts: fetchChannelPosts,
   post: fetchPost,
   locales: userLocales,
+  pages: fetchPageOptions,
 };
 
 /** Wie viele Beiträge die Auswahl eines Kanals anbietet. */
@@ -60,6 +69,7 @@ export function cacheNewsSource(source: NewsSource): NewsSource {
   const posts = new Map<string, Promise<NewsPost[]>>();
   const post = new Map<string, Promise<NewsPost | null>>();
   let locales: Promise<string[]> | undefined;
+  let pages: Promise<PageOption[]> | undefined;
 
   const once = <T>(store: Map<string, Promise<T>>, key: string, make: () => Promise<T>): Promise<T> => {
     const known = store.get(key);
@@ -77,6 +87,10 @@ export function cacheNewsSource(source: NewsSource): NewsSource {
     locales: () => {
       locales ??= source.locales();
       return locales;
+    },
+    pages: () => {
+      pages ??= source.pages();
+      return pages;
     },
   };
 }
@@ -109,6 +123,35 @@ export function useNewsChannels(source: NewsSource, enabled = true): Loaded<News
       const channels = await source.channels();
       if (cancelled) return;
       setEntries(channels);
+      setLoading(false);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [source, enabled]);
+
+  return { entries, loading };
+}
+
+/** Die Seiten des Tenants, erst wenn eine Schaltfläche auf eine Seite zeigen soll. */
+export function usePages(source: NewsSource, enabled: boolean): Loaded<PageOption[]> {
+  const [entries, setEntries] = useState<PageOption[]>([]);
+  const [loading, setLoading] = useState(enabled);
+
+  useEffect(() => {
+    if (!enabled) {
+      setLoading(false);
+      return undefined;
+    }
+
+    let cancelled = false;
+    setLoading(true);
+
+    void (async () => {
+      const pages = await source.pages();
+      if (cancelled) return;
+      setEntries(pages);
       setLoading(false);
     })();
 

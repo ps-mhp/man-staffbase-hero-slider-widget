@@ -29,6 +29,7 @@ import { BottomSpacing, useBottomSpacing } from "./bottom-spacing";
 import { useSectionHug } from "./section-hug";
 import type { HeroPosition } from "./attributes";
 import { isEditor } from "./editor-context";
+import { SlideCtas } from "./slide-ctas";
 import { Slide, SlideImage, firstFrameUrl, isVideo } from "./slides-model";
 import { DEFAULT_AUTOPLAY_DELAY_MS, useSlider } from "./use-slider";
 import heroSliderCss from "./styles/hero-slider.scss";
@@ -444,24 +445,7 @@ export function HeroSlider({
                     {slide.subline !== undefined && (
                       <p className="man-hero__subline">{slide.subline}</p>
                     )}
-                    {slide.cta !== undefined && (
-                      <a
-                        className="man-hero__cta"
-                        href={slide.cta.href}
-                        target={slide.cta.newTab === true ? "_blank" : undefined}
-                        // `noopener` gegen den Zugriff der Zielseite auf
-                        // `window.opener`; `noreferrer` folgt der Hausordnung
-                        // für externe Ziele.
-                        rel={slide.cta.newTab === true ? "noopener noreferrer" : undefined}
-                      >
-                        {/* Eigenes Element, damit die Beschriftung schmal
-                            verborgen werden kann, ohne den Link selbst zu
-                            verbergen: dort deckt er die ganze Folie ab und
-                            macht sie zum Ziel, seinen Namen braucht er
-                            trotzdem weiter (siehe `hero-slider.scss`). */}
-                        <span className="man-hero__cta-label">{slide.cta.label}</span>
-                      </a>
-                    )}
+                    <SlideCtas ctas={slide.ctas} />
                   </div>
                 </div>
               </div>

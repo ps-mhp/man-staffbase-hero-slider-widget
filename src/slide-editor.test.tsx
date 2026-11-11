@@ -96,6 +96,10 @@ const stubNewsSource = (overrides: Partial<NewsSource> = {}): NewsSource => ({
   posts: jest.fn(async () => [newsPost("p1", "Erster Beitrag"), newsPost("p2", "Zweiter Beitrag")]),
   post: jest.fn(async (id: string) => newsPost(id, `Beitrag ${id}`)),
   locales: jest.fn(async () => ["de_DE"]),
+  pages: jest.fn(async () => [
+    { id: "pg1", title: "Fahrzeuge", href: "/content/page/6a5e6703cb02c92e74be1e01", menuId: "6a5e6703cb02c92e74be1e01" },
+    { id: "pg2", title: "Service", href: "/content/page/6a5e6703cb02c92e74be1e02", menuId: "6a5e6703cb02c92e74be1e02" },
+  ]),
   ...overrides,
 });
 
@@ -141,6 +145,36 @@ const setup = (value: HeroItem[], dirty = false, newsSource = stubNewsSource()):
     latest,
     latestSlides: () => latest() as Slide[],
   };
+};
+
+/**
+ * Wie `setup`, aber mit Zustand: der Editor ist kontrolliert, und mehrere
+ * Schritte hintereinander brauchen den jeweils neuen Wert.
+ */
+const setupLive = (value: HeroItem[], newsSource = stubNewsSource()): Harness => {
+  const onChange = jest.fn<void, [HeroItem[]]>();
+
+  function Live(): React.ReactElement {
+    const [items, setItems] = React.useState(value);
+    return (
+      <SlideEditor
+        value={items}
+        onChange={(next) => {
+          onChange(next);
+          setItems(next);
+        }}
+        onSave={jest.fn()}
+        onClose={jest.fn()}
+        dirty={false}
+        mediaClient={stubMediaClient()}
+        newsSource={newsSource}
+      />
+    );
+  }
+
+  render(<Live />);
+  const latest = (): HeroItem[] => onChange.mock.calls[onChange.mock.calls.length - 1]![0];
+  return { onChange, onSave: jest.fn(), onClose: jest.fn(), latest, latestSlides: () => latest() as Slide[] };
 };
 
 describe("SlideEditor", () => {
@@ -238,32 +272,149 @@ describe("SlideEditor", () => {
     });
   });
 
-  describe("Schaltfläche", () => {
-    it("hält eine halb ausgefüllte Schaltfläche fest, statt sie zu verwerfen", () => {
-      const h = setup([slide("a")]);
-      fireEvent.change(screen.getByTestId("slide-cta-label"), { target: { value: "Mehr" } });
+  describe("Schaltflächen", () => {
+    it("legt eine Schaltfläche an und hält sie halb ausgefüllt fest", () => {
+      const h = setupLive([slide("a")]);
+      fireEvent.click(screen.getByTestId("slide-cta-add"));
+      fireEvent.change(screen.getByTestId("slide-cta-0-label"), { target: { value: "Mehr" } });
 
-      expect(h.latestSlides()[0]!.cta).toEqual({ label: "Mehr", href: "" });
+      expect(h.latestSlides()[0]!.ctas).toEqual([{ label: "Mehr", href: "" }]);
     });
 
-    it("entfernt die Schaltfläche, sobald beide Felder leer sind", () => {
-      const h = setup([slide("a", { cta: { label: "Mehr", href: "" } })]);
-      fireEvent.change(screen.getByTestId("slide-cta-label"), { target: { value: "" } });
+    it("legt ab der zweiten Schaltfläche eine Kontur an", () => {
+      const h = setup([slide("a", { ctas: [{ label: "Eins", href: "https://example.test" }] })]);
+      fireEvent.click(screen.getByTestId("slide-cta-add"));
 
-      expect(h.latestSlides()[0]!.cta).toBeUndefined();
+      expect(h.latestSlides()[0]!.ctas?.[1]).toEqual({ label: "", href: "", variant: "outline" });
     });
 
-    it("merkt sich das Öffnen in neuem Tab", () => {
-      const h = setup([
-        slide("a", { cta: { label: "Mehr", href: "https://example.test" } }),
+    it("erlaubt höchstens drei Schaltflächen", () => {
+      setup([
+        slide("a", {
+          ctas: [
+            { label: "1", href: "https://example.test/1" },
+            { label: "2", href: "https://example.test/2" },
+            { label: "3", href: "https://example.test/3" },
+          ],
+        }),
       ]);
-      fireEvent.click(screen.getByTestId("slide-cta-newtab"));
 
-      expect(h.latestSlides()[0]!.cta).toEqual({
-        label: "Mehr",
-        href: "https://example.test",
-        newTab: true,
-      });
+      expect(screen.getByTestId("slide-cta-add")).toBeDisabled();
+    });
+
+    it("entfernt die letzte Schaltfläche ganz, statt eine leere Liste zu speichern", () => {
+      const h = setup([slide("a", { ctas: [{ label: "Mehr", href: "" }] })]);
+      fireEvent.click(screen.getByTestId("slide-cta-0-remove"));
+
+      expect(h.latestSlides()[0]!.ctas).toBeUndefined();
+    });
+
+    it("sortiert Schaltflächen um", () => {
+      const h = setup([
+        slide("a", {
+          ctas: [
+            { label: "Eins", href: "https://example.test/1" },
+            { label: "Zwei", href: "https://example.test/2" },
+          ],
+        }),
+      ]);
+      expect(screen.getByTestId("slide-cta-0-up")).toBeDisabled();
+      fireEvent.click(screen.getByTestId("slide-cta-1-up"));
+
+      expect(h.latestSlides()[0]!.ctas?.map((cta) => cta.label)).toEqual(["Zwei", "Eins"]);
+    });
+
+    it("merkt sich Stil, Symbol, Symbolseite und neuen Tab", () => {
+      const h = setupLive([slide("a", { ctas: [{ label: "Mehr", href: "https://example.test" }] })]);
+      fireEvent.change(screen.getByTestId("slide-cta-0-variant"), { target: { value: "secondary" } });
+      expect(screen.getByTestId("slide-cta-0-icon-position")).toBeDisabled();
+      fireEvent.change(screen.getByTestId("slide-cta-0-icon"), { target: { value: "download" } });
+      fireEvent.change(screen.getByTestId("slide-cta-0-icon-position"), { target: { value: "start" } });
+      fireEvent.click(screen.getByTestId("slide-cta-0-newtab"));
+
+      expect(h.latestSlides()[0]!.ctas).toEqual([
+        {
+          label: "Mehr",
+          href: "https://example.test",
+          variant: "secondary",
+          icon: "download",
+          iconPosition: "start",
+          newTab: true,
+        },
+      ]);
+    });
+
+    it("schreibt den Vorgabestil nicht mit", () => {
+      const h = setup([
+        slide("a", { ctas: [{ label: "Mehr", href: "https://example.test", variant: "link" }] }),
+      ]);
+      fireEvent.change(screen.getByTestId("slide-cta-0-variant"), { target: { value: "primary" } });
+
+      expect(h.latestSlides()[0]!.ctas).toEqual([{ label: "Mehr", href: "https://example.test" }]);
+    });
+
+    it("warnt vor einer Adresse, die nicht übernommen wird", () => {
+      setup([slide("a", { ctas: [{ label: "Mehr", href: "javascript:alert(1)" }] })]);
+
+      expect(screen.getByTestId("slide-cta-0-href-invalid")).toBeInTheDocument();
+    });
+
+    it("bittet bei einer Adresse ohne Schema um Prüfung, ohne sie zu verwerfen", () => {
+      setup([slide("a", { ctas: [{ label: "MAN", href: "www.man.eu" }] })]);
+
+      expect(screen.getByTestId("slide-cta-0-href-doubtful")).toBeInTheDocument();
+      expect(screen.queryByTestId("slide-cta-0-href-invalid")).toBeNull();
+    });
+
+    it("verknüpft eine Seite aus Staffbase und bildet ihre Adresse", async () => {
+      const h = setupLive([slide("a", { ctas: [{ label: "Mehr", href: "https://example.test" }] })]);
+      fireEvent.change(screen.getByTestId("slide-cta-0-kind"), { target: { value: "page" } });
+      await screen.findByRole("option", { name: "Service" });
+      fireEvent.change(screen.getByTestId("slide-cta-0-page"), { target: { value: "pg2" } });
+
+      expect(h.latestSlides()[0]!.ctas).toEqual([
+        {
+          label: "Mehr",
+          href: "/content/page/6a5e6703cb02c92e74be1e02",
+          link: { kind: "page", pageId: "pg2", menuId: "6a5e6703cb02c92e74be1e02", title: "Service" },
+        },
+      ]);
+    });
+
+    it("verknüpft einen News-Beitrag über Kanal und Beitrag", async () => {
+      const h = setupLive([slide("a", { ctas: [{ label: "Lesen", href: "" }] })]);
+      fireEvent.change(screen.getByTestId("slide-cta-0-kind"), { target: { value: "post" } });
+      await screen.findByRole("option", { name: "Technik" });
+      fireEvent.change(screen.getByTestId("slide-cta-0-channel"), { target: { value: "c2" } });
+      await screen.findByRole("option", { name: "Zweiter Beitrag" });
+      fireEvent.change(screen.getByTestId("slide-cta-0-post"), { target: { value: "p2" } });
+
+      expect(h.latestSlides()[0]!.ctas).toEqual([
+        {
+          label: "Lesen",
+          href: "https://tenant.example.test/news/p2",
+          link: { kind: "post", postId: "p2", channelId: "c2", title: "Zweiter Beitrag" },
+        },
+      ]);
+    });
+
+    it("leert das Ziel beim Wechsel zurück zur freien Adresse", async () => {
+      const h = setup([
+        slide("a", {
+          ctas: [
+            {
+              label: "Mehr",
+              href: "/content/page/x",
+              link: { kind: "page", pageId: "pg1", menuId: "x" },
+            },
+          ],
+        }),
+      ]);
+      // Die Seitenliste kommt asynchron; erst danach steht das Formular still.
+      await screen.findByRole("option", { name: "Fahrzeuge" });
+      fireEvent.change(screen.getByTestId("slide-cta-0-kind"), { target: { value: "url" } });
+
+      expect(h.latestSlides()[0]!.ctas).toEqual([{ label: "Mehr", href: "" }]);
     });
   });
 

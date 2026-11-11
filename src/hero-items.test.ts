@@ -84,7 +84,7 @@ describe("parseHeroItems — Folien", () => {
         imagePortrait: { url: "https://example.test/a-hoch.jpg", alt: "Ein Lkw, hochkant" },
         headline: "Überschrift",
         subline: "Unterzeile",
-        cta: { label: "Mehr", href: "https://example.test", newTab: true },
+        ctas: [{ label: "Mehr", href: "https://example.test", newTab: true }],
       },
     ]);
   });
@@ -118,7 +118,7 @@ describe("parseHeroItems — Folien", () => {
       ]),
     ) as SlideItem[];
 
-    expect(items.map((item) => item.cta)).toEqual([undefined, undefined]);
+    expect(items.map((item) => item.ctas)).toEqual([undefined, undefined]);
   });
 
   it("vergibt eine Kennung, wenn keine dasteht", () => {
@@ -294,13 +294,95 @@ describe("parseHeroItems — News-Kanäle", () => {
   });
 });
 
+describe("Schaltflächen einer Folie", () => {
+  const read = (entry: Record<string, unknown>): SlideItem =>
+    parseHeroItems(JSON.stringify([{ ...slideWith(), ...entry }]))[0] as SlideItem;
+
+  it("bevorzugt ctas vor dem alten cta", () => {
+    const item = read({
+      cta: { label: "Alt", href: "https://example.test/alt" },
+      ctas: [{ label: "Neu", href: "https://example.test/neu" }],
+    });
+
+    expect(item.ctas).toEqual([{ label: "Neu", href: "https://example.test/neu" }]);
+  });
+
+  it("nimmt eine leere ctas-Liste als „keine Schaltfläche“, auch neben einem alten cta", () => {
+    const item = read({ cta: { label: "Alt", href: "https://example.test" }, ctas: [] });
+
+    expect(item.ctas).toBeUndefined();
+  });
+
+  it("behält ein bisher geduldetes Ziel ohne Schema", () => {
+    expect(read({ cta: { label: "MAN", href: "www.man.eu" } }).ctas).toEqual([
+      { label: "MAN", href: "www.man.eu" },
+    ]);
+  });
+
+  it("verwirft Ziele, die Code ausführen würden", () => {
+    const item = read({
+      ctas: [
+        { label: "Böse", href: "javascript:alert(1)" },
+        { label: "Daten", href: "data:text/html,<b>x</b>" },
+        { label: "Gut", href: "/content/page/abc" },
+        { label: "Mail", href: "mailto:info@example.test" },
+      ],
+    });
+
+    expect(item.ctas?.map((cta) => cta.label)).toEqual(["Gut", "Mail"]);
+  });
+
+  it("liest höchstens drei Schaltflächen", () => {
+    const ctas = [1, 2, 3, 4].map((n) => ({ label: `B${n}`, href: `https://example.test/${n}` }));
+
+    expect(read({ ctas }).ctas).toHaveLength(3);
+  });
+
+  it("fällt bei unbekanntem Stil oder Symbol auf die Vorgabe zurück", () => {
+    const item = read({
+      ctas: [{ label: "Mehr", href: "https://example.test", variant: "glitzer", icon: "rakete", iconPosition: "start" }],
+    });
+
+    expect(item.ctas).toEqual([{ label: "Mehr", href: "https://example.test" }]);
+  });
+
+  it("schreibt die erste Schaltfläche zusätzlich als cta für ältere Fassungen", () => {
+    const encoded = JSON.parse(
+      serializeHeroItems([
+        slideWith({
+          ctas: [
+            { label: "Eins", href: "https://example.test/1", variant: "secondary", icon: "play" },
+            { label: "Zwei", href: "https://example.test/2", newTab: true },
+          ],
+        }),
+      ]),
+    );
+
+    expect(encoded[0].cta).toEqual({ label: "Eins", href: "https://example.test/1" });
+    expect(encoded[0].ctas).toEqual([
+      { label: "Eins", href: "https://example.test/1", variant: "secondary", icon: "play" },
+      { label: "Zwei", href: "https://example.test/2", newTab: true },
+    ]);
+  });
+});
+
 describe("serializeHeroItems", () => {
   it("überlebt einen Round-Trip aller drei Sorten unverändert", () => {
     const items: HeroItem[] = [
       slideWith({
         imagePortrait: { url: "https://example.test/a-hoch.jpg", alt: "Hochkant" },
         subline: "Unterzeile",
-        cta: { label: "Mehr", href: "https://example.test", newTab: true },
+        ctas: [
+          { label: "Mehr", href: "https://example.test", newTab: true },
+          {
+            label: "Zur Seite",
+            href: "/content/page/6a5e6703cb02c92e74be1eab",
+            variant: "outline",
+            icon: "arrow-right",
+            iconPosition: "start",
+            link: { kind: "page", pageId: "p1", menuId: "6a5e6703cb02c92e74be1eab", title: "Fahrzeuge" },
+          },
+        ],
       }),
       postItem({ headline: "Eigen", showTeaser: false, ctaLabel: "Zum Beitrag" }),
       channelItem({ order: "oldest", onlyHighlighted: true, hashtags: ["trucks"] }),
@@ -356,7 +438,7 @@ describe("serializeHeroItems", () => {
 
   it("schreibt newTab nur, wenn es gesetzt ist", () => {
     const encoded = serializeHeroItems([
-      slideWith({ cta: { label: "Mehr", href: "https://example.test" } }),
+      slideWith({ ctas: [{ label: "Mehr", href: "https://example.test" }] }),
     ]);
 
     expect(encoded).not.toContain("newTab");

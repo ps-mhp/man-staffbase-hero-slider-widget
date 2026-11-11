@@ -456,15 +456,86 @@
 // navigiert — und genau deshalb gegen die `a`- und `button`-Regeln der
 // Wirtsseite durchgesetzt: deren Themenblock färbt Fläche und Schrift gleich
 // dunkelgrau ein.
+//
+// Bis zu drei Schaltflächen stehen in einer Reihe, die bei Platzmangel
+// umbricht. Der Abstand zur Unterzeile liegt am Behälter, nicht am Knopf:
+// `man-button` setzt `margin: 0` mit Nachdruck.
+.man-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: man("space-3");
+  margin-top: man("space-5");
+}
+
 .man-hero__cta {
   @include man-outshine-host {
     @include man-button("m", "primary", true, $wrap: true);
 
-    // Nach dem Knopf, weil `man-button` `margin: 0` mit Nachdruck setzt.
     & {
-      margin-top: man("space-5") !important;
+      gap: man("space-2") !important;
     }
   }
+}
+
+// Die Arten je Schaltfläche, jeweils nach der Grundregel — gleiche
+// Spezifität, also gewinnt die spätere. `secondary` ist der Craft-Knopf;
+// `outline` und `link` gibt es in Craft nicht, sie sind für den zweiten Knopf
+// auf einem Bild gedacht, wo eine zweite Vollfläche mit der ersten konkurriert.
+.man-hero__cta--secondary {
+  @include man-outshine-host {
+    @include man-button("m", "secondary", true, $wrap: true);
+
+    & {
+      gap: man("space-2") !important;
+    }
+  }
+}
+
+.man-hero__cta--outline {
+  @include man-outshine-host {
+    background-color: transparent !important;
+    border-color: man("white") !important;
+    color: man("white") !important;
+
+    &:hover {
+      background-color: man("white") !important;
+      border-color: man("white") !important;
+      color: man("slate") !important;
+    }
+
+    &:active {
+      background-color: man("slate-50") !important;
+      border-color: man("slate-50") !important;
+      color: man("slate-700") !important;
+    }
+  }
+}
+
+.man-hero__cta--link {
+  @include man-outshine-host {
+    min-width: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: man("white") !important;
+
+    &:hover,
+    &:active {
+      background-color: transparent !important;
+      border-color: transparent !important;
+      color: man("white") !important;
+      text-decoration: underline !important;
+      text-underline-offset: 4px !important;
+    }
+  }
+}
+
+.man-hero__cta-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
 }
 
 // --- Die Folie als Ganzes auf dem Telefon ------------------------------------
@@ -489,7 +560,14 @@
     }
   }
 
-  .man-hero__cta {
+  // Nur die erste Schaltfläche wird zur Fläche. Der Behälter trägt dann
+  // keinen Abstand mehr — sonst bliebe unter der Überschrift eine Lücke für
+  // einen Knopf, der gar nicht mehr dasteht.
+  .man-hero__ctas {
+    margin-top: 0;
+  }
+
+  .man-hero__cta--lead {
     @include man-outshine-host {
       position: absolute !important;
       inset: 0 !important;
@@ -520,13 +598,28 @@
   // Nur im Bild verborgen: Screenreader lesen die Beschriftung weiter, sie
   // ist der Name des Links. `clip-path` statt `display: none`, denn was nicht
   // dargestellt wird, hat auch keinen Namen.
-  .man-hero__cta-label {
+  .man-hero__cta--lead .man-hero__cta-label {
     position: absolute;
     width: 1px;
     height: 1px;
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
+  }
+
+  .man-hero__cta--lead .man-hero__cta-icon {
+    display: none;
+  }
+
+  // Weitere Schaltflächen bleiben Knöpfe, sonst wäre ihr Ziel auf dem Telefon
+  // nicht erreichbar. Sie liegen über der Fläche der ersten: später im Dokument
+  // und eigens positioniert.
+  .man-hero__cta--extra {
+    @include man-outshine-host {
+      position: relative !important;
+      z-index: 1 !important;
+      margin-top: man("space-3") !important;
+    }
   }
 }
 

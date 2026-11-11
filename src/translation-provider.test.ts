@@ -27,7 +27,7 @@ const items: HeroItem[] = [
     id: "a",
     image: { url: "https://example.test/a.jpg", alt: "Ein Lkw" },
     headline: "Überschrift",
-    cta: { label: "Mehr", href: "https://example.test", newTab: true },
+    ctas: [{ label: "Mehr", href: "https://example.test", newTab: true }],
   },
   { type: "news-channel", id: "k", channelId: "c", count: 3, order: "newest" },
 ];
@@ -64,7 +64,7 @@ describe("heroSliderTranslationProvider", () => {
 
     expect(next.startsWith("b64:")).toBe(true);
     expect(slide.headline).toBe("Headline");
-    expect(slide.cta).toEqual({ label: "More", href: "https://example.test", newTab: true });
+    expect(slide.ctas).toEqual([{ label: "More", href: "https://example.test", newTab: true }]);
     expect(slide.image.alt).toBe("Ein Lkw");
     expect(channel).toEqual({ ...items[1], ctaLabel: DEFAULT_CTA_LABEL });
   });

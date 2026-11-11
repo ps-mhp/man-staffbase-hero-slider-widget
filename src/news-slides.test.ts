@@ -121,10 +121,12 @@ describe("postToSlide", () => {
       image: { url: "https://cdn.test/wide-first.jpg", alt: "", width: 1900, height: 1069 },
       headline: "Volvo kommuniziert 700 km Reichweite",
       subline: "Eine Einordnung für das Kundengespräch.",
-      cta: {
-        label: "Mehr erfahren",
-        href: "https://tenant.test/openlink/content/news/article/x",
-      },
+      ctas: [
+        {
+          label: "Mehr erfahren",
+          href: "https://tenant.test/openlink/content/news/article/x",
+        },
+      ],
     });
   });
 
@@ -153,19 +155,19 @@ describe("postToSlide", () => {
   it("lässt die Schaltfläche weg, wenn die Beschriftung leer ist", () => {
     const slide = postToSlide(post(), { slideId: "s1", ctaLabel: "  " }, ["de_DE"]);
 
-    expect(slide.cta).toBeUndefined();
+    expect(slide.ctas).toBeUndefined();
   });
 
   it("fällt ohne detail_view auf den Pfad der Artikelansicht zurück", () => {
     const slide = postToSlide(post({ links: undefined }), { slideId: "s1" }, ["de_DE"]);
 
-    expect(slide.cta?.href).toBe("/content/news/article/6a5e6703cb02c92e74be1eaa");
+    expect(slide.ctas?.[0]?.href).toBe("/content/news/article/6a5e6703cb02c92e74be1eaa");
   });
 
   it("öffnet nie einen neuen Tab — der Beitrag liegt im selben Tenant", () => {
     const slide = postToSlide(post(), { slideId: "s1" }, ["de_DE"]);
 
-    expect(slide.cta?.newTab).toBeUndefined();
+    expect(slide.ctas?.[0]?.newTab).toBeUndefined();
   });
 
   it("liefert eine Folie mit leerer Bild-URL, wenn der Beitrag kein Bild hat", () => {

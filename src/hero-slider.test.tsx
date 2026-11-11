@@ -54,7 +54,7 @@ describe("HeroSlider", () => {
           slides={[
             slide("a", {
               subline: "Die Unterzeile",
-              cta: { label: "Mehr erfahren", href: "https://example.test/ziel" },
+              ctas: [{ label: "Mehr erfahren", href: "https://example.test/ziel" }],
             }),
           ]}
         />,
@@ -78,7 +78,7 @@ describe("HeroSlider", () => {
         <HeroSlider
           slides={[
             slide("a", {
-              cta: { label: "Extern", href: "https://example.test/x", newTab: true },
+              ctas: [{ label: "Extern", href: "https://example.test/x", newTab: true }],
             }),
           ]}
         />,
@@ -87,6 +87,42 @@ describe("HeroSlider", () => {
       const link = screen.getByRole("link", { name: "Extern" });
       expect(link).toHaveAttribute("target", "_blank");
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    });
+
+    it("zeigt mehrere Schaltflächen in Reihenfolge mit Stil und Symbol", () => {
+      const { container } = render(
+        <HeroSlider
+          slides={[
+            slide("a", {
+              ctas: [
+                { label: "Konfigurieren", href: "https://example.test/k", icon: "arrow-right" },
+                {
+                  label: "Prospekt",
+                  href: "/content/page/abc",
+                  variant: "outline",
+                  icon: "download",
+                  iconPosition: "start",
+                },
+              ],
+            }),
+          ]}
+        />,
+      );
+
+      const first = screen.getByTestId("hero-cta-0");
+      const second = screen.getByTestId("hero-cta-1");
+      expect(first).toHaveClass("man-hero__cta", "man-hero__cta--primary", "man-hero__cta--lead");
+      expect(second).toHaveClass("man-hero__cta", "man-hero__cta--outline", "man-hero__cta--extra");
+      expect(screen.getByRole("link", { name: "Prospekt" })).toHaveAttribute("href", "/content/page/abc");
+      // Symbol nach dem Text bei der ersten, davor bei der zweiten.
+      expect(first.lastElementChild).toHaveClass("man-hero__cta-icon");
+      expect(second.firstElementChild).toHaveClass("man-hero__cta-icon");
+      expect(container.querySelectorAll(".man-hero__ctas")).toHaveLength(1);
+    });
+
+    it("rendert ohne Schaltflächen keinen leeren Behälter", () => {
+      const { container } = render(<HeroSlider slides={[slide("a")]} />);
+      expect(container.querySelector(".man-hero__ctas")).toBeNull();
     });
   });
 
