@@ -16,10 +16,14 @@
  *
  * Der Editor schreibt nichts selbst zurück — er meldet jede Änderung über
  * `onChange`. Geprüft wird deshalb durchweg, welche Folienliste dort ankommt.
+ * Übernehmen, Abbrechen und Rückgängig gehören dem Rahmen aus
+ * `@man/config-ui`; sie stehen in `slide-editor-injector.test.tsx`.
  */
 
 import * as React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { ConfigShellProvider, type ConfigShellState } from "@man/config-ui";
 import { MediaClient, MediaItem } from "@shared/media/media-client";
 import { MAX_ITEMS, SlideEditor } from "./slide-editor";
 import { HeroItem, DEFAULT_CHANNEL_COUNT, NewsChannelItem, NewsPostItem } from "./hero-items";
@@ -105,116 +109,152 @@ const stubNewsSource = (overrides: Partial<NewsSource> = {}): NewsSource => ({
 
 interface Harness {
   onChange: jest.Mock<void, [HeroItem[]]>;
-  onSave: jest.Mock;
-  onClose: jest.Mock;
   /** Die Eintragsliste des jüngsten `onChange`. */
   latest: () => HeroItem[];
   /** Dieselbe Liste, aber als Folien getippt — die meisten Fälle prüfen Folien. */
   latestSlides: () => Slide[];
 }
 
+interface SetupOptions {
+  newsSource?: NewsSource;
+  /** Was der Rahmen meldet: Ansicht und ob Fehler schon gezeigt werden. */
+  shell?: Partial<ConfigShellState>;
+}
+
+/** Der Stand des Rahmens, wie ihn `ConfigShell` im Studio liefert. */
+const shellState = (overrides: Partial<ConfigShellState> = {}): ConfigShellState => ({
+  view: "editor",
+  setView: () => undefined,
+  preview: true,
+  issuesVisible: false,
+  ...overrides,
+});
+
+/** Die Zeile eines Eintrags in der Liste links, gefunden über ihren Titel. */
+const row = (name: string | RegExp): HTMLElement => screen.getByRole("row", { name });
+
+const rows = (): HTMLElement[] => within(screen.getByRole("grid", { name: "Einträge" })).getAllByRole("row");
+
 /** Öffnet das Menü hinter „Neu" und wählt eine Sorte. */
-const addVia = (testId: string): void => {
-  fireEvent.click(screen.getByTestId("item-add"));
-  fireEvent.click(screen.getByTestId(testId));
+const addVia = async (kind: RegExp): Promise<void> => {
+  await userEvent.click(screen.getByRole("button", { name: "Neu" }));
+  await userEvent.click(await screen.findByRole("menuitem", { name: kind }));
 };
 
-const setup = (value: HeroItem[], dirty = false, newsSource = stubNewsSource()): Harness => {
-  const onChange = jest.fn<void, [HeroItem[]]>();
-  const onSave = jest.fn();
-  const onClose = jest.fn();
-
-  render(
-    <SlideEditor
-      value={value}
-      onChange={onChange}
-      onSave={onSave}
-      onClose={onClose}
-      dirty={dirty}
-      mediaClient={stubMediaClient()}
-      newsSource={newsSource}
-    />,
-  );
-
-  const latest = (): HeroItem[] => onChange.mock.calls[onChange.mock.calls.length - 1]![0];
-
-  return {
-    onChange,
-    onSave,
-    onClose,
-    latest,
-    latestSlides: () => latest() as Slide[],
-  };
-};
+const action = (name: string): HTMLElement => screen.getByRole("button", { name });
 
 /**
- * Wie `setup`, aber mit Zustand: der Editor ist kontrolliert, und mehrere
- * Schritte hintereinander brauchen den jeweils neuen Wert.
+ * Baut den Editor auf. `live` hält den Wert im Zustand: der Editor ist
+ * kontrolliert, und mehrere Schritte hintereinander brauchen den jeweils
+ * neuen Wert.
  */
-const setupLive = (value: HeroItem[], newsSource = stubNewsSource()): Harness => {
+const mount = (value: HeroItem[], live: boolean, options: SetupOptions): Harness => {
   const onChange = jest.fn<void, [HeroItem[]]>();
+  const newsSource = options.newsSource ?? stubNewsSource();
 
-  function Live(): React.ReactElement {
+  function Harnessed(): React.ReactElement {
     const [items, setItems] = React.useState(value);
     return (
-      <SlideEditor
-        value={items}
-        onChange={(next) => {
-          onChange(next);
-          setItems(next);
-        }}
-        onSave={jest.fn()}
-        onClose={jest.fn()}
-        dirty={false}
-        mediaClient={stubMediaClient()}
-        newsSource={newsSource}
-      />
+      <ConfigShellProvider value={shellState(options.shell)}>
+        <SlideEditor
+          value={live ? items : value}
+          onChange={(next) => {
+            onChange(next);
+            if (live) setItems(next);
+          }}
+          mediaClient={stubMediaClient()}
+          newsSource={newsSource}
+        />
+      </ConfigShellProvider>
     );
   }
 
-  render(<Live />);
+  render(<Harnessed />);
   const latest = (): HeroItem[] => onChange.mock.calls[onChange.mock.calls.length - 1]![0];
-  return { onChange, onSave: jest.fn(), onClose: jest.fn(), latest, latestSlides: () => latest() as Slide[] };
+  return { onChange, latest, latestSlides: () => latest() as Slide[] };
 };
+
+const setup = (value: HeroItem[], options: SetupOptions = {}): Harness => mount(value, false, options);
+
+const setupLive = (value: HeroItem[], options: SetupOptions = {}): Harness => mount(value, true, options);
 
 describe("SlideEditor", () => {
   describe("Eintragsliste", () => {
     it("erklärt bei leerer Liste, welche Sorten es gibt", () => {
       setup([]);
-      expect(screen.getByText(/Noch kein Eintrag/i)).toBeInTheDocument();
+      expect(screen.getByText(/Noch kein Eintrag\./)).toBeInTheDocument();
+      expect(screen.getByText(/lege einen neuen an/)).toBeInTheDocument();
     });
 
-    it("listet alle Folien mit ihrer Überschrift", () => {
+    it("steht als benannte Seitenleiste mit Anzahl und Grenze da", () => {
       setup([slide("a"), slide("b")]);
-      expect(screen.getByTestId("slide-item-a")).toHaveTextContent("Überschrift a");
-      expect(screen.getByTestId("slide-item-b")).toHaveTextContent("Überschrift b");
+
+      expect(screen.getByRole("complementary", { name: "Einträge" })).toHaveTextContent(
+        `2 von ${MAX_ITEMS}`,
+      );
+      expect(rows()).toHaveLength(2);
+    });
+
+    it("listet alle Folien mit ihrer Überschrift und Sorte", () => {
+      setup([slide("a"), slide("b")]);
+      expect(row("Überschrift a")).toHaveTextContent("Folie");
+      expect(row("Überschrift b")).toBeInTheDocument();
+      expect(row("Überschrift a")).toHaveAttribute("aria-selected", "true");
+    });
+
+    it("zeigt in der Liste das Vorschaubild der Folie", () => {
+      setup([slide("a"), slide("b", { image: { url: "", alt: "" } })]);
+
+      expect(row("Überschrift a").querySelector("img")).toHaveAttribute(
+        "src",
+        "https://cdn.example.test/a.png",
+      );
+      expect(row("Überschrift b").querySelector("img")).toBeNull();
     });
 
     it("beschriftet eine Folie ohne Überschrift erkennbar", () => {
       setup([slide("a", { headline: "  " })]);
-      expect(screen.getByTestId("slide-item-a")).toHaveTextContent("Ohne Überschrift");
+      expect(row("Ohne Überschrift")).toBeInTheDocument();
     });
 
-    it("fügt eine leere Folie hinzu", () => {
-      const h = setup([slide("a")]);
-      addVia("slide-add");
+    it("nennt über dem Formular Sorte und Stelle des gewählten Eintrags", () => {
+      setup([slide("a"), slide("b")]);
+      expect(screen.getByRole("heading", { name: "Folie 1 von 2" })).toBeInTheDocument();
+    });
+
+    it("wechselt per Klick in der Liste zum Formular des Eintrags", async () => {
+      setup([slide("a"), slide("b")]);
+      await userEvent.click(screen.getByText("Überschrift b"));
+
+      expect(screen.getByRole("heading", { name: "Folie 2 von 2" })).toBeInTheDocument();
+      expect(screen.getByTestId("slide-headline")).toHaveValue("Überschrift b");
+      expect(row("Überschrift b")).toHaveAttribute("aria-selected", "true");
+    });
+
+    it("fügt eine leere Folie hinzu und wählt sie aus", async () => {
+      const h = setupLive([slide("a")]);
+      await addVia(/^Folie/);
 
       const slides = h.latestSlides();
       expect(slides).toHaveLength(2);
       expect(slides[1]!.image.url).toBe("");
+      expect(screen.getByRole("heading", { name: "Folie 2 von 2" })).toBeInTheDocument();
     });
 
     it("verhindert mehr Folien als sinnvoll gezeigt werden können", () => {
       const many = Array.from({ length: MAX_ITEMS }, (_, i) => slide(`s${i}`));
-      setup(many);
+      const h = setup(many);
 
-      expect(screen.getByTestId("item-add")).toBeDisabled();
-      expect(screen.getByTestId("slide-duplicate")).toBeDisabled();
+      expect(screen.getByRole("button", { name: "Neu" })).toBeDisabled();
+      // Gesperrt, nicht weggelassen: die Knöpfe springen nicht, und der Weg bleibt sichtbar.
+      expect(action("Eintrag duplizieren")).toHaveAttribute("aria-disabled", "true");
+      fireEvent.click(action("Eintrag duplizieren"));
+      expect(h.onChange).not.toHaveBeenCalled();
     });
 
     it("dupliziert eine Folie mit eigener Kennung direkt dahinter", () => {
       const h = setup([slide("a"), slide("b")]);
-      fireEvent.click(screen.getByTestId("slide-duplicate"));
+      fireEvent.click(action("Eintrag duplizieren"));
 
       const slides = h.latestSlides();
       expect(slides.map((s) => s.headline)).toEqual([
@@ -225,24 +265,101 @@ describe("SlideEditor", () => {
       expect(slides[1]!.id).not.toBe("a");
     });
 
-    it("löscht die gewählte Folie", () => {
-      const h = setup([slide("a"), slide("b")]);
-      fireEvent.click(screen.getByTestId("slide-remove"));
+    it("löscht die gewählte Folie und wählt die davor", async () => {
+      const h = setupLive([slide("a"), slide("b"), slide("c")]);
+      await userEvent.click(screen.getByText("Überschrift c"));
+      fireEvent.click(action("Eintrag löschen"));
 
-      expect(h.latest().map((s) => s.id)).toEqual(["b"]);
+      expect(h.latest().map((s) => s.id)).toEqual(["a", "b"]);
+      expect(screen.getByRole("heading", { name: "Folie 2 von 2" })).toBeInTheDocument();
+      expect(screen.getByTestId("slide-headline")).toHaveValue("Überschrift b");
     });
 
-    it("verschiebt eine Folie nach hinten", () => {
-      const h = setup([slide("a"), slide("b")]);
-      fireEvent.click(screen.getByTestId("slide-down"));
+    it("verschiebt eine Folie nach hinten, und die Auswahl geht mit", () => {
+      const h = setupLive([slide("a"), slide("b")]);
+      fireEvent.click(action("Eintrag nach unten"));
 
       expect(h.latest().map((s) => s.id)).toEqual(["b", "a"]);
+      expect(screen.getByRole("heading", { name: "Folie 2 von 2" })).toBeInTheDocument();
+      expect(screen.getByTestId("slide-headline")).toHaveValue("Überschrift a");
     });
 
     it("sperrt das Verschieben an den Rändern", () => {
-      setup([slide("a"), slide("b")]);
-      expect(screen.getByTestId("slide-up")).toBeDisabled();
-      expect(screen.getByTestId("slide-down")).toBeEnabled();
+      const h = setup([slide("a"), slide("b")]);
+
+      expect(action("Eintrag nach oben")).toHaveAttribute("aria-disabled", "true");
+      expect(action("Eintrag nach unten")).not.toHaveAttribute("aria-disabled", "true");
+      fireEvent.click(action("Eintrag nach oben"));
+      expect(h.onChange).not.toHaveBeenCalled();
+    });
+
+    it("markiert fehlerhafte Einträge, sobald der Rahmen Fehler zeigt", () => {
+      setup([slide("a"), slide("b", { image: { url: "", alt: "" } })], {
+        shell: { issuesVisible: true },
+      });
+
+      expect(within(row("Überschrift b")).getByText("Fehlerhaft")).toBeInTheDocument();
+      expect(row("Überschrift b")).toHaveTextContent("Bild fehlt");
+      expect(within(row("Überschrift a")).queryByText("Fehlerhaft")).toBeNull();
+    });
+
+    it("markiert nichts, solange der Rahmen keine Fehler zeigt", () => {
+      setup([slide("b", { image: { url: "", alt: "" } })]);
+      expect(within(row("Überschrift b")).queryByText("Fehlerhaft")).toBeNull();
+    });
+
+    it("zeichnet keine eigenen Knöpfe zum Übernehmen und Abbrechen", () => {
+      setup([slide("a")]);
+
+      expect(screen.queryByRole("button", { name: "Übernehmen" })).toBeNull();
+      expect(screen.queryByRole("button", { name: "Abbrechen" })).toBeNull();
+      expect(screen.queryByText("Ungesicherte Änderungen")).toBeNull();
+    });
+  });
+
+  describe("Sortieren per Ziehen", () => {
+    beforeEach(() => jest.useFakeTimers());
+    afterEach(() => jest.useRealTimers());
+
+    /** Ein Tastendruck am fokussierten Element, wie ihn der Drag-Manager erwartet. */
+    const press = (key: string): void => {
+      const target = document.activeElement ?? document.body;
+      fireEvent.keyDown(target, { key });
+      fireEvent.keyUp(target, { key });
+      act(() => jest.runAllTimers());
+    };
+
+    it("schiebt die erste Folie hinter die zweite, und die Auswahl geht mit", async () => {
+      const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+      const h = setupLive([slide("a"), slide("b"), slide("c")]);
+      // Erst ein Tab: so gilt die Tastatur als Eingabeweg, und Enter am Griff
+      // beginnt das Ziehen statt einen Klick.
+      await user.tab();
+      const [handle] = screen.getAllByRole("button", { name: /Ziehen zum Sortieren/ });
+      act(() => handle!.focus());
+      press("Enter");
+      press("ArrowDown");
+      press("Enter");
+
+      expect(h.latest().map((s) => s.id)).toEqual(["b", "a", "c"]);
+      expect(screen.getByRole("heading", { name: "Folie 2 von 3" })).toBeInTheDocument();
+    });
+  });
+
+  describe("Vorschau", () => {
+    it("zeigt in der Geräteansicht die gewählte Folie im Aussehen der Bühne", async () => {
+      setupLive([slide("a"), slide("b")], { shell: { view: "desktop" } });
+
+      expect(screen.getByTestId("hero-slide-preview")).toHaveTextContent("Überschrift a");
+      await userEvent.click(screen.getByText("Überschrift b"));
+      expect(screen.getByTestId("hero-slide-preview")).toHaveTextContent("Überschrift b");
+      // Die Liste bleibt stehen, das Formular weicht der Vorschau.
+      expect(screen.queryByTestId("slide-headline")).toBeNull();
+    });
+
+    it("zeigt im Editor keine Vorschau", () => {
+      setup([slide("a")]);
+      expect(screen.queryByTestId("hero-slide-preview")).toBeNull();
     });
   });
 
@@ -491,7 +608,7 @@ describe("SlideEditor", () => {
       ]);
 
       expect(screen.getByTestId("slide-image-thumb").tagName).toBe("VIDEO");
-      expect(screen.getByTestId("slide-item-a").querySelector("video")).toHaveAttribute(
+      expect(row("Überschrift a").querySelector("video")).toHaveAttribute(
         "src",
         "https://cdn.example.test/film.mp4#t=0.001",
       );
@@ -568,9 +685,6 @@ describe("SlideEditor", () => {
         <SlideEditor
           value={[slide("a", { image: { url: "", alt: "" } })]}
           onChange={onChange}
-          onSave={jest.fn()}
-          onClose={jest.fn()}
-          dirty={false}
           mediaClient={stubMediaClient({
             listMedia: jest.fn(async () => ({ items: [film], total: 1, nextOffset: null })),
           })}
@@ -596,9 +710,6 @@ describe("SlideEditor", () => {
         <SlideEditor
           value={[postItem("p", { channelId: "c1", postId: "p1" })]}
           onChange={jest.fn()}
-          onSave={jest.fn()}
-          onClose={jest.fn()}
-          dirty={false}
           mediaClient={stubMediaClient({
             listMedia: jest.fn(async () => ({ items: [mediaItem("a"), film], total: 2, nextOffset: null })),
           })}
@@ -612,46 +723,30 @@ describe("SlideEditor", () => {
       expect(screen.queryByTestId("media-picker-item-film")).not.toBeInTheDocument();
     });
 
-    it("zeigt nach dem Wechsel der Folie deren Adresse, nicht die verworfene Eingabe", () => {
+    it("zeigt nach dem Wechsel der Folie deren Adresse, nicht die verworfene Eingabe", async () => {
       setup([slide("a"), slide("b")]);
       typeUrl("slide-image-url", "kaputt");
-      fireEvent.click(screen.getByTestId("slide-item-b"));
+      await userEvent.click(screen.getByText("Überschrift b"));
 
       expect(screen.getByTestId("slide-image-url")).toHaveValue("https://cdn.example.test/b.png");
       expect(screen.queryByTestId("slide-image-url-error")).not.toBeInTheDocument();
     });
   });
 
-  describe("Fußzeile", () => {
-    it("benennt ungesicherte Änderungen", () => {
-      setup([slide("a")], true);
-      expect(screen.getByText("Ungesicherte Änderungen")).toBeInTheDocument();
-    });
-
-    it("reicht Übernehmen und Abbrechen weiter", () => {
-      const h = setup([slide("a")]);
-
-      fireEvent.click(screen.getByTestId("slide-editor-save"));
-      expect(h.onSave).toHaveBeenCalled();
-
-      fireEvent.click(screen.getByTestId("slide-editor-cancel"));
-      expect(h.onClose).toHaveBeenCalled();
-    });
-  });
-
   describe("News-Einträge anlegen", () => {
-    it("legt einen Beitrags-Eintrag an und wählt ihn aus", () => {
-      const h = setup([]);
-      addVia("news-post-add");
+    it("legt einen Beitrags-Eintrag an und wählt ihn aus", async () => {
+      const h = setupLive([]);
+      await addVia(/^News-Beitrag/);
 
       const items = h.latest();
       expect(items).toHaveLength(1);
       expect(items[0]).toMatchObject({ type: "news-post", channelId: "", postId: "" });
+      expect(screen.getByRole("heading", { name: "News-Beitrag 1 von 1" })).toBeInTheDocument();
     });
 
-    it("legt einen Kanal-Eintrag mit brauchbaren Vorgaben an", () => {
+    it("legt einen Kanal-Eintrag mit brauchbaren Vorgaben an", async () => {
       const h = setup([]);
-      addVia("news-channel-add");
+      await addVia(/^News-Kanal/);
 
       expect(h.latest()[0]).toMatchObject({
         type: "news-channel",
@@ -660,55 +755,58 @@ describe("SlideEditor", () => {
       });
     });
 
-    it("bietet die drei Sorten erst an, wenn das Menü offen ist", () => {
+    it("bietet die drei Sorten mit ihrem Zweck erst an, wenn das Menü offen ist", async () => {
       setup([]);
-      expect(screen.queryByTestId("item-add-menu")).not.toBeInTheDocument();
+      expect(screen.queryByRole("menu")).toBeNull();
 
-      fireEvent.click(screen.getByTestId("item-add"));
-      expect(screen.getByTestId("slide-add")).toBeInTheDocument();
-      expect(screen.getByTestId("news-post-add")).toBeInTheDocument();
-      expect(screen.getByTestId("news-channel-add")).toBeInTheDocument();
+      await userEvent.click(screen.getByRole("button", { name: "Neu" }));
+      const menu = await screen.findByRole("menu");
+
+      expect(within(menu).getAllByRole("menuitem")).toHaveLength(3);
+      expect(menu).toHaveTextContent("Bild und Text selbst pflegen");
+      expect(menu).toHaveTextContent("Ein bestimmter Beitrag");
+      expect(menu).toHaveTextContent("Eine Folie je Beitrag");
     });
 
-    it("schließt das Menü nach der Wahl", () => {
+    it("schließt das Menü nach der Wahl", async () => {
       setup([]);
-      addVia("slide-add");
-      expect(screen.queryByTestId("item-add-menu")).not.toBeInTheDocument();
+      await addVia(/^Folie/);
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull());
     });
 
-    it("schließt das Menü mit Escape", () => {
+    it("schließt das Menü mit Escape", async () => {
       setup([]);
-      fireEvent.click(screen.getByTestId("item-add"));
-      fireEvent.keyDown(screen.getByTestId("item-add-menu"), { key: "Escape" });
+      await userEvent.click(screen.getByRole("button", { name: "Neu" }));
+      await screen.findByRole("menu");
+      await userEvent.keyboard("{Escape}");
 
-      expect(screen.queryByTestId("item-add-menu")).not.toBeInTheDocument();
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull());
     });
 
-    it("sperrt das Anlegen, wenn die Bühne voll ist", () => {
+    it("sperrt das Anlegen, wenn die Bühne voll ist", async () => {
       setup(Array.from({ length: MAX_ITEMS }, (_, i) => slide(`s${i}`)));
 
-      expect(screen.getByTestId("item-add")).toBeDisabled();
-      expect(screen.queryByTestId("item-add-menu")).not.toBeInTheDocument();
+      const add = screen.getByRole("button", { name: "Neu" });
+      expect(add).toBeDisabled();
+      await userEvent.click(add);
+      expect(screen.queryByRole("menu")).toBeNull();
     });
 
     it("zeigt je Eintrag seine Sorte an", async () => {
       setup([slide("a"), postItem("p"), channelItem("c")]);
 
-      expect(screen.getByTestId("slide-item-a")).toHaveTextContent("Folie");
-      expect(screen.getByTestId("slide-item-p")).toHaveTextContent("Post");
-      expect(screen.getByTestId("slide-item-c")).toHaveTextContent("Kanal");
+      const [first, second, third] = rows();
+      expect(first).toHaveTextContent("Folie");
+      expect(second).toHaveTextContent("Post");
+      expect(third).toHaveTextContent("Kanal");
 
       // Der Kanalname wird nachgeladen; bis dahin steht dort die Kennung.
-      await waitFor(() =>
-        expect(screen.getByTestId("slide-item-c")).toHaveTextContent("Unternehmen · 3 Beiträge"),
-      );
+      await waitFor(() => expect(rows()[2]).toHaveTextContent("Unternehmen · 3 Beiträge"));
     });
 
     it("holt den Titel eines gewählten Beitrags für die Liste nach", async () => {
       setup([postItem("p", { postId: "p1" })]);
-      await waitFor(() =>
-        expect(screen.getByTestId("slide-item-p")).toHaveTextContent("Beitrag p1"),
-      );
+      await waitFor(() => expect(rows()[0]).toHaveTextContent("Beitrag p1"));
     });
   });
 
@@ -748,7 +846,7 @@ describe("SlideEditor", () => {
     });
 
     it("tritt zur Seite, wenn die Kanalliste nicht erreichbar ist", async () => {
-      setup([postItem("p")], false, stubNewsSource({ channels: jest.fn(async () => []) }));
+      setup([postItem("p")], { newsSource: stubNewsSource({ channels: jest.fn(async () => []) }) });
 
       const manual = await screen.findByTestId("news-post-channel-manual");
       expect(manual).toBeInTheDocument();

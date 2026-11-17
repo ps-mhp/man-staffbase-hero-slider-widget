@@ -16,53 +16,42 @@
  *
  * Die Einträge liegen als JSON in einem einzigen Attribut — in einem Textfeld
  * wären sie unbearbeitbar. Dieser Editor tritt an seine Stelle: links die
- * Liste der Einträge, rechts die Felder des gewählten.
+ * Liste der Einträge, rechts die Felder des gewählten, in den Geräteansichten
+ * statt der Felder die Vorschau.
  *
  * Ein Eintrag ist entweder eine handgepflegte Folie oder ein Verweis auf die
- * News: ein einzelner Beitrag oder ein ganzer Kanal. Die Liste links behandelt
- * alle drei gleich — Reihenfolge, Duplizieren und Löschen gehören zum Eintrag,
- * nicht zu seiner Sorte. Nur die rechte Spalte wechselt.
+ * News: ein einzelner Beitrag oder ein ganzer Kanal. Nur die rechte Spalte
+ * wechselt mit der Sorte.
  *
- * Er schreibt nichts selbst zurück. Das Übergeben an das Formularfeld, die
- * Rückfrage bei ungesicherten Änderungen und das Wiederöffnen erledigt
- * `@shared/config-modal`; hier stehen nur die Felder.
+ * Er schreibt nichts selbst zurück und zeichnet keine Knöpfe zum Übernehmen
+ * oder Abbrechen: Kopf, Status, Rückgängig und Rückfrage kommen aus dem
+ * Rahmen von `@man/config-ui`, das Zurückschreiben ins Formularfeld aus
+ * `@shared/config-modal`. Nachgeladen wird er nur im Studio
+ * (`slide-editor-injector.ts`) — die Bausteine bringen react-aria mit, und
+ * das gehört nicht ins Seitenbündel.
  */
 
 import * as React from "react";
 import { ReactElement, useMemo, useState } from "react";
+import { ConfigWorkspace } from "@man/config-ui/layout/config-workspace";
+import { ItemActions } from "@man/config-ui/sidebar/item-actions";
 import { useHotStyle } from "@shared/hot-style";
 import { MediaClient, createMediaClient } from "@shared/media/media-client";
 import { MediaAccept, MediaPicker, PickedMedia } from "@shared/media/media-picker";
-import {
-  HeroItem,
-  NewsChannelItem,
-  NewsPostItem,
-  SlideItem,
-  emptyNewsChannelItem,
-  emptyNewsPostItem,
-  isNewsChannelItem,
-  isNewsPostItem,
-  isSlideItem,
-} from "./hero-items";
+
+import { HeroEntryPreview } from "./hero-slide-preview";
+import { HeroItem, isNewsChannelItem, isNewsPostItem, isSlideItem } from "./hero-items";
+import { MAX_ITEMS, entryKindName } from "./editor-entries";
+import { EntrySidebar } from "./editors/entry-sidebar";
 import { useItemLabels } from "./editors/item-label";
 import { NewsChannelForm } from "./editors/news-channel-form";
 import { NewsPostForm } from "./editors/news-post-form";
 import { NewsSource, cacheNewsSource, defaultNewsSource } from "./editors/news-source";
 import { SlideForm } from "./editors/slide-form";
-import { SlideImage, emptySlide, firstFrameUrl, newSlideId } from "./slides-model";
+import { Entries, PickerTarget, patchForPick, pickedImage, useEntries } from "./use-entries";
 import slideEditorCss from "./styles/slide-editor.scss";
 
-/**
- * Mehr Einträge trägt keine Bühne: sie werden nur nacheinander gezeigt, und
- * was hinter dem fünften steht, sieht im Autoplay niemand mehr. Ein
- * Kanaleintrag zählt hier als einer — wie viele Folien er tatsächlich
- * beisteuert, entscheidet erst `resolve-hero-items`, das dieselbe Acht ein
- * zweites Mal durchsetzt.
- */
-export const MAX_ITEMS = 8;
-
-/** Welches Bild eines Eintrags der Picker gerade füllt. */
-type PickerTarget = "image" | "imagePortrait" | "imageOverride";
+export { MAX_ITEMS };
 
 /**
  * Eine Folie nimmt Bilder und Videos. Das Bild eines News-Beitrags bleibt ein
@@ -73,310 +62,116 @@ const SLIDE_MEDIA: MediaAccept = ["image", "video"];
 export interface SlideEditorProps {
   value: HeroItem[];
   onChange: (items: HeroItem[]) => void;
-  onSave: () => void;
-  onClose: () => void;
-  dirty: boolean;
   /** Vorgabe ist ein Client auf dieselbe Herkunft; für Tests austauschbar. */
   mediaClient?: MediaClient;
   /** Vorgabe sind die echten News-Endpunkte; für Tests austauschbar. */
   newsSource?: NewsSource;
 }
 
-export function SlideEditor({
-  value,
-  onChange,
-  onSave,
-  onClose,
-  dirty,
-  mediaClient,
-  newsSource,
-}: SlideEditorProps): ReactElement {
+interface EntryFormProps {
+  item: HeroItem;
+  entries: Entries;
+  source: NewsSource;
+  onPick: (target: PickerTarget) => void;
+}
+
+/** Die Felder je Sorte, unverändert aus `editors/`. */
+function EntryForm({ item, entries, source, onPick }: EntryFormProps): ReactElement | null {
+  if (isSlideItem(item)) {
+    return (
+      <SlideForm
+        // Je Eintrag eine eigene Instanz: das Adressfeld hält eine noch
+        // ungültige Eingabe fest, und die gehört nicht in die nächste Folie.
+        key={item.id}
+        slide={item}
+        onPatch={entries.patch}
+        onPick={onPick}
+        source={source}
+      />
+    );
+  }
+  if (isNewsPostItem(item)) {
+    return <NewsPostForm item={item} onPatch={entries.patch} onPick={onPick} source={source} />;
+  }
+  if (isNewsChannelItem(item)) {
+    return <NewsChannelForm item={item} onPatch={entries.patch} source={source} />;
+  }
+  return null;
+}
+
+interface EntryMainProps {
+  entries: Entries;
+  total: number;
+  source: NewsSource;
+  onPick: (target: PickerTarget) => void;
+}
+
+/** Die Hauptfläche: welcher Eintrag, seine Aktionen, seine Felder. */
+function EntryMain({ entries, total, source, onPick }: EntryMainProps): ReactElement {
+  const { item, index, full } = entries;
+  if (item === undefined) {
+    return <p className="p-6 text-sm text-muted-foreground">Wähle links einen Eintrag oder lege einen neuen an.</p>;
+  }
+  return (
+    <div className="p-6">
+      <div className="man-se__form">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-[17px] font-semibold text-foreground">
+            {`${entryKindName(item)} ${index + 1} von ${total}`}
+          </h2>
+          <ItemActions
+            noun="Eintrag"
+            onMoveBack={() => entries.move(-1)}
+            onMoveForward={() => entries.move(1)}
+            canMoveBack={index > 0}
+            canMoveForward={index < total - 1}
+            onDuplicate={entries.duplicate}
+            // Voll heißt: keine Kopie. Gesperrt statt weggelassen, damit die
+            // Knöpfe nicht springen; „Neu“ nennt die Grenze.
+            canDuplicate={!full}
+            onDelete={entries.remove}
+          />
+        </div>
+        <EntryForm item={item} entries={entries} source={source} onPick={onPick} />
+      </div>
+    </div>
+  );
+}
+
+export function SlideEditor({ value, onChange, mediaClient, newsSource }: SlideEditorProps): ReactElement {
   const css = useHotStyle(slideEditorCss, "hero-slider-widget", "styles/slide-editor.scss");
   const client = useMemo(() => mediaClient ?? createMediaClient(), [mediaClient]);
   const source = useMemo(() => cacheNewsSource(newsSource ?? defaultNewsSource), [newsSource]);
-
-  const [selected, setSelected] = useState(0);
-  const [pickerTarget, setPickerTarget] = useState<PickerTarget | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  // Nach dem Löschen des letzten Eintrags zeigt der Index ins Leere. Klemmen
-  // statt beim Löschen nachzuführen: so kann kein Pfad ihn ungültig lassen.
-  const index = Math.min(selected, Math.max(value.length - 1, 0));
-  const item: HeroItem | undefined = value[index];
+  const entries = useEntries(value, onChange);
   const labels = useItemLabels(value, source);
-  const full = value.length >= MAX_ITEMS;
-
-  const patch = (changes: Partial<HeroItem>): void => {
-    if (item === undefined) return;
-    onChange(value.map((entry, i) => (i === index ? ({ ...entry, ...changes } as HeroItem) : entry)));
-  };
-
-  const add = (fresh: HeroItem): void => {
-    setMenuOpen(false);
-    if (full) return;
-    onChange([...value, fresh]);
-    setSelected(value.length);
-  };
-
-  const duplicate = (): void => {
-    if (item === undefined || full) return;
-    // Eine neue Kennung, keine geerbte: zwei Einträge mit derselben wären als
-    // React-Schlüssel und beim Auflösen der Folien nicht zu unterscheiden.
-    const copy = { ...item, id: newSlideId() } as HeroItem;
-    onChange([...value.slice(0, index + 1), copy, ...value.slice(index + 1)]);
-    setSelected(index + 1);
-  };
-
-  const remove = (): void => {
-    onChange(value.filter((_, i) => i !== index));
-    setSelected(Math.max(index - 1, 0));
-  };
-
-  /** Verschiebt den gewählten Eintrag um eine Stelle; am Rand passiert nichts. */
-  const move = (delta: number): void => {
-    const target = index + delta;
-    if (target < 0 || target >= value.length) return;
-    const next = [...value];
-    const [moved] = next.splice(index, 1);
-    if (moved === undefined) return;
-    next.splice(target, 0, moved);
-    onChange(next);
-    setSelected(target);
-  };
+  const [pickerTarget, setPickerTarget] = useState<PickerTarget | null>(null);
+  const { item } = entries;
 
   const handlePick = (picked: PickedMedia): void => {
     const target = pickerTarget;
     setPickerTarget(null);
-    if (item === undefined || target === null) return;
-
-    const image: SlideImage = { url: picked.url, alt: picked.alt ?? "" };
-    if (picked.width !== undefined) image.width = picked.width;
-    if (picked.height !== undefined) image.height = picked.height;
-    if (picked.type === "video") image.kind = "video";
-
-    // Die vorhandene Beschreibung überlebt einen Bildwechsel nicht: sie
-    // beschriebe das alte Motiv und wäre damit schlechter als keine.
-    if (target === "image") patch({ image } as Partial<SlideItem>);
-    else if (target === "imageOverride") patch({ imageOverride: image } as Partial<NewsPostItem>);
-    else patch({ imagePortrait: image } as Partial<SlideItem>);
+    if (target !== null) entries.patch(patchForPick(target, pickedImage(picked)));
   };
 
   return (
     <div className="man-se" data-testid="slide-editor">
       <style>{css}</style>
-
-      <div className="man-se__body">
-        <div className="man-se__list-pane">
-          <div className="man-se__list-head">
-            {/* Der Blur des ganzen Blocks schließt das Menü: ein Klick daneben
-                nimmt ihm den Fokus. Ein Lauscher am Dokument wäre die zweite
-                Stelle, an der aufgeräumt werden muss. */}
-            <div
-              className="man-se__menu"
-              onBlur={(event) => {
-                if (!event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false);
-              }}
-              onKeyDown={(event) => {
-                if (event.key === "Escape") setMenuOpen(false);
-              }}
-            >
-              <button
-                type="button"
-                className="man-se__button man-se__button--primary"
-                data-testid="item-add"
-                aria-haspopup="menu"
-                aria-expanded={menuOpen}
-                disabled={full}
-                onClick={() => setMenuOpen((open) => !open)}
-              >
-                Neu<span className="man-se__add-plus" aria-hidden="true">+</span>
-              </button>
-
-              {menuOpen && (
-                <div className="man-se__menu-list" role="menu" data-testid="item-add-menu">
-                  <button
-                    type="button"
-                    role="menuitem"
-                    className="man-se__menu-item"
-                    data-testid="slide-add"
-                    onClick={() => add(emptySlide())}
-                  >
-                    Folie
-                    <span className="man-se__menu-note">Bild und Text selbst pflegen</span>
-                  </button>
-                  <button
-                    type="button"
-                    role="menuitem"
-                    className="man-se__menu-item"
-                    data-testid="news-post-add"
-                    onClick={() => add(emptyNewsPostItem())}
-                  >
-                    News-Beitrag
-                    <span className="man-se__menu-note">Ein bestimmter Beitrag</span>
-                  </button>
-                  <button
-                    type="button"
-                    role="menuitem"
-                    className="man-se__menu-item"
-                    data-testid="news-channel-add"
-                    onClick={() => add(emptyNewsChannelItem())}
-                  >
-                    News-Kanal
-                    <span className="man-se__menu-note">Eine Folie je Beitrag</span>
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {full && <p className="man-se__hint">Mehr als {MAX_ITEMS} Einträge sieht niemand.</p>}
-          </div>
-
-          <div className="man-se__list" role="list" data-testid="slide-list">
-            {value.map((entry, position) => {
-              const label = labels[position];
-              return (
-                <button
-                  key={entry.id}
-                  type="button"
-                  role="listitem"
-                  className={`man-se__item${position === index ? " man-se__item--active" : ""}`}
-                  data-testid={`slide-item-${entry.id}`}
-                  aria-current={position === index}
-                  onClick={() => setSelected(position)}
-                >
-                  <span className="man-se__item-index">{position + 1}</span>
-                  {label?.thumbUrl !== undefined && label.thumbVideo ? (
-                    <video
-                      className="man-se__item-thumb"
-                      src={firstFrameUrl(label.thumbUrl)}
-                      muted
-                      preload="metadata"
-                    />
-                  ) : label?.thumbUrl !== undefined ? (
-                    <img className="man-se__item-thumb" src={label.thumbUrl} alt="" />
-                  ) : (
-                    <span
-                      className="man-se__item-thumb man-se__item-thumb--empty"
-                      aria-hidden="true"
-                    />
-                  )}
-                  <span className="man-se__item-text">
-                    <span className="man-se__item-kind">{label?.kind ?? "Eintrag"}</span>
-                    <span className="man-se__item-title">{label?.title ?? ""}</span>
-                  </span>
-                </button>
-              );
-            })}
-
-            {value.length === 0 && (
-              <p className="man-se__empty">
-                Noch kein Eintrag. Lege über <strong>Neu</strong> eine eigene Folie an oder hole
-                einen Beitrag aus den News.
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="man-se__form-pane">
-          {item === undefined ? (
-            <p className="man-se__empty">Wähle links einen Eintrag oder lege einen neuen an.</p>
-          ) : (
-            <div className="man-se__form">
-              <div className="man-se__toolbar">
-                <button
-                  type="button"
-                  className="man-se__button"
-                  data-testid="slide-up"
-                  onClick={() => move(-1)}
-                  disabled={index === 0}
-                  aria-label="Eintrag nach vorn"
-                >
-                  ↑
-                </button>
-                <button
-                  type="button"
-                  className="man-se__button"
-                  data-testid="slide-down"
-                  onClick={() => move(1)}
-                  disabled={index >= value.length - 1}
-                  aria-label="Eintrag nach hinten"
-                >
-                  ↓
-                </button>
-                <button
-                  type="button"
-                  className="man-se__button"
-                  data-testid="slide-duplicate"
-                  onClick={duplicate}
-                  disabled={full}
-                >
-                  Duplizieren
-                </button>
-                <button
-                  type="button"
-                  className="man-se__button man-se__button--danger"
-                  data-testid="slide-remove"
-                  onClick={remove}
-                >
-                  Löschen
-                </button>
-              </div>
-
-              {isSlideItem(item) && (
-                <SlideForm
-                  // Je Eintrag eine eigene Instanz: das Adressfeld hält eine
-                  // noch ungültige Eingabe fest, und die gehört nicht in die
-                  // nächste Folie.
-                  key={item.id}
-                  slide={item}
-                  onPatch={(changes: Partial<SlideItem>) => patch(changes)}
-                  onPick={(target) => setPickerTarget(target)}
-                  source={source}
-                />
-              )}
-
-              {isNewsPostItem(item) && (
-                <NewsPostForm
-                  item={item}
-                  onPatch={(changes: Partial<NewsPostItem>) => patch(changes)}
-                  onPick={(target) => setPickerTarget(target)}
-                  source={source}
-                />
-              )}
-
-              {isNewsChannelItem(item) && (
-                <NewsChannelForm
-                  item={item}
-                  onPatch={(changes: Partial<NewsChannelItem>) => patch(changes)}
-                  source={source}
-                />
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className="man-se__footer">
-        <span className="man-se__footer-note">
-          {dirty ? "Ungesicherte Änderungen" : "Keine Änderungen"}
-        </span>
-        <button
-          type="button"
-          className="man-se__button"
-          data-testid="slide-editor-cancel"
-          onClick={onClose}
-        >
-          Abbrechen
-        </button>
-        <button
-          type="button"
-          className="man-se__button man-se__button--primary"
-          data-testid="slide-editor-save"
-          onClick={onSave}
-        >
-          Übernehmen
-        </button>
-      </div>
+      <ConfigWorkspace
+        className="flex-1"
+        sidebar={
+          <EntrySidebar
+            items={value}
+            labels={labels}
+            selectedId={item?.id}
+            onSelect={entries.select}
+            onAdd={entries.add}
+            onReorder={entries.reorder}
+          />
+        }
+        preview={<HeroEntryPreview item={item} />}
+      >
+        <EntryMain entries={entries} total={value.length} source={source} onPick={setPickerTarget} />
+      </ConfigWorkspace>
 
       {pickerTarget !== null && (
         <MediaPicker

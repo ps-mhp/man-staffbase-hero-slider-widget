@@ -12,13 +12,42 @@
  */
 
 import * as React from "react";
+import { GalleryHorizontalEnd } from "lucide-react";
 
-import { startFieldModalInjector } from "@shared/config-modal";
-import { SlideEditor } from "./slide-editor";
+import { FieldModalShellOptions, startFieldModalInjector } from "@shared/config-modal";
+import { changesStatus, validateHeroItems } from "./editor-entries";
 import { HeroItem, encodeHeroItemsAttribute, parseHeroItems } from "./hero-items";
+import { SLIDE_EDITOR_HELP } from "./slide-editor-help";
 
 /** Das Schemafeld, an dessen Stelle der Editor tritt. */
 const FIELD_KEY = "slides";
+
+/**
+ * Der Editor kommt erst, wenn ein Dialog ihn zeigt: er baut auf
+ * `@man/config-ui` und damit auf react-aria, und das hat im Seitenbündel,
+ * das jede Leserin lädt, nichts verloren. Hier im Seitenbündel bleiben nur
+ * Prüfung, Status und Hilfe – sie braucht der Rahmen, bevor der Editor da ist.
+ */
+const LazySlideEditor = React.lazy(() =>
+  import("./slide-editor").then((module) => ({ default: module.SlideEditor })),
+);
+
+const LOADING = React.createElement(
+  "p",
+  { className: "p-6 text-sm text-muted-foreground" },
+  "Editor wird geladen …",
+);
+
+/** Was der gemeinsame Rahmen vom Hero-Slider wissen muss. Offengelegt für Tests. */
+export const slideEditorShell: FieldModalShellOptions<HeroItem[]> = {
+  widgetName: "Hero-Slider",
+  title: "Folien bearbeiten",
+  icon: GalleryHorizontalEnd,
+  preview: true,
+  help: SLIDE_EDITOR_HELP,
+  statusText: changesStatus,
+  validate: validateHeroItems,
+};
 
 /**
  * Wartet auf den Konfigurationsdialog des Widgets und setzt den Folien-Editor
@@ -26,7 +55,9 @@ const FIELD_KEY = "slides";
  *
  * Alles, was das Überleben im fremden Dialog betrifft — Portal, Abfangen des
  * Schließens, Zurückschreiben über den nativen Setter —, liegt in
- * `@shared/config-modal`; hier bleibt nur die Zuordnung von Feld und Editor.
+ * `@shared/config-modal`; Kopf, Übernehmen, Rückgängig und Rückfrage im
+ * Rahmen von `@man/config-ui`. Hier bleibt nur die Zuordnung von Feld und
+ * Editor.
  *
  * @param root der zu beobachtende Teilbaum; standardmäßig das Dokument.
  * Offengelegt, damit Tests den Beobachter auf einen losgelösten Container
@@ -42,11 +73,12 @@ export function startSlideEditorInjector(root: ParentNode = document): () => voi
     reopenTestId: "slide-editor-reopen",
     parse: parseHeroItems,
     serialize: encodeHeroItemsAttribute,
-    // Der Editor zeichnet seinen eigenen Rahmen: Liste, Formular und Fußzeile
-    // teilen sich Kanten, die der Formular-Innenabstand des Panels nur von
-    // ihnen wegschöbe.
-    panelClassName: "p-0",
-    render: ({ value, onChange, onSave, onClose, dirty }) =>
-      React.createElement(SlideEditor, { value, onChange, onSave, onClose, dirty }),
+    shell: slideEditorShell,
+    render: ({ value, onChange }) =>
+      React.createElement(
+        React.Suspense,
+        { fallback: LOADING },
+        React.createElement(LazySlideEditor, { value, onChange }),
+      ),
   });
 }

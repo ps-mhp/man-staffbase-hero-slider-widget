@@ -20,205 +20,31 @@
 .man-se {
   display: flex;
   flex-direction: column;
-  // Der Dialog von `@shared/config-modal` gibt die Höhe vor; der Editor füllt
-  // sie und lässt nur seine Listen scrollen, damit die Fußzeile mit
-  // "Übernehmen" immer sichtbar bleibt.
+  // Der Rahmen von `@man/config-ui` gibt die Höhe vor; der Editor füllt sie
+  // und lässt nur Liste und Formular scrollen, damit der Kopf mit
+  // „Übernehmen“ immer sichtbar bleibt.
   height: 100%;
   min-height: 0;
   // Und die Breite genauso. Der Dialog ist ein Flex-Container in Zeilenrichtung
   // und gibt dem Editor `flex: 0 1 auto`: ohne diese beiden Zeilen nimmt er
   // seine Inhaltsbreite an und blieb auf einem 1440px breiten Dialog bei 929px
-  // stehen — die Fusszeile sass dann sichtbar schmaler als der Dialog, mit
-  // einer leeren weissen Fläche daneben. Live gemessen am 01.09.2026.
+  // stehen, mit einer leeren weissen Fläche daneben. Live gemessen am
+  // 01.09.2026.
   flex: 1 1 auto;
   width: 100%;
   font-family: inherit;
   color: chrome.$text;
 }
 
-.man-se__body {
-  display: grid;
-  // Feste Spalte für die Liste: sie ist eine Übersicht, kein Inhalt, und soll
-  // nicht mitwachsen, wenn die Formularseite länger wird.
-  grid-template-columns: 260px minmax(0, 1fr);
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-// --- Liste der Folien --------------------------------------------------------
-.man-se__list-pane {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  background: chrome.$surface-panel;
-  border-right: 1px solid chrome.$border;
-}
-
-.man-se__list {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  padding: 8px;
-}
-
-.man-se__item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 6px 8px;
-  text-align: start;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: chrome.$radius-control;
-  cursor: pointer;
-  transition: background-color chrome.$transition;
-}
-
-.man-se__item:hover {
-  background: chrome.$surface-hover;
-}
-
-.man-se__item--active {
-  background: chrome.$accent-selection;
-  border-color: chrome.$accent-border;
-}
-
-.man-se__item-index {
-  flex: 0 0 auto;
-  width: 18px;
-  color: chrome.$text-muted;
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-}
-
-.man-se__item-thumb {
-  flex: 0 0 auto;
-  width: 48px;
-  height: 30px;
-  object-fit: cover;
-  border: 1px solid chrome.$border-tile;
-  border-radius: chrome.$radius-small;
-  background: chrome.$surface-handle;
-}
-
-.man-se__item-thumb--empty {
-  display: block;
-}
-
-.man-se__item-text {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.man-se__item-kind {
-  display: block;
-  font-size: 11px;
-  line-height: 14px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: chrome.$text-muted;
-}
-
-.man-se__item-title {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 13px;
-  color: chrome.$text-strong;
-}
-
-// Der Knopf sitzt ueber der Liste, nicht darunter: er legt vorn an, und dort
-// beginnt auch das Lesen der Liste.
-.man-se__list-head {
-  flex: 0 0 auto;
-  padding: 8px;
-  border-bottom: 1px solid chrome.$border;
-}
-
-.man-se__menu {
-  position: relative;
-}
-
-// Das Plus steht am Knopf, nicht im Wort: ein Leerzeichen im Markup fiele
-// beim Umbrechen weg, dieser Abstand nicht.
-.man-se__add-plus {
-  margin-inline-start: 6px;
-}
-
-.man-se__menu-list {
-  position: absolute;
-  z-index: 2;
-  top: calc(100% + 4px);
-  inset-inline-start: 0;
-  min-width: 220px;
-  padding: 4px;
-  background: chrome.$surface;
-  border: 1px solid chrome.$border-menu;
-  border-radius: chrome.$radius-menu;
-  box-shadow: chrome.$shadow-menu;
-}
-
-.man-se__menu-item {
-  display: block;
-  width: 100%;
-  padding: 6px 8px;
-  text-align: start;
-  font: inherit;
-  font-size: 13px;
-  color: chrome.$text-strong;
-  background: transparent;
-  border: 0;
-  border-radius: chrome.$radius-small;
-  cursor: pointer;
-}
-
-.man-se__menu-item:hover {
-  background: chrome.$surface-hover;
-}
-
-.man-se__menu-item:focus-visible {
-  outline: none;
-  background: chrome.$accent-selection;
-  box-shadow: chrome.$focus-ring;
-}
-
-// Der Nachsatz sagt, wofuer die Sorte gut ist. Ohne ihn muesste man drei
-// Eintraege anlegen, um den Unterschied zu sehen.
-.man-se__menu-note {
-  display: block;
-  font-size: 11px;
-  line-height: 15px;
-  color: chrome.$text-muted;
-}
-
-.man-se__empty {
-  margin: 12px 8px;
-  color: chrome.$text-muted;
-  font-size: 13px;
-  line-height: 20px;
-}
-
 // --- Formular ----------------------------------------------------------------
-.man-se__form-pane {
-  min-height: 0;
-  overflow-y: auto;
-  padding: 16px;
-  background: chrome.$surface;
-}
-
+// Liste, Kopf und Aktionen kommen aus `@man/config-ui` und tragen dessen
+// Tailwind-Klassen; hier stehen nur noch die Felder der drei Formulare.
+//
 // Ein Eingabefeld über die volle Breite eines 1440px-Dialogs ist nicht zu
 // lesen — der Blick verliert beim Zurückspringen die Zeile. Der Inhalt bleibt
 // deshalb auf einer ruhigen Lesebreite, auch wenn der Dialog breiter wird.
 .man-se__form {
   max-width: 720px;
-}
-
-.man-se__toolbar {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 16px;
 }
 
 .man-se__field {
@@ -326,12 +152,6 @@
 .man-se__input--area {
   min-height: 56px;
   resize: vertical;
-}
-
-// Der Hinweis in der Knopfleiste bekommt eine eigene Zeile: zwischen den
-// Knöpfen stehend würde er die Leiste auseinanderziehen.
-.man-se__list-head .man-se__hint {
-  margin: 6px 0 0;
 }
 
 // Auswahlfelder tragen dieselbe Hülle wie Eingabefelder, brauchen aber das
@@ -485,7 +305,7 @@
   background: chrome.$accent-surface;
 }
 
-// --- Schaltflächen und Fußzeile ----------------------------------------------
+// --- Schaltflächen ------------------------------------------------------------
 // Staffbase gestaltet die Knöpfe im Konfigurationsdialog selbst mit. Live
 // gemessen: `display` kommt als `flex` an statt als unser `inline-flex`, und
 // die Knöpfe tragen `margin: auto` — in der 1440px breiten Fussleiste ergab
@@ -528,17 +348,6 @@
   opacity: 0.6;
 }
 
-.man-se__button--primary {
-  color: chrome.$surface;
-  background: chrome.$accent;
-  border-color: chrome.$accent-strong;
-}
-
-.man-se__button--primary:hover:not(:disabled) {
-  background: chrome.$accent-strong;
-  border-color: chrome.$accent-stronger;
-}
-
 .man-se__button--quiet {
   background: transparent;
   border-color: transparent;
@@ -550,26 +359,8 @@
 }
 
 .man-se__button:focus-visible,
-.man-se__pick:focus-visible,
-.man-se__item:focus-visible {
+.man-se__pick:focus-visible {
   outline: none;
   border-color: chrome.$focus-border;
   box-shadow: chrome.$focus-ring;
-}
-
-.man-se__footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  flex: 0 0 auto;
-  padding: 10px 16px;
-  background: chrome.$surface-header;
-  border-top: 1px solid chrome.$border;
-}
-
-.man-se__footer-note {
-  margin-right: auto;
-  font-size: 12px;
-  color: chrome.$text-state;
 }
