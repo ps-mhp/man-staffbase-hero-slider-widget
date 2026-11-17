@@ -23,8 +23,10 @@
 import * as React from "react";
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ConfigShellProvider, type ConfigShellState } from "@man/config-ui";
+import { ConfigShell, ConfigShellProvider, type ConfigShellState } from "@man/config-ui";
+import { fakeDataTransfer } from "@man/config-ui/drop/drag-testing";
 import { MediaClient, MediaItem } from "@shared/media/media-client";
+import { forgetDraggedForTests } from "@shared/media/media-drag";
 import { MAX_ITEMS, SlideEditor } from "./slide-editor";
 import { HeroItem, DEFAULT_CHANNEL_COUNT, NewsChannelItem, NewsPostItem } from "./hero-items";
 import type { Post as NewsPost } from "@shared/staffbase/posts";
@@ -730,6 +732,137 @@ describe("SlideEditor", () => {
 
       expect(screen.getByTestId("slide-image-url")).toHaveValue("https://cdn.example.test/b.png");
       expect(screen.queryByTestId("slide-image-url-error")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Mediathek als Leiste im Rahmen", () => {
+    const film: MediaItem = {
+      ...mediaItem("film"),
+      url: "https://cdn.example.test/film.mov",
+      playbackUrl: "https://cdn.example.test/t_mp4/film.mp4",
+      hasPreview: true,
+      fileName: "film.mov",
+      type: "video",
+    };
+    const library = (): MediaClient =>
+      stubMediaClient({ listMedia: jest.fn(async () => ({ items: [mediaItem("a"), film], total: 2, nextOffset: null })) });
+
+    /** Der Editor im echten Rahmen: dort dockt die Mediathek rechts an. */
+    const mountInShell = (value: HeroItem[]): Harness & { closeShell: jest.Mock } => {
+      const onChange = jest.fn<void, [HeroItem[]]>();
+      const closeShell = jest.fn();
+      const client = library();
+      function InShell(): React.ReactElement {
+        const [items, setItems] = React.useState(value);
+        return (
+          <ConfigShell widgetName="Hero-Slider" title="Folien" dirty={false} onApply={jest.fn()} onDiscard={jest.fn()} onClose={closeShell}>
+            <SlideEditor
+              value={items}
+              onChange={(next) => {
+                onChange(next);
+                setItems(next);
+              }}
+              mediaClient={client}
+              newsSource={stubNewsSource()}
+            />
+          </ConfigShell>
+        );
+      }
+      render(<InShell />);
+      const latest = (): HeroItem[] => onChange.mock.calls[onChange.mock.calls.length - 1]![0];
+      return { onChange, latest, latestSlides: () => latest() as Slide[], closeShell };
+    };
+
+    const panelNamed = (name: string): HTMLElement => screen.getByRole("complementary", { name });
+
+    beforeEach(() => forgetDraggedForTests());
+
+    it("öffnet die Mediathek als Leiste und nennt das Ziel", async () => {
+      mountInShell([slide("a", { image: { url: "", alt: "" } }), slide("b")]);
+      await userEvent.click(screen.getByTestId("slide-image-pick"));
+
+      expect(panelNamed("Bild für Folie 1")).toBeInTheDocument();
+      expect(screen.queryByRole("dialog", { name: "Staffbase Medien" })).toBeNull();
+      // Eine Folie nimmt auch Videos.
+      expect(await within(panelNamed("Bild für Folie 1")).findByTestId("media-picker-item-film")).toBeInTheDocument();
+
+      await userEvent.click(screen.getByTestId("slide-portrait-pick"));
+      expect(panelNamed("Hochformat-Bild für Folie 1")).toBeInTheDocument();
+    });
+
+    it("nennt beim News-Beitrag das Bühnenbild und bietet nur Bilder an", async () => {
+      mountInShell([postItem("p", { channelId: "c1", postId: "p1" })]);
+      await userEvent.click(await screen.findByTestId("news-post-image-pick"));
+
+      const panel = panelNamed("Bühnenbild für News-Beitrag 1");
+      expect(await within(panel).findByTestId("media-picker-item-a")).toBeInTheDocument();
+      expect(within(panel).queryByTestId("media-picker-item-film")).toBeNull();
+    });
+
+    it("übernimmt per Klick in die Folie, die gefragt hat – auch nach einem Wechsel der Auswahl", async () => {
+      const h = mountInShell([slide("a", { image: { url: "", alt: "" } }), slide("b")]);
+      await userEvent.click(screen.getByTestId("slide-image-pick"));
+      const tile = await screen.findByTestId("media-picker-item-a");
+
+      await userEvent.click(screen.getByText("Überschrift b"));
+      await userEvent.click(tile);
+
+      await waitFor(() => expect(h.onChange).toHaveBeenCalled());
+      expect(h.latestSlides()[0]!.image).toMatchObject({ url: "https://cdn.example.test/a.png", width: 1920, height: 823 });
+      expect(h.latestSlides()[1]!.image.url).toBe("https://cdn.example.test/b.png");
+      expect(screen.queryByRole("complementary", { name: "Bild für Folie 1" })).toBeNull();
+    });
+
+    it("schließt die Leiste mit Escape, nicht den Rahmen", async () => {
+      const h = mountInShell([slide("a")]);
+      await userEvent.click(screen.getByTestId("slide-image-replace"));
+      expect(panelNamed("Bild für Folie 1")).toBeInTheDocument();
+
+      await userEvent.keyboard("{Escape}");
+
+      expect(screen.queryByRole("complementary", { name: "Bild für Folie 1" })).toBeNull();
+      expect(h.closeShell).not.toHaveBeenCalled();
+    });
+
+    it("nimmt ein Bild aus der Leiste per Ziehen an jedem Bildfeld an", async () => {
+      const h = mountInShell([slide("a")]);
+      await userEvent.click(screen.getByTestId("slide-image-replace"));
+      const dataTransfer = fakeDataTransfer();
+      fireEvent.dragStart(await screen.findByTestId("media-picker-item-a"), { dataTransfer });
+
+      const portrait = screen.getByTestId("slide-portrait-drop");
+      expect(portrait).toHaveAttribute("data-drop-state", "ready");
+      fireEvent.dragEnter(portrait, { dataTransfer });
+      expect(portrait).toHaveAttribute("data-drop-state", "over");
+      fireEvent.drop(portrait, { dataTransfer });
+
+      await waitFor(() => expect(h.latestSlides()[0]!.imagePortrait).toMatchObject({ url: "https://cdn.example.test/a.png", width: 1920 }));
+      expect(h.latestSlides()[0]!.image.url).toBe("https://cdn.example.test/a.png");
+    });
+
+    it("legt ein Video in der abspielbaren Fassung als Folienbild ab", async () => {
+      const h = mountInShell([slide("a")]);
+      await userEvent.click(screen.getByTestId("slide-image-replace"));
+      const dataTransfer = fakeDataTransfer();
+      fireEvent.dragStart(await screen.findByTestId("media-picker-item-film"), { dataTransfer });
+      fireEvent.drop(screen.getByTestId("slide-image-drop"), { dataTransfer });
+
+      await waitFor(() => expect(h.latestSlides()[0]!.image).toMatchObject({ url: "https://cdn.example.test/t_mp4/film.mp4", kind: "video" }));
+    });
+
+    it("lässt ein Video am Bühnenbild eines News-Beitrags abprallen", async () => {
+      const h = mountInShell([postItem("p", { channelId: "c1", postId: "p1" }), slide("s")]);
+      // Die Leiste öffnet über die Folie; dort gibt es auch Videos zum Ziehen.
+      await userEvent.click(screen.getByText("Überschrift s"));
+      await userEvent.click(screen.getByTestId("slide-image-replace"));
+      const dataTransfer = fakeDataTransfer();
+      fireEvent.dragStart(await screen.findByTestId("media-picker-item-film"), { dataTransfer });
+      await userEvent.click(within(screen.getByRole("grid", { name: "Einträge" })).getAllByRole("row")[0]!);
+
+      const zone = await screen.findByTestId("news-post-image-drop");
+      expect(zone).toHaveAttribute("data-drop-state", "idle");
+      expect(fireEvent.dragEnter(zone, { dataTransfer })).toBe(true);
+      expect(h.onChange).not.toHaveBeenCalled();
     });
   });
 

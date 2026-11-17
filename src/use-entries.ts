@@ -21,7 +21,7 @@
  * die Auswahl, so weit es geht, an derselben Stelle stehen.
  */
 
-import { useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import type { PickedMedia } from "@shared/media/media-picker";
 
 import {
@@ -55,6 +55,14 @@ export interface Entries {
   move: (delta: number) => void;
   reorder: (ids: string[]) => void;
   patch: (changes: Partial<HeroItem>) => void;
+  /**
+   * Ändert den Eintrag mit dieser Kennung, gleich welcher gewählt ist.
+   * Liest den jüngsten Stand, nicht den des Renderns: die Mediathek-Leiste
+   * hält ihren Rückruf seit dem Öffnen fest, und ein Ablegen löst sich erst
+   * nach einer Serveranfrage auf – dazwischen kann sich die Liste geändert
+   * haben.
+   */
+  patchItem: (id: string, changes: Partial<HeroItem>) => void;
 }
 
 function resolveIndex(items: readonly HeroItem[], selection: Selection): number {
@@ -63,8 +71,26 @@ function resolveIndex(items: readonly HeroItem[], selection: Selection): number 
   return items.length === 0 ? -1 : Math.min(Math.max(selection.index, 0), items.length - 1);
 }
 
+/** Jüngster Wert und Rückruf für Änderungen, die nach dem Rendern eintreffen. */
+function useLatestValue(value: HeroItem[], onChange: (items: HeroItem[]) => void) {
+  const latest = useRef({ value, onChange });
+  useLayoutEffect(() => {
+    latest.current = { value, onChange };
+  });
+  return useCallback((id: string, changes: Partial<HeroItem>): void => {
+    const current = latest.current.value;
+    if (!current.some((entry) => entry.id === id)) return;
+    const next = current.map((entry) => (entry.id === id ? ({ ...entry, ...changes } as HeroItem) : entry));
+    // Gleich vormerken: ein zweites Ablegen vor dem nächsten Rendern baut
+    // auf diesem auf, statt es zu überschreiben.
+    latest.current = { ...latest.current, value: next };
+    latest.current.onChange(next);
+  }, []);
+}
+
 export function useEntries(value: HeroItem[], onChange: (items: HeroItem[]) => void): Entries {
   const [selection, setSelection] = useState<Selection>(() => ({ id: value[0]?.id ?? null, index: 0 }));
+  const patchItem = useLatestValue(value, onChange);
   const index = resolveIndex(value, selection);
   const item = index >= 0 ? value[index] : undefined;
   const full = value.length >= MAX_ITEMS;
@@ -94,6 +120,7 @@ export function useEntries(value: HeroItem[], onChange: (items: HeroItem[]) => v
       if (item === undefined) return;
       onChange(value.map((entry, at) => (at === index ? ({ ...entry, ...changes } as HeroItem) : entry)));
     },
+    patchItem,
   };
 }
 

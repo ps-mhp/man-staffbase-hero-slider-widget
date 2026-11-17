@@ -55,6 +55,15 @@ Fenster.
 11. Speichern Sie die Seite und prüfen Sie sie in der Vorschau, einmal breit
     und einmal in einem schmalen Fenster.
 
+**Mediathek als Leiste.** **Bild oder Video wählen** und **Ersetzen** öffnen
+die Mediathek rechts neben dem Formular; ihr Titel nennt das Ziel, etwa
+„Bild für Folie 2“. Ein Klick auf ein Bild – oder Enter – übernimmt es
+dorthin. Sie können Bilder aus der Leiste auch direkt auf jedes Bildfeld
+ziehen, etwa auf **Bild oder Video für Hochformat**: passende Felder werden
+beim Ziehen umrandet, über dem Ziel steht „Hier ablegen“. Videos nehmen nur
+Folien an, nicht die Bildfelder eines News-Beitrags. Escape oder der Pfeil
+oben in der Leiste schließt sie, ohne den Editor zu verlassen.
+
 ## Mehrere Folien anlegen
 
 1. Öffnen Sie die Einstellungen und damit den Editor.

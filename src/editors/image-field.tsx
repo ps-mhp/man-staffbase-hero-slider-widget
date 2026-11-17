@@ -20,12 +20,20 @@
  * Wer `onUrlChange` mitgibt, bekommt darunter ein Adressfeld: das Medium kommt
  * dann wahlweise aus der Mediathek oder von einer https-Adresse, und es darf
  * auch ein Video sein.
+ *
+ * Mit `media` (aus `useFieldMedia`) ist das ganze Feld eine Ablagezone für
+ * Kacheln aus der Mediathek-Leiste – auch über dem Adressfeld, in das der
+ * Browser sonst die Vorschau-Adresse schriebe. „Bild wählen“ bleibt der Weg
+ * für Tastatur und Screenreader.
  */
 
 import * as React from "react";
 import { ReactElement, useEffect, useState } from "react";
+import { DropZone } from "@man/config-ui/drop/drop-zone";
+import { useMediaDrop } from "@shared/media/use-media-drop";
 
 import { MediaKind, SlideImage, firstFrameUrl, isVideo, parseMediaUrl } from "../slides-model";
+import type { FieldMedia } from "./editor-media";
 
 export interface ImageFieldProps {
   label: string;
@@ -39,6 +47,8 @@ export interface ImageFieldProps {
   /** Eine geprüfte Adresse, oder `""`, wenn das Feld geleert wurde. */
   onUrlChange?: (url: string) => void;
   onKindChange?: (kind: MediaKind) => void;
+  /** Ablegen aus der Mediathek-Leiste; ohne bleibt es bei „Bild wählen“. */
+  media?: FieldMedia;
   testId: string;
 }
 
@@ -117,6 +127,36 @@ function Thumb({ image, testId }: { image: SlideImage; testId: string }): ReactE
   );
 }
 
+interface DropAreaProps {
+  media: FieldMedia | undefined;
+  testId: string;
+  children: React.ReactNode;
+}
+
+/** Das Feld als Ablagezone samt Fehlermeldung des letzten Ablegens. */
+function MediaDropArea({ media, testId, children }: DropAreaProps & { media: FieldMedia }): ReactElement {
+  const drop = useMediaDrop({ client: media.client, accept: media.accept, onPick: media.onPick });
+  return (
+    <DropZone zone={drop} busy={drop.busy} className="man-se__field" data-testid={`${testId}-drop`}>
+      {children}
+      {drop.error !== null && (
+        <p className="man-se__hint man-se__hint--warning" role="alert" data-testid={`${testId}-drop-error`}>
+          {drop.error}
+        </p>
+      )}
+    </DropZone>
+  );
+}
+
+function FieldArea({ media, testId, children }: DropAreaProps): ReactElement {
+  if (media === undefined) return <div className="man-se__field">{children}</div>;
+  return (
+    <MediaDropArea media={media} testId={testId}>
+      {children}
+    </MediaDropArea>
+  );
+}
+
 export function ImageField({
   label,
   hint,
@@ -127,12 +167,13 @@ export function ImageField({
   onAltChange,
   onUrlChange,
   onKindChange,
+  media,
   testId,
 }: ImageFieldProps): ReactElement {
   const video = image !== undefined && isVideo(image);
 
   return (
-    <div className="man-se__field">
+    <FieldArea media={media} testId={testId}>
       <span className="man-se__label">{label}</span>
       <p className="man-se__hint">{hint}</p>
 
@@ -208,6 +249,6 @@ export function ImageField({
           />
         </label>
       )}
-    </div>
+    </FieldArea>
   );
 }

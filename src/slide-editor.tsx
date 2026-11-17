@@ -29,19 +29,26 @@
  * `@shared/config-modal`. Nachgeladen wird er nur im Studio
  * (`slide-editor-injector.ts`) — die Bausteine bringen react-aria mit, und
  * das gehört nicht ins Seitenbündel.
+ *
+ * Bilder kommen aus der Mediathek: im Rahmen als Leiste rechts
+ * (`useMediaPanel`), deren Kacheln man auch direkt auf jedes Bildfeld
+ * ziehen kann (`EditorMediaContext` → `useMediaDrop`); ohne Rahmen als
+ * Overlay wie zuvor.
  */
 
 import * as React from "react";
-import { ReactElement, useMemo, useState } from "react";
+import { ReactElement, useMemo } from "react";
 import { ConfigWorkspace } from "@man/config-ui/layout/config-workspace";
 import { ItemActions } from "@man/config-ui/sidebar/item-actions";
 import { useHotStyle } from "@shared/hot-style";
 import { MediaClient, createMediaClient } from "@shared/media/media-client";
-import { MediaAccept, MediaPicker, PickedMedia } from "@shared/media/media-picker";
+import { MediaAccept, PickedMedia } from "@shared/media/media-picker";
+import { useMediaPanel } from "@shared/media/use-media-panel";
 
 import { HeroEntryPreview } from "./hero-slide-preview";
 import { HeroItem, isNewsChannelItem, isNewsPostItem, isSlideItem } from "./hero-items";
 import { MAX_ITEMS, entryKindName } from "./editor-entries";
+import { EditorMedia, EditorMediaContext } from "./editors/editor-media";
 import { EntrySidebar } from "./editors/entry-sidebar";
 import { useItemLabels } from "./editors/item-label";
 import { NewsChannelForm } from "./editors/news-channel-form";
@@ -58,6 +65,21 @@ export { MAX_ITEMS };
  * Bild: es ersetzt das Beitragsbild, und das ist nie ein Video.
  */
 const SLIDE_MEDIA: MediaAccept = ["image", "video"];
+
+const TARGET_NOUNS: Readonly<Record<PickerTarget, string>> = {
+  image: "Bild",
+  imagePortrait: "Hochformat-Bild",
+  imageOverride: "Bühnenbild",
+};
+
+/** Titel der Mediathek-Leiste: wohin die Wahl geht, etwa „Bild für Folie 2“. */
+export function mediaPanelTitle(target: PickerTarget, item: HeroItem, index: number): string {
+  return `${TARGET_NOUNS[target]} für ${entryKindName(item)} ${index + 1}`;
+}
+
+/** Was die Bildfelder eines Eintrags nehmen. */
+const acceptFor = (item: HeroItem | undefined): MediaAccept =>
+  item !== undefined && isSlideItem(item) ? SLIDE_MEDIA : "images";
 
 export interface SlideEditorProps {
   value: HeroItem[];
@@ -138,49 +160,66 @@ function EntryMain({ entries, total, source, onPick }: EntryMainProps): ReactEle
   );
 }
 
+/**
+ * Mediathek und Ablegen für den gewählten Eintrag. Beides schreibt über
+ * `patchItem` mit der Kennung des Eintrags: in die Folie, die gefragt hat,
+ * auch wenn inzwischen eine andere gewählt ist.
+ */
+function useEditorMedia(client: MediaClient, entries: Entries) {
+  const media = useMediaPanel(client);
+  const { item, index, patchItem } = entries;
+  const accept = acceptFor(item);
+  const place = (itemId: string, target: PickerTarget, picked: PickedMedia): void =>
+    patchItem(itemId, patchForPick(target, pickedImage(picked)));
+  const open = (target: PickerTarget): void => {
+    if (item === undefined) return;
+    const itemId = item.id;
+    media.openMedia({
+      title: mediaPanelTitle(target, item, index),
+      accept,
+      onSelect: (picked) => place(itemId, target, picked),
+    });
+  };
+  // `patchItem` bleibt stabil und liest selbst den jüngsten Stand: neu gebaut
+  // wird der Kontext nur, wenn Client oder Medienart wechseln.
+  const drop = useMemo<EditorMedia>(
+    () => ({ client, accept, drop: (itemId, target, picked) => patchItem(itemId, patchForPick(target, pickedImage(picked))) }),
+    [client, accept, patchItem],
+  );
+  return { open, drop, overlay: media.overlay };
+}
+
 export function SlideEditor({ value, onChange, mediaClient, newsSource }: SlideEditorProps): ReactElement {
   const css = useHotStyle(slideEditorCss, "hero-slider-widget", "styles/slide-editor.scss");
   const client = useMemo(() => mediaClient ?? createMediaClient(), [mediaClient]);
   const source = useMemo(() => cacheNewsSource(newsSource ?? defaultNewsSource), [newsSource]);
   const entries = useEntries(value, onChange);
   const labels = useItemLabels(value, source);
-  const [pickerTarget, setPickerTarget] = useState<PickerTarget | null>(null);
+  const media = useEditorMedia(client, entries);
   const { item } = entries;
-
-  const handlePick = (picked: PickedMedia): void => {
-    const target = pickerTarget;
-    setPickerTarget(null);
-    if (target !== null) entries.patch(patchForPick(target, pickedImage(picked)));
-  };
 
   return (
     <div className="man-se" data-testid="slide-editor">
       <style>{css}</style>
-      <ConfigWorkspace
-        className="flex-1"
-        sidebar={
-          <EntrySidebar
-            items={value}
-            labels={labels}
-            selectedId={item?.id}
-            onSelect={entries.select}
-            onAdd={entries.add}
-            onReorder={entries.reorder}
-          />
-        }
-        preview={<HeroEntryPreview item={item} />}
-      >
-        <EntryMain entries={entries} total={value.length} source={source} onPick={setPickerTarget} />
-      </ConfigWorkspace>
-
-      {pickerTarget !== null && (
-        <MediaPicker
-          client={client}
-          accept={item !== undefined && isSlideItem(item) ? SLIDE_MEDIA : "images"}
-          onSelect={handlePick}
-          onClose={() => setPickerTarget(null)}
-        />
-      )}
+      <EditorMediaContext.Provider value={media.drop}>
+        <ConfigWorkspace
+          className="flex-1"
+          sidebar={
+            <EntrySidebar
+              items={value}
+              labels={labels}
+              selectedId={item?.id}
+              onSelect={entries.select}
+              onAdd={entries.add}
+              onReorder={entries.reorder}
+            />
+          }
+          preview={<HeroEntryPreview item={item} />}
+        >
+          <EntryMain entries={entries} total={value.length} source={source} onPick={media.open} />
+        </ConfigWorkspace>
+      </EditorMediaContext.Provider>
+      {media.overlay}
     </div>
   );
 }

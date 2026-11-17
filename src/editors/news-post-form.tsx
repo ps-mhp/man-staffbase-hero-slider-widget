@@ -25,6 +25,7 @@ import { ReactElement } from "react";
 import { DEFAULT_CTA_LABEL, NewsPostItem } from "../hero-items";
 import { documentLocales } from "@shared/staffbase/posts";
 import { pickPostContent } from "../news-slides";
+import { useFieldMedia } from "./editor-media";
 import { ImageField } from "./image-field";
 import { IdSelect, IdSelectOption } from "./id-select";
 import { NewsPreview } from "./news-preview";
@@ -48,6 +49,8 @@ export function NewsPostForm({
 }: NewsPostFormProps): ReactElement {
   const channels = useNewsChannels(source);
   const posts = useChannelPosts(source, item.channelId);
+  const overrideMedia = useFieldMedia(item.id, "imageOverride");
+  const portraitMedia = useFieldMedia(item.id, "imagePortrait");
 
   const postOptions: IdSelectOption[] = posts.entries.map((post) => {
     // Die Titel der Auswahl folgen der Sprache der Seite, nicht der der
@@ -142,6 +145,7 @@ export function NewsPostForm({
               item.imageOverride === undefined ? undefined : { ...item.imageOverride, alt },
           })
         }
+        media={overrideMedia}
         testId="news-post-image"
       />
 
@@ -157,6 +161,7 @@ export function NewsPostForm({
               item.imagePortrait === undefined ? undefined : { ...item.imagePortrait, alt },
           })
         }
+        media={portraitMedia}
         testId="news-post-portrait"
       />
     </>

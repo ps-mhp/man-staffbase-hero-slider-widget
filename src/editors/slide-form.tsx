@@ -25,6 +25,7 @@ import { ReactElement } from "react";
 import { SlideItem } from "../hero-items";
 import { mediaFromUrl, withMediaKind } from "../slides-model";
 import { CtaListForm } from "./cta-list-form";
+import { useFieldMedia } from "./editor-media";
 import { ImageField } from "./image-field";
 import { NewsSource } from "./news-source";
 
@@ -44,6 +45,8 @@ export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): R
   // Für die Kachel und das Adressfeld heißt das dasselbe: noch kein Medium.
   const image = slide.image.url === "" ? undefined : slide.image;
   const portrait = slide.imagePortrait;
+  const imageMedia = useFieldMedia(slide.id, "image");
+  const portraitMedia = useFieldMedia(slide.id, "imagePortrait");
 
   return (
     <>
@@ -58,6 +61,7 @@ export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): R
           onPatch({ image: url === "" ? { url: "", alt: "" } : mediaFromUrl(image, url) })
         }
         onKindChange={(kind) => onPatch({ image: withMediaKind(slide.image, kind) })}
+        media={imageMedia}
         testId="slide-image"
       />
 
@@ -79,6 +83,7 @@ export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): R
             imagePortrait: portrait === undefined ? undefined : withMediaKind(portrait, kind),
           })
         }
+        media={portraitMedia}
         testId="slide-portrait"
       />
 
