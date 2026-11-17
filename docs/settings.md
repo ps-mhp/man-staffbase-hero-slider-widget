@@ -18,9 +18,10 @@
 | News-Beitrag | Ein bestimmter Beitrag als eine Folie. Inhalt und Ziel kommen aus dem Beitrag. |
 | News-Kanal | Ein ganzer Kanal, eine Folie je Beitrag. Neue Beiträge erscheinen ohne weiteres Zutun. |
 
-Alle drei stehen in derselben Liste, lassen sich mischen und über **↑** und
-**↓** sortieren. Insgesamt zeigt die Bühne höchstens acht Folien — ein
-Kanal-Eintrag zählt dabei mit allen Folien, die er beisteuert.
+Alle drei stehen in derselben Liste, lassen sich mischen und per Ziehen am
+Griff oder über **nach oben** und **nach unten** sortieren. Insgesamt zeigt
+die Bühne höchstens acht Folien — ein Kanal-Eintrag zählt dabei mit allen
+Folien, die er beisteuert.
 
 ## Felder einer Folie
 
@@ -93,6 +94,6 @@ Kanal-Eintrag zählt dabei mit allen Folien, die er beisteuert.
   ist, nimmt nur seine eigene Folie mit. Die übrigen Folien bleiben stehen.
 - News-Folien folgen der Sprache der lesenden Person, soweit der Beitrag
   übersetzt ist; sonst der ersten vorhandenen Fassung.
-- Die **Vorschau** im Editor rechnet mit denselben Regeln wie die
-  veröffentlichte Seite. Was dort nicht steht, erscheint auch auf der Bühne
-  nicht.
+- Die **Vorschau** im Formular eines News-Eintrags rechnet mit denselben
+  Regeln wie die veröffentlichte Seite. Was dort nicht steht, erscheint auch
+  auf der Bühne nicht.

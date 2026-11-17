@@ -1,5 +1,26 @@
 # Schritt für Schritt
 
+## Der Editor auf einen Blick
+
+Der Editor öffnet sich mit den Einstellungen des Widgets und füllt das ganze
+Fenster.
+
+- **Kopfleiste:** links **Schließen**, daneben der Status — er sagt, ob und
+  wie viele Einträge noch nicht übernommen sind. In der Mitte der Umschalter
+  **Editor** · **Desktop** · **Tablet** · **Mobil**. Rechts **Rückgängig**,
+  **Wiederholen** und **Hilfe**, ganz rechts **Abbrechen** und
+  **Übernehmen**.
+- **Liste links:** alle Einträge in der Reihenfolge der Bühne, darüber
+  **+ Neu** und die Zahl der Einträge („3 von 8“). Am Griff links einer Zeile
+  ziehen Sie einen Eintrag an eine neue Stelle.
+- **Rechts:** über dem Formular Sorte und Stelle des gewählten Eintrags (etwa
+  **Folie 2 von 3**) und vier Symbole: **nach oben**, **nach unten**,
+  **duplizieren**, **löschen**. Ihr Name erscheint, wenn Sie mit der Maus
+  darauf zeigen.
+- **Desktop**, **Tablet** und **Mobil** zeigen den gewählten Eintrag in der
+  jeweiligen Breite; **Editor** führt zurück zum Formular. News-Einträge
+  zeigen dort nur einen Platzhalter — sie werden erst auf der Seite zu Folien.
+
 ## Bühne mit einem Bild einrichten
 
 1. Legen Sie das Bild vorher in der Staffbase-Mediathek ab. Quer, mindestens
@@ -10,7 +31,7 @@
    Inhalten, kann es nicht sinnvoll über die volle Breite laufen.
 3. Öffnen Sie die Einstellungen des Widgets. Der Editor öffnet sich von
    selbst.
-4. Klicken Sie über der Liste auf **Neu +** und wählen Sie **Folie**.
+4. Klicken Sie über der Liste auf **+ Neu** und wählen Sie **Folie**.
 5. Klicken Sie unter **Bild oder Video** auf die gestrichelte Fläche **Bild
    oder Video wählen** und wählen Sie das Bild aus der Mediathek — oder fügen
    Sie darunter die Adresse eines Bildes oder Videos ein. Ohne Bild wird die
@@ -28,7 +49,7 @@
    und die ganze Folie führt zum Ziel der ersten Schaltfläche; weitere
    Schaltflächen bleiben als Knöpfe sichtbar. Was in der Unterzeile steht,
    sollte deshalb nichts sein, was unbedingt gelesen werden muss.
-9. Klicken Sie auf **Übernehmen**.
+9. Klicken Sie oben rechts auf **Übernehmen**.
 10. Stellen Sie **Sekunden je Folie** auf `0` — bei einer einzelnen Folie gibt
     es nichts zu wechseln.
 11. Speichern Sie die Seite und prüfen Sie sie in der Vorschau, einmal breit
@@ -37,19 +58,20 @@
 ## Mehrere Folien anlegen
 
 1. Öffnen Sie die Einstellungen und damit den Editor.
-2. Wählen Sie für jede weitere Folie unter **Neu +** den Eintrag **Folie** und
+2. Wählen Sie für jede weitere Folie unter **+ Neu** den Eintrag **Folie** und
    füllen Sie sie wie oben aus. Mehr als acht Folien sind nicht möglich — so weit blättert
    niemand.
-3. Sortieren Sie über die Pfeile **↑** und **↓** oben rechts. Die erste Folie
-   ist die, die beim Laden der Seite zu sehen ist.
+3. Sortieren Sie, indem Sie eine Folie links am Griff an die neue Stelle
+   ziehen, oder über die Symbole **nach oben** und **nach unten** über dem
+   Formular. Die erste Folie ist die, die beim Laden der Seite zu sehen ist.
 4. Prüfen Sie, dass **Sekunden je Folie** auf `5` steht (Voreinstellung).
 5. **Übernehmen**, speichern, in der Vorschau prüfen.
 
 ## Einen einzelnen News-Beitrag auf die Bühne holen
 
 1. Öffnen Sie die Einstellungen und damit den Editor.
-2. Klicken Sie über der Liste auf **Neu +** und wählen Sie **News-Beitrag**.
-   Links erscheint ein Eintrag mit der Marke **Post**.
+2. Klicken Sie über der Liste auf **+ Neu** und wählen Sie **News-Beitrag**.
+   Links erscheint ein Eintrag mit dem Zusatz **Post** unter dem Titel.
 3. Wählen Sie unter **Kanal** den News-Kanal. Erst danach lässt sich der
    Beitrag wählen.
 4. Wählen Sie unter **Beitrag** den gewünschten Beitrag. Zur Auswahl stehen
@@ -66,8 +88,8 @@
 ## Alle Beiträge eines Kanals zeigen
 
 1. Öffnen Sie die Einstellungen und damit den Editor.
-2. Klicken Sie über der Liste auf **Neu +** und wählen Sie **News-Kanal**.
-   Links erscheint ein Eintrag mit der Marke **Kanal**.
+2. Klicken Sie über der Liste auf **+ Neu** und wählen Sie **News-Kanal**.
+   Links erscheint ein Eintrag mit dem Zusatz **Kanal** unter dem Titel.
 3. Wählen Sie unter **Kanal** den News-Kanal.
 4. Stellen Sie **Anzahl der Folien** ein (Voreinstellung `3`, höchstens acht).
 5. Wählen Sie die **Reihenfolge**: `Neueste zuerst` oder `Älteste zuerst`.
@@ -115,20 +137,29 @@ denn sie wird bei jedem Seitenaufruf geladen.
 2. Wählen Sie im Editor die betroffene Folie aus.
 3. Klicken Sie unter **Bild oder Video für Hochformat** auf **Bild oder Video
    wählen** oder tragen Sie darunter eine Adresse ein.
-4. **Übernehmen**, speichern, und in einem schmalen Fenster oder auf dem
+4. Die Ansicht **Mobil** in der Kopfleiste zeigt den Hochformat-Zuschnitt
+   schon im Editor.
+5. **Übernehmen**, speichern, und in einem schmalen Fenster oder auf dem
    Telefon prüfen.
 
 ## Nachträglich ändern
 
 1. Öffnen Sie die Einstellungen des Widgets; der Editor öffnet sich mit den
    vorhandenen Einträgen.
-2. Wählen Sie links den zu ändernden Eintrag. Die Marke über dem Titel sagt,
-   um welche Sorte es sich handelt: **Folie**, **Post** oder **Kanal**.
-3. Ändern Sie die Felder rechts. Über **Duplizieren** entsteht eine Kopie des
-   gewählten Eintrags direkt dahinter, über **Löschen** verschwindet er. Pfeile,
-   Duplizieren und Löschen gelten für alle drei Sorten gleichermaßen.
-4. **Übernehmen** schreibt die Änderungen in das Widget — erst danach greift
-   das Speichern der Seite.
+2. Wählen Sie links den zu ändernden Eintrag. Der Zusatz unter dem Titel
+   sagt, um welche Sorte es sich handelt: **Folie**, **Post** oder **Kanal**.
+3. Ändern Sie die Felder rechts. Über das Symbol **duplizieren** entsteht eine
+   Kopie des gewählten Eintrags direkt dahinter, über **löschen** verschwindet
+   er. Verschieben, Duplizieren und Löschen gelten für alle drei Sorten
+   gleichermaßen. Bei acht Einträgen sind **+ Neu** und **duplizieren**
+   gesperrt.
+4. **Rückgängig** und **Wiederholen** in der Kopfleiste nehmen einzelne
+   Schritte zurück oder stellen sie wieder her.
+5. **Übernehmen** schreibt die Änderungen in das Widget — erst danach greift
+   das Speichern der Seite. Fehlt einer Folie das Bild, übernimmt der Editor
+   nichts: der Status nennt die Folie, und die Liste markiert sie.
+6. **Abbrechen** oder **Schließen** fragen nach, solange etwas nicht
+   übernommen ist: **Verwerfen**, **Weiter bearbeiten** oder **Übernehmen**.
 
 ## Wenn etwas nicht funktioniert
 
