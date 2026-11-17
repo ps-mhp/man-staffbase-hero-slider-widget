@@ -1,0 +1,180 @@
+/*!
+ * Copyright 2026, MHP Management und IT-Beratung GmbH and contributors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Was eine einzelne Folie zeigt: Bühnenbild (Bild, Zuschnitt oder Video) und
+ * Text samt Schaltflächen.
+ *
+ * Aus `hero-slider.tsx` herausgelöst, damit die Vorschau im Studio
+ * (`hero-slide-preview.tsx`) dieselbe Folie zeigen kann, ohne die Bühne
+ * selbst zu bauen: die verschiebt Brotkrumen und misst Abschnitte der Seite,
+ * und das darf im Studio nicht geschehen. Hier steht nur Markup und das
+ * Abspielen des Videos – nichts, was über die eigene Folie hinausgreift.
+ */
+
+import * as React from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
+import { SlideCtas } from "./slide-ctas";
+import { Slide, SlideImage, firstFrameUrl, isVideo } from "./slides-model";
+
+/** Unterhalb dieser Breite zeigt das `<picture>` den Hochkant-Zuschnitt. */
+export const PORTRAIT_MEDIA = "(orientation: portrait) and (max-width: 767px)";
+
+/** Ob eine Medienabfrage gerade zutrifft; ohne `matchMedia` nie. */
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(() => globalThis.matchMedia?.(query).matches === true);
+
+  useEffect(() => {
+    const list = globalThis.matchMedia?.(query);
+    if (!list) return undefined;
+    const onChange = (): void => setMatches(list.matches);
+    onChange();
+    list.addEventListener("change", onChange);
+    return () => list.removeEventListener("change", onChange);
+  }, [query]);
+
+  return matches;
+}
+
+/** Das `<img>` eines Bühnenbilds samt Ladepriorität. */
+function SlideImg({ image, eager }: { image: SlideImage; eager: boolean }): ReactElement {
+  return (
+    <img
+      className="man-hero__image"
+      src={image.url}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      // Der erste Slide ist das grösste sichtbare Element der Seite und
+      // bestimmt damit deren Ladezeit-Messwert; die übrigen liegen darunter
+      // und dürfen warten.
+      loading={eager ? "eager" : "lazy"}
+      fetchPriority={eager ? "high" : "auto"}
+    />
+  );
+}
+
+/** Das `<picture>` eines Slides samt Hochkant-Zuschnitt. */
+function SlidePicture({ slide, eager }: { slide: Slide; eager: boolean }): ReactElement {
+  return (
+    <picture>
+      {slide.imagePortrait !== undefined && (
+        <source media={PORTRAIT_MEDIA} srcSet={slide.imagePortrait.url} />
+      )}
+      <SlideImg image={slide.image} eager={eager} />
+    </picture>
+  );
+}
+
+interface SlideVideoProps {
+  video: SlideImage;
+  /** Nur die vordere Folie spielt, und auch die nicht bei weniger Bewegung. */
+  play: boolean;
+  eager: boolean;
+}
+
+/**
+ * Ein Video an der Stelle des Bühnenbilds: stumm, in Schleife und ohne
+ * Bedienleiste, damit es dort steht wie ein Foto.
+ *
+ * Kein `autoPlay`: das Attribut liefe auf jeder Folie los, auch auf den
+ * verborgenen, und fragte nicht nach weniger Bewegung. Der Effekt startet und
+ * hält das Video stattdessen mit der Folie.
+ */
+function SlideVideo({ video, play, eager }: SlideVideoProps): ReactElement {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (element === null) return;
+    // React setzt `muted` nicht als Attribut, und ein Video mit Ton spielt
+    // kein Browser ohne Klick ab. Die Eigenschaft ist das, was zählt.
+    element.muted = true;
+    if (!play) {
+      element.pause();
+      return;
+    }
+    // Ein verweigertes Abspielen (Stromsparmodus, Browserregel) ist kein
+    // Fehler der Seite: das erste Bild bleibt stehen wie ein Foto. Ältere
+    // Browser geben gar kein Promise zurück.
+    const started = element.play() as Promise<void> | undefined;
+    started?.catch(() => undefined);
+  }, [play, video.url]);
+
+  const label = video.alt.trim();
+
+  return (
+    <video
+      ref={ref}
+      className="man-hero__image"
+      src={firstFrameUrl(video.url)}
+      muted
+      loop
+      playsInline
+      // Ein Bühnenbild hat kein Bild-im-Bild und gehört nicht auf den Fernseher.
+      disablePictureInPicture
+      disableRemotePlayback
+      // Wie beim Bild: der erste Slide darf sofort laden, die übrigen holen
+      // nur, was für ihr erstes Bild nötig ist.
+      preload={eager ? "auto" : "metadata"}
+      // Ein Video hat kein `alt`. Mit Beschreibung tritt es als Bild auf —
+      // ohne Rolle lesen Screenreader ein `<video>` ohne Bedienleiste gar
+      // nicht vor —, ohne ist es Schmuck und für Hilfsmittel nicht vorhanden.
+      role={label === "" ? undefined : "img"}
+      aria-label={label === "" ? undefined : label}
+      aria-hidden={label === "" ? true : undefined}
+    />
+  );
+}
+
+interface SlideMediaProps {
+  slide: Slide;
+  eager: boolean;
+  play: boolean;
+  /** Trifft {@link PORTRAIT_MEDIA} gerade zu? */
+  portrait: boolean;
+}
+
+/**
+ * Das Bühnenbild eines Slides.
+ *
+ * Reine Bilder bleiben ein `<picture>`, das den Zuschnitt selbst wählt. Ist
+ * ein Video beteiligt, geht das nicht: `<picture>` wählt nur zwischen Bildern.
+ * Dann fällt die Wahl hier, und es wird nur eins der beiden geladen.
+ */
+export function SlideMedia({ slide, eager, play, portrait }: SlideMediaProps): ReactElement {
+  const { image, imagePortrait } = slide;
+  if (!isVideo(image) && (imagePortrait === undefined || !isVideo(imagePortrait))) {
+    return <SlidePicture slide={slide} eager={eager} />;
+  }
+
+  const shown = portrait && imagePortrait !== undefined ? imagePortrait : image;
+  return isVideo(shown) ? (
+    <SlideVideo video={shown} play={play} eager={eager} />
+  ) : (
+    <SlideImg image={shown} eager={eager} />
+  );
+}
+
+/** Überschrift, Unterzeile und Schaltflächen über dem Bühnenbild. */
+export function SlideText({ slide }: { slide: Slide }): ReactElement {
+  return (
+    <div className="man-hero__inner">
+      <div className="man-hero__body">
+        {slide.headline !== "" && <h2 className="man-hero__headline">{slide.headline}</h2>}
+        {slide.subline !== undefined && <p className="man-hero__subline">{slide.subline}</p>}
+        <SlideCtas ctas={slide.ctas} />
+      </div>
+    </div>
+  );
+}

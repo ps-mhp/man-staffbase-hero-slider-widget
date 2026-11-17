@@ -21,7 +21,7 @@
  */
 
 import * as React from "react";
-import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
+import { ReactElement, useCallback, useRef, useState } from "react";
 import { useHotStyle } from "@shared/hot-style";
 import { useFullBleed } from "./full-bleed";
 import { PageTopLayout, usePageTop } from "./page-top";
@@ -29,8 +29,8 @@ import { BottomSpacing, useBottomSpacing } from "./bottom-spacing";
 import { useSectionHug } from "./section-hug";
 import type { HeroPosition } from "./attributes";
 import { isEditor } from "./editor-context";
-import { SlideCtas } from "./slide-ctas";
-import { Slide, SlideImage, firstFrameUrl, isVideo } from "./slides-model";
+import { PORTRAIT_MEDIA, SlideMedia, SlideText, useMediaQuery } from "./hero-slide-media";
+import { Slide } from "./slides-model";
 import { DEFAULT_AUTOPLAY_DELAY_MS, useSlider } from "./use-slider";
 import heroSliderCss from "./styles/hero-slider.scss";
 
@@ -45,9 +45,6 @@ export const HERO_HEIGHTS: readonly HeroHeight[] = [
   "section",
 ];
 
-/** Unterhalb dieser Breite zeigt das `<picture>` den Hochkant-Zuschnitt. */
-const PORTRAIT_MEDIA = "(orientation: portrait) and (max-width: 767px)";
-
 export interface HeroSliderProps {
   slides: Slide[];
   height?: HeroHeight;
@@ -61,142 +58,6 @@ export interface HeroSliderProps {
   controls?: boolean;
   /** Blockabstand der Seite unter der Bühne; Vorgabe ist der der Seite. */
   bottomSpacing?: BottomSpacing;
-}
-
-/** Ob eine Medienabfrage gerade zutrifft; ohne `matchMedia` nie. */
-function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(() => globalThis.matchMedia?.(query).matches === true);
-
-  useEffect(() => {
-    const list = globalThis.matchMedia?.(query);
-    if (!list) return undefined;
-    const onChange = (): void => setMatches(list.matches);
-    onChange();
-    list.addEventListener("change", onChange);
-    return () => list.removeEventListener("change", onChange);
-  }, [query]);
-
-  return matches;
-}
-
-/** Das `<img>` eines Bühnenbilds samt Ladepriorität. */
-function SlideImg({ image, eager }: { image: SlideImage; eager: boolean }): ReactElement {
-  return (
-    <img
-      className="man-hero__image"
-      src={image.url}
-      alt={image.alt}
-      width={image.width}
-      height={image.height}
-      // Der erste Slide ist das grösste sichtbare Element der Seite und
-      // bestimmt damit deren Ladezeit-Messwert; die übrigen liegen darunter
-      // und dürfen warten.
-      loading={eager ? "eager" : "lazy"}
-      fetchPriority={eager ? "high" : "auto"}
-    />
-  );
-}
-
-/** Das `<picture>` eines Slides samt Hochkant-Zuschnitt. */
-function SlidePicture({ slide, eager }: { slide: Slide; eager: boolean }): ReactElement {
-  return (
-    <picture>
-      {slide.imagePortrait !== undefined && (
-        <source media={PORTRAIT_MEDIA} srcSet={slide.imagePortrait.url} />
-      )}
-      <SlideImg image={slide.image} eager={eager} />
-    </picture>
-  );
-}
-
-interface SlideVideoProps {
-  video: SlideImage;
-  /** Nur die vordere Folie spielt, und auch die nicht bei weniger Bewegung. */
-  play: boolean;
-  eager: boolean;
-}
-
-/**
- * Ein Video an der Stelle des Bühnenbilds: stumm, in Schleife und ohne
- * Bedienleiste, damit es dort steht wie ein Foto.
- *
- * Kein `autoPlay`: das Attribut liefe auf jeder Folie los, auch auf den
- * verborgenen, und fragte nicht nach weniger Bewegung. Der Effekt startet und
- * hält das Video stattdessen mit der Folie.
- */
-function SlideVideo({ video, play, eager }: SlideVideoProps): ReactElement {
-  const ref = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const element = ref.current;
-    if (element === null) return;
-    // React setzt `muted` nicht als Attribut, und ein Video mit Ton spielt
-    // kein Browser ohne Klick ab. Die Eigenschaft ist das, was zählt.
-    element.muted = true;
-    if (!play) {
-      element.pause();
-      return;
-    }
-    // Ein verweigertes Abspielen (Stromsparmodus, Browserregel) ist kein
-    // Fehler der Seite: das erste Bild bleibt stehen wie ein Foto. Ältere
-    // Browser geben gar kein Promise zurück.
-    const started = element.play() as Promise<void> | undefined;
-    started?.catch(() => undefined);
-  }, [play, video.url]);
-
-  const label = video.alt.trim();
-
-  return (
-    <video
-      ref={ref}
-      className="man-hero__image"
-      src={firstFrameUrl(video.url)}
-      muted
-      loop
-      playsInline
-      // Ein Bühnenbild hat kein Bild-im-Bild und gehört nicht auf den Fernseher.
-      disablePictureInPicture
-      disableRemotePlayback
-      // Wie beim Bild: der erste Slide darf sofort laden, die übrigen holen
-      // nur, was für ihr erstes Bild nötig ist.
-      preload={eager ? "auto" : "metadata"}
-      // Ein Video hat kein `alt`. Mit Beschreibung tritt es als Bild auf —
-      // ohne Rolle lesen Screenreader ein `<video>` ohne Bedienleiste gar
-      // nicht vor —, ohne ist es Schmuck und für Hilfsmittel nicht vorhanden.
-      role={label === "" ? undefined : "img"}
-      aria-label={label === "" ? undefined : label}
-      aria-hidden={label === "" ? true : undefined}
-    />
-  );
-}
-
-interface SlideMediaProps {
-  slide: Slide;
-  eager: boolean;
-  play: boolean;
-  /** Trifft {@link PORTRAIT_MEDIA} gerade zu? */
-  portrait: boolean;
-}
-
-/**
- * Das Bühnenbild eines Slides.
- *
- * Reine Bilder bleiben ein `<picture>`, das den Zuschnitt selbst wählt. Ist
- * ein Video beteiligt, geht das nicht: `<picture>` wählt nur zwischen Bildern.
- * Dann fällt die Wahl hier, und es wird nur eins der beiden geladen.
- */
-function SlideMedia({ slide, eager, play, portrait }: SlideMediaProps): ReactElement {
-  const { image, imagePortrait } = slide;
-  if (!isVideo(image) && (imagePortrait === undefined || !isVideo(imagePortrait))) {
-    return <SlidePicture slide={slide} eager={eager} />;
-  }
-
-  const shown = portrait && imagePortrait !== undefined ? imagePortrait : image;
-  return isVideo(shown) ? (
-    <SlideVideo video={shown} play={play} eager={eager} />
-  ) : (
-    <SlideImg image={shown} eager={eager} />
-  );
 }
 
 export function HeroSlider({
@@ -437,17 +298,7 @@ export function HeroSlider({
                   />
                 </div>
 
-                <div className="man-hero__inner">
-                  <div className="man-hero__body">
-                    {slide.headline !== "" && (
-                      <h2 className="man-hero__headline">{slide.headline}</h2>
-                    )}
-                    {slide.subline !== undefined && (
-                      <p className="man-hero__subline">{slide.subline}</p>
-                    )}
-                    <SlideCtas ctas={slide.ctas} />
-                  </div>
-                </div>
+                <SlideText slide={slide} />
               </div>
             );
           })}
