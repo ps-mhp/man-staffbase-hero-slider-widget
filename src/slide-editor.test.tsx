@@ -145,6 +145,12 @@ const addVia = async (kind: RegExp): Promise<void> => {
 
 const action = (name: string): HTMLElement => screen.getByRole("button", { name });
 
+/** Öffnet eine Auswahlliste und wählt eine Option. */
+const choose = async (trigger: HTMLElement, option: string | RegExp): Promise<void> => {
+  await userEvent.click(trigger);
+  await userEvent.click(await screen.findByRole("option", { name: option }));
+};
+
 /**
  * Baut den Editor auf. `live` hält den Wert im Zustand: der Editor ist
  * kontrolliert, und mehrere Schritte hintereinander brauchen den jeweils
@@ -528,8 +534,8 @@ describe("SlideEditor", () => {
     it("verknüpft eine Seite aus Staffbase und bildet ihre Adresse", async () => {
       const h = setupLive([slide("a", { ctas: [{ label: "Mehr", href: "https://example.test" }] })]);
       fireEvent.change(screen.getByTestId("slide-cta-0-kind"), { target: { value: "page" } });
-      await screen.findByRole("option", { name: "Service" });
-      fireEvent.change(screen.getByTestId("slide-cta-0-page"), { target: { value: "pg2" } });
+      await waitFor(() => expect(screen.getByTestId("slide-cta-0-page")).toBeEnabled());
+      await choose(screen.getByTestId("slide-cta-0-page"), "Service");
 
       expect(h.latestSlides()[0]!.ctas).toEqual([
         {
@@ -543,10 +549,10 @@ describe("SlideEditor", () => {
     it("verknüpft einen News-Beitrag über Kanal und Beitrag", async () => {
       const h = setupLive([slide("a", { ctas: [{ label: "Lesen", href: "" }] })]);
       fireEvent.change(screen.getByTestId("slide-cta-0-kind"), { target: { value: "post" } });
-      await screen.findByRole("option", { name: "Technik" });
-      fireEvent.change(screen.getByTestId("slide-cta-0-channel"), { target: { value: "c2" } });
-      await screen.findByRole("option", { name: "Zweiter Beitrag" });
-      fireEvent.change(screen.getByTestId("slide-cta-0-post"), { target: { value: "p2" } });
+      await waitFor(() => expect(screen.getByTestId("slide-cta-0-channel")).toBeEnabled());
+      await choose(screen.getByTestId("slide-cta-0-channel"), "Technik");
+      await waitFor(() => expect(screen.getByTestId("slide-cta-0-post")).toBeEnabled());
+      await choose(screen.getByTestId("slide-cta-0-post"), "Zweiter Beitrag");
 
       expect(h.latestSlides()[0]!.ctas).toEqual([
         {
@@ -570,7 +576,7 @@ describe("SlideEditor", () => {
         }),
       ]);
       // Die Seitenliste kommt asynchron; erst danach steht das Formular still.
-      await screen.findByRole("option", { name: "Fahrzeuge" });
+      await waitFor(() => expect(screen.getByTestId("slide-cta-0-page")).toHaveTextContent("Fahrzeuge"));
       fireEvent.change(screen.getByTestId("slide-cta-0-kind"), { target: { value: "url" } });
 
       expect(h.latestSlides()[0]!.ctas).toEqual([{ label: "Mehr", href: "" }]);
@@ -1012,18 +1018,40 @@ describe("SlideEditor", () => {
     it("füllt die Beitragsauswahl erst, wenn ein Kanal gewählt ist", async () => {
       const h = setup([postItem("p")]);
 
-      const channel = await screen.findByTestId("news-post-channel");
-      expect(screen.getByTestId("news-post-post")).toBeDisabled();
+      const channel = await screen.findByRole("combobox", { name: /Kanal/ });
+      expect(channel).toHaveAttribute("data-testid", "news-post-channel");
+      expect(screen.getByRole("combobox", { name: /Beitrag/ })).toBeDisabled();
 
-      fireEvent.change(channel, { target: { value: "c1" } });
+      await choose(channel, "Unternehmen");
       expect(h.latest()[0]).toMatchObject({ channelId: "c1", postId: "" });
+    });
+
+    it("markiert Kanal und Beitrag als Pflicht und nennt den fehlenden Beitrag, sobald der Rahmen Fehler zeigt", async () => {
+      setup([postItem("p", { channelId: "c1" })], { shell: { issuesVisible: true } });
+
+      const post = await screen.findByRole("combobox", { name: /Beitrag/ });
+      expect(post).toHaveAttribute("aria-required", "true");
+      expect(post).toHaveAttribute("aria-invalid", "true");
+      expect(post).toHaveAccessibleDescription(expect.stringContaining("Ohne Beitrag wird dieser Eintrag nicht gezeigt."));
+      expect(screen.getByRole("combobox", { name: /Kanal/ })).toHaveAttribute("aria-required", "true");
+    });
+
+    it("lässt eine Kennung von Hand eingeben", async () => {
+      const h = setup([postItem("p", { channelId: "c1" })]);
+
+      await choose(await screen.findByRole("combobox", { name: /Beitrag/ }), "Andere Kennung eingeben …");
+      const manual = screen.getByTestId("news-post-post-manual");
+      expect(manual).toHaveFocus();
+      fireEvent.change(manual, { target: { value: " 6a5e6703cb02c92e74be1eaa " } });
+
+      expect(h.latest()[0]).toMatchObject({ postId: "6a5e6703cb02c92e74be1eaa" });
     });
 
     it("wirft den gewählten Beitrag weg, wenn der Kanal wechselt", async () => {
       const h = setup([postItem("p", { channelId: "c1", postId: "p1" })]);
 
-      const channel = await screen.findByTestId("news-post-channel");
-      fireEvent.change(channel, { target: { value: "c2" } });
+      await waitFor(() => expect(screen.getByTestId("news-post-channel")).toHaveTextContent("Unternehmen"));
+      await choose(screen.getByTestId("news-post-channel"), "Technik");
 
       expect(h.latest()[0]).toMatchObject({ channelId: "c2", postId: "" });
     });
@@ -1032,8 +1060,10 @@ describe("SlideEditor", () => {
       setup([postItem("p", { channelId: "c1" })]);
 
       const select = await screen.findByTestId("news-post-post");
-      await waitFor(() => expect(select).toHaveTextContent("Erster Beitrag"));
-      expect(select).toHaveTextContent("Zweiter Beitrag");
+      await waitFor(() => expect(select).toBeEnabled());
+      await userEvent.click(select);
+      expect(await screen.findByRole("option", { name: "Erster Beitrag" })).toBeInTheDocument();
+      expect(screen.getByRole("option", { name: "Zweiter Beitrag" })).toBeInTheDocument();
     });
 
     it("tritt zur Seite, wenn die Kanalliste nicht erreichbar ist", async () => {
@@ -1080,9 +1110,9 @@ describe("SlideEditor", () => {
     it("kehrt die Reihenfolge um", async () => {
       const h = setup([channelItem("c")]);
 
-      fireEvent.change(await screen.findByTestId("news-channel-order"), {
-        target: { value: "oldest" },
-      });
+      const order = screen.getByRole("radiogroup", { name: "Reihenfolge" });
+      expect(within(order).getByRole("radio", { name: "Neueste zuerst" })).toBeChecked();
+      await userEvent.click(within(order).getByRole("radio", { name: "Älteste zuerst" }));
       expect(h.latest()[0]).toMatchObject({ order: "oldest" });
     });
 
@@ -1098,11 +1128,27 @@ describe("SlideEditor", () => {
     it("verlangt standardmäßig ein Bild und lässt das abschalten", async () => {
       const h = setup([channelItem("c")]);
 
-      const check = await screen.findByTestId("news-channel-require-image");
-      expect(check).toBeChecked();
+      const toggle = await screen.findByRole("switch", { name: "Nur Beiträge mit Bild" });
+      expect(toggle).toBeChecked();
+      expect(toggle).toHaveAccessibleDescription(expect.stringContaining("dunkle Fläche"));
 
-      fireEvent.click(check);
+      fireEvent.click(toggle);
       expect(h.latest()[0]).toMatchObject({ requireImage: false });
+    });
+
+    it("gliedert die Felder wie der Screen", () => {
+      setup([channelItem("c")]);
+      expect(screen.getAllByRole("region").map((region) => within(region).getAllByRole("heading")[0]!.textContent)).toEqual([
+        "Quelle",
+        "Auswahl",
+        "Darstellung",
+      ]);
+    });
+
+    it("blendet den Anrisstext per Schalter aus", () => {
+      const h = setup([channelItem("c")]);
+      fireEvent.click(screen.getByRole("switch", { name: "Anrisstext zeigen" }));
+      expect(h.latest()[0]).toMatchObject({ showTeaser: false });
     });
 
     it("zeigt in der Vorschau eine Folie je Beitrag", async () => {

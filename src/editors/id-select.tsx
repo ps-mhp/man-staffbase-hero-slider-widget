@@ -21,13 +21,23 @@
  * Speichern würde ihn stillschweigend verlieren. Dann tritt ein Textfeld an
  * die Stelle der Auswahl.
  *
- * Eine eigene Umsetzung statt der geteilten, weil diese hier im
- * Folien-Editor steht und dessen Stylesheet (`man-se__`) benutzt, während die
- * geteilte in Staffbases Dialog mit Inline-Stilen auskommen muss.
+ * Gebaut aus `Field`, `Select` und `Input` von `@man/config-ui`: Label,
+ * Pflichtmarke, Hinweis und Fehler sind so mit der Eingabe verdrahtet wie in
+ * jedem anderen Widget.
  */
 
 import * as React from "react";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
+import { Field } from "@man/config-ui/form/field";
+import { Input } from "@man/config-ui/primitives/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "@man/config-ui/primitives/select";
 
 export interface IdSelectOption {
   id: string;
@@ -37,6 +47,9 @@ export interface IdSelectOption {
 export interface IdSelectProps {
   label: string;
   hint?: string;
+  required?: boolean;
+  /** Warum der Wert so nicht geht; setzt `aria-invalid`. */
+  error?: string;
   value: string;
   options: IdSelectOption[];
   loading: boolean;
@@ -46,23 +59,40 @@ export interface IdSelectProps {
   onChange: (id: string) => void;
   testId: string;
   disabled?: boolean;
+  className?: string;
 }
 
 /** Der Eintrag, der die Auswahl an die Eingabe von Hand übergibt. */
 const MANUAL_VALUE = "__manual__";
 
-export function IdSelect({
-  label,
-  hint,
-  value,
-  options,
-  loading,
-  placeholder,
-  unavailableNotice,
-  onChange,
-  testId,
-  disabled = false,
-}: IdSelectProps): ReactElement {
+interface ManualProps extends IdSelectProps {
+  /** Von Hand gewählt: dann gleich in das Feld, statt den Fokus zu verlieren. */
+  focusOnMount: boolean;
+}
+
+function ManualInput({ label, hint, required, error, value, options, loading, unavailableNotice, onChange, testId, disabled, className, focusOnMount }: ManualProps): ReactElement {
+  const ref = useRef<HTMLInputElement | null>(null);
+  useEffect(() => {
+    if (focusOnMount) ref.current?.focus();
+  }, [focusOnMount]);
+  const unavailable = options.length === 0 && !loading;
+  return (
+    <Field label={label} hint={unavailable ? unavailableNotice : hint} required={required} error={error} className={className}>
+      <Input
+        ref={ref}
+        type="text"
+        data-testid={`${testId}-manual`}
+        value={value}
+        disabled={disabled}
+        onChange={(event) => onChange(event.target.value.trim())}
+        placeholder="Kennung, z. B. 6a5e6703cb02c92e74be1eaa"
+      />
+    </Field>
+  );
+}
+
+export function IdSelect(props: IdSelectProps): ReactElement {
+  const { label, hint, required, error, value, options, loading, placeholder, onChange, testId, disabled = false, className } = props;
   const [manual, setManual] = useState(false);
 
   const known = options.some((option) => option.id === value);
@@ -72,47 +102,35 @@ export function IdSelect({
   const stepAside =
     !disabled && (manual || (!loading && (options.length === 0 || (value !== "" && !known))));
 
-  return (
-    <label className="man-se__field">
-      <span className="man-se__label">{label}</span>
-      {hint !== undefined && <p className="man-se__hint">{hint}</p>}
+  if (stepAside) return <ManualInput {...props} disabled={disabled} focusOnMount={manual} />;
 
-      {stepAside ? (
-        <>
-          {options.length === 0 && !loading && <p className="man-se__hint">{unavailableNotice}</p>}
-          <input
-            type="text"
-            className="man-se__input"
-            data-testid={`${testId}-manual`}
-            value={value}
-            disabled={disabled}
-            onChange={(event) => onChange(event.target.value.trim())}
-            placeholder="Kennung, z. B. 6a5e6703cb02c92e74be1eaa"
-          />
-        </>
-      ) : (
-        <select
-          className="man-se__input man-se__select"
-          data-testid={testId}
-          value={known ? value : ""}
-          disabled={disabled || loading}
-          onChange={(event) => {
-            if (event.target.value === MANUAL_VALUE) {
-              setManual(true);
-              return;
-            }
-            onChange(event.target.value);
-          }}
-        >
-          <option value="">{loading ? "Wird geladen …" : placeholder}</option>
-          {options.map((option) => (
-            <option key={option.id} value={option.id}>
-              {option.title}
-            </option>
-          ))}
-          <option value={MANUAL_VALUE}>Andere Kennung eingeben …</option>
-        </select>
-      )}
-    </label>
+  return (
+    <Select
+      // Leer zeigt Radix den Platzhalter.
+      value={known ? value : ""}
+      disabled={disabled || loading}
+      onValueChange={(next) => {
+        if (next === MANUAL_VALUE) {
+          setManual(true);
+          return;
+        }
+        onChange(next);
+      }}
+    >
+      <Field label={label} hint={hint} required={required} error={error} className={className}>
+        <SelectTrigger className="w-full cursor-pointer" data-testid={testId}>
+          <SelectValue placeholder={loading ? "Wird geladen …" : placeholder} />
+        </SelectTrigger>
+      </Field>
+      <SelectContent position="popper" className="max-h-80">
+        {options.map((option) => (
+          <SelectItem key={option.id} value={option.id}>
+            {option.title}
+          </SelectItem>
+        ))}
+        {options.length > 0 && <SelectSeparator />}
+        <SelectItem value={MANUAL_VALUE}>Andere Kennung eingeben …</SelectItem>
+      </SelectContent>
+    </Select>
   );
 }

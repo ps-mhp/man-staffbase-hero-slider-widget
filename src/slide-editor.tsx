@@ -111,15 +111,17 @@ interface EntryFormProps {
 function EntryForm({ item, entries, source, onPick }: EntryFormProps): ReactElement | null {
   if (isSlideItem(item)) {
     return (
-      <SlideForm
-        // Je Eintrag eine eigene Instanz: das Adressfeld hält eine noch
-        // ungültige Eingabe fest, und die gehört nicht in die nächste Folie.
-        key={item.id}
-        slide={item}
-        onPatch={entries.patch}
-        onPick={onPick}
-        source={source}
-      />
+      <div>
+        <SlideForm
+          // Je Eintrag eine eigene Instanz: das Adressfeld hält eine noch
+          // ungültige Eingabe fest, und die gehört nicht in die nächste Folie.
+          key={item.id}
+          slide={item}
+          onPatch={entries.patch}
+          onPick={onPick}
+          source={source}
+        />
+      </div>
     );
   }
   if (isNewsPostItem(item)) {
@@ -169,9 +171,7 @@ function EntryMain({ entries, total, source, onPick }: EntryMainProps): ReactEle
             onDelete={entries.remove}
           />
         </div>
-        <div>
-          <EntryForm item={item} entries={entries} source={source} onPick={onPick} />
-        </div>
+        <EntryForm item={item} entries={entries} source={source} onPick={onPick} />
       </div>
     </div>
   );

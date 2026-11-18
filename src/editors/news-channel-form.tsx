@@ -12,16 +12,23 @@
  */
 
 /**
- * Die Felder eines ganzen News-Kanals.
+ * Die Felder eines ganzen News-Kanals, wie im Screen: Quelle, Auswahl,
+ * Darstellung.
  *
  * Anders als beim einzelnen Beitrag steht hier nicht fest, was auf der Bühne
- * landet: der Eintrag ist eine Anweisung, keine Folie. Die Vorschau ist
- * deshalb kein Zierat, sondern die einzige Stelle, an der man sieht, was die
- * Filter übrig lassen.
+ * landet: der Eintrag ist eine Anweisung, keine Folie. Was die Filter übrig
+ * lassen, zeigt die rechte Spalte daneben (`entry-preview.tsx`).
  */
 
 import * as React from "react";
 import { ReactElement } from "react";
+import { Field } from "@man/config-ui/form/field";
+import { FormSection } from "@man/config-ui/form/form-section";
+import type { SegmentedOption } from "@man/config-ui/form/segmented";
+import { SegmentedField } from "@man/config-ui/form/segmented-field";
+import { SwitchRow } from "@man/config-ui/form/switch-row";
+import { Input } from "@man/config-ui/primitives/input";
+import { useConfigShell } from "@man/config-ui/shell/shell-context";
 
 import { DEFAULT_CTA_LABEL, MAX_CHANNEL_COUNT, NewsChannelItem } from "../hero-items";
 import { IdSelect } from "./id-select";
@@ -33,6 +40,13 @@ export interface NewsChannelFormProps {
   source: NewsSource;
 }
 
+type ChannelOrder = NewsChannelItem["order"];
+
+const ORDER_OPTIONS: readonly SegmentedOption<ChannelOrder>[] = [
+  { id: "newest", label: "Neueste zuerst" },
+  { id: "oldest", label: "Älteste zuerst" },
+];
+
 /** „#a, b“ wird zu `["a", "b"]`; leere Angaben fallen weg. */
 export function parseHashtagInput(raw: string): string[] {
   return raw
@@ -41,18 +55,16 @@ export function parseHashtagInput(raw: string): string[] {
     .filter((tag) => tag !== "");
 }
 
-export function NewsChannelForm({
-  item,
-  onPatch,
-  source,
-}: NewsChannelFormProps): ReactElement {
+function SourceSection({ item, onPatch, source }: NewsChannelFormProps): ReactElement {
+  const { issuesVisible } = useConfigShell();
   const channels = useNewsChannels(source);
-
   return (
-    <>
+    <FormSection title="Quelle">
       <IdSelect
         label="Kanal"
-        hint="Alle Beiträge dieses Kanals kommen als eigene Folien auf die Bühne."
+        required
+        hint="Jeder Beitrag dieses Kanals wird eine eigene Folie."
+        error={issuesVisible && item.channelId.trim() === "" ? "Ohne Kanal wird dieser Eintrag nicht gezeigt." : undefined}
         value={item.channelId}
         options={channels.entries.map((channel) => ({ id: channel.id, title: channel.title }))}
         loading={channels.loading}
@@ -61,117 +73,103 @@ export function NewsChannelForm({
         onChange={(channelId) => onPatch({ channelId })}
         testId="news-channel-channel"
       />
-
-      <label className="man-se__field">
-        <span className="man-se__label">Anzahl der Folien</span>
-        <p className="man-se__hint">
-          Höchstens {MAX_CHANNEL_COUNT}; zusammen mit den übrigen Einträgen zeigt die Bühne nie
-          mehr als {MAX_CHANNEL_COUNT} Folien.
-        </p>
-        <input
-          type="number"
-          className="man-se__input"
-          data-testid="news-channel-count"
-          min={1}
-          max={MAX_CHANNEL_COUNT}
-          value={item.count}
-          onChange={(event) => {
-            const count = Number.parseInt(event.target.value, 10);
-            if (!Number.isFinite(count)) return;
-            onPatch({ count: Math.min(Math.max(count, 1), MAX_CHANNEL_COUNT) });
-          }}
-        />
-      </label>
-
-      <label className="man-se__field">
-        <span className="man-se__label">Reihenfolge</span>
-        <select
-          className="man-se__input man-se__select"
-          data-testid="news-channel-order"
-          value={item.order}
-          onChange={(event) =>
-            onPatch({ order: event.target.value === "oldest" ? "oldest" : "newest" })
-          }
+      <div className="grid grid-cols-2 gap-4 max-lg:grid-cols-1">
+        <Field
+          label="Anzahl Beiträge"
+          hint={`1 bis ${MAX_CHANNEL_COUNT}; mit den übrigen Einträgen zeigt die Bühne nie mehr als ${MAX_CHANNEL_COUNT} Folien.`}
         >
-          <option value="newest">Neueste zuerst</option>
-          <option value="oldest">Älteste zuerst</option>
-        </select>
-      </label>
-
-      <fieldset className="man-se__field man-se__fieldset">
-        <legend className="man-se__label">Filter</legend>
-
-        <label className="man-se__check">
-          <input
-            type="checkbox"
-            data-testid="news-channel-highlighted"
-            checked={item.onlyHighlighted === true}
-            onChange={(event) =>
-              onPatch({ onlyHighlighted: event.target.checked ? true : undefined })
-            }
-          />
-          Nur hervorgehobene Beiträge
-        </label>
-
-        <label className="man-se__check">
-          <input
-            type="checkbox"
-            data-testid="news-channel-require-image"
-            checked={item.requireImage !== false}
-            onChange={(event) =>
-              onPatch({ requireImage: event.target.checked ? undefined : false })
-            }
-          />
-          Nur Beiträge mit Bild
-        </label>
-        <p className="man-se__hint">
-          Ohne Bild bleibt von der Folie nur eine dunkle Fläche mit Text. Abschalten nur, wenn das
-          gewollt ist.
-        </p>
-
-        <label className="man-se__sub">
-          <span className="man-se__label">Schlagworte (optional)</span>
-          <p className="man-se__hint">
-            Mehrere durch Komma trennen. Ein Beitrag genügt, wenn er eines davon trägt.
-          </p>
-          <input
-            type="text"
-            className="man-se__input"
-            data-testid="news-channel-hashtags"
-            value={(item.hashtags ?? []).join(", ")}
+          <Input
+            type="number"
+            inputMode="numeric"
+            data-testid="news-channel-count"
+            min={1}
+            max={MAX_CHANNEL_COUNT}
+            value={item.count}
             onChange={(event) => {
-              const hashtags = parseHashtagInput(event.target.value);
-              onPatch({ hashtags: hashtags.length > 0 ? hashtags : undefined });
+              const count = Number.parseInt(event.target.value, 10);
+              if (!Number.isFinite(count)) return;
+              onPatch({ count: Math.min(Math.max(count, 1), MAX_CHANNEL_COUNT) });
             }}
-            placeholder="trucks, elektro"
           />
-        </label>
-      </fieldset>
-
-      <label className="man-se__check">
-        <input
-          type="checkbox"
-          data-testid="news-channel-teaser"
-          checked={item.showTeaser !== false}
-          onChange={(event) => onPatch({ showTeaser: event.target.checked ? undefined : false })}
+        </Field>
+        <SegmentedField
+          label="Reihenfolge"
+          options={ORDER_OPTIONS}
+          value={item.order}
+          onChange={(order) => onPatch({ order })}
         />
-        Teaser als Unterzeile zeigen
-      </label>
+      </div>
+    </FormSection>
+  );
+}
 
-      <label className="man-se__field">
-        <span className="man-se__label">Beschriftung der Schaltfläche</span>
-        <p className="man-se__hint">
-          Gilt für alle Folien dieses Kanals. Leer lassen, um die Schaltfläche wegzulassen.
-        </p>
-        <input
+function SelectionSection({ item, onPatch }: Omit<NewsChannelFormProps, "source">): ReactElement {
+  return (
+    <FormSection title="Auswahl">
+      <SwitchRow
+        label="Nur hervorgehobene Beiträge"
+        data-testid="news-channel-highlighted"
+        checked={item.onlyHighlighted === true}
+        onCheckedChange={(checked) => onPatch({ onlyHighlighted: checked ? true : undefined })}
+      />
+      <SwitchRow
+        label="Nur Beiträge mit Bild"
+        hint="Ohne Bild bleibt von der Folie nur eine dunkle Fläche mit Text."
+        data-testid="news-channel-require-image"
+        checked={item.requireImage !== false}
+        onCheckedChange={(checked) => onPatch({ requireImage: checked ? undefined : false })}
+      />
+      <Field
+        label="Hashtags"
+        hint="Mehrere durch Komma trennen; ein Beitrag genügt, wenn er einen davon trägt. Leer = alle Beiträge des Kanals."
+      >
+        <Input
           type="text"
-          className="man-se__input"
+          data-testid="news-channel-hashtags"
+          value={(item.hashtags ?? []).join(", ")}
+          onChange={(event) => {
+            const hashtags = parseHashtagInput(event.target.value);
+            onPatch({ hashtags: hashtags.length > 0 ? hashtags : undefined });
+          }}
+          placeholder="trucks, elektro"
+        />
+      </Field>
+    </FormSection>
+  );
+}
+
+function DisplaySection({ item, onPatch }: Omit<NewsChannelFormProps, "source">): ReactElement {
+  return (
+    <FormSection title="Darstellung">
+      <SwitchRow
+        label="Anrisstext zeigen"
+        hint="Als Unterzeile unter der Überschrift."
+        data-testid="news-channel-teaser"
+        checked={item.showTeaser !== false}
+        onCheckedChange={(checked) => onPatch({ showTeaser: checked ? undefined : false })}
+      />
+      <Field
+        className="max-w-[360px]"
+        label="Beschriftung des Buttons"
+        hint="Gilt für alle Folien dieses Kanals. Leer lassen, um den Button wegzulassen."
+      >
+        <Input
+          type="text"
           data-testid="news-channel-cta"
           value={item.ctaLabel ?? DEFAULT_CTA_LABEL}
           onChange={(event) => onPatch({ ctaLabel: event.target.value })}
         />
-      </label>
+      </Field>
+    </FormSection>
+  );
+}
 
+export function NewsChannelForm({ item, onPatch, source }: NewsChannelFormProps): ReactElement {
+  return (
+    <>
+      <SourceSection item={item} onPatch={onPatch} source={source} />
+      <SelectionSection item={item} onPatch={onPatch} />
+      <DisplaySection item={item} onPatch={onPatch} />
     </>
   );
 }
