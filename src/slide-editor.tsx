@@ -16,19 +16,15 @@
  *
  * Die Einträge liegen als JSON in einem einzigen Attribut — in einem Textfeld
  * wären sie unbearbeitbar. Dieser Editor tritt an seine Stelle: links die
- * Liste der Einträge, in der Mitte die Felder des gewählten, rechts was er
- * auf die Bühne bringt (verkleinert). In den Geräteansichten steht statt
- * der Felder die Vorschau in Gerätebreite, und die rechte Spalte gibt ihr
- * den Platz.
- *
- * Der Screen sieht rechts die Einstellungen des Widgets vor (Höhe, Breite,
- * Lage, Sekunden …). Die sind eigene Felder im Dialog von Staffbase; dieser
- * Editor bekommt nur das Feld `slides` und kann die übrigen weder lesen
- * noch mit „Übernehmen“/„Abbrechen“ zurücknehmen.
+ * Liste der Einträge, in der Mitte die Felder des gewählten, rechts das Panel
+ * „Widget“ mit den Einstellungen der Bühne (Höhe, Breite, Lage, Sekunden …).
+ * Die reisen im selben Attribut (`hero-settings.ts`), also nimmt „Abbrechen“
+ * sie mit zurück. In den Geräteansichten steht statt der Felder die Vorschau
+ * in Gerätebreite; das Panel bleibt daneben.
  *
  * Ein Eintrag ist entweder eine handgepflegte Folie oder ein Verweis auf die
- * News: ein einzelner Beitrag oder ein ganzer Kanal. Nur die rechte Spalte
- * wechselt mit der Sorte.
+ * News: ein einzelner Beitrag oder ein ganzer Kanal. Nur die Felder in der
+ * Mitte wechseln mit der Sorte.
  *
  * Er schreibt nichts selbst zurück und zeichnet keine Knöpfe zum Übernehmen
  * oder Abbrechen: Kopf, Status, Rückgängig und Rückfrage kommen aus dem
@@ -45,10 +41,9 @@
 
 import * as React from "react";
 import { ReactElement, useMemo } from "react";
-import { InspectorPanel } from "@man/config-ui/inspector/inspector-panel";
 import { ConfigWorkspace } from "@man/config-ui/layout/config-workspace";
-import { useConfigShell } from "@man/config-ui/shell/shell-context";
 import { ItemActions } from "@man/config-ui/sidebar/item-actions";
+import type { ShownIssues } from "@shared/config-modal";
 import { useHotStyle } from "@shared/hot-style";
 import { MediaClient, createMediaClient } from "@shared/media/media-client";
 import { MediaAccept, PickedMedia } from "@shared/media/media-picker";
@@ -57,14 +52,15 @@ import { useMediaPanel } from "@shared/media/use-media-panel";
 import { HeroEntryPreview } from "./hero-slide-preview";
 import { HeroItem, isNewsChannelItem, isNewsPostItem, isSlideItem } from "./hero-items";
 import { MAX_ITEMS, entryKindName } from "./editor-entries";
+import type { HeroEditorValue } from "./editor-value";
 import { EditorMedia, EditorMediaContext } from "./editors/editor-media";
-import { EntryPreview } from "./editors/entry-preview";
 import { EntrySidebar } from "./editors/entry-sidebar";
 import { useItemLabels } from "./editors/item-label";
 import { NewsChannelForm } from "./editors/news-channel-form";
 import { NewsPostForm } from "./editors/news-post-form";
 import { NewsSource, cacheNewsSource, defaultNewsSource } from "./editors/news-source";
 import { SlideForm } from "./editors/slide-form";
+import { WIDGET_PANEL_TITLE, WidgetSettingsPanel } from "./editors/widget-settings-panel";
 import { Entries, PickerTarget, patchForPick, pickedImage, useEntries } from "./use-entries";
 import slideEditorCss from "./styles/slide-editor.scss";
 
@@ -92,8 +88,10 @@ const acceptFor = (item: HeroItem | undefined): MediaAccept =>
   item !== undefined && isSlideItem(item) ? SLIDE_MEDIA : "images";
 
 export interface SlideEditorProps {
-  value: HeroItem[];
-  onChange: (items: HeroItem[]) => void;
+  value: HeroEditorValue;
+  onChange: (value: HeroEditorValue) => void;
+  /** Das letzte gescheiterte Übernehmen; siehe `@shared/config-modal`. */
+  shownIssues?: ShownIssues | null;
   /** Vorgabe ist ein Client auf dieselbe Herkunft; für Tests austauschbar. */
   mediaClient?: MediaClient;
   /** Vorgabe sind die echten News-Endpunkte; für Tests austauschbar. */
@@ -204,14 +202,16 @@ function useEditorMedia(client: MediaClient, entries: Entries) {
   return { open, drop, overlay: media.overlay };
 }
 
-export function SlideEditor({ value, onChange, mediaClient, newsSource }: SlideEditorProps): ReactElement {
+export function SlideEditor({ value, onChange, shownIssues = null, mediaClient, newsSource }: SlideEditorProps): ReactElement {
   const css = useHotStyle(slideEditorCss, "hero-slider-widget", "styles/slide-editor.scss");
   const client = useMemo(() => mediaClient ?? createMediaClient(), [mediaClient]);
   const source = useMemo(() => cacheNewsSource(newsSource ?? defaultNewsSource), [newsSource]);
-  const entries = useEntries(value, onChange);
-  const labels = useItemLabels(value, source);
+  const { items } = value;
+  // Die Einträge ändern sich über `useEntries`; das hält selbst den jüngsten
+  // Stand der Liste, die Einstellungen kommen aus diesem Rendern.
+  const entries = useEntries(items, (next) => onChange({ ...value, items: next }));
+  const labels = useItemLabels(items, source);
   const media = useEditorMedia(client, entries);
-  const { view } = useConfigShell();
   const { item } = entries;
 
   return (
@@ -222,7 +222,7 @@ export function SlideEditor({ value, onChange, mediaClient, newsSource }: SlideE
           className="flex-1"
           sidebar={
             <EntrySidebar
-              items={value}
+              items={items}
               labels={labels}
               selectedId={item?.id}
               onSelect={entries.select}
@@ -231,15 +231,17 @@ export function SlideEditor({ value, onChange, mediaClient, newsSource }: SlideE
             />
           }
           inspector={
-            view === "editor" ? (
-              <InspectorPanel title="Vorschau">
-                <EntryPreview item={item} source={source} />
-              </InspectorPanel>
-            ) : undefined
+            <WidgetSettingsPanel
+              settings={value.settings}
+              legacy={value.legacy}
+              onChange={(settings) => onChange({ ...value, settings })}
+              shownIssues={shownIssues}
+            />
           }
+          inspectorTitle={WIDGET_PANEL_TITLE}
           preview={<HeroEntryPreview item={item} source={source} />}
         >
-          <EntryMain entries={entries} total={value.length} source={source} onPick={media.open} />
+          <EntryMain entries={entries} total={items.length} source={source} onPick={media.open} />
         </ConfigWorkspace>
       </EditorMediaContext.Provider>
       {media.overlay}

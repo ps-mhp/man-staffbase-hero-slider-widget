@@ -15,12 +15,16 @@ import * as React from "react";
 import { GalleryHorizontalEnd } from "lucide-react";
 
 import { FieldModalShellOptions, startFieldModalInjector } from "@shared/config-modal";
-import { changesStatus, validateHeroItems } from "./editor-entries";
-import { HeroItem, encodeHeroItemsAttribute, parseHeroItems } from "./hero-items";
+import { SLIDES_ATTRIBUTE } from "./configuration-schema";
+import {
+  HeroEditorValue,
+  heroEditorStatus,
+  readEditorValue,
+  validateHeroEditor,
+  writeEditorValue,
+} from "./editor-value";
+import { readLegacySettings, startHiddenLegacySettings } from "./legacy-settings";
 import { SLIDE_EDITOR_HELP } from "./slide-editor-help";
-
-/** Das Schemafeld, an dessen Stelle der Editor tritt. */
-const FIELD_KEY = "slides";
 
 /**
  * Der Editor kommt erst, wenn ein Dialog ihn zeigt: er baut auf
@@ -39,19 +43,22 @@ const LOADING = React.createElement(
 );
 
 /** Was der gemeinsame Rahmen vom Hero-Slider wissen muss. Offengelegt für Tests. */
-export const slideEditorShell: FieldModalShellOptions<HeroItem[]> = {
+export const slideEditorShell: FieldModalShellOptions<HeroEditorValue> = {
   widgetName: "Hero-Slider",
   title: "Folien bearbeiten",
   icon: GalleryHorizontalEnd,
   preview: true,
   help: SLIDE_EDITOR_HELP,
-  statusText: changesStatus,
-  validate: validateHeroItems,
+  statusText: heroEditorStatus,
+  validate: validateHeroEditor,
 };
 
 /**
  * Wartet auf den Konfigurationsdialog des Widgets und setzt den Folien-Editor
- * an die Stelle seines `slides`-Feldes.
+ * an die Stelle seines `slides`-Feldes; die alten Felder der Einstellungen
+ * blendet er im eigenen Dialog aus (`legacy-settings.ts`). Das Modal schreibt
+ * nur `slides` – Einträge und Einstellungen –, und nur, was sich geändert
+ * hat: Öffnen und Übernehmen ohne Änderung lässt das Feld, wie es ist.
  *
  * Alles, was das Überleben im fremden Dialog betrifft — Portal, Abfangen des
  * Schließens, Zurückschreiben über den nativen Setter —, liegt in
@@ -65,20 +72,25 @@ export const slideEditorShell: FieldModalShellOptions<HeroItem[]> = {
  * @returns eine Funktion, die die Beobachtung beendet und den Editor abbaut.
  */
 export function startSlideEditorInjector(root: ParentNode = document): () => void {
-  return startFieldModalInjector<HeroItem[]>({
-    fieldKey: FIELD_KEY,
+  const stopModal = startFieldModalInjector<HeroEditorValue>({
+    fieldKey: SLIDES_ATTRIBUTE,
     root,
     reopenLabel: "Folien bearbeiten",
     modalTestId: "slide-editor-modal",
     reopenTestId: "slide-editor-reopen",
-    parse: parseHeroItems,
-    serialize: encodeHeroItemsAttribute,
+    parse: (raw) => readEditorValue(raw, readLegacySettings(root)),
+    serialize: writeEditorValue,
     shell: slideEditorShell,
-    render: ({ value, onChange }) =>
+    render: ({ value, onChange, shownIssues }) =>
       React.createElement(
         React.Suspense,
         { fallback: LOADING },
-        React.createElement(LazySlideEditor, { value, onChange }),
+        React.createElement(LazySlideEditor, { value, onChange, shownIssues }),
       ),
   });
+  const stopHiding = startHiddenLegacySettings(root);
+  return () => {
+    stopModal();
+    stopHiding();
+  };
 }

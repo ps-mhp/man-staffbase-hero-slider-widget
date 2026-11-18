@@ -25,10 +25,18 @@ import { JSONSchema7 } from "json-schema";
 
 import { modalRoot, queryDeep, settleModal } from "@shared/ui/config-modal.testing";
 import { encodeHeroItemsAttribute, parseHeroItems } from "./hero-items";
+import { HeroEditorValue } from "./editor-value";
+import { parseHeroContent } from "./hero-settings";
 import { slideEditorShell, startSlideEditorInjector } from "./slide-editor-injector";
 import { Slide } from "./slides-model";
 
-const schema: JSONSchema7 = { properties: { slides: { type: "string", title: "Folien" } } };
+const schema: JSONSchema7 = {
+  properties: {
+    slides: { type: "string", title: "Folien" },
+    height: { type: "string", title: "Höhe", enum: ["small", "medium", "large", "viewport", "section"] },
+    controls: { type: "boolean", title: "Bedienelemente zeigen" },
+  },
+};
 
 const slide = (id: string): Slide => ({
   id,
@@ -46,10 +54,12 @@ async function settleEditor(): Promise<void> {
   }
 }
 
-async function open(slides: Slide[]): Promise<{ container: HTMLElement; stop: () => void }> {
-  const { container } = render(
-    <Form schema={schema} validator={validator} formData={{ slides: encodeHeroItemsAttribute(slides) }} />,
-  );
+async function open(
+  slides: Slide[] | string,
+  legacy: Record<string, unknown> = {},
+): Promise<{ container: HTMLElement; stop: () => void }> {
+  const raw = typeof slides === "string" ? slides : encodeHeroItemsAttribute(slides);
+  const { container } = render(<Form schema={schema} validator={validator} formData={{ slides: raw, ...legacy }} />);
   let stop = (): void => {};
   await act(async () => {
     stop = startSlideEditorInjector(container);
@@ -112,17 +122,67 @@ describe("startSlideEditorInjector", () => {
 
     await act(async () => stop());
   });
+
+  it("schreibt nichts, wer öffnet und gleich übernimmt – auch nicht an alten Bühnen", async () => {
+    // Rohes JSON wie vor dem Base64-Umschlag; jedes Schreiben machte daraus `b64:`.
+    const raw = JSON.stringify([{ id: "a", image: { url: "https://cdn.example.test/a.png", alt: "" }, headline: "A" }]);
+    const { container, stop } = await open(raw, { height: "large", controls: false });
+
+    await click(inModal('[data-testid="config-shell-apply"]'));
+
+    expect(fieldValue(container)).toBe(raw);
+    await act(async () => stop());
+  });
+
+  it("zeigt rechts die Einstellungen und blendet die alten Felder im Dialog aus", async () => {
+    const { container, stop } = await open([slide("a")], { height: "large", controls: false });
+
+    expect(inModal('[aria-label="Widget"]')).not.toBeNull();
+    expect(inModal('[data-testid="hero-setting-height"]')).toHaveTextContent("Groß");
+    /** Ob eine Zeile um das Feld verborgen ist. */
+    const hidden = (key: string): boolean => {
+      for (let node = container.querySelector<HTMLElement>(`[id="root_${key}"]`); node !== null; node = node.parentElement) {
+        if (node.style.display === "none") return true;
+      }
+      return false;
+    };
+    expect(hidden("height")).toBe(true);
+    expect(hidden("controls")).toBe(true);
+
+    await act(async () => stop());
+  });
+
+  it("schreibt eine bediente Einstellung ins Feld slides, die alten Felder bleiben", async () => {
+    const { container, stop } = await open([slide("a")], { height: "large", controls: true });
+
+    await click(inModal('[role="switch"][data-testid="hero-setting-full-bleed"]'));
+    expect(inModal('[role="status"]')).toHaveTextContent("Einstellungen geändert");
+    await click(inModal('[data-testid="config-shell-apply"]'));
+
+    expect(parseHeroContent(fieldValue(container))).toEqual({ items: [slide("a")], settings: { fullBleed: false } });
+    expect(container.querySelector<HTMLSelectElement>("#root_height")!.value).not.toBe("");
+    await act(async () => stop());
+  });
 });
 
 describe("slideEditorShell", () => {
-  it("prüft mit den Regeln der Einträge", () => {
-    expect(slideEditorShell.validate?.([slide("a"), { ...slide("b"), image: { url: "", alt: "" } }])).toEqual([
+  const editorValue = (items: Slide[], settings: HeroEditorValue["settings"] = {}): HeroEditorValue => ({
+    items,
+    settings,
+    legacy: {},
+  });
+
+  it("prüft mit den Regeln der Einträge und der Einstellungen", () => {
+    expect(
+      slideEditorShell.validate?.(editorValue([slide("a"), { ...slide("b"), image: { url: "", alt: "" } }], { autoplayDelay: 99 })),
+    ).toEqual([
       { id: "b", message: "Folie 2: Bild fehlt" },
+      { id: "autoplay-delay", message: "Sekunden pro Folie: erlaubt sind 0 bis 30" },
     ]);
   });
 
   it("zählt im Status, was sich gegenüber dem übernommenen Stand geändert hat", () => {
-    expect(slideEditorShell.statusText?.([slide("a"), slide("b")], [slide("a")])).toBe(
+    expect(slideEditorShell.statusText?.(editorValue([slide("a"), slide("b")]), editorValue([slide("a")]))).toBe(
       "1 Eintrag geändert",
     );
   });

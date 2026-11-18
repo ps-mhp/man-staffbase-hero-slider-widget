@@ -17,7 +17,8 @@
  *
  * Anders als beim einzelnen Beitrag steht hier nicht fest, was auf der Bühne
  * landet: der Eintrag ist eine Anweisung, keine Folie. Was die Filter übrig
- * lassen, zeigt die rechte Spalte daneben (`entry-preview.tsx`).
+ * lassen, zeigt die Vorschau in Desktop, Tablet und Mobil – eine Folie je
+ * Beitrag (`hero-slide-preview.tsx`).
  */
 
 import * as React from "react";

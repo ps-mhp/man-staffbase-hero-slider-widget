@@ -29,6 +29,7 @@ import { MediaClient, MediaItem } from "@shared/media/media-client";
 import { forgetDraggedForTests } from "@shared/media/media-drag";
 import { MAX_ITEMS, SlideEditor } from "./slide-editor";
 import { HeroItem, DEFAULT_CHANNEL_COUNT, NewsChannelItem, NewsPostItem } from "./hero-items";
+import type { HeroEditorValue } from "./editor-value";
 import type { Post as NewsPost } from "@shared/staffbase/posts";
 import { NewsChannel } from "@shared/staffbase/channels";
 import { NewsSource } from "./editors/news-source";
@@ -132,6 +133,9 @@ const shellState = (overrides: Partial<ConfigShellState> = {}): ConfigShellState
   ...overrides,
 });
 
+/** Der Wert des Modals ohne Einstellungen: die Fälle hier prüfen die Einträge. */
+const editorValue = (items: HeroItem[]): HeroEditorValue => ({ items, settings: {}, legacy: {} });
+
 /** Die Zeile eines Eintrags in der Liste links, gefunden über ihren Titel. */
 const row = (name: string | RegExp): HTMLElement => screen.getByRole("row", { name });
 
@@ -165,10 +169,10 @@ const mount = (value: HeroItem[], live: boolean, options: SetupOptions): Harness
     return (
       <ConfigShellProvider value={shellState(options.shell)}>
         <SlideEditor
-          value={live ? items : value}
+          value={editorValue(live ? items : value)}
           onChange={(next) => {
-            onChange(next);
-            if (live) setItems(next);
+            onChange(next.items);
+            if (live) setItems(next.items);
           }}
           mediaClient={stubMediaClient()}
           newsSource={newsSource}
@@ -386,18 +390,18 @@ describe("SlideEditor", () => {
       expect(screen.getByTestId("hero-slide-preview")).toHaveTextContent("Überschrift a");
       await userEvent.click(screen.getByText("Überschrift b"));
       expect(screen.getByTestId("hero-slide-preview")).toHaveTextContent("Überschrift b");
-      // Die Liste bleibt stehen, das Formular weicht der Vorschau, und die
-      // rechte Spalte gibt ihr den Platz.
+      // Die Liste bleibt stehen, das Formular weicht der Vorschau, und das
+      // Panel „Widget“ bleibt daneben – dort stellt man ein, was man sieht.
       expect(screen.queryByTestId("slide-headline")).toBeNull();
-      expect(screen.queryByRole("complementary", { name: "Vorschau" })).toBeNull();
+      expect(screen.getByRole("complementary", { name: "Widget" })).toBeInTheDocument();
     });
 
-    it("zeigt im Editor die Folie verkleinert in der rechten Spalte, nicht im Gerät", () => {
+    it("zeigt im Editor rechts das Panel „Widget“, keine Vorschau", () => {
       setup([slide("a")]);
 
       expect(screen.queryByTestId("hero-slide-preview")).toBeNull();
-      const column = screen.getByRole("complementary", { name: "Vorschau" });
-      expect(within(column).getByTestId("hero-mini-preview")).toHaveTextContent("Überschrift a");
+      const panel = screen.getByRole("complementary", { name: "Widget" });
+      expect(within(panel).getAllByRole("tab").map((tab) => tab.textContent)).toEqual(["Gestaltung", "Verhalten"]);
     });
 
     it("zeigt in der Geräteansicht einen News-Beitrag als echte Folie", async () => {
@@ -780,8 +784,8 @@ describe("SlideEditor", () => {
       const onChange = jest.fn<void, [HeroItem[]]>();
       render(
         <SlideEditor
-          value={[slide("a", { image: { url: "", alt: "" } })]}
-          onChange={onChange}
+          value={editorValue([slide("a", { image: { url: "", alt: "" } })])}
+          onChange={(next) => onChange(next.items)}
           mediaClient={stubMediaClient({
             listMedia: jest.fn(async () => ({ items: [film], total: 1, nextOffset: null })),
           })}
@@ -805,7 +809,7 @@ describe("SlideEditor", () => {
       const film: MediaItem = { ...mediaItem("film"), type: "video", fileName: "film.mp4" };
       render(
         <SlideEditor
-          value={[postItem("p", { channelId: "c1", postId: "p1" })]}
+          value={editorValue([postItem("p", { channelId: "c1", postId: "p1" })])}
           onChange={jest.fn()}
           mediaClient={stubMediaClient({
             listMedia: jest.fn(async () => ({ items: [mediaItem("a"), film], total: 2, nextOffset: null })),
@@ -852,10 +856,10 @@ describe("SlideEditor", () => {
         return (
           <ConfigShell widgetName="Hero-Slider" title="Folien" dirty={false} onApply={jest.fn()} onDiscard={jest.fn()} onClose={closeShell}>
             <SlideEditor
-              value={items}
+              value={editorValue(items)}
               onChange={(next) => {
-                onChange(next);
-                setItems(next);
+                onChange(next.items);
+                setItems(next.items);
               }}
               mediaClient={client}
               newsSource={stubNewsSource()}
@@ -1123,17 +1127,9 @@ describe("SlideEditor", () => {
       expect(screen.queryByTestId("news-post-channel")).not.toBeInTheDocument();
     });
 
-    it("zeigt rechts eine Vorschau des gewählten Beitrags", async () => {
-      setup([postItem("p", { channelId: "c1", postId: "p1" })]);
-      const column = screen.getByRole("complementary", { name: "Vorschau" });
-      const slides = await within(column).findByRole("list", { name: "Folien dieses Eintrags" });
-      expect(within(slides).getByRole("listitem")).toHaveTextContent("Beitrag p1");
-      expect(within(slides).getByRole("listitem")).toHaveTextContent("Teaser p1");
-    });
-
-    it("sagt rechts, was fehlt, solange kein Beitrag gewählt ist", () => {
-      setup([postItem("p")]);
-      expect(screen.getByTestId("entry-preview")).toHaveTextContent("Wähle einen Beitrag");
+    it("sagt in der Vorschau, was fehlt, solange kein Beitrag gewählt ist", () => {
+      setup([postItem("p")], { shell: { view: "desktop" } });
+      expect(screen.getByTestId("hero-news-preview")).toHaveTextContent("Wähle einen Beitrag");
     });
 
     it("übernimmt eine überschriebene Überschrift", async () => {
@@ -1201,19 +1197,22 @@ describe("SlideEditor", () => {
     });
 
     it("zeigt in der Vorschau eine Folie je Beitrag", async () => {
-      setup([channelItem("c", { channelId: "c1", count: 2 })]);
+      setup([channelItem("c", { channelId: "c1", count: 2 })], { shell: { view: "desktop" } });
 
-      const preview = await screen.findByTestId("entry-preview");
-      await waitFor(() => expect(preview).toHaveTextContent("Erster Beitrag"));
-      expect(preview).toHaveTextContent("Zweiter Beitrag");
-      expect(preview).toHaveTextContent("2 Folien");
-      expect(within(preview).getAllByTestId("hero-mini-preview")).toHaveLength(2);
+      await waitFor(() => expect(screen.getAllByTestId("hero-slide-preview")).toHaveLength(2));
+      const [first, second] = screen.getAllByTestId("hero-slide-preview");
+      expect(first).toHaveTextContent("Erster Beitrag");
+      expect(second).toHaveTextContent("Zweiter Beitrag");
+      expect(screen.getByText("Folie 2 von 2")).toBeInTheDocument();
     });
 
     it("sagt in der Vorschau, wenn die Filter nichts übrig lassen", async () => {
-      setup([channelItem("c", { channelId: "c1" })], { newsSource: stubNewsSource({ posts: jest.fn(async () => []) }) });
+      setup([channelItem("c", { channelId: "c1" })], {
+        shell: { view: "desktop" },
+        newsSource: stubNewsSource({ posts: jest.fn(async () => []) }),
+      });
 
-      await waitFor(() => expect(screen.getByTestId("entry-preview")).toHaveTextContent("Dazu gibt es nichts zu zeigen"));
+      await waitFor(() => expect(screen.getByTestId("hero-news-preview")).toHaveTextContent("Dazu gibt es nichts zu zeigen"));
     });
   });
 });

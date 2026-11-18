@@ -42,12 +42,13 @@ export const SLIDE_EDITOR_HELP = (
     <li>Höchstens {MAX_ITEMS} Einträge; ein Kanal zählt als einer.</li>
     <li>Eine Folie ohne Bild wird nicht gezeigt; „Übernehmen“ nennt sie.</li>
     <li>
-      Rechts steht verkleinert, was der gewählte Eintrag auf die Bühne bringt. Desktop, Tablet
-      und Mobil zeigen ihn im Gerätrahmen – News als die Folien, die daraus werden.
+      Desktop, Tablet und Mobil zeigen den gewählten Eintrag im Gerätrahmen – News als die
+      Folien, die daraus werden.
     </li>
     <li>
-      Höhe, Breite, Lage, Abstand, Sekunden je Folie und Bedienelemente stehen nach dem
-      Schließen im Dialog von Staffbase.
+      Rechts im Panel <strong>Widget</strong>: Höhe, volle Breite, Lage und Abstand unter
+      „Gestaltung“, Sekunden pro Folie und Bedienelemente unter „Verhalten“. „Wie bisher“
+      heißt: hier noch nicht festgelegt, es gilt die Einstellung des Blocks.
     </li>
   </ul>
 );

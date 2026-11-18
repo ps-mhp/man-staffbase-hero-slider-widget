@@ -45,7 +45,7 @@ const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 const STAGE_BOX = "flex aspect-[21/9] min-h-[320px] flex-col items-center justify-center gap-2 p-6 text-center";
 
 /** Das Stylesheet der Bühne – einmal je Vorschau, nicht je Folie. */
-export function HeroStageStyle(): ReactElement {
+function HeroStageStyle(): ReactElement {
   const css = useHotStyle(heroSliderCss, "hero-slider-widget", "styles/hero-slider.scss");
   return <style>{css}</style>;
 }
@@ -60,15 +60,8 @@ function forDevice(slide: Slide, mobile: boolean): Slide {
   return mobile && imagePortrait !== undefined ? { ...rest, image: imagePortrait } : rest;
 }
 
-export interface SlideStageProps {
-  slide: Slide;
-  /** Ein Video spielt nur, wo man es sehen soll; in kleinen Vorschauen steht es. */
-  play?: boolean;
-  testId?: string;
-}
-
 /** Eine Folie im Markup der Bühne. Braucht {@link HeroStageStyle} darüber. */
-export function SlideStage({ slide, play = true, testId = "hero-slide-preview" }: SlideStageProps): ReactElement {
+function SlideStage({ slide }: { slide: Slide }): ReactElement {
   const { view } = useConfigShell();
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const shown = forDevice(slide, view === "mobile");
@@ -78,12 +71,12 @@ export function SlideStage({ slide, play = true, testId = "hero-slide-preview" }
     // `inert`: Eine Schaltfläche der Vorschau führte sonst aus dem Studio
     // hinaus, und Tab wanderte durch Links, die hier nichts bedeuten.
     <div inert>
-      <div className="man-hero man-hero--height-medium" data-testid={testId}>
+      <div className="man-hero man-hero--height-medium" data-testid="hero-slide-preview">
         <div className="man-hero__frame">
           <div className="man-hero__slides">
             <div className="man-hero__slide man-hero__slide--active">
               <div className="man-hero__media">
-                {hasImage && <SlideMedia slide={shown} eager play={play && !reducedMotion} portrait={false} />}
+                {hasImage && <SlideMedia slide={shown} eager play={!reducedMotion} portrait={false} />}
               </div>
               <SlideText slide={shown} />
             </div>
