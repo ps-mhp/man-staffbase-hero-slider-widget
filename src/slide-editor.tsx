@@ -16,8 +16,15 @@
  *
  * Die Einträge liegen als JSON in einem einzigen Attribut — in einem Textfeld
  * wären sie unbearbeitbar. Dieser Editor tritt an seine Stelle: links die
- * Liste der Einträge, rechts die Felder des gewählten, in den Geräteansichten
- * statt der Felder die Vorschau.
+ * Liste der Einträge, in der Mitte die Felder des gewählten, rechts was er
+ * auf die Bühne bringt (verkleinert). In den Geräteansichten steht statt
+ * der Felder die Vorschau in Gerätebreite, und die rechte Spalte gibt ihr
+ * den Platz.
+ *
+ * Der Screen sieht rechts die Einstellungen des Widgets vor (Höhe, Breite,
+ * Lage, Sekunden …). Die sind eigene Felder im Dialog von Staffbase; dieser
+ * Editor bekommt nur das Feld `slides` und kann die übrigen weder lesen
+ * noch mit „Übernehmen“/„Abbrechen“ zurücknehmen.
  *
  * Ein Eintrag ist entweder eine handgepflegte Folie oder ein Verweis auf die
  * News: ein einzelner Beitrag oder ein ganzer Kanal. Nur die rechte Spalte
@@ -38,7 +45,9 @@
 
 import * as React from "react";
 import { ReactElement, useMemo } from "react";
+import { InspectorPanel } from "@man/config-ui/inspector/inspector-panel";
 import { ConfigWorkspace } from "@man/config-ui/layout/config-workspace";
+import { useConfigShell } from "@man/config-ui/shell/shell-context";
 import { ItemActions } from "@man/config-ui/sidebar/item-actions";
 import { useHotStyle } from "@shared/hot-style";
 import { MediaClient, createMediaClient } from "@shared/media/media-client";
@@ -49,6 +58,7 @@ import { HeroEntryPreview } from "./hero-slide-preview";
 import { HeroItem, isNewsChannelItem, isNewsPostItem, isSlideItem } from "./hero-items";
 import { MAX_ITEMS, entryKindName } from "./editor-entries";
 import { EditorMedia, EditorMediaContext } from "./editors/editor-media";
+import { EntryPreview } from "./editors/entry-preview";
 import { EntrySidebar } from "./editors/entry-sidebar";
 import { useItemLabels } from "./editors/item-label";
 import { NewsChannelForm } from "./editors/news-channel-form";
@@ -203,6 +213,7 @@ export function SlideEditor({ value, onChange, mediaClient, newsSource }: SlideE
   const entries = useEntries(value, onChange);
   const labels = useItemLabels(value, source);
   const media = useEditorMedia(client, entries);
+  const { view } = useConfigShell();
   const { item } = entries;
 
   return (
@@ -221,7 +232,14 @@ export function SlideEditor({ value, onChange, mediaClient, newsSource }: SlideE
               onReorder={entries.reorder}
             />
           }
-          preview={<HeroEntryPreview item={item} />}
+          inspector={
+            view === "editor" ? (
+              <InspectorPanel title="Vorschau">
+                <EntryPreview item={item} source={source} />
+              </InspectorPanel>
+            ) : undefined
+          }
+          preview={<HeroEntryPreview item={item} source={source} />}
         >
           <EntryMain entries={entries} total={value.length} source={source} onPick={media.open} />
         </ConfigWorkspace>

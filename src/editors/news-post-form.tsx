@@ -28,7 +28,6 @@ import { pickPostContent } from "../news-slides";
 import { useFieldMedia } from "./editor-media";
 import { ImageField } from "./image-field";
 import { IdSelect, IdSelectOption } from "./id-select";
-import { NewsPreview } from "./news-preview";
 import { NewsSource, useChannelPosts, useNewsChannels } from "./news-source";
 
 /** Welches Bild eines News-Eintrags der Picker gerade füllt. */
@@ -88,12 +87,6 @@ export function NewsPostForm({
         testId="news-post-post"
       />
 
-      <NewsPreview
-        item={item}
-        source={source}
-        ready={item.postId !== ""}
-        emptyHint="Wähle einen Beitrag, dann steht hier, was auf der Bühne erscheint."
-      />
 
       <label className="man-se__field">
         <span className="man-se__label">Überschrift überschreiben (optional)</span>

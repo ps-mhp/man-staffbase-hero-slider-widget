@@ -17,10 +17,12 @@
  */
 
 import * as React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { ConfigShellProvider, type ConfigView } from "@man/config-ui";
 
 import { HeroEntryPreview } from "./hero-slide-preview";
+import type { Post as NewsPost } from "@shared/staffbase/posts";
+import { NewsSource } from "./editors/news-source";
 import { HeroItem, NewsChannelItem, NewsPostItem } from "./hero-items";
 import { Slide } from "./slides-model";
 
@@ -95,18 +97,63 @@ describe("HeroEntryPreview", () => {
     expect(stage).toHaveTextContent("Ohne Bild wird diese Folie nicht gezeigt.");
   });
 
-  it("zeigt für News einen ruhigen Platzhalter statt etwas nachzuladen", () => {
+  it("zeigt für News ohne Quelle einen ruhigen Platzhalter statt etwas nachzuladen", () => {
     renderPreview(post);
-    expect(screen.getByTestId("hero-news-preview")).toHaveTextContent(
-      "News-Beitrag – Vorschau nach dem Laden",
-    );
+    expect(screen.getByTestId("hero-news-preview")).toHaveTextContent("News-Beitrag");
+    expect(screen.getByTestId("hero-news-preview")).toHaveTextContent("erst auf der Seite aus den News");
   });
 
   it("nennt beim Kanal die Sorte im Platzhalter", () => {
     renderPreview(channel);
-    expect(screen.getByTestId("hero-news-preview")).toHaveTextContent(
-      "News-Kanal – Vorschau nach dem Laden",
-    );
+    expect(screen.getByTestId("hero-news-preview")).toHaveTextContent("News-Kanal");
+  });
+
+  describe("mit News-Quelle", () => {
+    const newsPost = (id: string, title: string): NewsPost => ({
+      id,
+      published: "2026-01-01T10:00:00.000Z",
+      highlighted: false,
+      hashtags: [],
+      contents: { de_DE: { title, teaser: `Teaser ${id}`, image: { original: { url: `https://cdn.example.test/${id}.jpg` } } } },
+      links: { detail_view: { href: `https://tenant.example.test/news/${id}` } },
+    });
+    const source = (): NewsSource => ({
+      channels: jest.fn(async () => []),
+      posts: jest.fn(async () => [newsPost("p1", "Erster Beitrag"), newsPost("p2", "Zweiter Beitrag")]),
+      post: jest.fn(async (id: string) => newsPost(id, `Beitrag ${id}`)),
+      locales: jest.fn(async () => ["de_DE"]),
+      pages: jest.fn(async () => []),
+    });
+
+    const renderWithSource = (item: HeroItem): void => {
+      render(
+        <ConfigShellProvider value={{ view: "desktop", setView: () => undefined, preview: true, issuesVisible: false }}>
+          <HeroEntryPreview item={item} source={source()} />
+        </ConfigShellProvider>,
+      );
+    };
+
+    it("zeigt einen News-Beitrag als echte Folie", async () => {
+      renderWithSource(post);
+
+      expect(screen.getByTestId("hero-news-preview")).toHaveTextContent("Wird geladen");
+      const stage = await screen.findByTestId("hero-slide-preview");
+      expect(stage).toHaveTextContent("Beitrag p1");
+      expect(stage.querySelector("img")).toHaveAttribute("src", "https://cdn.example.test/p1.jpg");
+    });
+
+    it("zeigt beim Kanal jede Folie mit ihrer Stelle", async () => {
+      renderWithSource({ ...channel, count: 2 });
+
+      await waitFor(() => expect(screen.getAllByTestId("hero-slide-preview")).toHaveLength(2));
+      expect(screen.getByText("Folie 1 von 2")).toBeInTheDocument();
+      expect(screen.getAllByTestId("hero-slide-preview")[1]).toHaveTextContent("Zweiter Beitrag");
+    });
+
+    it("sagt ohne gewählten Beitrag, was fehlt", () => {
+      renderWithSource({ ...post, postId: "" });
+      expect(screen.getByTestId("hero-news-preview")).toHaveTextContent("Wähle einen Beitrag");
+    });
   });
 
   it("hat ohne Eintrag nichts zu zeigen und sagt das", () => {

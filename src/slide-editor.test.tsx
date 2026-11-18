@@ -181,6 +181,13 @@ const setup = (value: HeroItem[], options: SetupOptions = {}): Harness => mount(
 const setupLive = (value: HeroItem[], options: SetupOptions = {}): Harness => mount(value, true, options);
 
 describe("SlideEditor", () => {
+  // Die verkleinerte Vorschau hält Videos an; jsdom kennt kein Abspielen.
+  beforeAll(() => {
+    jest.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => undefined);
+    jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => undefined);
+  });
+  afterAll(() => jest.restoreAllMocks());
+
   describe("Eintragsliste", () => {
     it("erklärt bei leerer Liste, welche Sorten es gibt", () => {
       setup([]);
@@ -373,13 +380,28 @@ describe("SlideEditor", () => {
       expect(screen.getByTestId("hero-slide-preview")).toHaveTextContent("Überschrift a");
       await userEvent.click(screen.getByText("Überschrift b"));
       expect(screen.getByTestId("hero-slide-preview")).toHaveTextContent("Überschrift b");
-      // Die Liste bleibt stehen, das Formular weicht der Vorschau.
+      // Die Liste bleibt stehen, das Formular weicht der Vorschau, und die
+      // rechte Spalte gibt ihr den Platz.
       expect(screen.queryByTestId("slide-headline")).toBeNull();
+      expect(screen.queryByRole("complementary", { name: "Vorschau" })).toBeNull();
     });
 
-    it("zeigt im Editor keine Vorschau", () => {
+    it("zeigt im Editor die Folie verkleinert in der rechten Spalte, nicht im Gerät", () => {
       setup([slide("a")]);
+
       expect(screen.queryByTestId("hero-slide-preview")).toBeNull();
+      const column = screen.getByRole("complementary", { name: "Vorschau" });
+      expect(within(column).getByTestId("hero-mini-preview")).toHaveTextContent("Überschrift a");
+    });
+
+    it("zeigt in der Geräteansicht einen News-Beitrag als echte Folie", async () => {
+      setup([postItem("p", { channelId: "c1", postId: "p1" })], { shell: { view: "desktop" } });
+
+      await waitFor(() => expect(screen.getByTestId("hero-slide-preview")).toHaveTextContent("Beitrag p1"));
+      expect(screen.getByTestId("hero-slide-preview").querySelector("img")).toHaveAttribute(
+        "src",
+        "https://cdn.example.test/post-p1.jpg",
+      );
     });
   });
 
@@ -1022,10 +1044,17 @@ describe("SlideEditor", () => {
       expect(screen.queryByTestId("news-post-channel")).not.toBeInTheDocument();
     });
 
-    it("zeigt eine Vorschau des gewählten Beitrags", async () => {
+    it("zeigt rechts eine Vorschau des gewählten Beitrags", async () => {
       setup([postItem("p", { channelId: "c1", postId: "p1" })]);
-      const preview = await screen.findByTestId("news-preview");
-      await waitFor(() => expect(preview).toHaveTextContent("Beitrag p1"));
+      const column = screen.getByRole("complementary", { name: "Vorschau" });
+      const slides = await within(column).findByRole("list", { name: "Folien dieses Eintrags" });
+      expect(within(slides).getByRole("listitem")).toHaveTextContent("Beitrag p1");
+      expect(within(slides).getByRole("listitem")).toHaveTextContent("Teaser p1");
+    });
+
+    it("sagt rechts, was fehlt, solange kein Beitrag gewählt ist", () => {
+      setup([postItem("p")]);
+      expect(screen.getByTestId("entry-preview")).toHaveTextContent("Wähle einen Beitrag");
     });
 
     it("übernimmt eine überschriebene Überschrift", async () => {
@@ -1079,9 +1108,17 @@ describe("SlideEditor", () => {
     it("zeigt in der Vorschau eine Folie je Beitrag", async () => {
       setup([channelItem("c", { channelId: "c1", count: 2 })]);
 
-      const preview = await screen.findByTestId("news-preview");
+      const preview = await screen.findByTestId("entry-preview");
       await waitFor(() => expect(preview).toHaveTextContent("Erster Beitrag"));
       expect(preview).toHaveTextContent("Zweiter Beitrag");
+      expect(preview).toHaveTextContent("2 Folien");
+      expect(within(preview).getAllByTestId("hero-mini-preview")).toHaveLength(2);
+    });
+
+    it("sagt in der Vorschau, wenn die Filter nichts übrig lassen", async () => {
+      setup([channelItem("c", { channelId: "c1" })], { newsSource: stubNewsSource({ posts: jest.fn(async () => []) }) });
+
+      await waitFor(() => expect(screen.getByTestId("entry-preview")).toHaveTextContent("Dazu gibt es nichts zu zeigen"));
     });
   });
 });

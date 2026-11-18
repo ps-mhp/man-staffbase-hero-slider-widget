@@ -25,7 +25,6 @@ import { ReactElement } from "react";
 
 import { DEFAULT_CTA_LABEL, MAX_CHANNEL_COUNT, NewsChannelItem } from "../hero-items";
 import { IdSelect } from "./id-select";
-import { NewsPreview } from "./news-preview";
 import { NewsSource, useNewsChannels } from "./news-source";
 
 export interface NewsChannelFormProps {
@@ -173,12 +172,6 @@ export function NewsChannelForm({
         />
       </label>
 
-      <NewsPreview
-        item={item}
-        source={source}
-        ready={item.channelId !== ""}
-        emptyHint="Wähle einen Kanal, dann steht hier, welche Beiträge auf die Bühne kommen."
-      />
     </>
   );
 }
