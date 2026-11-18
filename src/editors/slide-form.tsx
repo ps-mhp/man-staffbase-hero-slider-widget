@@ -12,7 +12,8 @@
  */
 
 /**
- * Die Felder einer handgepflegten Folie.
+ * Die Felder einer handgepflegten Folie, gegliedert wie im Screen: Medium,
+ * Text, Buttons.
  *
  * Aus `slide-editor.tsx` herausgelöst, als die beiden News-Formulare
  * dazukamen: drei Formulare in einer Datei wären das Doppelte an Zeilen und
@@ -21,6 +22,11 @@
 
 import * as React from "react";
 import { ReactElement } from "react";
+import { Field } from "@man/config-ui/form/field";
+import { FormSection } from "@man/config-ui/form/form-section";
+import { Input } from "@man/config-ui/primitives/input";
+import { Textarea } from "@man/config-ui/primitives/textarea";
+import { useConfigShell } from "@man/config-ui/shell/shell-context";
 
 import { SlideItem } from "../hero-items";
 import { mediaFromUrl, withMediaKind } from "../slides-model";
@@ -36,11 +42,12 @@ export interface SlideFormProps {
   slide: SlideItem;
   onPatch: (changes: Partial<SlideItem>) => void;
   onPick: (target: SlidePickerTarget) => void;
-  /** Für die Ziele der Schaltflächen: Seiten und Beiträge aus Staffbase. */
+  /** Für die Ziele der Buttons: Seiten und Beiträge aus Staffbase. */
   source: NewsSource;
 }
 
-export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): ReactElement {
+function MediaSection({ slide, onPatch, onPick }: Omit<SlideFormProps, "source">): ReactElement {
+  const { issuesVisible } = useConfigShell();
   // Das Hauptbild ist nie `undefined` — eine leere Folie trägt `url: ""`.
   // Für die Kachel und das Adressfeld heißt das dasselbe: noch kein Medium.
   const image = slide.image.url === "" ? undefined : slide.image;
@@ -49,10 +56,11 @@ export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): R
   const portraitMedia = useFieldMedia(slide.id, "imagePortrait");
 
   return (
-    <>
+    <FormSection title="Medium">
       <ImageField
         label="Bild oder Video"
         hint="Quer, mindestens 1920 px breit. Ohne Bild oder Video wird die Folie nicht gezeigt."
+        error={issuesVisible && image === undefined ? "Diese Folie hat noch kein Bild oder Video." : undefined}
         image={image}
         onPick={() => onPick("image")}
         pickLabel="Bild oder Video wählen"
@@ -66,8 +74,9 @@ export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): R
       />
 
       <ImageField
-        label="Bild oder Video für Hochformat (optional)"
-        hint="Wird auf schmalen, stehenden Bildschirmen gezeigt. Ohne wird überall der Querzuschnitt verwendet."
+        label="Hochformat"
+        hint="Für schmale, stehende Bildschirme; ohne eigenes Bild wird das Querformat beschnitten."
+        compactEmpty
         image={portrait}
         onPick={() => onPick("imagePortrait")}
         pickLabel="Bild oder Video wählen"
@@ -86,25 +95,23 @@ export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): R
         media={portraitMedia}
         testId="slide-portrait"
       />
+    </FormSection>
+  );
+}
 
-      <label className="man-se__field">
-        <span className="man-se__label">Überschrift</span>
-        <p className="man-se__hint">
-          Kurz halten — bis etwa 24 Zeichen bleibt sie einzeilig.
-        </p>
-        <input
+function TextSection({ slide, onPatch }: Pick<SlideFormProps, "slide" | "onPatch">): ReactElement {
+  return (
+    <FormSection title="Text">
+      <Field label="Überschrift" hint="Kurz halten — bis etwa 24 Zeichen bleibt sie einzeilig.">
+        <Input
           type="text"
-          className="man-se__input"
           data-testid="slide-headline"
           value={slide.headline}
           onChange={(event) => onPatch({ headline: event.target.value })}
         />
-      </label>
-
-      <label className="man-se__field">
-        <span className="man-se__label">Unterzeile (optional)</span>
-        <textarea
-          className="man-se__input man-se__input--area"
+      </Field>
+      <Field label="Unterzeile" hint="Optional.">
+        <Textarea
           data-testid="slide-subline"
           rows={2}
           value={slide.subline ?? ""}
@@ -112,13 +119,17 @@ export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): R
             onPatch({ subline: event.target.value === "" ? undefined : event.target.value })
           }
         />
-      </label>
+      </Field>
+    </FormSection>
+  );
+}
 
-      <CtaListForm
-        ctas={slide.ctas ?? []}
-        onChange={(ctas) => onPatch({ ctas })}
-        source={source}
-      />
+export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): ReactElement {
+  return (
+    <>
+      <MediaSection slide={slide} onPatch={onPatch} onPick={onPick} />
+      <TextSection slide={slide} onPatch={onPatch} />
+      <CtaListForm ctas={slide.ctas ?? []} onChange={(ctas) => onPatch({ ctas })} source={source} />
     </>
   );
 }

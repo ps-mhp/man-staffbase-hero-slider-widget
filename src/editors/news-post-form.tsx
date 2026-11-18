@@ -134,10 +134,11 @@ function MediaSection({ item, onPatch, onPick }: Omit<NewsPostFormProps, "source
   const overrideMedia = useFieldMedia(item.id, "imageOverride");
   const portraitMedia = useFieldMedia(item.id, "imagePortrait");
   return (
-    <FormSection title="Medium" description="Optional. Ohne eigenes Bild zeigt die Bühne das Beitragsbild.">
+    <FormSection title="Medium" description="Ohne eigenes Bild zeigt die Bühne das Beitragsbild.">
       <ImageField
         label="Bühnenbild"
         hint="Das Beitragsbild ist fürs Feed geschnitten. Für eine hohe Bühne lohnt ein eigenes, quer und mindestens 1920 px breit."
+        compactEmpty
         image={item.imageOverride}
         onPick={() => onPick("imageOverride")}
         onClear={() => onPatch({ imageOverride: undefined })}
@@ -154,6 +155,7 @@ function MediaSection({ item, onPatch, onPick }: Omit<NewsPostFormProps, "source
       <ImageField
         label="Hochformat"
         hint="Für schmale, stehende Bildschirme; ohne eigenes Bild wird das Querformat beschnitten."
+        compactEmpty
         image={item.imagePortrait}
         onPick={() => onPick("imagePortrait")}
         onClear={() => onPatch({ imagePortrait: undefined })}

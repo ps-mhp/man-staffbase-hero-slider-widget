@@ -469,12 +469,12 @@ describe("SlideEditor", () => {
 
     it("entfernt die letzte Schaltfläche ganz, statt eine leere Liste zu speichern", () => {
       const h = setup([slide("a", { ctas: [{ label: "Mehr", href: "" }] })]);
-      fireEvent.click(screen.getByTestId("slide-cta-0-remove"));
+      fireEvent.click(action("Button löschen"));
 
       expect(h.latestSlides()[0]!.ctas).toBeUndefined();
     });
 
-    it("sortiert Schaltflächen um", () => {
+    it("sortiert Schaltflächen um", async () => {
       const h = setup([
         slide("a", {
           ctas: [
@@ -483,19 +483,52 @@ describe("SlideEditor", () => {
           ],
         }),
       ]);
-      expect(screen.getByTestId("slide-cta-0-up")).toBeDisabled();
-      fireEvent.click(screen.getByTestId("slide-cta-1-up"));
+      expect(action("Button nach oben")).toHaveAttribute("aria-disabled", "true");
+      await userEvent.click(screen.getByRole("button", { name: /^Zwei/ }));
+      expect(screen.getByRole("heading", { name: "Button 2 von 2" })).toBeInTheDocument();
+      fireEvent.click(action("Button nach oben"));
 
       expect(h.latestSlides()[0]!.ctas?.map((cta) => cta.label)).toEqual(["Zwei", "Eins"]);
     });
 
-    it("merkt sich Stil, Symbol, Symbolseite und neuen Tab", () => {
+    it("zeigt die Buttons als Liste mit Stil und Ziel, den ersten aufgeklappt", () => {
+      setup([
+        slide("a", {
+          ctas: [
+            { label: "Zu den Terminen", href: "/content/page/x", link: { kind: "page", pageId: "pg1", menuId: "x", title: "Termine" } },
+            { label: "", href: "", variant: "outline" },
+          ],
+        }),
+      ]);
+
+      const list = screen.getByRole("list", { name: "Buttons" });
+      const [first, second] = within(list).getAllByRole("button", { expanded: true }).concat(within(list).getAllByRole("button", { expanded: false }));
+      expect(first).toHaveTextContent("Zu den Terminen");
+      expect(first).toHaveTextContent("Rot gefüllt · Seite „Termine“");
+      expect(second).toHaveTextContent("Button 2 ohne Beschriftung");
+      expect(second).toHaveTextContent("Weiße Kontur · Ziel fehlt");
+      expect(screen.getByRole("region", { name: "Buttons" })).toHaveTextContent("2 von 3");
+    });
+
+    it("dupliziert einen Button direkt dahinter und klappt die Kopie auf", () => {
       const h = setupLive([slide("a", { ctas: [{ label: "Mehr", href: "https://example.test" }] })]);
-      fireEvent.change(screen.getByTestId("slide-cta-0-variant"), { target: { value: "secondary" } });
-      expect(screen.getByTestId("slide-cta-0-icon-position")).toBeDisabled();
-      fireEvent.change(screen.getByTestId("slide-cta-0-icon"), { target: { value: "download" } });
-      fireEvent.change(screen.getByTestId("slide-cta-0-icon-position"), { target: { value: "start" } });
-      fireEvent.click(screen.getByTestId("slide-cta-0-newtab"));
+      fireEvent.click(action("Button duplizieren"));
+
+      expect(h.latestSlides()[0]!.ctas).toEqual([
+        { label: "Mehr", href: "https://example.test" },
+        { label: "Mehr", href: "https://example.test" },
+      ]);
+      expect(screen.getByRole("heading", { name: "Button 2 von 2" })).toBeInTheDocument();
+    });
+
+    it("merkt sich Stil, Symbol, Symbolseite und neuen Tab", async () => {
+      const h = setupLive([slide("a", { ctas: [{ label: "Mehr", href: "https://example.test" }] })]);
+      await choose(screen.getByTestId("slide-cta-0-variant"), "Weiß gefüllt");
+      // Ohne Symbol gibt es keine Seite, auf der es stünde.
+      expect(screen.queryByRole("radiogroup", { name: "Symbol steht" })).toBeNull();
+      await choose(screen.getByTestId("slide-cta-0-icon"), "Herunterladen");
+      await userEvent.click(screen.getByRole("radio", { name: "Vor dem Text" }));
+      fireEvent.click(screen.getByRole("switch", { name: "In neuem Tab öffnen" }));
 
       expect(h.latestSlides()[0]!.ctas).toEqual([
         {
@@ -509,11 +542,11 @@ describe("SlideEditor", () => {
       ]);
     });
 
-    it("schreibt den Vorgabestil nicht mit", () => {
+    it("schreibt den Vorgabestil nicht mit", async () => {
       const h = setup([
         slide("a", { ctas: [{ label: "Mehr", href: "https://example.test", variant: "link" }] }),
       ]);
-      fireEvent.change(screen.getByTestId("slide-cta-0-variant"), { target: { value: "primary" } });
+      await choose(screen.getByTestId("slide-cta-0-variant"), "Rot gefüllt (Hauptaktion)");
 
       expect(h.latestSlides()[0]!.ctas).toEqual([{ label: "Mehr", href: "https://example.test" }]);
     });
@@ -533,7 +566,7 @@ describe("SlideEditor", () => {
 
     it("verknüpft eine Seite aus Staffbase und bildet ihre Adresse", async () => {
       const h = setupLive([slide("a", { ctas: [{ label: "Mehr", href: "https://example.test" }] })]);
-      fireEvent.change(screen.getByTestId("slide-cta-0-kind"), { target: { value: "page" } });
+      await userEvent.click(screen.getByRole("radio", { name: "Seite" }));
       await waitFor(() => expect(screen.getByTestId("slide-cta-0-page")).toBeEnabled());
       await choose(screen.getByTestId("slide-cta-0-page"), "Service");
 
@@ -548,7 +581,7 @@ describe("SlideEditor", () => {
 
     it("verknüpft einen News-Beitrag über Kanal und Beitrag", async () => {
       const h = setupLive([slide("a", { ctas: [{ label: "Lesen", href: "" }] })]);
-      fireEvent.change(screen.getByTestId("slide-cta-0-kind"), { target: { value: "post" } });
+      await userEvent.click(screen.getByRole("radio", { name: "News-Beitrag" }));
       await waitFor(() => expect(screen.getByTestId("slide-cta-0-channel")).toBeEnabled());
       await choose(screen.getByTestId("slide-cta-0-channel"), "Technik");
       await waitFor(() => expect(screen.getByTestId("slide-cta-0-post")).toBeEnabled());
@@ -577,7 +610,7 @@ describe("SlideEditor", () => {
       ]);
       // Die Seitenliste kommt asynchron; erst danach steht das Formular still.
       await waitFor(() => expect(screen.getByTestId("slide-cta-0-page")).toHaveTextContent("Fahrzeuge"));
-      fireEvent.change(screen.getByTestId("slide-cta-0-kind"), { target: { value: "url" } });
+      await userEvent.click(screen.getByRole("radio", { name: "Adresse" }));
 
       expect(h.latestSlides()[0]!.ctas).toEqual([{ label: "Mehr", href: "" }]);
     });
@@ -621,15 +654,30 @@ describe("SlideEditor", () => {
   });
 
   describe("Bild oder Video per Adresse", () => {
+    /** Das Adressfeld steht hinter „Adresse einfügen“; offen bleibt es offen. */
+    const urlField = (field: string): HTMLElement => {
+      const open = screen.queryByTestId(`${field}-url`);
+      if (open !== null) return open;
+      fireEvent.click(screen.getByTestId(`${field}-url-toggle`));
+      return screen.getByTestId(`${field}-url`);
+    };
+
     const typeUrl = (testId: string, url: string): void => {
-      fireEvent.change(screen.getByTestId(testId), { target: { value: url } });
+      fireEvent.change(urlField(testId.replace(/-url$/, "")), { target: { value: url } });
     };
 
     it("bietet neben der Mediathek ein Adressfeld an", () => {
       setup([slide("a", { image: { url: "", alt: "" } })]);
 
       expect(screen.getByTestId("slide-image-pick")).toBeInTheDocument();
+      const toggle = screen.getByRole("button", { name: "Bild oder Video: Adresse einfügen" });
+      expect(toggle).toHaveAttribute("aria-expanded", "false");
+      expect(screen.queryByTestId("slide-image-url")).toBeNull();
+
+      fireEvent.click(toggle);
+      expect(toggle).toHaveAttribute("aria-expanded", "true");
       expect(screen.getByTestId("slide-image-url")).toHaveValue("");
+      expect(screen.getByTestId("slide-image-url")).toHaveFocus();
     });
 
     it("übernimmt ein Bild per Adresse", () => {
@@ -669,6 +717,7 @@ describe("SlideEditor", () => {
 
       expect(h.onChange).not.toHaveBeenCalled();
       expect(screen.getByTestId("slide-image-url")).toHaveAttribute("aria-invalid", "true");
+      expect(screen.getByTestId("slide-image-url")).toHaveAccessibleDescription(expect.stringContaining("Wird nicht übernommen"));
       expect(screen.getByTestId("slide-image-url-error")).toHaveTextContent("https://");
     });
 
@@ -699,9 +748,9 @@ describe("SlideEditor", () => {
       });
     });
 
-    it("lässt die Sorte von Hand umschalten, wenn die Adresse keine Endung verrät", () => {
+    it("lässt die Sorte von Hand umschalten, wenn die Adresse keine Endung verrät", async () => {
       const h = setup([slide("a", { image: { url: "https://cdn.example.test/stream/7", alt: "" } })]);
-      fireEvent.change(screen.getByTestId("slide-image-kind"), { target: { value: "video" } });
+      await userEvent.click(screen.getByRole("radio", { name: "Video" }));
 
       expect(h.latestSlides()[0]!.image.kind).toBe("video");
     });
@@ -776,7 +825,7 @@ describe("SlideEditor", () => {
       typeUrl("slide-image-url", "kaputt");
       await userEvent.click(screen.getByText("Überschrift b"));
 
-      expect(screen.getByTestId("slide-image-url")).toHaveValue("https://cdn.example.test/b.png");
+      expect(urlField("slide-image")).toHaveValue("https://cdn.example.test/b.png");
       expect(screen.queryByTestId("slide-image-url-error")).not.toBeInTheDocument();
     });
   });

@@ -12,233 +12,145 @@
  */
 
 /**
- * Die Schaltflächen einer handgepflegten Folie.
+ * Die Buttons einer handgepflegten Folie, wie im Screen als Unterliste:
+ * je Button eine Zeile („Zu den Terminen · Rot gefüllt · Seite …“), einer
+ * aufgeklappt mit seinen Feldern, darunter „+ Button hinzufügen“.
  *
- * Nur hier: News-Folien bekommen ihre Schaltfläche aus dem Beitrag, und ein
+ * Nur hier: News-Folien bekommen ihren Button aus dem Beitrag, und ein
  * Kanal-Eintrag ist gar keine Folie, sondern eine Anweisung.
  *
- * Halb ausgefüllte Schaltflächen bleiben im Zustand des Dialogs stehen. Erst
- * das Lesen des gespeicherten Attributs (`parseCta`) verwirft, was keine
+ * Halb ausgefüllte Buttons bleiben im Zustand des Dialogs stehen. Erst das
+ * Lesen des gespeicherten Attributs (`parseCta`) verwirft, was keine
  * Beschriftung oder kein brauchbares Ziel hat — sonst verschwände ein Knopf
  * unter den Händen, sobald man das erste Feld ausfüllt.
  */
 
 import * as React from "react";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
+import { Plus } from "lucide-react";
+import { Field } from "@man/config-ui/form/field";
+import { FormSection } from "@man/config-ui/form/form-section";
+import type { SegmentedOption } from "@man/config-ui/form/segmented";
+import { SegmentedField } from "@man/config-ui/form/segmented-field";
+import { SubList, type SubListItem } from "@man/config-ui/form/sub-list";
+import { SwitchRow } from "@man/config-ui/form/switch-row";
+import { Button } from "@man/config-ui/primitives/button";
+import { Input } from "@man/config-ui/primitives/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@man/config-ui/primitives/select";
+import { ItemActions } from "@man/config-ui/sidebar/item-actions";
 
-import { documentLocales } from "@shared/staffbase/posts";
-
-import { pickPostContent, postHref } from "../news-slides";
+import { CTA_ICONS, CTA_VARIANTS, CtaIcon, CtaIconPosition, CtaVariant, MAX_SLIDE_CTAS, SlideCta } from "../slides-model";
 import {
-  CTA_ICONS,
-  CTA_VARIANTS,
-  CtaIcon,
-  CtaIconPosition,
-  CtaLink,
-  CtaVariant,
-  MAX_SLIDE_CTAS,
-  SlideCta,
-  isExecutableHref,
-  isSafeCtaHref,
-} from "../slides-model";
-import { IdSelect, IdSelectOption } from "./id-select";
-import { NewsSource, useChannelPosts, useNewsChannels, usePages } from "./news-source";
+  CtaTargetKind,
+  ICON_LABELS,
+  TARGET_LABELS,
+  VARIANT_LABELS,
+  ctaSummary,
+  duplicateCta,
+  emptyCta,
+  moveCta,
+  targetKindOf,
+  withTargetKind,
+  without,
+} from "./cta-model";
+import { CtaTarget } from "./cta-targets";
+import { NewsSource } from "./news-source";
 
-/** Woher das Ziel kommt; abgeleitet aus `link`, nie gespeichert. */
-export type CtaTargetKind = "url" | "page" | "post";
+const TARGET_OPTIONS: readonly SegmentedOption<CtaTargetKind>[] = (["url", "page", "post"] as const).map((id) => ({
+  id,
+  label: TARGET_LABELS[id],
+}));
 
-export const VARIANT_LABELS: Record<CtaVariant, string> = {
-  primary: "Rot gefüllt (Hauptaktion)",
-  secondary: "Weiß gefüllt",
-  outline: "Weiße Kontur",
-  link: "Textverweis",
-};
+const POSITION_OPTIONS: readonly SegmentedOption<CtaIconPosition>[] = [
+  { id: "start", label: "Vor dem Text" },
+  { id: "end", label: "Nach dem Text" },
+];
 
-export const ICON_LABELS: Record<CtaIcon, string> = {
-  "arrow-right": "Pfeil nach rechts",
-  "chevron-right": "Winkel nach rechts",
-  "external-link": "Externer Link",
-  download: "Herunterladen",
-  play: "Abspielen",
-  "file-text": "Dokument",
-  calendar: "Kalender",
-  mail: "E-Mail",
-  phone: "Telefon",
-  info: "Information",
-};
+/** Radix kennt keinen leeren Wert; „kein Symbol“ heißt in der Auswahl so. */
+const NO_ICON = "none";
 
-const TARGET_LABELS: Record<CtaTargetKind, string> = {
-  url: "Freie Adresse",
-  page: "Seite aus Staffbase",
-  post: "News-Beitrag aus Staffbase",
-};
-
-/** Dieselbe Schaltfläche ohne die genannten Felder; das Original bleibt unberührt. */
-const without = (cta: SlideCta, ...keys: (keyof SlideCta)[]): SlideCta => {
-  const next = { ...cta };
-  for (const key of keys) delete next[key];
-  return next;
-};
-
-export const targetKindOf = (cta: SlideCta): CtaTargetKind => cta.link?.kind ?? "url";
-
-/** Ein leerer Knopf. Ab dem zweiten als Kontur — zwei rote Flächen nebeneinander konkurrieren. */
-export const emptyCta = (position: number): SlideCta =>
-  position === 0 ? { label: "", href: "" } : { label: "", href: "", variant: "outline" };
-
-/** Wechselt die Herkunft des Ziels. Die alte Adresse gehörte zur alten Herkunft und fällt weg. */
-export function withTargetKind(cta: SlideCta, kind: CtaTargetKind): SlideCta {
-  if (targetKindOf(cta) === kind) return cta;
-  const rest = without(cta, "link");
-  if (kind === "url") return { ...rest, href: "" };
-  const link: CtaLink =
-    kind === "page"
-      ? { kind: "page", pageId: "", menuId: "" }
-      : { kind: "post", postId: "", channelId: "" };
-  return { ...rest, href: "", link };
-}
-
-/** Verschiebt einen Eintrag um eine Stelle; außerhalb der Liste bleibt alles, wie es ist. */
-export function moveCta(ctas: SlideCta[], from: number, by: -1 | 1): SlideCta[] {
-  const to = from + by;
-  if (to < 0 || to >= ctas.length) return ctas;
-  const next = [...ctas];
-  [next[from], next[to]] = [next[to]!, next[from]!];
-  return next;
-}
-
-interface CtaTargetProps {
+interface LookProps {
   cta: SlideCta;
   onChange: (cta: SlideCta) => void;
-  source: NewsSource;
   testId: string;
 }
 
-function PageTarget({ cta, onChange, source, testId }: CtaTargetProps): ReactElement {
-  const pages = usePages(source, true);
-  const link = cta.link?.kind === "page" ? cta.link : undefined;
-
-  const choose = (pageId: string): void => {
-    const page = pages.entries.find((entry) => entry.id === pageId);
-    if (page === undefined) {
-      // Von Hand eingetragen: ohne `menuId` gibt es noch keine Adresse.
-      onChange({ ...cta, href: "", link: { kind: "page", pageId, menuId: "" } });
-      return;
-    }
-    onChange({
-      ...cta,
-      href: page.href,
-      link: { kind: "page", pageId: page.id, menuId: page.menuId, title: page.title },
-    });
-  };
-
+function VariantSelect({ cta, onChange, testId }: LookProps): ReactElement {
   return (
-    <>
-      <IdSelect
-        label="Seite"
-        hint="Die hundert zuletzt geänderten Seiten."
-        value={link?.pageId ?? ""}
-        options={pages.entries.map((page) => ({ id: page.id, title: page.title }))}
-        loading={pages.loading}
-        placeholder="Seite wählen …"
-        unavailableNotice="Die Seitenliste ist hier nicht erreichbar. Wähle „Freie Adresse“ und trage den Pfad der Seite ein, z. B. /content/page/…"
-        onChange={choose}
-        testId={`${testId}-page`}
-      />
-      {link !== undefined && link.pageId !== "" && cta.href === "" && (
-        <p className="man-se__hint man-se__hint--warning">
-          Diese Seite steht nicht in der Liste, ihre Adresse ist unbekannt. Die Schaltfläche wird so nicht gezeigt.
-        </p>
-      )}
-    </>
+    <Select
+      value={cta.variant ?? "primary"}
+      onValueChange={(value) => {
+        const variant = value as CtaVariant;
+        const rest = without(cta, "variant");
+        onChange(variant === "primary" ? rest : { ...rest, variant });
+      }}
+    >
+      <Field label="Stil">
+        <SelectTrigger className="w-full cursor-pointer" data-testid={`${testId}-variant`}>
+          <SelectValue />
+        </SelectTrigger>
+      </Field>
+      <SelectContent position="popper">
+        {CTA_VARIANTS.map((variant) => (
+          <SelectItem key={variant} value={variant}>
+            {VARIANT_LABELS[variant]}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }
 
-function PostTarget({ cta, onChange, source, testId }: CtaTargetProps): ReactElement {
-  const link = cta.link?.kind === "post" ? cta.link : undefined;
-  const channelId = link?.channelId ?? "";
-  const channels = useNewsChannels(source);
-  const posts = useChannelPosts(source, channelId);
-
-  const postOptions: IdSelectOption[] = posts.entries.map((post) => {
-    const title = pickPostContent(post.contents, documentLocales())?.title?.trim();
-    return { id: post.id, title: title === undefined || title === "" ? post.id : title };
-  });
-
-  const choosePost = (postId: string): void => {
-    const post = posts.entries.find((entry) => entry.id === postId);
-    const title = postOptions.find((option) => option.id === postId)?.title;
-    onChange({
-      ...cta,
-      // Ein Beitrag von Hand hat denselben Pfad wie jeder andere; der Weg über
-      // `detail_view` ist nur genauer, wenn die Liste ihn kennt.
-      href: post !== undefined ? postHref(post) : postId === "" ? "" : `/content/news/article/${postId}`,
-      link: {
-        kind: "post",
-        postId,
-        channelId,
-        ...(title !== undefined && title !== postId ? { title } : {}),
-      },
-    });
-  };
-
+function IconSelect({ cta, onChange, testId }: LookProps): ReactElement {
   return (
-    <>
-      <IdSelect
-        label="Kanal"
-        value={channelId}
-        options={channels.entries.map((channel) => ({ id: channel.id, title: channel.title }))}
-        loading={channels.loading}
-        placeholder="Kanal wählen …"
-        unavailableNotice="Die Kanalliste ist hier nicht erreichbar. Trage die Kennung des Kanals ein."
-        onChange={(next) =>
-          onChange({ ...cta, href: "", link: { kind: "post", postId: "", channelId: next } })
+    <Select
+      value={cta.icon ?? NO_ICON}
+      onValueChange={(value) => {
+        const rest = without(cta, "icon", "iconPosition");
+        if (value === NO_ICON) {
+          onChange(rest);
+          return;
         }
-        testId={`${testId}-channel`}
-      />
-      <IdSelect
-        label="Beitrag"
-        value={link?.postId ?? ""}
-        options={postOptions}
-        loading={posts.loading}
-        disabled={channelId === ""}
-        placeholder={channelId === "" ? "Erst einen Kanal wählen …" : "Beitrag wählen …"}
-        unavailableNotice="Die Beitragsliste ist hier nicht erreichbar. Trage die Kennung des Beitrags ein."
-        onChange={choosePost}
-        testId={`${testId}-post`}
-      />
-    </>
+        onChange({ ...rest, icon: value as CtaIcon, ...(cta.iconPosition === "start" ? { iconPosition: "start" } : {}) });
+      }}
+    >
+      <Field label="Symbol">
+        <SelectTrigger className="w-full cursor-pointer" data-testid={`${testId}-icon`}>
+          <SelectValue />
+        </SelectTrigger>
+      </Field>
+      <SelectContent position="popper" className="max-h-80">
+        <SelectItem value={NO_ICON}>Kein Symbol</SelectItem>
+        {CTA_ICONS.map((icon) => (
+          <SelectItem key={icon} value={icon}>
+            {ICON_LABELS[icon]}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }
 
-function UrlTarget({ cta, onChange, testId }: CtaTargetProps): ReactElement {
-  const href = cta.href.trim();
-  const rejected = href !== "" && isExecutableHref(href);
-  const doubtful = href !== "" && !rejected && !isSafeCtaHref(href);
+/** Stil, Symbol und – nur mit Symbol – seine Seite. */
+function CtaLook({ cta, onChange, testId }: LookProps): ReactElement {
   return (
-    <label className="man-se__field">
-      <span className="man-se__label">Adresse</span>
-      <input
-        type="text"
-        inputMode="url"
-        className="man-se__input"
-        data-testid={`${testId}-href`}
-        value={cta.href}
-        onChange={(event) => onChange({ ...cta, href: event.target.value })}
-        placeholder="https://…, /content/…, mailto:… oder tel:…"
-      />
-      {rejected && (
-        <p className="man-se__hint man-se__hint--warning" data-testid={`${testId}-href-invalid`}>
-          Diese Adresse wird nicht übernommen, weil sie Code ausführen würde.
-        </p>
+    <>
+      <div className="grid grid-cols-2 gap-4 max-lg:grid-cols-1">
+        <VariantSelect cta={cta} onChange={onChange} testId={testId} />
+        <IconSelect cta={cta} onChange={onChange} testId={testId} />
+      </div>
+      {cta.icon !== undefined && (
+        <SegmentedField
+          label="Symbol steht"
+          options={POSITION_OPTIONS}
+          value={cta.iconPosition ?? "end"}
+          onChange={(position) => {
+            const rest = without(cta, "iconPosition");
+            onChange(position === "start" ? { ...rest, iconPosition: "start" } : rest);
+          }}
+        />
       )}
-      {doubtful && (
-        <p className="man-se__hint man-se__hint--warning" data-testid={`${testId}-href-doubtful`}>
-          Bitte prüfen: üblich sind https://…, mailto:…, tel:… und Pfade wie /content/…. Ohne https:// führt
-          die Adresse meist ins Leere.
-        </p>
-      )}
-    </label>
+    </>
   );
 }
 
@@ -248,158 +160,56 @@ interface CtaFieldsProps {
   count: number;
   onChange: (cta: SlideCta) => void;
   onMove: (by: -1 | 1) => void;
+  onDuplicate: () => void;
   onRemove: () => void;
   source: NewsSource;
 }
 
-function CtaFields({ cta, position, count, onChange, onMove, onRemove, source }: CtaFieldsProps): ReactElement {
+function CtaFields({ cta, position, count, onChange, onMove, onDuplicate, onRemove, source }: CtaFieldsProps): ReactElement {
   const testId = `slide-cta-${position}`;
-  const kind = targetKindOf(cta);
-  const Target = kind === "page" ? PageTarget : kind === "post" ? PostTarget : UrlTarget;
-
   return (
-    <fieldset className="man-se__cta" data-testid={testId}>
-      <legend className="man-se__label">Schaltfläche {position + 1}</legend>
-      <div className="man-se__cta-actions">
-          <button
-            type="button"
-            className="man-se__button man-se__button--quiet"
-            data-testid={`${testId}-up`}
-            aria-label={`Schaltfläche ${position + 1} nach vorn`}
-            disabled={position === 0}
-            onClick={() => onMove(-1)}
-          >
-            ↑
-          </button>
-          <button
-            type="button"
-            className="man-se__button man-se__button--quiet"
-            data-testid={`${testId}-down`}
-            aria-label={`Schaltfläche ${position + 1} nach hinten`}
-            disabled={position === count - 1}
-            onClick={() => onMove(1)}
-          >
-            ↓
-          </button>
-          <button
-            type="button"
-            className="man-se__button man-se__button--quiet man-se__button--danger"
-            data-testid={`${testId}-remove`}
-            onClick={onRemove}
-          >
-            Entfernen
-          </button>
-      </div>
-
-      <label className="man-se__field">
-        <span className="man-se__label">Beschriftung</span>
-        <input
-          type="text"
-          className="man-se__input"
-          data-testid={`${testId}-label`}
-          value={cta.label}
-          onChange={(event) => onChange({ ...cta, label: event.target.value })}
+    <div className="flex flex-col gap-4" data-testid={testId}>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <h4 className="text-[15px] font-semibold text-foreground">{`Button ${position + 1} von ${count}`}</h4>
+        <ItemActions
+          className="ml-auto"
+          noun="Button"
+          onMoveBack={() => onMove(-1)}
+          onMoveForward={() => onMove(1)}
+          canMoveBack={position > 0}
+          canMoveForward={position < count - 1}
+          onDuplicate={onDuplicate}
+          canDuplicate={count < MAX_SLIDE_CTAS}
+          onDelete={onRemove}
         />
-      </label>
-
-      <label className="man-se__field">
-        <span className="man-se__label">Ziel</span>
-        <select
-          className="man-se__input man-se__select"
-          data-testid={`${testId}-kind`}
-          value={kind}
-          onChange={(event) => onChange(withTargetKind(cta, event.target.value as CtaTargetKind))}
-        >
-          {(Object.keys(TARGET_LABELS) as CtaTargetKind[]).map((option) => (
-            <option key={option} value={option}>
-              {TARGET_LABELS[option]}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <Target cta={cta} onChange={onChange} source={source} testId={testId} />
-
-      <div className="man-se__cta-row">
-        <label className="man-se__field">
-          <span className="man-se__label">Stil</span>
-          <select
-            className="man-se__input man-se__select"
-            data-testid={`${testId}-variant`}
-            value={cta.variant ?? "primary"}
-            onChange={(event) => {
-              const variant = event.target.value as CtaVariant;
-              const rest = without(cta, "variant");
-              onChange(variant === "primary" ? rest : { ...rest, variant });
-            }}
-          >
-            {CTA_VARIANTS.map((variant) => (
-              <option key={variant} value={variant}>
-                {VARIANT_LABELS[variant]}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="man-se__field">
-          <span className="man-se__label">Symbol</span>
-          <select
-            className="man-se__input man-se__select"
-            data-testid={`${testId}-icon`}
-            value={cta.icon ?? ""}
-            onChange={(event) => {
-              const rest = without(cta, "icon", "iconPosition");
-              const icon = event.target.value as CtaIcon | "";
-              onChange(
-                icon === ""
-                  ? rest
-                  : { ...rest, icon, ...(cta.iconPosition === "start" ? { iconPosition: "start" } : {}) },
-              );
-            }}
-          >
-            <option value="">Kein Symbol</option>
-            {CTA_ICONS.map((icon) => (
-              <option key={icon} value={icon}>
-                {ICON_LABELS[icon]}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="man-se__field">
-          <span className="man-se__label">Symbol steht</span>
-          <select
-            className="man-se__input man-se__select"
-            data-testid={`${testId}-icon-position`}
-            value={cta.iconPosition ?? "end"}
-            disabled={cta.icon === undefined}
-            onChange={(event) => {
-              const rest = without(cta, "iconPosition");
-              const next = event.target.value as CtaIconPosition;
-              onChange(next === "start" ? { ...rest, iconPosition: "start" } : rest);
-            }}
-          >
-            <option value="end">Nach dem Text</option>
-            <option value="start">Vor dem Text</option>
-          </select>
-        </label>
       </div>
-
-      <label className="man-se__check">
-        <input
-          type="checkbox"
-          data-testid={`${testId}-newtab`}
-          checked={cta.newTab === true}
-          onChange={(event) => {
-            const rest = without(cta, "newTab");
-            onChange(event.target.checked ? { ...rest, newTab: true } : rest);
-          }}
-        />
-        In neuem Tab öffnen
-      </label>
-    </fieldset>
+      <div className="grid grid-cols-2 gap-4 max-lg:grid-cols-1">
+        <Field label="Beschriftung">
+          <Input type="text" data-testid={`${testId}-label`} value={cta.label} onChange={(event) => onChange({ ...cta, label: event.target.value })} />
+        </Field>
+        <SegmentedField label="Ziel" options={TARGET_OPTIONS} value={targetKindOf(cta)} onChange={(kind) => onChange(withTargetKind(cta, kind))} />
+      </div>
+      <CtaTarget cta={cta} onChange={onChange} source={source} testId={testId} />
+      <CtaLook cta={cta} onChange={onChange} testId={testId} />
+      <SwitchRow
+        label="In neuem Tab öffnen"
+        data-testid={`${testId}-newtab`}
+        checked={cta.newTab === true}
+        onCheckedChange={(checked) => {
+          const rest = without(cta, "newTab");
+          onChange(checked ? { ...rest, newTab: true } : rest);
+        }}
+      />
+    </div>
   );
 }
+
+const listItems = (ctas: SlideCta[]): SubListItem[] =>
+  ctas.map((cta, position) => ({
+    id: String(position),
+    label: cta.label.trim() === "" ? `Button ${position + 1} ohne Beschriftung` : cta.label,
+    description: ctaSummary(cta),
+  }));
 
 export interface CtaListFormProps {
   ctas: SlideCta[];
@@ -408,42 +218,56 @@ export interface CtaListFormProps {
 }
 
 export function CtaListForm({ ctas, onChange, source }: CtaListFormProps): ReactElement {
+  // Der erste ist offen, wie im Screen; die Folie bringt ihre eigene
+  // Instanz mit (`key`), also auch ihren eigenen offenen Button.
+  const [open, setOpen] = useState<number | null>(ctas.length > 0 ? 0 : null);
   // Eine leere Liste wird nicht gespeichert: das Attribut bliebe sonst mit
   // `"ctas": []` stehen, wo vorher gar nichts stand.
-  const commit = (next: SlideCta[]): void => onChange(next.length === 0 ? undefined : next);
-  const replace = (position: number, cta: SlideCta): void =>
-    commit(ctas.map((entry, at) => (at === position ? cta : entry)));
+  const commit = (next: SlideCta[], openAt: number | null): void => {
+    onChange(next.length === 0 ? undefined : next);
+    setOpen(openAt);
+  };
+  const full = ctas.length >= MAX_SLIDE_CTAS;
 
   return (
-    <fieldset className="man-se__field man-se__fieldset">
-      <legend className="man-se__label">Schaltflächen (optional)</legend>
-      <p className="man-se__hint">
-        Bis zu {MAX_SLIDE_CTAS}. Eine Schaltfläche erscheint nur, wenn Beschriftung und Ziel ausgefüllt sind. Auf
-        dem Telefon wird die erste zur Fläche der ganzen Folie.
-      </p>
-
-      {ctas.map((cta, position) => (
-        <CtaFields
-          key={position}
-          cta={cta}
-          position={position}
-          count={ctas.length}
-          source={source}
-          onChange={(next) => replace(position, next)}
-          onMove={(by) => commit(moveCta(ctas, position, by))}
-          onRemove={() => commit(ctas.filter((_, at) => at !== position))}
-        />
-      ))}
-
-      <button
-        type="button"
-        className="man-se__button"
-        data-testid="slide-cta-add"
-        disabled={ctas.length >= MAX_SLIDE_CTAS}
-        onClick={() => commit([...ctas, emptyCta(ctas.length)])}
-      >
-        Schaltfläche hinzufügen
-      </button>
-    </fieldset>
+    <FormSection
+      title="Buttons"
+      aside={`${ctas.length} von ${MAX_SLIDE_CTAS}`}
+      description="Ein Button erscheint nur mit Beschriftung und Ziel. Auf dem Telefon wird der erste zur Fläche der ganzen Folie."
+    >
+      <SubList
+        aria-label="Buttons"
+        items={listItems(ctas)}
+        openId={open === null ? null : String(open)}
+        onOpenChange={(id) => setOpen(id === null ? null : Number(id))}
+        emptyState="Noch kein Button."
+        renderItem={(_, position) => (
+          <CtaFields
+            cta={ctas[position]!}
+            position={position}
+            count={ctas.length}
+            source={source}
+            onChange={(next) => commit(ctas.map((entry, at) => (at === position ? next : entry)), position)}
+            onMove={(by) => commit(moveCta(ctas, position, by), Math.min(Math.max(position + by, 0), ctas.length - 1))}
+            onDuplicate={() => commit(duplicateCta(ctas, position), position + 1)}
+            onRemove={() => commit(ctas.filter((_, at) => at !== position), ctas.length > 1 ? Math.max(position - 1, 0) : null)}
+          />
+        )}
+        footer={
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            data-testid="slide-cta-add"
+            disabled={full}
+            title={full ? `Höchstens ${MAX_SLIDE_CTAS}` : undefined}
+            onClick={() => commit([...ctas, emptyCta(ctas.length)], ctas.length)}
+          >
+            <Plus aria-hidden />
+            Button hinzufügen
+          </Button>
+        }
+      />
+    </FormSection>
   );
 }

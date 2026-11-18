@@ -176,14 +176,10 @@ describe("Stylesheets", () => {
       );
     });
 
-    it("hält die Knöpfe des Dialogs kompakt", () => {
-      // Staffbase gibt den Knöpfen im Konfigurationsdialog `margin: auto`.
-      // Live gemessen lagen dadurch 219px Luft neben "Abbrechen", und die
-      // Fussleiste riss auf die ganzen 1440px auseinander.
-      expect(read("slide-editor.scss")).toMatch(
-        /\.man-se__button\s*\{[\s\S]*?@include tokens\.man-outshine-host\s*\{[^}]*margin:\s*0/,
-      );
-    });
+    // Die Knöpfe des Folien-Editors brauchen keinen Schutz mehr gegen das
+    // `margin: auto` des Staffbase-Dialogs: sie sind Buttons von
+    // `@man/config-ui` im Shadow Root des Rahmens, wo dessen Regeln nicht
+    // hinreichen.
   });
 
   describe("Craft (MAN Design System)", () => {
