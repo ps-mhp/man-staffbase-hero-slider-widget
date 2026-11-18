@@ -36,14 +36,8 @@ import {
 import { HeroSlider } from "./hero-slider";
 import { HeroSliderLoader } from "./hero-slider-loader";
 import { startSlideEditorInjector } from "./slide-editor-injector";
-import {
-  readAutoplayDelayMs,
-  readBottomSpacing,
-  readFlag,
-  readHeight,
-  readPosition,
-} from "./attributes";
-import { isSlideItem, parseHeroItems } from "./hero-items";
+import { isSlideItem } from "./hero-items";
+import { parseHeroContent, resolveHeroOptions } from "./hero-settings";
 import { heroSliderTranslationProvider } from "./translation-provider";
 import icon from "../resources/hero-slider-widget.svg";
 import pkg from "../package.json";
@@ -82,18 +76,12 @@ const factory: BlockFactory = (BaseBlockClass, _widgetApi) => {
 
     public renderBlock(container: HTMLElement): void {
       const attrs = this.parseAttributes<Record<string, unknown>>();
-      const items = parseHeroItems(
+      const { items, settings } = parseHeroContent(
         typeof attrs[SLIDES_ATTRIBUTE] === "string" ? (attrs[SLIDES_ATTRIBUTE] as string) : "",
       );
-
-      const options = {
-        height: readHeight(attrs[HEIGHT_ATTRIBUTE]),
-        fullBleed: readFlag(attrs[FULL_BLEED_ATTRIBUTE]),
-        autoplayDelayMs: readAutoplayDelayMs(attrs[AUTOPLAY_DELAY_ATTRIBUTE]),
-        position: readPosition(attrs[POSITION_ATTRIBUTE]),
-        controls: readFlag(attrs[CONTROLS_ATTRIBUTE]),
-        bottomSpacing: readBottomSpacing(attrs[BOTTOM_SPACING_ATTRIBUTE]),
-      };
+      // Was das Modal eingestellt hat, gilt vor dem alten Attribut – je
+      // Einstellung einzeln (`hero-settings.ts`).
+      const options = resolveHeroOptions(settings, attrs);
 
       this._root ??= ReactDOM.createRoot(container);
       // Eine Buehne aus handgepflegten Folien steht sofort und ohne Netz; nur

@@ -48,6 +48,14 @@ import {
 export type HeroItemType = "slide" | "news-post" | "news-channel";
 
 /**
+ * Die Marke des Eintrags, der die Einstellungen der Bühne trägt
+ * (`hero-settings.ts`). Er steht in derselben Liste, ist aber kein Eintrag
+ * der Bühne: Diese Fassung überspringt ihn hier, ältere lesen ihn als Folie
+ * ohne Bild und lassen ihn ebenso weg.
+ */
+export const SETTINGS_ENTRY_TYPE = "settings";
+
+/**
  * Eine handgepflegte Folie.
  *
  * Das `type`-Feld ist optional und wird beim Schreiben **weggelassen**: ein
@@ -394,6 +402,15 @@ export function emptyNewsChannelItem(): NewsChannelItem {
  * kaputte Bühne darf die Seite nicht mitreißen.
  */
 export function parseHeroItems(raw: string | null | undefined): HeroItem[] {
+  return parseHeroEntries(readHeroEntries(raw));
+}
+
+/**
+ * Die rohe Liste im `slides`-Attribut, Nutzlast entpackt; leer bei allem,
+ * was keine Liste ist. Die Einträge prüft {@link parseHeroEntries}, die
+ * Einstellungen `hero-settings.ts`.
+ */
+export function readHeroEntries(raw: string | null | undefined): unknown[] {
   if (raw === null || raw === undefined || raw.trim() === "") return [];
 
   // Ein Wert mit Marke, der nicht aufgeht, ist kaputte Nutzlast und kein JSON.
@@ -412,12 +429,19 @@ export function parseHeroItems(raw: string | null | undefined): HeroItem[] {
     return [];
   }
 
-  if (!Array.isArray(parsed)) return [];
+  return Array.isArray(parsed) ? parsed : [];
+}
 
+/** Ob ein roher Eintrag die Einstellungen trägt statt eines Eintrags der Bühne. */
+export const isSettingsEntry = (entry: unknown): entry is Record<string, unknown> =>
+  isRecord(entry) && entry.type === SETTINGS_ENTRY_TYPE;
+
+/** Die Einträge der Bühne aus der rohen Liste, siehe {@link parseHeroItems}. */
+export function parseHeroEntries(entries: readonly unknown[]): HeroItem[] {
   const items: HeroItem[] = [];
   const usedIds = new Set<string>();
-  for (const entry of parsed) {
-    if (!isRecord(entry)) continue;
+  for (const entry of entries) {
+    if (!isRecord(entry) || entry.type === SETTINGS_ENTRY_TYPE) continue;
 
     let item: HeroItem | null;
     if (entry.type === "news-post") item = parseNewsPostItem(entry);
@@ -533,13 +557,16 @@ const encodeNewsChannelItem = (item: NewsChannelItem): Record<string, unknown> =
  * geschrieben haben, solange keine News im Spiel sind.
  */
 export function serializeHeroItems(items: HeroItem[]): string {
-  return JSON.stringify(
-    items.map((item) => {
-      if (isNewsPostItem(item)) return encodeNewsPostItem(item);
-      if (isNewsChannelItem(item)) return encodeNewsChannelItem(item);
-      return encodeSlideItem(item);
-    }),
-  );
+  return JSON.stringify(heroItemsToJson(items));
+}
+
+/** Die Einträge als Liste von Objekten, wie {@link serializeHeroItems} sie schreibt. */
+export function heroItemsToJson(items: readonly HeroItem[]): Record<string, unknown>[] {
+  return items.map((item) => {
+    if (isNewsPostItem(item)) return encodeNewsPostItem(item);
+    if (isNewsChannelItem(item)) return encodeNewsChannelItem(item);
+    return encodeSlideItem(item);
+  });
 }
 
 /**

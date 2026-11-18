@@ -30,7 +30,8 @@
 import { TranslationProvider } from "@shared/translation/carriers";
 
 import { SLIDES_ATTRIBUTE } from "./configuration-schema";
-import { encodeHeroItemsAttribute, parseHeroItems } from "./hero-items";
+import { parseHeroItems } from "./hero-items";
+import { encodeHeroContent, parseHeroContent } from "./hero-settings";
 import {
   applyTranslatedFields,
   heroItemsToTranslatableHtml,
@@ -49,10 +50,15 @@ export const heroSliderTranslationProvider: TranslationProvider = {
   // Eine leere Bühne hat keinen Text; eine Anfrage dafür wäre nur Lärm.
   toTranslatable: (stored) => (stored ? heroItemsToTranslatableHtml(parseHeroItems(stored)) : null),
 
-  fromTranslated: (html, stored) =>
-    encodeHeroItemsAttribute(
-      applyTranslatedFields(parseHeroItems(stored), readTranslatedFields(html)),
-    ),
+  // Die Einstellungen der Bühne haben keinen Text, reisen aber im selben
+  // Attribut: Sie kommen unverändert aus dem gespeicherten Wert zurück.
+  fromTranslated: (html, stored) => {
+    const content = parseHeroContent(stored);
+    return encodeHeroContent({
+      ...content,
+      items: applyTranslatedFields(content.items, readTranslatedFields(html)),
+    });
+  },
 
   acceptsTranslated: isTranslatedHeroHtml,
 };

@@ -20,6 +20,7 @@ import {
   encodeHeroItemsAttribute,
   parseHeroItems,
 } from "./hero-items";
+import { encodeHeroContent, parseHeroContent } from "./hero-settings";
 import { heroSliderTranslationProvider as provider } from "./translation-provider";
 
 const items: HeroItem[] = [
@@ -67,6 +68,16 @@ describe("heroSliderTranslationProvider", () => {
     expect(slide.ctas).toEqual([{ label: "More", href: "https://example.test", newTab: true }]);
     expect(slide.image.alt).toBe("Ein Lkw");
     expect(channel).toEqual({ ...items[1], ctaLabel: DEFAULT_CTA_LABEL });
+  });
+
+  it("behält beim Zurückschreiben die Einstellungen der Bühne", () => {
+    const withSettings = encodeHeroContent({ items, settings: { height: "large", controls: false } });
+    const html = provider.toTranslatable(withSettings) as string;
+
+    const next = provider.fromTranslated(html.replace("Überschrift", "Headline"), withSettings) as string;
+
+    expect(parseHeroContent(next).settings).toEqual({ height: "large", controls: false });
+    expect((parseHeroContent(next).items[0] as SlideItem).headline).toBe("Headline");
   });
 
   it("weist eine Antwort ab, die nicht von dieser Anfrage stammt", () => {

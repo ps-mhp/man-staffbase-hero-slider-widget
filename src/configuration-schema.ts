@@ -22,6 +22,9 @@ export const POSITION_ATTRIBUTE = "position";
 export const CONTROLS_ATTRIBUTE = "controls";
 export const BOTTOM_SPACING_ATTRIBUTE = "bottom-spacing";
 
+/** Obergrenze für „Sekunden je Folie“, im Dialog wie im Modal. */
+export const MAX_AUTOPLAY_DELAY_SECONDS = 30;
+
 /**
  * Das Schema des Konfigurationsdialogs.
  *
@@ -63,7 +66,7 @@ export const configurationSchema: JSONSchema7 = {
       title: "Sekunden je Folie",
       default: 5,
       minimum: 0,
-      maximum: 30,
+      maximum: MAX_AUTOPLAY_DELAY_SECONDS,
     },
     [POSITION_ATTRIBUTE]: {
       type: "string",

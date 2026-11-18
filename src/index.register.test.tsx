@@ -237,6 +237,24 @@ describe("Attribute an der Bühne", () => {
     });
   });
 
+  it("lässt Einstellungen aus dem Modal vor den alten Attributen gelten, je Schlüssel", async () => {
+    const definition = await loadAndRegister();
+    const withSettings = JSON.stringify([
+      ...(JSON.parse(slides) as unknown[]),
+      { type: "settings", height: "viewport", controls: false },
+    ]);
+
+    const props = await renderWith(definition, {
+      [SLIDES_ATTRIBUTE]: withSettings,
+      [HEIGHT_ATTRIBUTE]: "small",
+      [CONTROLS_ATTRIBUTE]: true,
+      [POSITION_ATTRIBUTE]: "pre",
+    });
+
+    expect(props).toMatchObject({ height: "viewport", controls: false, position: "pre" });
+    expect((props.slides as unknown[]).length).toBe(1);
+  });
+
   it("hält Lage und Bedienelemente auseinander", async () => {
     // Beide lesen heute aus verschiedenen Attributen. Würde eines davon am
     // falschen Attribut hängen, bliebe der Test oben grün.
