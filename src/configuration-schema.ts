@@ -22,6 +22,22 @@ export const POSITION_ATTRIBUTE = "position";
 export const CONTROLS_ATTRIBUTE = "controls";
 export const BOTTOM_SPACING_ATTRIBUTE = "bottom-spacing";
 
+/**
+ * Alle Attribute, die der Baustein anmeldet. `widgets.json` muss genau diese
+ * nennen (geprüft in `widgets-json.test.ts` im Meta-Repo): install.sh
+ * registriert nur die dort genannten, und Staffbase verwirft alle übrigen
+ * beim Speichern still.
+ */
+export const ALL_ATTRIBUTES: string[] = [
+  SLIDES_ATTRIBUTE,
+  HEIGHT_ATTRIBUTE,
+  FULL_BLEED_ATTRIBUTE,
+  AUTOPLAY_DELAY_ATTRIBUTE,
+  POSITION_ATTRIBUTE,
+  CONTROLS_ATTRIBUTE,
+  BOTTOM_SPACING_ATTRIBUTE,
+];
+
 /** Obergrenze für „Sekunden je Folie“, im Dialog wie im Modal. */
 export const MAX_AUTOPLAY_DELAY_SECONDS = 30;
 

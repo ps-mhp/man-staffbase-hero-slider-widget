@@ -23,12 +23,7 @@ import { BlockFactory, BlockDefinition, ExternalBlockDefinition, BaseBlock } fro
 import { startWidget } from "@shared/dev-mode/start-widget";
 import { getTranslationRegistry } from "@shared/translation/registry";
 import {
-  AUTOPLAY_DELAY_ATTRIBUTE,
-  BOTTOM_SPACING_ATTRIBUTE,
-  CONTROLS_ATTRIBUTE,
-  FULL_BLEED_ATTRIBUTE,
-  HEIGHT_ATTRIBUTE,
-  POSITION_ATTRIBUTE,
+  ALL_ATTRIBUTES,
   SLIDES_ATTRIBUTE,
   configurationSchema,
   uiSchema,
@@ -43,15 +38,7 @@ import icon from "../resources/hero-slider-widget.svg";
 import pkg from "../package.json";
 
 /** Die Attribute des Widgets; gespiegelt im Konfigurationsschema. */
-const widgetAttributes: string[] = [
-  SLIDES_ATTRIBUTE,
-  HEIGHT_ATTRIBUTE,
-  FULL_BLEED_ATTRIBUTE,
-  AUTOPLAY_DELAY_ATTRIBUTE,
-  POSITION_ATTRIBUTE,
-  CONTROLS_ATTRIBUTE,
-  BOTTOM_SPACING_ATTRIBUTE,
-];
+const widgetAttributes: string[] = ALL_ATTRIBUTES;
 
 let stopInjector: (() => void) | null = null;
 
