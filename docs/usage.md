@@ -19,14 +19,15 @@ Fenster.
   Symbole: **nach oben**, **nach unten**, **duplizieren**, **löschen**. Ihr
   Name erscheint, wenn Sie mit der Maus darauf zeigen. Darunter die Felder in
   Abschnitten, bei einer Folie **Medium**, **Text** und **Buttons**.
-- **Rechts:** die **Vorschau** — verkleinert, was der gewählte Eintrag auf die
-  Bühne bringt; bei News-Einträgen jede Folie mit Titel und Anrisstext.
+- **Rechts:** das Panel **Widget** mit den Einstellungen der ganzen Bühne.
+  Unter **Gestaltung** stehen **Höhe**, **Volle Breite**, **Lage** und
+  **Abstand unten**, unter **Verhalten** **Sekunden pro Folie** und
+  **Bedienelemente zeigen**. **Wie bisher** heißt: hier noch nicht
+  festgelegt, es gilt die bisherige Einstellung des Blocks.
 - **Desktop**, **Tablet** und **Mobil** zeigen den gewählten Eintrag in der
   jeweiligen Breite, News-Einträge als die Folien, die aus den Beiträgen
-  werden; **Editor** führt zurück zum Formular.
-- Höhe, Breite, Lage, Abstand nach unten, **Sekunden je Folie** und
-  **Bedienelemente** stehen nicht im Editor, sondern nach dem Schließen im
-  Dialog von Staffbase.
+  werden; das Panel **Widget** bleibt daneben. **Editor** führt zurück zum
+  Formular.
 
 ## Bühne mit einem Bild einrichten
 
@@ -57,9 +58,9 @@ Fenster.
    zum Ziel des ersten Buttons; weitere Buttons bleiben sichtbar. Was in der
    Unterzeile steht, sollte deshalb nichts sein, was unbedingt gelesen werden
    muss.
-9. Klicken Sie oben rechts auf **Übernehmen**.
-10. Stellen Sie **Sekunden je Folie** auf `0` — bei einer einzelnen Folie gibt
-    es nichts zu wechseln.
+9. Stellen Sie rechts unter **Verhalten** **Sekunden pro Folie** auf `0` —
+   bei einer einzelnen Folie gibt es nichts zu wechseln.
+10. Klicken Sie oben rechts auf **Übernehmen**.
 11. Speichern Sie die Seite und prüfen Sie sie in der Vorschau, einmal breit
     und einmal in einem schmalen Fenster.
 
@@ -81,7 +82,8 @@ oben in der Leiste schließt sie, ohne den Editor zu verlassen.
 3. Sortieren Sie, indem Sie eine Folie links am Griff an die neue Stelle
    ziehen, oder über die Symbole **nach oben** und **nach unten** über dem
    Formular. Die erste Folie ist die, die beim Laden der Seite zu sehen ist.
-4. Prüfen Sie, dass **Sekunden je Folie** auf `5` steht (Voreinstellung).
+4. Prüfen Sie rechts unter **Verhalten**, dass **Sekunden pro Folie** leer ist
+   oder `5` zeigt (Voreinstellung).
 5. **Übernehmen**, speichern, in der Vorschau prüfen.
 
 ## Einen einzelnen News-Beitrag auf die Bühne holen
@@ -93,8 +95,8 @@ oben in der Leiste schließt sie, ohne den Editor zu verlassen.
    Beitrag wählen.
 4. Wählen Sie unter **Beitrag** den gewünschten Beitrag. Zur Auswahl stehen
    die fünfzig jüngsten Beiträge des Kanals, neueste zuerst.
-5. Prüfen Sie rechts die **Vorschau**: sie zeigt Bild, Überschrift und
-   Anrisstext genau so, wie die Folie später aussieht.
+5. Schalten Sie oben auf **Desktop**: die Vorschau zeigt Bild, Überschrift und
+   Anrisstext genau so, wie die Folie später aussieht. **Editor** führt zurück.
 6. Optional unter **Darstellung**: eine eigene **Überschrift**, **Anrisstext
    zeigen** abschalten oder die **Beschriftung des Buttons** ändern. Der
    Button führt immer zum Beitrag selbst.
@@ -117,8 +119,9 @@ oben in der Leiste schließt sie, ohne den Editor zu verlassen.
      von der Folie nur eine dunkle Fläche mit Text.
    - **Hashtags** — mehrere durch Komma trennen; ein Beitrag genügt, wenn er
      einen davon trägt.
-7. Prüfen Sie rechts die **Vorschau**: sie zeigt genau die Beiträge, die die
-   Filter übrig lassen. Bleibt sie leer, sind die Filter zu eng.
+7. Schalten Sie oben auf **Desktop**: die Vorschau zeigt genau die Beiträge,
+   die die Filter übrig lassen, eine Folie je Beitrag. Bleibt sie leer, sind
+   die Filter zu eng.
 8. **Übernehmen**, speichern, in der Vorschau prüfen.
 
 Der Eintrag zählt in der Liste als **einer**, bringt aber mehrere Folien mit.
@@ -183,11 +186,11 @@ denn sie wird bei jedem Seitenaufruf geladen.
 
 1. **Die Bühne bleibt leer.** Mindestens ein Bild fehlt: Folien ohne Bild
    werden nicht gezeigt. Öffnen Sie den Editor und prüfen Sie jeden Eintrag auf
-   ein Bild — bei News-Einträgen in der Vorschau.
+   ein Bild — bei News-Einträgen in der Vorschau (**Desktop**).
 2. **Das Bild läuft nicht über die volle Breite.** Steht das Widget in einer
    Spalte neben anderen Inhalten? Dann setzen Sie es in eine eigene Zeile.
-   Andernfalls prüfen Sie, ob **Über die volle Breite zeigen** eingeschaltet
-   ist.
+   Andernfalls prüfen Sie, ob rechts unter **Gestaltung** **Volle Breite**
+   eingeschaltet ist.
 3. **Der Text sitzt nicht auf der Fluchtlinie.** Das kann an einer
    abweichenden Inhaltsbreite der Seite liegen. Melden Sie den Fall mit der
    Seitenadresse — die Bühne richtet sich nach der Breite, die die Seite selbst

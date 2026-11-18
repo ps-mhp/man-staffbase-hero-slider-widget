@@ -26,8 +26,8 @@ Formular warnt, wenn eine Adresse nicht übernommen wird.
 
 **Frage:** Das Bild läuft nicht über die volle Fensterbreite.
 
-Antwort: Zwei mögliche Ursachen. Entweder ist **Über die volle Breite zeigen**
-ausgeschaltet, oder das Widget steht in einer Spalte neben anderen Inhalten.
+Antwort: Zwei mögliche Ursachen. Entweder ist **Volle Breite** (im Editor
+rechts unter **Gestaltung**) ausgeschaltet, oder das Widget steht in einer Spalte neben anderen Inhalten.
 Setzen Sie es in eine eigene Zeile am Kopf der Seite.
 
 **Frage:** Der Text steht nicht dort, wo der übrige Seiteninhalt beginnt.
@@ -45,8 +45,8 @@ darin lässt alle Folien verschwinden.
 
 **Frage:** Die Bühne wechselt nicht von selbst.
 
-Antwort: Drei mögliche Ursachen: Es gibt nur eine Folie; **Sekunden je Folie**
-steht auf `0`; oder im Betriebssystem ist „Bewegung reduzieren“ eingeschaltet.
+Antwort: Drei mögliche Ursachen: Es gibt nur eine Folie; **Sekunden pro Folie**
+(im Editor rechts unter **Verhalten**) steht auf `0`; oder im Betriebssystem ist „Bewegung reduzieren“ eingeschaltet.
 Im letzten Fall ist das gewollt — geblättert werden kann weiterhin über Pfeile
 und Striche.
 
@@ -84,7 +84,8 @@ nicht sichtbar. Nur diese eine Folie fällt weg; die übrigen bleiben stehen.
 
 Antwort: Meist sind die Filter zu eng. **Nur Beiträge mit Bild** ist
 voreingestellt — ein Kanal ohne Bilder liefert damit nichts. Prüfen Sie die
-Vorschau im Editor: sie zeigt genau das, was auf der Bühne erscheinen wird.
+Vorschau im Editor (**Desktop**): sie zeigt genau das, was auf der Bühne
+erscheinen wird.
 
 **Frage:** In der Kanalauswahl steht kein einziger Kanal, stattdessen ein
 Textfeld für eine Kennung.
@@ -135,17 +136,34 @@ dadurch ein weisser Streifen zwischen Menü oder Brotkrumen und Bild. Die Bühne
 gleicht diesen Abstand selbst aus, sobald sie ganz oben steht. Steht über ihr
 ein anderer Block, bleibt der Abstand, wie die Seite ihn setzt.
 
-**Frage:** Ich habe „Kein Abstand“ gewählt, unter der Bühne ist aber noch Platz.
+**Frage:** Ich habe bei **Abstand unten** „Keiner“ gewählt, unter der Bühne ist
+aber noch Platz.
 
-Antwort: „Kein Abstand“ nimmt den Abstand zum nächsten Block im selben
+Antwort: „Keiner“ nimmt den Abstand zum nächsten Block im selben
 Abschnitt weg. Ist die Bühne der letzte Block ihres Abschnitts, endet der
 Abschnitt ohnehin mit ihr. Was dann noch an Platz bleibt, ist der Innenabstand
 des folgenden Abschnitts — der gehört ihm und lässt sich in seinen
 Abschnittseinstellungen ändern. Liegt der folgende Inhalt im selben Abschnitt
-wie die Bühne, schliesst er mit „Kein Abstand“ direkt an.
+wie die Bühne, schliesst er mit „Keiner“ direkt an.
 
 **Frage:** Ohne Bedienelemente — wie blättert man dann?
 
 Antwort: Mit dem Finger wischen, mit den Pfeiltasten blättern, oder von selbst:
 die eingestellte Zeit je Folie läuft unverändert. Für die Tastatur wird die
 Bühne selbst anwählbar, sobald die Bedienelemente fehlen.
+
+**Frage:** Wo sind Höhe, volle Breite und die Sekunden je Folie geblieben? Im
+Dialog von Staffbase finde ich sie nicht mehr.
+
+Antwort: Sie stehen im Editor rechts im Panel **Widget**: Höhe, Volle Breite,
+Lage und Abstand unten unter **Gestaltung**, Sekunden pro Folie und
+Bedienelemente unter **Verhalten**. So nimmt **Abbrechen** sie mit den
+Einträgen zurück. Was bisher eingestellt war, gilt weiter, bis Sie es dort
+ändern.
+
+**Frage:** Im Panel **Widget** steht „Wie bisher“. Was gilt?
+
+Antwort: Die Einstellung, die der Block schon hatte. Der Editor konnte sie aus
+dem alten Feld nicht sicher lesen und zeigt deshalb keine Vorgabe an, die
+vielleicht gar nicht gilt. Sobald Sie dort etwas wählen und übernehmen, gilt
+Ihre Wahl.

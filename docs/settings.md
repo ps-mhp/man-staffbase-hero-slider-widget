@@ -1,14 +1,41 @@
 # Einstellungen
 
+Alles wird im Editor gepflegt, der sich beim Öffnen der Einstellungen von
+selbst zeigt: die Einträge links und in der Mitte, die Einstellungen der Bühne
+rechts im Panel **Widget**. Im Dialog von Staffbase bleibt nur das Textfeld
+„Einträge“ hinter dem Editor; es ist die Rohfassung und muss nicht angefasst
+werden.
+
 | Einstellung | Beschreibung |
 | --- | --- |
-| Einträge | Der Inhalt der Bühne: eigene Folien, einzelne News-Beiträge und ganze News-Kanäle. Wird über den Editor gepflegt, der sich beim Öffnen der Einstellungen von selbst zeigt. Das darunterliegende Textfeld ist die Rohfassung und muss nicht angefasst werden. |
-| Höhe | `Standard (420–560 px)` ist voreingestellt. Daneben `Niedrig (320–420 px)`, `Hoch (560–720 px)` und `Bildschirmhoch`. |
-| Über die volle Breite zeigen | Eingeschaltet (Voreinstellung) läuft das Bild über die volle Fensterbreite, während der Text auf der Fluchtlinie der Seite bleibt. Ausgeschaltet bleibt die Bühne in der Inhaltsspalte. |
-| Sekunden je Folie | `5` ist voreingestellt. `0` hält die Bühne an; dann wird nur über Pfeile und Striche geblättert — und wenn die Bedienelemente abgeschaltet sind, nur noch mit Wischen und den Pfeiltasten. Höchstens 30. |
-| Lage zu den Brotkrumen | `Nach den Brotkrumen` ist voreingestellt: die Bühne beginnt unter der Brotkrumen-Zeile. `Vor den Brotkrumen` setzt sie bündig unter das Menü und rückt die Brotkrumen darunter. Greift nur, wenn die Bühne oben auf der Seite steht und die Seite überhaupt Brotkrumen hat. |
+| Einträge | Der Inhalt der Bühne: eigene Folien, einzelne News-Beiträge und ganze News-Kanäle. |
+
+### Panel „Widget“, Reiter „Gestaltung“
+
+| Einstellung | Beschreibung |
+| --- | --- |
+| Höhe | `Abschnittshöhe` ist voreingestellt. Daneben `Klein (320–420 px)`, `Mittel (420–560 px)`, `Groß (560–720 px)` und `Bildschirmhöhe`. |
+| Volle Breite | Eingeschaltet (Voreinstellung) läuft das Bild über die volle Fensterbreite, während der Text auf der Fluchtlinie der Seite bleibt. Ausgeschaltet bleibt die Bühne in der Inhaltsspalte. |
+| Lage | `Nach den Brotkrumen` ist voreingestellt: die Bühne beginnt unter der Brotkrumen-Zeile. `Vor den Brotkrumen` setzt sie bündig unter das Menü und rückt die Brotkrumen darunter. Greift nur, wenn die Bühne oben auf der Seite steht und die Seite überhaupt Brotkrumen hat. |
+| Abstand unten | `Standard` ist voreingestellt: unter der Bühne bleibt der Abstand, den die Seite zwischen ihre Blöcke setzt. `Keiner` lässt den folgenden Block direkt anschliessen — bei „Vor den Brotkrumen“ direkt unter den Brotkrumen. |
+
+### Panel „Widget“, Reiter „Verhalten“
+
+| Einstellung | Beschreibung |
+| --- | --- |
+| Sekunden pro Folie | `5` ist voreingestellt, erlaubt sind `0` bis `30`; Kommazahlen gehen auch. `0` hält die Bühne an; dann wird nur über Pfeile und Striche geblättert — und wenn die Bedienelemente abgeschaltet sind, nur noch mit Wischen und den Pfeiltasten. Leer heißt: wie bisher. |
 | Bedienelemente zeigen | Eingeschaltet (Voreinstellung) erscheinen Pfeile und Striche. Ausgeschaltet verschwinden beide; geblättert wird weiter mit Wischen und den Pfeiltasten, und die eingestellte Zeit je Folie läuft unverändert. |
-| Abstand nach unten | `Standard` ist voreingestellt: unter der Bühne bleibt der Abstand, den die Seite zwischen ihre Blöcke setzt. `Kein Abstand` lässt den folgenden Block direkt anschliessen — bei „Vor den Brotkrumen“ direkt unter den Brotkrumen. |
+
+### Bestehende Bühnen
+
+Bis Version 0.4 standen diese Einstellungen als einzelne Felder im Dialog von
+Staffbase. Bestehende Bühnen behalten sie: Solange eine Einstellung im Panel
+nicht bedient wurde, gilt weiter der Wert des alten Feldes. Das Panel zeigt
+ihn an, wo er sich lesen lässt; sonst steht bei Auswahlfeldern **Wie bisher**
+und bei Schaltern der Hinweis „Noch nicht hier festgelegt“. Erst wer eine
+Einstellung bedient und **Übernehmen** wählt, legt sie im Editor fest — und
+nur diese eine. Wer den Editor öffnet und ohne Änderung übernimmt, ändert
+nichts. Die alten Felder sind im Dialog ausgeblendet.
 
 ## Sorten von Einträgen
 
@@ -72,7 +99,7 @@ Folien, die er beisteuert.
   gewählten Stufe geklemmt.
 - `Bildschirmhoch` füllt die sichtbare Seite abzüglich der Kopfzeile,
   mindestens aber 420 px.
-- **Sekunden je Folie** wirkt erst ab der zweiten Folie.
+- **Sekunden pro Folie** wirkt erst ab der zweiten Folie.
 - Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, sieht keinen
   Wechsel von selbst — unabhängig von dieser Einstellung.
 - Oben schliesst die Bühne immer bündig an — an die Brotkrumen oder, bei
@@ -82,7 +109,7 @@ Folien, die er beisteuert.
 - Steht die Bühne als letzter Block in ihrem Abschnitt, endet der Abschnitt
   mit ihr — bei jeder Höhe. Bei einer festen Stufe passt sich der Abschnitt der
   Bühne an, bei `Abschnittshöhe` die Bühne dem Abschnitt.
-- **Abstand nach unten** regelt den Abstand zum nächsten Block im selben
+- **Abstand unten** regelt den Abstand zum nächsten Block im selben
   Abschnitt. Der Innenabstand eines folgenden Abschnitts gehört diesem und
   bleibt.
 - Bei `Abschnittshöhe` nimmt die Bühne die Höhe des Abschnitts nur ein, wenn
@@ -94,6 +121,6 @@ Folien, die er beisteuert.
   ist, nimmt nur seine eigene Folie mit. Die übrigen Folien bleiben stehen.
 - News-Folien folgen der Sprache der lesenden Person, soweit der Beitrag
   übersetzt ist; sonst der ersten vorhandenen Fassung.
-- Die **Vorschau** im Formular eines News-Eintrags rechnet mit denselben
-  Regeln wie die veröffentlichte Seite. Was dort nicht steht, erscheint auch
-  auf der Bühne nicht.
+- Die **Vorschau** in Desktop, Tablet und Mobil rechnet bei News-Einträgen mit
+  denselben Regeln wie die veröffentlichte Seite. Was dort nicht steht,
+  erscheint auch auf der Bühne nicht.
