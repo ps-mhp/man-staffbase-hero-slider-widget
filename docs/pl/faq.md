@@ -14,39 +14,39 @@ Odpowiedź: Najczęściej film jest niedostępny bez logowania lub **Typ** jest 
 na **Obraz**, ponieważ adres nie zawiera rozszerzenia. Otwórz adres w
 prywatnym oknie przeglądarki: jeśli tam się nie uruchamia, to również
 czytelnicy go nie zobaczą. Komunikat tuż pod polem oznacza, że adres
-nie został przyjęty — musi zaczynać się od `https://`.
+nie został zaakceptowany — musi zaczynać się od `https://`.
 
 **Pytanie:** Wpisałem tekst etykiety dla przycisku, ale
 nie pojawia się on.
 
 Odpowiedź: Przycisk wymaga **obu** elementów — etykiety i adresu docelowego. Dopóki
-jedno z pól jest puste, przycisk nie jest wyświetlany. W przypadku adresu dowolnego
-akceptowane są tylko `https://…`, `mailto:…`, `tel:…` oraz ścieżki typu `/content/…`;
+jedno z pól jest puste, przycisk nie będzie wyświetlany. W przypadku adresu e-mail
+akceptowane są tylko formaty `https://…`, `mailto:…`, `tel:…` oraz ścieżki typu `/content/…`;
 formularz wyświetla ostrzeżenie, jeśli adres nie zostanie zaakceptowany.
 
 **Pytanie:** Obraz nie zajmuje całej szerokości okna.
 
-Odpowiedź: Są dwie możliwe przyczyny. Albo opcja **Wyświetlaj na całej szerokości**
-jest wyłączona, albo widżet znajduje się w kolumnie obok innych treści.
+Odpowiedź: Istnieją dwie możliwe przyczyny. Albo opcja **Pełna szerokość** (w edytorze
+po prawej stronie w sekcji **Układ**) jest wyłączona, albo widżet znajduje się w kolumnie obok innych treści.
 Umieść go w osobnym wierszu u góry strony.
 
 **Pytanie:** Tekst nie znajduje się w miejscu, w którym zaczyna się pozostała treść strony.
 
-Odpowiedź: Obszar wyświetlania dostosowuje się do szerokości treści zgłaszanej przez stronę.
+Odpowiedź: Obszar roboczy dostosowuje się do szerokości treści zgłaszanej przez stronę.
 Jeśli się różni, zgłoś ten przypadek, podając adres strony.
 
 **Pytanie:** Zamiast edytora widzę pole tekstowe „Wpisy” z nawiasami
-falistymi w środku.
+falkowymi w środku.
 
 Odpowiedź: Edytor nie mógł połączyć się z oknem dialogowym. Zamknij
 ustawienia i otwórz je ponownie. Tekst w polu to
-surowa wersja wpisów; nie edytuj go ręcznie — jedna literówka
+surowa wersja wpisów; nie edytuj jej ręcznie — jedna literówka
 spowoduje zniknięcie wszystkich slajdów.
 
-**Pytanie:** Scena nie przełącza się automatycznie.
+**Pytanie:** Scena nie zmienia się automatycznie.
 
-Odpowiedź: Trzy możliwe przyczyny: jest tylko jeden slajd; **sekundy na slajd**
-są ustawione na `0`; lub w systemie operacyjnym włączona jest opcja „Ogranicz ruch”.
+Odpowiedź: Istnieją trzy możliwe przyczyny: jest tylko jeden slajd; **sekundy na slajd**
+(w edytorze po prawej stronie w sekcji **Zachowanie**) jest ustawione na `0`; albo w systemie operacyjnym włączona jest opcja „Ogranicz ruch”.
 W tym ostatnim przypadku jest to zamierzone — nadal można przewijać za pomocą strzałek
 i kresek.
 
@@ -75,47 +75,48 @@ Odpowiedź: W przypadku wpisu **kanału wiadomości** — nie — zawsze wyświe
 wpisy z kanału zgodnie z ustawionymi filtrami. Natomiast wpis **wpisu z wiadomości**
 pozostaje przy wpisie, który wybrałeś.
 
-**Pytanie:** Jedna slajd z aktualności nagle zniknęła.
+**Pytanie:** Slajd z aktualności nagle zniknął.
 
-Odpowiedź: Post został usunięty, przeniesiony lub jest niewidoczny dla osoby
-czytającej. Zniknęła tylko ta jedna slajd; pozostałe pozostają na swoim miejscu.
+Odpowiedź: Wpis został usunięty, przeniesiony lub jest niewidoczny dla osoby
+czytającej. Zniknął tylko ten jeden slajd; pozostałe pozostają na swoim miejscu.
 
-**Pytanie:** Mój wpis kanału wyświetla mniej slajdów niż zostało ustawione.
+**Pytanie:** Mój wpis na kanale wyświetla mniej slajdów niż zostało ustawione.
 
-Odpowiedź: Najczęściej filtry są zbyt wąskie. **Tylko posty ze zdjęciem** jest
-ustawieniem domyślnym — kanał bez zdjęć nie wyświetla w ten sposób żadnych treści. Sprawdź
-podgląd w edytorze: pokazuje on dokładnie to, co pojawi się na scenie.
+Odpowiedź: Najczęściej filtry są zbyt wąskie. **Tylko wpisy ze zdjęciami** jest
+ustawieniem domyślnym — kanał bez zdjęć nie wyświetla się w tym przypadku. Sprawdź
+podgląd w edytorze (**Desktop**): pokazuje on dokładnie to, co pojawi się na scenie
+.
 
 **Pytanie:** W wyborze kanałów nie ma ani jednego kanału, zamiast tego pojawia się
 pole tekstowe na identyfikator.
 
-Odpowiedź: Lista kanałów wiadomości była niedostępna. Proszę ponownie załadować okno dialogowe.
-Jeśli to nie pomoże, proszę ręcznie wpisać identyfikator kanału; znajduje się on
-w adresie kanału w systemie CMS.
+Odpowiedź: Lista kanałów informacyjnych była niedostępna. Proszę ponownie załadować okno dialogowe.
+Jeśli to nie pomoże, proszę ręcznie wpisać identyfikator kanału; znajduje się
+w adresie kanału w CMS.
 
-**Pytanie:** Dlaczego zdjęcie wpisu z aktualnościami na scenie jest nieostre lub
+**Pytanie:** Dlaczego zdjęcie z artykułu informacyjnego na scenie jest nieostre lub
 dziwnie przycięte?
 
-Odpowiedź: Zdjęcia do artykułów są przycięte pod kątem formatu kanału informacyjnego, a nie pod kątem
-ekranu o pełnej wysokości. W wpisie w sekcji **Zastąp obraz sceny**
-przeznacz własny obraz, w orientacji poziomej i o szerokości co najmniej 1920 px.
+Odpowiedź: Zdjęcia do artykułów są przycinane pod kątem formatu kanału, a nie pod kątem
+sceny o wysokości ekranu. W wpisie w sekcji **Zastąp obraz sceny**
+przeznacz własny obraz w formacie poziomym o szerokości co najmniej 1920 px.
 
-**Pytanie:** Co dzieje się z ramką podczas automatycznego tłumaczenia
+**Pytanie:** Co dzieje się ze sceną podczas automatycznego tłumaczenia
 strony?
 
-Odpowiedź: Tłumaczone są wszystkie teksty wpisane samodzielnie: nagłówek,
+Odpowiedź: Tłumaczone są wszystkie teksty napisane samodzielnie: nagłówek,
 podtytuł, etykieta przycisku i opis obrazu na slajdzie,
 a także nadpisany tytuł i etykieta wpisu z aktualnościami.
 Obrazy, linki, kanały, filtry i kolejność pozostają niezmienione.
 
-**Pytanie:** W przetłumaczonej wersji strony wpis w sekcji aktualności zawiera inne teksty niż w
+**Pytanie:** Wpisy w sekcji aktualności na przetłumaczonej stronie zawierają inne teksty niż w
 języku źródłowym — czy to błąd?
 
-Odpowiedź: Nie. Tytuł i tekst zapowiedzi wpisu w sekcji aktualności pochodzą z samego
-wpisu, a ten jest wyświetlany w języku, który czytelnik ustawił w aplikacji.
-Tłumaczone jest tylko to, co sam wpisałeś Tłumaczone jest tylko to, co napisałeś w samym wpisie.
-Jeśli brakuje wersji językowej wpisu, wyświetla się ta, która jest dostępna, zamiast
-pozostawiać puste pole.
+Odpowiedź: Nie. Tytuł i fragment wpisu w sekcji aktualności pochodzą z samego
+wpisu i są wyświetlane w języku, który czytelnik ustawił w aplikacji
+. Tłumaczone jest tylko to, co sam napisałeś
+w wpisie. Jeśli brakuje wersji językowej wpisu, wyświetla się ta, która jest dostępna, zamiast
+pozostawiać puste miejsce.
 
 **Pytanie:** Wybrałem opcję „Przed ścieżką nawigacyjną”, ale nic się nie zmienia.
 
@@ -127,25 +128,42 @@ gorsze niż brak jakiejkolwiek zmiany. W edytorze w takim przypadku pojawia się
 nad sceną. Na opublikowanej stronie nie jest ona widoczna; tam
 nie można zmienić tego ustawienia.
 
-**Pytanie:** Dawniej nad sceną znajdował się biały pasek. Gdzie się podział?
+**Pytanie:** Nad sceną był kiedyś biały pasek. Gdzie się podział?
 
 Odpowiedź: Sekcja, w której znajduje się scena, zachowuje nad swoim pierwszym blokiem
-odstęp wewnętrzny. W przypadku tekstu jest to prawidłowe, ale nad sceną powoduje to
+odstęp wewnętrzny. W przypadku tekstu jest to właściwe, ale w przypadku sceny powoduje to
 powstanie białego paska między menu lub ścieżką nawigacyjną a obrazem. Scena
 sama wyrównuje ten odstęp, gdy tylko znajdzie się na samym szczycie. Jeśli nad nią
 znajduje się inny blok, odstęp pozostaje taki, jak ustalono na stronie.
 
-**Pytanie:** Wybrałem opcję „Brak odstępu”, ale pod sceną nadal jest miejsce.
+**Pytanie:** Wybrałem opcję „Brak” w polu **Odstęp od dołu**, ale pod sceną
+nadal jest miejsce.
 
-Odpowiedź: Opcja „Brak odstępu” usuwa odstęp od następnego bloku w tym samym
-akapicie. Jeśli scena jest ostatnim blokiem swojego akapitu, to
-akapit i tak kończy się wraz z nią. Miejsce, które pozostaje, to odstęp wewnętrzny
-kolejnej sekcji — należy do niej i można go zmienić w jej
+Odpowiedź: Opcja „Brak” usuwa odstęp od następnego bloku w tej samej
+sekcji. Jeśli scena jest ostatnim blokiem swojej sekcji, sekcja ta
+i tak kończy się wraz z nią. Pozostała przestrzeń to odstęp wewnętrzny
+następnej sekcji — należy on do niej i można go zmienić w jej
 ustawieniach sekcji. Jeśli następująca treść znajduje się w tej samej sekcji
-co scena, przy „Brak odstępu” przylega do niej bezpośrednio.
+co scena, przy „Brak” przylega do niej bezpośrednio.
 
-**Pytanie:** Bez elementów sterujących — jak wtedy przewijać?
+**Pytanie:** Bez elementów sterujących — jak w takim razie przewijać?
 
 Odpowiedź: Przesuwając palcem, za pomocą klawiszy strzałek lub automatycznie:
-ustawiony czas na każdy slajd przebiega niezmiennie. W przypadku klawiatury
-sama scena staje się elementem sterującym, gdy tylko brakuje elementów sterujących.
+ustawiony czas na każdą slajdę przebiega bez zmian. W przypadku klawiatury
+sama scena staje się wybieralna, gdy tylko brakuje elementów sterujących.
+
+**Pytanie:** Gdzie podziały się wysokość, pełna szerokość i liczba sekund na slajd? W
+oknie dialogowym Staffbase już ich nie widzę.
+
+Odpowiedź: Znajdują się one w edytorze po prawej stronie w panelu **Widget**: wysokość, pełna szerokość,
+położenie i odstęp na dole w sekcji **Układ**, sekund na slajd oraz
+elementy sterujące w sekcji **Zachowanie**. Przycisk **Anuluj** cofa te
+ustawienia. Dotychczasowe ustawienia pozostają ważne, dopóki ich tam
+nie zmienisz.
+
+**Pytanie:** W panelu **Widget** widnieje napis „Tak jak dotychczas”. Co to oznacza?
+
+Odpowiedź: Ustawienie, które blok miał już wcześniej. Edytor nie mógł
+prawidłowo odczytać danych ze starego pola i dlatego nie wyświetla domyślnej wartości, która
+może w ogóle nie mieć zastosowania. Gdy tylko wybierzesz tam coś i zatwierdzisz, obowiązuje
+Twój wybór.

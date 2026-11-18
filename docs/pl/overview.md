@@ -12,8 +12,8 @@ strona główna może również wyświetlać **wpisy z aktualności**:
 
 - **Wpis z aktualności** — konkretny wpis jako slajd. Zdjęcie, nagłówek
   i zapowiedź pochodzą z wpisu, a przycisk prowadzi do niego.
-- **Kanał wiadomości** — cały kanał, jeden slajd na każdy wpis. Liczbę slajdów,
-  kolejność oraz filtry można dostosować. Gdy w
+- **Kanał wiadomości** — cały kanał, jedna slajd na każdy wpis. Liczbę,
+  kolejność i filtry można dostosować. Gdy w
   kanale pojawi się nowy wpis, automatycznie trafia on na scenę.
 
 Te trzy rodzaje znajdują się na tej samej liście i można je dowolnie łączyć oraz
@@ -31,8 +31,8 @@ artykuły z kanału.
 - **Tekst pozostaje na linii bazowej strony**: zaczyna się na tej samej
   pionowej linii co nagłówek, menu i tekst poniżej obszaru obrazu. Nie
   przylega on w żadnym wypadku do krawędzi obrazu.
-- Tekst znajduje się w lewym dolnym rogu, na ciemnym gradientem, który rozciąga się od dołu do
-  góry. Na szerokich ekranach dodawany jest drugi gradient z lewej strony,
+- Tekst znajduje się w lewym dolnym rogu, na ciemnym gradientem, który rozchodzi się od dołu
+  do góry. Na szerokich ekranach dodawany jest drugi gradient z lewej strony,
   aby jasny tekst pozostawał czytelny na jasnym tle.
 - W przypadku wielu slajdów: strzałki po lewej i prawej stronie, a pomiędzy nimi kreska dla każdego slajdu.
   Kreska bieżącego slajdu jest czerwona.
@@ -46,7 +46,7 @@ artykuły z kanału.
   przyciski pozostają widoczne jako przyciski. Jeśli slajd nie ma celu, nie
   można go również dotknąć.
 - Użytkownicy, którzy w systemie operacyjnym włączyli opcję „Ogranicz ruchy”, nie widzą
-  samoczynnej zmiany slajdów ani przejścia — widzą tylko elementy sterujące.
+  samoczynnej zmiany slajdów ani przejścia — widzą jedynie elementy sterujące.
 - Slajdy z sekcji „Aktualności” wyglądają jak każdy inny slajd. To, że treść pochodzi
   z artykułu, nie jest widoczne z zewnątrz.
 

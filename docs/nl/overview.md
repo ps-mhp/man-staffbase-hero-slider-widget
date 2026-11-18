@@ -30,7 +30,7 @@ berichten van een kanaal.
   inhoud vrijhoudt, valt weg.
 - De **tekst blijft op de uitlijningslijn van de pagina**: hij begint op dezelfde
   verticale lijn als de koptekst, het menu en de tekst onder het podium. Hij
-  ligt uitdrukkelijk niet tegen de rand van de afbeelding aan.
+  ligt nadrukkelijk niet tegen de rand van de afbeelding aan.
 - De tekst staat linksonder, op een donker verloop dat van onder naar
   boven loopt. Op brede schermen komt daar een tweede verloop vanaf links
   bij, zodat lichte tekst op een lichte achtergrond leesbaar blijft.

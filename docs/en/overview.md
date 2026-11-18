@@ -39,10 +39,10 @@ articles from a channel.
 - The transition continues as long as the mouse hovers over the stage or the focus is
   on it. On a phone, you swipe; the arrows are hidden there.
 - **On a phone** (less than 768 pixels wide), only the heading appears
-  on the slide, up to four lines long; anything beyond that ends with “...”.
-  The subtitle and first button are hidden there—instead, a
+  on the slide, up to four lines long; anything beyond that ends with “…”.
+  The subheading and first button are hidden there—instead, a
   tapping anywhere on the slide takes you to the destination of the first button. For
-  screen readers, its label remains the name of this link. Other
+  screen readers, the button’s label remains the name of this link. Other
   buttons remain visible as buttons. If a slide has no destination, it
   cannot be tapped.
 - Users who have “Reduce Motion” enabled in their operating system will not see
@@ -53,6 +53,6 @@ articles from a channel.
 ## What You See in the CMS Editor
 
 The editor displays the stage within the content column, meaning it’s **narrower than on
-the published page**. You can only assess how far the image actually extends and where the text
-is positioned in the preview or on the published page. Always check there at least once in a narrow
+the published page**. How far the image actually extends and where the text
+is positioned can only be assessed in the preview or on the published page. Always check there at least once in a narrow
 window width—that’s where the portrait-orientation cropping takes effect.

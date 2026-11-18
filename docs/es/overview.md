@@ -5,13 +5,13 @@ todo el ancho de la ventana, con un título encima, opcionalmente un subtítulo 
 un botón. El modelo a seguir es el escenario de man.eu.
 
 Si se crean varias diapositivas, se obtiene un cambiador: las diapositivas se
-funden unas en otras, y se puede pasar de una a otra mediante las flechas y las líneas de la esquina inferior izquierda.
+funden unas en otras, y se puede pasar de una a otra mediante las flechas y las líneas situadas en la esquina inferior izquierda.
 
 No es necesario actualizar una diapositiva manualmente. Además de las diapositivas propias, la
 página de inicio también puede mostrar **artículos de las noticias**:
 
 - **Artículo de noticias**: un artículo concreto como diapositiva. La imagen, el título
-  y el resumen proceden del artículo, y el botón lleva a él.
+  y el resumen provienen del artículo, y el botón lleva a él.
 - **Canal de noticias**: un canal completo, con una diapositiva por artículo. Se puede configurar el número de diapositivas,
   el orden y los filtros. Cuando aparece un nuevo artículo en
   el canal, se muestra automáticamente en el escenario sin necesidad de intervención alguna.
@@ -47,8 +47,8 @@ noticias de un canal.
   tampoco se puede pulsar.
 - Quien tenga configurada la opción «Reducir movimiento» en el sistema operativo no verá
   ningún cambio por sí mismo ni ninguna transición; solo verá los elementos de control.
-- Las diapositivas de las noticias tienen el mismo aspecto que cualquier otra diapositiva. Desde fuera no se aprecia
-  que el contenido proceda de una noticia.
+- Las diapositivas de las noticias tienen el mismo aspecto que cualquier otra diapositiva. Desde fuera no se puede
+  distinguir que el contenido provenga de una noticia.
 
 ## Lo que ves en el editor del CMS
 
