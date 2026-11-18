@@ -221,14 +221,32 @@ describe("SlideEditor", () => {
 
     it("nennt über dem Formular Sorte und Stelle des gewählten Eintrags", () => {
       setup([slide("a"), slide("b")]);
-      expect(screen.getByRole("heading", { name: "Folie 1 von 2" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "Eintrag 1 von 2" })).toBeInTheDocument();
+      expect(screen.getByTestId("entry-kind")).toHaveTextContent("Folie");
+    });
+
+    it("nennt in der Unterzeile einer Folie ihre Buttons", () => {
+      setup([
+        slide("a", { ctas: [{ label: "Eins", href: "https://example.test/1" }, { label: "Zwei", href: "" }] }),
+        slide("b", { ctas: [{ label: "Eins", href: "https://example.test/1" }] }),
+        slide("c"),
+      ]);
+
+      expect(row(/Überschrift a/)).toHaveTextContent("Folie · 2 Buttons");
+      expect(row(/Überschrift b/)).toHaveTextContent("Folie · 1 Button");
+      expect(row(/Überschrift c/)).toHaveTextContent(/Folie$/);
+    });
+
+    it("zeigt ohne Bild das Zeichen der Sorte statt einer leeren Kachel", () => {
+      setup([slide("a", { image: { url: "", alt: "" } })]);
+      expect(row(/Überschrift a/).querySelector("svg")).not.toBeNull();
     });
 
     it("wechselt per Klick in der Liste zum Formular des Eintrags", async () => {
       setup([slide("a"), slide("b")]);
       await userEvent.click(screen.getByText("Überschrift b"));
 
-      expect(screen.getByRole("heading", { name: "Folie 2 von 2" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "Eintrag 2 von 2" })).toBeInTheDocument();
       expect(screen.getByTestId("slide-headline")).toHaveValue("Überschrift b");
       expect(row("Überschrift b")).toHaveAttribute("aria-selected", "true");
     });
@@ -240,7 +258,7 @@ describe("SlideEditor", () => {
       const slides = h.latestSlides();
       expect(slides).toHaveLength(2);
       expect(slides[1]!.image.url).toBe("");
-      expect(screen.getByRole("heading", { name: "Folie 2 von 2" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "Eintrag 2 von 2" })).toBeInTheDocument();
     });
 
     it("verhindert mehr Folien als sinnvoll gezeigt werden können", () => {
@@ -273,7 +291,7 @@ describe("SlideEditor", () => {
       fireEvent.click(action("Eintrag löschen"));
 
       expect(h.latest().map((s) => s.id)).toEqual(["a", "b"]);
-      expect(screen.getByRole("heading", { name: "Folie 2 von 2" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "Eintrag 2 von 2" })).toBeInTheDocument();
       expect(screen.getByTestId("slide-headline")).toHaveValue("Überschrift b");
     });
 
@@ -282,7 +300,7 @@ describe("SlideEditor", () => {
       fireEvent.click(action("Eintrag nach unten"));
 
       expect(h.latest().map((s) => s.id)).toEqual(["b", "a"]);
-      expect(screen.getByRole("heading", { name: "Folie 2 von 2" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "Eintrag 2 von 2" })).toBeInTheDocument();
       expect(screen.getByTestId("slide-headline")).toHaveValue("Überschrift a");
     });
 
@@ -344,7 +362,7 @@ describe("SlideEditor", () => {
       press("Enter");
 
       expect(h.latest().map((s) => s.id)).toEqual(["b", "a", "c"]);
-      expect(screen.getByRole("heading", { name: "Folie 2 von 3" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "Eintrag 2 von 3" })).toBeInTheDocument();
     });
   });
 
@@ -874,7 +892,7 @@ describe("SlideEditor", () => {
       const items = h.latest();
       expect(items).toHaveLength(1);
       expect(items[0]).toMatchObject({ type: "news-post", channelId: "", postId: "" });
-      expect(screen.getByRole("heading", { name: "News-Beitrag 1 von 1" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "Eintrag 1 von 1" })).toBeInTheDocument();
     });
 
     it("legt einen Kanal-Eintrag mit brauchbaren Vorgaben an", async () => {
@@ -896,9 +914,9 @@ describe("SlideEditor", () => {
       const menu = await screen.findByRole("menu");
 
       expect(within(menu).getAllByRole("menuitem")).toHaveLength(3);
-      expect(menu).toHaveTextContent("Bild und Text selbst pflegen");
-      expect(menu).toHaveTextContent("Ein bestimmter Beitrag");
-      expect(menu).toHaveTextContent("Eine Folie je Beitrag");
+      expect(menu).toHaveTextContent("Bild oder Video mit Text und Buttons");
+      expect(menu).toHaveTextContent("Ein Beitrag aus einem Kanal");
+      expect(menu).toHaveTextContent("Die neuesten Beiträge eines Kanals, je eine Folie");
     });
 
     it("schließt das Menü nach der Wahl", async () => {
@@ -930,16 +948,34 @@ describe("SlideEditor", () => {
 
       const [first, second, third] = rows();
       expect(first).toHaveTextContent("Folie");
-      expect(second).toHaveTextContent("Post");
-      expect(third).toHaveTextContent("Kanal");
+      expect(second).toHaveTextContent("News-Beitrag");
+      expect(third).toHaveTextContent("News-Kanal · 3 neueste");
 
       // Der Kanalname wird nachgeladen; bis dahin steht dort die Kennung.
-      await waitFor(() => expect(rows()[2]).toHaveTextContent("Unternehmen · 3 Beiträge"));
+      expect(third).toHaveTextContent("c1");
+      await waitFor(() => expect(rows()[2]).toHaveTextContent("Unternehmen"));
     });
 
-    it("holt den Titel eines gewählten Beitrags für die Liste nach", async () => {
-      setup([postItem("p", { postId: "p1" })]);
+    it("nennt beim Kanal die Reihenfolge", () => {
+      setup([channelItem("c", { order: "oldest", count: 2 })]);
+      expect(rows()[0]).toHaveTextContent("News-Kanal · 2 älteste");
+    });
+
+    it("holt Titel, Kanal und Bild eines gewählten Beitrags für die Liste nach", async () => {
+      setup([postItem("p", { channelId: "c2", postId: "p1" })]);
+
       await waitFor(() => expect(rows()[0]).toHaveTextContent("Beitrag p1"));
+      await waitFor(() => expect(rows()[0]).toHaveTextContent("News-Beitrag · Kanal Technik"));
+      expect(rows()[0]!.querySelector("img")).toHaveAttribute("src", "https://cdn.example.test/post-p1.jpg");
+    });
+
+    it("zeigt beim Beitrag das eigene Bühnenbild vor dem Beitragsbild", async () => {
+      setup([
+        postItem("p", { channelId: "c1", postId: "p1", imageOverride: { url: "https://cdn.example.test/eigen.jpg", alt: "" } }),
+      ]);
+
+      await waitFor(() => expect(rows()[0]).toHaveTextContent("Beitrag p1"));
+      expect(rows()[0]!.querySelector("img")).toHaveAttribute("src", "https://cdn.example.test/eigen.jpg");
     });
   });
 

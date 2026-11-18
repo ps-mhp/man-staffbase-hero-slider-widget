@@ -16,37 +16,94 @@
  *
  * Eine Folie trägt ihre Überschrift bei sich; ein News-Eintrag trägt nur
  * Kennungen. „Beitrag 6a5e6703cb02c92e74be1eaa" wäre in einer Liste von acht
- * Einträgen nutzlos — deshalb werden Kanalname und Beitragstitel nachgeladen.
- * Bis sie da sind, steht die Kennung dort: ein Ladezustand je Zeile wäre
- * unruhiger als der kurze Wechsel des Textes.
+ * Einträgen nutzlos — deshalb werden Kanalname, Beitragstitel und
+ * Beitragsbild nachgeladen. Bis sie da sind, steht die Kennung dort: ein
+ * Ladezustand je Zeile wäre unruhiger als der kurze Wechsel des Textes.
+ *
+ * Die Unterzeile folgt dem Screen: Sorte, dann das, woran man den Eintrag
+ * wiedererkennt („Folie · 2 Buttons“, „News-Beitrag · Kanal Produkte“,
+ * „News-Kanal · 3 neueste“).
  */
 
 import { useEffect, useState } from "react";
 
-import { HeroItem, heroItemType, isNewsChannelItem, isNewsPostItem, isSlideItem } from "../hero-items";
+import {
+  HeroItem,
+  HeroItemType,
+  NewsChannelItem,
+  NewsPostItem,
+  SlideItem,
+  heroItemType,
+  isNewsChannelItem,
+  isNewsPostItem,
+  isSlideItem,
+} from "../hero-items";
 import { documentLocales } from "@shared/staffbase/posts";
-import { pickPostContent } from "../news-slides";
+import type { NewsChannel } from "@shared/staffbase/channels";
+import { entryKindName } from "../editor-entries";
+import { pickPostContent, pickPostImage } from "../news-slides";
 import { isVideo } from "../slides-model";
 import { NewsSource, useNewsChannels } from "./news-source";
 
 export interface ItemLabel {
-  /** Kurzwort für die Sorte, steht als Marke in der Zeile. */
+  type: HeroItemType;
+  /** Die Sorte ausgeschrieben, wie im Menü „Neu“. */
   kind: string;
   title: string;
+  /** Sorte und Erkennungszeichen, etwa „Folie · 2 Buttons“. */
+  description: string;
   thumbUrl: string | undefined;
   /** Zeigt `thumbUrl` auf ein Video? Dann braucht die Zeile ein `<video>`. */
   thumbVideo: boolean;
 }
 
-const KIND_TEXT: Record<string, string> = {
-  slide: "Folie",
-  "news-post": "Post",
-  "news-channel": "Kanal",
-};
+/** Was von einem Beitrag in der Liste steht. */
+interface PostFacts {
+  title?: string;
+  imageUrl?: string;
+}
 
-export function useItemLabels(items: HeroItem[], source: NewsSource): ItemLabel[] {
-  const channels = useNewsChannels(source, items.some(isNewsChannelItem));
-  const [postTitles, setPostTitles] = useState<Record<string, string>>({});
+const buttonCount = (count: number): string => (count === 1 ? "1 Button" : `${count} Buttons`);
+
+function slideLabel(item: SlideItem, kind: string): Omit<ItemLabel, "type"> {
+  const buttons = item.ctas?.length ?? 0;
+  return {
+    kind,
+    title: item.headline.trim() === "" ? "Ohne Überschrift" : item.headline,
+    description: buttons > 0 ? `${kind} · ${buttonCount(buttons)}` : kind,
+    thumbUrl: item.image.url === "" ? undefined : item.image.url,
+    thumbVideo: isVideo(item.image),
+  };
+}
+
+function postLabel(item: NewsPostItem, kind: string, facts: PostFacts | undefined, channels: NewsChannel[]): Omit<ItemLabel, "type"> {
+  const fallback = item.postId === "" ? "Kein Beitrag gewählt" : item.postId;
+  const headline = item.headline?.trim();
+  const channel = channels.find((entry) => entry.id === item.channelId)?.title;
+  const override = item.imageOverride;
+  return {
+    kind,
+    title: headline !== undefined && headline !== "" ? headline : (facts?.title ?? fallback),
+    description: channel === undefined ? kind : `${kind} · Kanal ${channel}`,
+    thumbUrl: override?.url ?? facts?.imageUrl,
+    thumbVideo: override !== undefined && isVideo(override),
+  };
+}
+
+function channelLabel(item: NewsChannelItem, kind: string, channels: NewsChannel[]): Omit<ItemLabel, "type"> {
+  const channel = channels.find((entry) => entry.id === item.channelId);
+  return {
+    kind,
+    title: channel?.title ?? (item.channelId === "" ? "Kein Kanal gewählt" : item.channelId),
+    description: `${kind} · ${String(item.count)} ${item.order === "oldest" ? "älteste" : "neueste"}`,
+    thumbUrl: undefined,
+    thumbVideo: false,
+  };
+}
+
+/** Titel und Bild der gewählten Beiträge, nachgeladen über ihre Kennungen. */
+function usePostFacts(items: HeroItem[], source: NewsSource): Record<string, PostFacts> {
+  const [facts, setFacts] = useState<Record<string, PostFacts>>({});
 
   // Die Kennungen, nicht die Einträge: sonst liefe der Effekt bei jedem
   // Tastendruck in einem anderen Feld erneut.
@@ -64,18 +121,23 @@ export function useItemLabels(items: HeroItem[], source: NewsSource): ItemLabel[
     void (async () => {
       const ids = [...new Set(postIds.split(","))];
       const locales = documentLocales();
-      const found: Record<string, string> = {};
+      const found: Record<string, PostFacts> = {};
 
       await Promise.all(
         ids.map(async (id) => {
           const post = await source.post(id);
           if (post === null) return;
-          const title = pickPostContent(post.contents, locales)?.title?.trim();
-          if (title !== undefined && title !== "") found[id] = title;
+          const content = pickPostContent(post.contents, locales);
+          const title = content?.title?.trim();
+          const imageUrl = pickPostImage(content)?.url;
+          found[id] = {
+            ...(title !== undefined && title !== "" ? { title } : {}),
+            ...(imageUrl !== undefined ? { imageUrl } : {}),
+          };
         }),
       );
 
-      if (!cancelled) setPostTitles((known) => ({ ...known, ...found }));
+      if (!cancelled) setFacts((known) => ({ ...known, ...found }));
     })();
 
     return () => {
@@ -83,44 +145,20 @@ export function useItemLabels(items: HeroItem[], source: NewsSource): ItemLabel[
     };
   }, [postIds, source]);
 
+  return facts;
+}
+
+export function useItemLabels(items: HeroItem[], source: NewsSource): ItemLabel[] {
+  const needsChannels = items.some((item) => isNewsChannelItem(item) || (isNewsPostItem(item) && item.channelId !== ""));
+  const channels = useNewsChannels(source, needsChannels).entries;
+  const facts = usePostFacts(items, source);
+
   return items.map((item) => {
-    const kind = KIND_TEXT[heroItemType(item)] ?? "Eintrag";
-
-    if (isSlideItem(item)) {
-      return {
-        kind,
-        title: item.headline.trim() === "" ? "Ohne Überschrift" : item.headline,
-        thumbUrl: item.image.url === "" ? undefined : item.image.url,
-        thumbVideo: isVideo(item.image),
-      };
-    }
-
-    if (isNewsPostItem(item)) {
-      const fallback = item.postId === "" ? "Kein Beitrag gewählt" : item.postId;
-      const headline = item.headline?.trim();
-      return {
-        kind,
-        title:
-          headline !== undefined && headline !== ""
-            ? headline
-            : (postTitles[item.postId] ?? fallback),
-        thumbUrl: item.imageOverride?.url,
-        thumbVideo: item.imageOverride !== undefined && isVideo(item.imageOverride),
-      };
-    }
-
-    if (isNewsChannelItem(item)) {
-      const channel = channels.entries.find((entry) => entry.id === item.channelId);
-      const name =
-        channel?.title ?? (item.channelId === "" ? "Kein Kanal gewählt" : item.channelId);
-      return {
-        kind,
-        title: `${name} · ${String(item.count)} Beiträge`,
-        thumbUrl: undefined,
-        thumbVideo: false,
-      };
-    }
-
-    return { kind, title: "Unbekannter Eintrag", thumbUrl: undefined, thumbVideo: false };
+    const type = heroItemType(item);
+    const kind = entryKindName(item);
+    if (isSlideItem(item)) return { type, ...slideLabel(item, kind) };
+    if (isNewsPostItem(item)) return { type, ...postLabel(item, kind, facts[item.postId], channels) };
+    if (isNewsChannelItem(item)) return { type, ...channelLabel(item, kind, channels) };
+    return { type, kind, title: "Unbekannter Eintrag", description: kind, thumbUrl: undefined, thumbVideo: false };
   });
 }

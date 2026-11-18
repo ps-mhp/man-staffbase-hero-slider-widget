@@ -38,14 +38,8 @@
 
 // --- Formular ----------------------------------------------------------------
 // Liste, Kopf und Aktionen kommen aus `@man/config-ui` und tragen dessen
-// Tailwind-Klassen; hier stehen nur noch die Felder der drei Formulare.
-//
-// Ein Eingabefeld über die volle Breite eines 1440px-Dialogs ist nicht zu
-// lesen — der Blick verliert beim Zurückspringen die Zeile. Der Inhalt bleibt
-// deshalb auf einer ruhigen Lesebreite, auch wenn der Dialog breiter wird.
-.man-se__form {
-  max-width: 720px;
-}
+// Tailwind-Klassen (die Lesebreite von 720 px steht dort am Formular); hier
+// stehen nur noch die Felder der drei Formulare.
 
 .man-se__field {
   display: block;
