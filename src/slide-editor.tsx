@@ -107,7 +107,7 @@ interface EntryFormProps {
   onPick: (target: PickerTarget) => void;
 }
 
-/** Die Felder je Sorte, unverändert aus `editors/`. */
+/** Die Abschnitte des Formulars je Sorte, aus `editors/`. */
 function EntryForm({ item, entries, source, onPick }: EntryFormProps): ReactElement | null {
   if (isSlideItem(item)) {
     return (

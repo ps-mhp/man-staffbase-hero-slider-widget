@@ -14,7 +14,7 @@
 
 | Sorte | Beschreibung |
 | --- | --- |
-| Folie | Eine von Hand gepflegte Folie: Bild, Überschrift, Unterzeile, Schaltfläche. |
+| Folie | Eine von Hand gepflegte Folie: Bild oder Video, Überschrift, Unterzeile, Buttons. |
 | News-Beitrag | Ein bestimmter Beitrag als eine Folie. Inhalt und Ziel kommen aus dem Beitrag. |
 | News-Kanal | Ein ganzer Kanal, eine Folie je Beitrag. Neue Beiträge erscheinen ohne weiteres Zutun. |
 
@@ -28,17 +28,17 @@ Folien, die er beisteuert.
 | Feld | Beschreibung |
 | --- | --- |
 | Bild oder Video | Pflicht. Aus der Mediathek oder über eine Adresse (`https://…`). Quer, mindestens 1920 px breit. Ohne Bild oder Video wird die Folie nicht gezeigt. |
-| Adresse | Statt der Mediathek: die `https`-Adresse eines Bildes oder Videos. Andere Adressen werden nicht übernommen. |
+| Adresse | Hinter **Adresse einfügen**, statt der Mediathek: die `https`-Adresse eines Bildes oder Videos. Andere Adressen werden nicht übernommen. |
 | Art | Bild oder Video. Stellt sich an der Endung der Adresse selbst ein (`.mp4`, `.webm`, `.mov` sind Videos); nur bei Adressen ohne Endung von Hand wählen. |
 | Bild- bzw. Videobeschreibung | Was zu sehen ist. Nur bei rein schmückenden Bildern und Videos leer lassen — Screenreader lesen dieses Feld vor. |
-| Bild oder Video für Hochformat | Optional. Wird auf schmalen, stehenden Bildschirmen gezeigt. Fehlt es, wird überall der Querzuschnitt verwendet. |
+| Hochformat | Optional. Wird auf schmalen, stehenden Bildschirmen gezeigt. Fehlt es, wird überall der Querzuschnitt verwendet. |
 | Überschrift | Kurz halten: bis etwa 24 Zeichen bleibt sie einzeilig. |
 | Unterzeile | Optional, ein bis zwei Zeilen. |
-| Schaltflächen | Optional, bis zu drei je Folie, mit ↑/↓ sortierbar. Eine Schaltfläche erscheint nur, wenn Beschriftung und Ziel ausgefüllt sind. Nur bei von Hand gepflegten Folien; News-Folien bekommen ihre Schaltfläche aus dem Beitrag. |
-| Ziel | **Freie Adresse** (`https://…`, `mailto:…`, `tel:…` oder ein Pfad wie `/content/…`), **Seite aus Staffbase** oder **News-Beitrag aus Staffbase** (erst Kanal, dann Beitrag). Andere Adressen, etwa `javascript:`, werden nicht übernommen. |
-| Stil | **Rot gefüllt** (Hauptaktion, Vorgabe), **Weiß gefüllt**, **Weiße Kontur** oder **Textverweis**. Neue Schaltflächen ab der zweiten beginnen als Kontur, damit nicht zwei rote Flächen nebeneinanderstehen. |
-| Symbol | Optional: Pfeil, Winkel, externer Link, Herunterladen, Abspielen, Dokument, Kalender, E-Mail, Telefon oder Information — vor oder nach dem Text. |
-| In neuem Tab öffnen | Öffnet das Ziel der Schaltfläche in einem neuen Tab. Für externe Ziele üblich. |
+| Buttons | Optional, bis zu drei je Folie. Stehen als Liste mit Stil und Ziel; ein Klick klappt die Felder eines Buttons auf. Nach oben/unten, duplizieren und löschen über die Symbole über den Feldern. Ein Button erscheint nur, wenn Beschriftung und Ziel ausgefüllt sind. Nur bei von Hand gepflegten Folien; News-Folien bekommen ihren Button aus dem Beitrag. |
+| Ziel | **Adresse** (`https://…`, `mailto:…`, `tel:…` oder ein Pfad wie `/content/…`), **Seite** aus Staffbase oder **News-Beitrag** aus Staffbase (erst Kanal, dann Beitrag). Andere Adressen, etwa `javascript:`, werden nicht übernommen. |
+| Stil | **Rot gefüllt** (Hauptaktion, Vorgabe), **Weiß gefüllt**, **Weiße Kontur** oder **Textverweis**. Neue Buttons ab dem zweiten beginnen als Kontur, damit nicht zwei rote Flächen nebeneinanderstehen. |
+| Symbol | Optional: Pfeil, Winkel, externer Link, Herunterladen, Abspielen, Dokument, Kalender, E-Mail, Telefon oder Information. Mit Symbol erscheint **Symbol steht**: vor oder nach dem Text. |
+| In neuem Tab öffnen | Schalter. Öffnet das Ziel des Buttons in einem neuen Tab. Für externe Ziele üblich. |
 
 ## Felder eines News-Beitrags
 
@@ -46,24 +46,24 @@ Folien, die er beisteuert.
 | --- | --- |
 | Kanal | Pflicht. Bestimmt, welche Beiträge zur Auswahl stehen. |
 | Beitrag | Pflicht. Die fünfzig jüngsten Beiträge des Kanals, neueste zuerst. |
-| Überschrift überschreiben | Optional. Leer lassen, um den Titel des Beitrags zu übernehmen. |
-| Teaser als Unterzeile zeigen | Eingeschaltet voreingestellt. Der Teaser wird auf 240 Zeichen gekürzt. |
-| Beschriftung der Schaltfläche | `Mehr erfahren` voreingestellt. Leer lassen, um die Schaltfläche wegzulassen; das Ziel ist immer der Beitrag. |
-| Bühnenbild überschreiben | Optional. Sinnvoll, wenn das Beitragsbild für die Bühne zu knapp geschnitten ist. |
-| Bild für Hochformat | Optional. Wird auf schmalen, stehenden Bildschirmen gezeigt. |
+| Überschrift | Optional. Leer lassen, um den Titel des Beitrags zu übernehmen. |
+| Anrisstext zeigen | Eingeschaltet voreingestellt. Der Anrisstext (Teaser) steht als Unterzeile und wird auf 240 Zeichen gekürzt. |
+| Beschriftung des Buttons | `Mehr erfahren` voreingestellt. Leer lassen, um den Button wegzulassen; das Ziel ist immer der Beitrag. |
+| Bühnenbild | Optional. Sinnvoll, wenn das Beitragsbild für die Bühne zu knapp geschnitten ist. |
+| Hochformat | Optional. Wird auf schmalen, stehenden Bildschirmen gezeigt. |
 
 ## Felder eines News-Kanals
 
 | Feld | Beschreibung |
 | --- | --- |
 | Kanal | Pflicht. Alle Folien dieses Eintrags stammen aus diesem Kanal. |
-| Anzahl der Folien | `3` voreingestellt, höchstens acht. |
+| Anzahl Beiträge | `3` voreingestellt, höchstens acht. |
 | Reihenfolge | `Neueste zuerst` (Voreinstellung) oder `Älteste zuerst`. |
 | Nur hervorgehobene Beiträge | Ausgeschaltet voreingestellt. Beschränkt auf das, was in den News angepinnt ist. |
 | Nur Beiträge mit Bild | Eingeschaltet voreingestellt. Ohne Bild bliebe von der Folie nur eine dunkle Fläche mit Text. |
-| Schlagworte | Optional, mehrere durch Komma getrennt. Ein Beitrag genügt, wenn er eines davon trägt. |
-| Teaser als Unterzeile zeigen | Eingeschaltet voreingestellt. |
-| Beschriftung der Schaltfläche | Gilt für alle Folien des Kanals. Leer lassen, um die Schaltfläche wegzulassen. |
+| Hashtags | Optional, mehrere durch Komma getrennt. Ein Beitrag genügt, wenn er einen davon trägt. |
+| Anrisstext zeigen | Eingeschaltet voreingestellt. |
+| Beschriftung des Buttons | Gilt für alle Folien des Kanals. Leer lassen, um den Button wegzulassen. |
 
 ## Hinweise
 

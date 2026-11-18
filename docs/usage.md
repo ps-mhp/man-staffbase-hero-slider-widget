@@ -13,13 +13,20 @@ Fenster.
 - **Liste links:** alle Einträge in der Reihenfolge der Bühne, darüber
   **+ Neu** und die Zahl der Einträge („3 von 8“). Am Griff links einer Zeile
   ziehen Sie einen Eintrag an eine neue Stelle.
-- **Rechts:** über dem Formular Sorte und Stelle des gewählten Eintrags (etwa
-  **Folie 2 von 3**) und vier Symbole: **nach oben**, **nach unten**,
-  **duplizieren**, **löschen**. Ihr Name erscheint, wenn Sie mit der Maus
-  darauf zeigen.
+  Unter jedem Titel stehen Sorte und Erkennungszeichen, etwa **Folie · 2
+  Buttons**, **News-Beitrag · Kanal Technik** oder **News-Kanal · 3 neueste**.
+- **Mitte:** über dem Formular **Eintrag 2 von 3** mit der Sorte und vier
+  Symbole: **nach oben**, **nach unten**, **duplizieren**, **löschen**. Ihr
+  Name erscheint, wenn Sie mit der Maus darauf zeigen. Darunter die Felder in
+  Abschnitten, bei einer Folie **Medium**, **Text** und **Buttons**.
+- **Rechts:** die **Vorschau** — verkleinert, was der gewählte Eintrag auf die
+  Bühne bringt; bei News-Einträgen jede Folie mit Titel und Anrisstext.
 - **Desktop**, **Tablet** und **Mobil** zeigen den gewählten Eintrag in der
-  jeweiligen Breite; **Editor** führt zurück zum Formular. News-Einträge
-  zeigen dort nur einen Platzhalter — sie werden erst auf der Seite zu Folien.
+  jeweiligen Breite, News-Einträge als die Folien, die aus den Beiträgen
+  werden; **Editor** führt zurück zum Formular.
+- Höhe, Breite, Lage, Abstand nach unten, **Sekunden je Folie** und
+  **Bedienelemente** stehen nicht im Editor, sondern nach dem Schließen im
+  Dialog von Staffbase.
 
 ## Bühne mit einem Bild einrichten
 
@@ -32,23 +39,24 @@ Fenster.
 3. Öffnen Sie die Einstellungen des Widgets. Der Editor öffnet sich von
    selbst.
 4. Klicken Sie über der Liste auf **+ Neu** und wählen Sie **Folie**.
-5. Klicken Sie unter **Bild oder Video** auf die gestrichelte Fläche **Bild
-   oder Video wählen** und wählen Sie das Bild aus der Mediathek — oder fügen
-   Sie darunter die Adresse eines Bildes oder Videos ein. Ohne Bild wird die
-   Folie nicht gezeigt.
+5. Klicken Sie unter **Medium** auf die gestrichelte Fläche **Bild oder Video
+   wählen** und wählen Sie das Bild aus der Mediathek — oder fügen Sie über
+   **Adresse einfügen** die Adresse eines Bildes oder Videos ein. Ohne Bild
+   wird die Folie nicht gezeigt.
 6. Tragen Sie unter **Bildbeschreibung** ein, was zu sehen ist. Lassen Sie das
    Feld nur leer, wenn das Bild rein schmückend ist.
 7. Tragen Sie die **Überschrift** ein. Halten Sie sie kurz: bis etwa
    24 Zeichen bleibt sie einzeilig.
-8. Optional: **Unterzeile** und bis zu drei **Schaltflächen**
-   (**Schaltfläche hinzufügen**). Je Schaltfläche wählen Sie das **Ziel** —
-   freie Adresse, Seite oder News-Beitrag aus Staffbase —, den **Stil** und
-   bei Bedarf ein **Symbol**. Eine Schaltfläche erscheint nur, wenn
-   Beschriftung **und** Ziel ausgefüllt sind. Auf dem Telefon zeigt die Bühne
-   Unterzeile und erste Schaltfläche nicht an: dort trägt sie die Überschrift,
-   und die ganze Folie führt zum Ziel der ersten Schaltfläche; weitere
-   Schaltflächen bleiben als Knöpfe sichtbar. Was in der Unterzeile steht,
-   sollte deshalb nichts sein, was unbedingt gelesen werden muss.
+8. Optional: **Unterzeile** und bis zu drei **Buttons** (**Button
+   hinzufügen**). Die Buttons stehen als Liste; ein Klick auf eine Zeile
+   klappt ihre Felder auf. Je Button wählen Sie das **Ziel** — **Adresse**,
+   **Seite** oder **News-Beitrag** aus Staffbase —, den **Stil** und bei
+   Bedarf ein **Symbol**. Ein Button erscheint nur, wenn Beschriftung **und**
+   Ziel ausgefüllt sind. Auf dem Telefon zeigt die Bühne Unterzeile und ersten
+   Button nicht an: dort trägt sie die Überschrift, und die ganze Folie führt
+   zum Ziel des ersten Buttons; weitere Buttons bleiben sichtbar. Was in der
+   Unterzeile steht, sollte deshalb nichts sein, was unbedingt gelesen werden
+   muss.
 9. Klicken Sie oben rechts auf **Übernehmen**.
 10. Stellen Sie **Sekunden je Folie** auf `0` — bei einer einzelnen Folie gibt
     es nichts zu wechseln.
@@ -59,7 +67,7 @@ Fenster.
 die Mediathek rechts neben dem Formular; ihr Titel nennt das Ziel, etwa
 „Bild für Folie 2“. Ein Klick auf ein Bild – oder Enter – übernimmt es
 dorthin. Sie können Bilder aus der Leiste auch direkt auf jedes Bildfeld
-ziehen, etwa auf **Bild oder Video für Hochformat**: passende Felder werden
+ziehen, etwa auf die Zeile **Hochformat**: passende Felder werden
 beim Ziehen umrandet, über dem Ziel steht „Hier ablegen“. Videos nehmen nur
 Folien an, nicht die Bildfelder eines News-Beitrags. Escape oder der Pfeil
 oben in der Leiste schließt sie, ohne den Editor zu verlassen.
@@ -80,37 +88,37 @@ oben in der Leiste schließt sie, ohne den Editor zu verlassen.
 
 1. Öffnen Sie die Einstellungen und damit den Editor.
 2. Klicken Sie über der Liste auf **+ Neu** und wählen Sie **News-Beitrag**.
-   Links erscheint ein Eintrag mit dem Zusatz **Post** unter dem Titel.
+   Links erscheint ein Eintrag mit dem Zusatz **News-Beitrag** unter dem Titel.
 3. Wählen Sie unter **Kanal** den News-Kanal. Erst danach lässt sich der
    Beitrag wählen.
 4. Wählen Sie unter **Beitrag** den gewünschten Beitrag. Zur Auswahl stehen
    die fünfzig jüngsten Beiträge des Kanals, neueste zuerst.
-5. Prüfen Sie die **Vorschau** darunter: sie zeigt Bild, Überschrift und
-   Teaser genau so, wie die Folie später aussieht.
-6. Optional: **Überschrift überschreiben**, **Teaser als Unterzeile zeigen**
-   abschalten oder die **Beschriftung der Schaltfläche** ändern. Das Ziel der
-   Schaltfläche ist immer der Beitrag selbst.
-7. Optional: **Bühnenbild überschreiben**. Das Beitragsbild ist fürs Feed
-   geschnitten und trägt eine hohe Bühne nicht immer.
+5. Prüfen Sie rechts die **Vorschau**: sie zeigt Bild, Überschrift und
+   Anrisstext genau so, wie die Folie später aussieht.
+6. Optional unter **Darstellung**: eine eigene **Überschrift**, **Anrisstext
+   zeigen** abschalten oder die **Beschriftung des Buttons** ändern. Der
+   Button führt immer zum Beitrag selbst.
+7. Optional unter **Medium**: ein eigenes **Bühnenbild**. Das Beitragsbild ist
+   fürs Feed geschnitten und trägt eine hohe Bühne nicht immer.
 8. **Übernehmen**, speichern, in der Vorschau prüfen.
 
 ## Alle Beiträge eines Kanals zeigen
 
 1. Öffnen Sie die Einstellungen und damit den Editor.
 2. Klicken Sie über der Liste auf **+ Neu** und wählen Sie **News-Kanal**.
-   Links erscheint ein Eintrag mit dem Zusatz **Kanal** unter dem Titel.
+   Links erscheint ein Eintrag mit dem Zusatz **News-Kanal** unter dem Titel.
 3. Wählen Sie unter **Kanal** den News-Kanal.
-4. Stellen Sie **Anzahl der Folien** ein (Voreinstellung `3`, höchstens acht).
+4. Stellen Sie **Anzahl Beiträge** ein (Voreinstellung `3`, höchstens acht).
 5. Wählen Sie die **Reihenfolge**: `Neueste zuerst` oder `Älteste zuerst`.
-6. Setzen Sie bei Bedarf **Filter**:
+6. Schalten Sie unter **Auswahl** bei Bedarf ein:
    - **Nur hervorgehobene Beiträge** — beschränkt auf das, was in den News
      angepinnt ist.
    - **Nur Beiträge mit Bild** — eingeschaltet voreingestellt. Ohne Bild bliebe
      von der Folie nur eine dunkle Fläche mit Text.
-   - **Schlagworte** — mehrere durch Komma trennen; ein Beitrag genügt, wenn er
-     eines davon trägt.
-7. Prüfen Sie die **Vorschau**: sie zeigt genau die Beiträge, die die Filter
-   übrig lassen. Bleibt sie leer, sind die Filter zu eng.
+   - **Hashtags** — mehrere durch Komma trennen; ein Beitrag genügt, wenn er
+     einen davon trägt.
+7. Prüfen Sie rechts die **Vorschau**: sie zeigt genau die Beiträge, die die
+   Filter übrig lassen. Bleibt sie leer, sind die Filter zu eng.
 8. **Übernehmen**, speichern, in der Vorschau prüfen.
 
 Der Eintrag zählt in der Liste als **einer**, bringt aber mehrere Folien mit.
@@ -125,8 +133,8 @@ fällt hinten weg.
    ihrem Format (etwa `MP4`). Übernommen wird die von Staffbase umgerechnete
    Fassung — sie läuft in jedem Browser und ist meist deutlich kleiner als das
    Original.
-3. Liegt das Video woanders: Fügen Sie stattdessen seine Adresse unter
-   **Oder Adresse eines Bildes oder Videos** ein. Sie muss mit `https://`
+3. Liegt das Video woanders: Fügen Sie stattdessen über **Adresse einfügen**
+   seine Adresse ein. Sie muss mit `https://`
    beginnen, und alle Leser:innen müssen das Video ohne Anmeldung abrufen
    können. Endet sie auf `.mp4`, `.webm` oder `.mov`, springt **Art** von
    selbst auf **Video**; sonst stellen Sie es dort von Hand um.
@@ -144,8 +152,8 @@ denn sie wird bei jedem Seitenaufruf geladen.
 1. Legen Sie einen hochkant zugeschnittenen Ausschnitt desselben Motivs in der
    Mediathek ab.
 2. Wählen Sie im Editor die betroffene Folie aus.
-3. Klicken Sie unter **Bild oder Video für Hochformat** auf **Bild oder Video
-   wählen** oder tragen Sie darunter eine Adresse ein.
+3. Klicken Sie in der Zeile **Hochformat (optional)** auf **Bild oder Video
+   wählen** oder über **Adresse einfügen** auf eine Adresse.
 4. Die Ansicht **Mobil** in der Kopfleiste zeigt den Hochformat-Zuschnitt
    schon im Editor.
 5. **Übernehmen**, speichern, und in einem schmalen Fenster oder auf dem
@@ -156,7 +164,8 @@ denn sie wird bei jedem Seitenaufruf geladen.
 1. Öffnen Sie die Einstellungen des Widgets; der Editor öffnet sich mit den
    vorhandenen Einträgen.
 2. Wählen Sie links den zu ändernden Eintrag. Der Zusatz unter dem Titel
-   sagt, um welche Sorte es sich handelt: **Folie**, **Post** oder **Kanal**.
+   sagt, um welche Sorte es sich handelt: **Folie**, **News-Beitrag** oder
+   **News-Kanal**.
 3. Ändern Sie die Felder rechts. Über das Symbol **duplizieren** entsteht eine
    Kopie des gewählten Eintrags direkt dahinter, über **löschen** verschwindet
    er. Verschieben, Duplizieren und Löschen gelten für alle drei Sorten

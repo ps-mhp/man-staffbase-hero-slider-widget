@@ -25,7 +25,7 @@ export const SLIDE_EDITOR_HELP = (
   <ul className="flex list-disc flex-col gap-2 pl-5">
     <li>
       <strong>Folie</strong>: Bild oder Video, Überschrift, Unterzeile und bis zu drei
-      Schaltflächen selbst pflegen.
+      Buttons selbst pflegen.
     </li>
     <li>
       <strong>News-Beitrag</strong>: ein bestimmter Beitrag; Titel, Teaser und Bild kommen aus
@@ -42,8 +42,12 @@ export const SLIDE_EDITOR_HELP = (
     <li>Höchstens {MAX_ITEMS} Einträge; ein Kanal zählt als einer.</li>
     <li>Eine Folie ohne Bild wird nicht gezeigt; „Übernehmen“ nennt sie.</li>
     <li>
-      Desktop, Tablet und Mobil zeigen den gewählten Eintrag im Gerätrahmen. News erscheinen
-      erst auf der Seite.
+      Rechts steht verkleinert, was der gewählte Eintrag auf die Bühne bringt. Desktop, Tablet
+      und Mobil zeigen ihn im Gerätrahmen – News als die Folien, die daraus werden.
+    </li>
+    <li>
+      Höhe, Breite, Lage, Abstand, Sekunden je Folie und Bedienelemente stehen nach dem
+      Schließen im Dialog von Staffbase.
     </li>
   </ul>
 );
