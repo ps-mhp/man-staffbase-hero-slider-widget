@@ -23,7 +23,7 @@ import Form from "@rjsf/mui";
 import validator from "@rjsf/validator-ajv8";
 import { JSONSchema7 } from "json-schema";
 
-import { modalRoot, queryDeep, settleModal } from "@shared/ui/config-modal.testing";
+import { clickElement, modalRoot, queryDeep, queryInModal, settleEditor } from "@shared/ui/config-modal.testing";
 import { encodeHeroItemsAttribute, parseHeroItems } from "./hero-items";
 import { HeroEditorValue } from "./editor-value";
 import { parseHeroContent } from "./hero-settings";
@@ -47,13 +47,6 @@ const slide = (id: string): Slide => ({
 const fieldValue = (container: HTMLElement): string =>
   container.querySelector<HTMLInputElement>("#root_slides")!.value;
 
-/** Das Modal lädt nach, der Editor darin noch einmal: so oft warten, bis er da ist. */
-async function settleEditor(): Promise<void> {
-  for (let round = 0; round < 5 && modalRoot()?.querySelector('[data-testid="slide-editor"]') == null; round += 1) {
-    await settleModal();
-  }
-}
-
 async function open(
   slides: Slide[] | string,
   legacy: Record<string, unknown> = {},
@@ -64,20 +57,9 @@ async function open(
   await act(async () => {
     stop = startSlideEditorInjector(container);
   });
-  await settleEditor();
+  await settleEditor('[data-testid="slide-editor"]', 5);
   return { container, stop };
 }
-
-/** Ein Klick wie von Hilfsmitteln: react-aria nimmt ihn als Druck an. */
-async function click(element: Element | null): Promise<void> {
-  if (element === null) throw new Error("Nichts zum Klicken gefunden");
-  await act(async () => {
-    (element as HTMLElement).click();
-  });
-}
-
-const inModal = (selector: string): HTMLElement | null =>
-  modalRoot()?.querySelector<HTMLElement>(selector) ?? null;
 
 const buttonNamed = (name: string): HTMLElement | null =>
   Array.from(modalRoot()?.querySelectorAll<HTMLElement>("button") ?? []).find(
@@ -90,9 +72,9 @@ describe("startSlideEditorInjector", () => {
 
     expect(modalRoot()!.textContent).toContain("Hero-Slider");
     expect(modalRoot()!.querySelector("h1")).toHaveTextContent("Folien bearbeiten");
-    expect(inModal('[data-testid="slide-editor"]')).not.toBeNull();
-    expect(inModal('[role="grid"][aria-label="Einträge"]')).not.toBeNull();
-    expect(inModal('[aria-label="Ansicht"]')).not.toBeNull();
+    expect(queryInModal('[data-testid="slide-editor"]')).not.toBeNull();
+    expect(queryInModal('[role="grid"][aria-label="Einträge"]')).not.toBeNull();
+    expect(queryInModal('[aria-label="Ansicht"]')).not.toBeNull();
 
     await act(async () => stop());
   });
@@ -101,13 +83,13 @@ describe("startSlideEditorInjector", () => {
     const { container, stop } = await open([slide("a")]);
     const before = fieldValue(container);
 
-    await click(buttonNamed("Neu"));
-    await click(queryDeep(document, '[role="menuitem"]'));
-    await click(inModal('[data-testid="config-shell-apply"]'));
+    await clickElement(buttonNamed("Neu"));
+    await clickElement(queryDeep(document, '[role="menuitem"]'));
+    await clickElement(queryInModal('[data-testid="config-shell-apply"]'));
 
     expect(fieldValue(container)).toBe(before);
-    expect(inModal('[role="status"]')).toHaveTextContent("Folie 2: Bild fehlt");
-    expect(inModal('[data-testid="slide-editor"]')).not.toBeNull();
+    expect(queryInModal('[role="status"]')).toHaveTextContent("Folie 2: Bild fehlt");
+    expect(queryInModal('[data-testid="slide-editor"]')).not.toBeNull();
 
     await act(async () => stop());
   });
@@ -115,8 +97,8 @@ describe("startSlideEditorInjector", () => {
   it("schreibt beim Übernehmen die neue Reihenfolge ins Feld", async () => {
     const { container, stop } = await open([slide("a"), slide("b")]);
 
-    await click(buttonNamed("Eintrag nach unten"));
-    await click(inModal('[data-testid="config-shell-apply"]'));
+    await clickElement(buttonNamed("Eintrag nach unten"));
+    await clickElement(queryInModal('[data-testid="config-shell-apply"]'));
 
     expect(parseHeroItems(fieldValue(container)).map((item) => item.id)).toEqual(["b", "a"]);
 
@@ -128,7 +110,7 @@ describe("startSlideEditorInjector", () => {
     const raw = JSON.stringify([{ id: "a", image: { url: "https://cdn.example.test/a.png", alt: "" }, headline: "A" }]);
     const { container, stop } = await open(raw, { height: "large", controls: false });
 
-    await click(inModal('[data-testid="config-shell-apply"]'));
+    await clickElement(queryInModal('[data-testid="config-shell-apply"]'));
 
     expect(fieldValue(container)).toBe(raw);
     await act(async () => stop());
@@ -137,8 +119,8 @@ describe("startSlideEditorInjector", () => {
   it("zeigt rechts die Einstellungen und blendet die alten Felder im Dialog aus", async () => {
     const { container, stop } = await open([slide("a")], { height: "large", controls: false });
 
-    expect(inModal('[aria-label="Widget"]')).not.toBeNull();
-    expect(inModal('[data-testid="hero-setting-height"]')).toHaveTextContent("Groß");
+    expect(queryInModal('[aria-label="Widget"]')).not.toBeNull();
+    expect(queryInModal('[data-testid="hero-setting-height"]')).toHaveTextContent("Groß");
     /** Ob eine Zeile um das Feld verborgen ist. */
     const hidden = (key: string): boolean => {
       for (let node = container.querySelector<HTMLElement>(`[id="root_${key}"]`); node !== null; node = node.parentElement) {
@@ -155,9 +137,9 @@ describe("startSlideEditorInjector", () => {
   it("schreibt eine bediente Einstellung ins Feld slides, die alten Felder bleiben", async () => {
     const { container, stop } = await open([slide("a")], { height: "large", controls: true });
 
-    await click(inModal('[role="switch"][data-testid="hero-setting-full-bleed"]'));
-    expect(inModal('[role="status"]')).toHaveTextContent("Einstellungen geändert");
-    await click(inModal('[data-testid="config-shell-apply"]'));
+    await clickElement(queryInModal('[role="switch"][data-testid="hero-setting-full-bleed"]'));
+    expect(queryInModal('[role="status"]')).toHaveTextContent("Einstellungen geändert");
+    await clickElement(queryInModal('[data-testid="config-shell-apply"]'));
 
     expect(parseHeroContent(fieldValue(container))).toEqual({ items: [slide("a")], settings: { fullBleed: false } });
     expect(container.querySelector<HTMLSelectElement>("#root_height")!.value).not.toBe("");
