@@ -33,6 +33,12 @@ beforeEach(() => {
           fills += 1;
         },
         clearRect: () => undefined,
+        beginPath: () => undefined,
+        moveTo: () => undefined,
+        lineTo: () => undefined,
+        arc: () => undefined,
+        fill: () => undefined,
+        stroke: () => undefined,
       }) as unknown as CanvasRenderingContext2D,
   );
   jest.spyOn(globalThis, "requestAnimationFrame").mockImplementation((callback) => {

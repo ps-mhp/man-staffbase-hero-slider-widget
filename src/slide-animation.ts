@@ -20,8 +20,11 @@
  * Frei von DOM und React.
  */
 
-/** Die Muster, alle aus Quadraten in MAN-Farben (src/shared/stylings/_man-tokens.scss). */
-export const ANIMATION_PATTERNS = ["wave", "grid", "pulse"] as const;
+/**
+ * Die Muster in MAN-Farben (src/shared/stylings/_man-tokens.scss): erst die
+ * eckigen aus Quadraten, dann die runden aus Punkten und Linien.
+ */
+export const ANIMATION_PATTERNS = ["wave", "grid", "pulse", "dots", "lines", "rings", "flow"] as const;
 export type AnimationPattern = (typeof ANIMATION_PATTERNS)[number];
 
 /** Grundton: dunkel mit hellen Wellenkämmen oder weiß mit dunklen. */
@@ -68,12 +71,20 @@ export const ANIMATION_LABELS: Record<AnimationPattern, string> = {
   wave: "Welle",
   grid: "Raster",
   pulse: "Module",
+  dots: "Punkte",
+  lines: "Linien",
+  rings: "Ringe",
+  flow: "Strömung",
 };
 
 export const ANIMATION_DESCRIPTIONS: Record<AnimationPattern, string> = {
   wave: "Feine Quadrate, durch die eine Welle läuft und sie anhebt.",
   grid: "Ruhiges Raster, über das ein Lichtband zieht.",
   pulse: "Locker verteilte Module, die langsam pulsieren.",
+  dots: "Feine Punkte, die eine Kräuselung anhebt.",
+  lines: "Fließende Höhenlinien, einzelne in Rot.",
+  rings: "Punktringe, die sich ruhig von rechts ausbreiten.",
+  flow: "Partikel, die auf kleinen Bahnen kreisen und driften.",
 };
 
 const pick = <T extends string>(list: readonly T[], value: unknown, fallback: T): T =>
