@@ -56,6 +56,7 @@ Folien, die er beisteuert.
 
 | Feld | Beschreibung |
 | --- | --- |
+| Aufbau | **Fest**: Überschrift, Unterzeile und Buttons an festem Platz unten links. **Benutzerdefiniert**: Bausteine in neun Zonen, auf der Bühne angeordnet (siehe unten). Der Wechsel nimmt mit, was da ist. |
 | Hintergrund | **Bild oder Video** (eine Datei, siehe unten) oder **Animation**: ein bewegtes Muster aus Quadraten in MAN-Farben, das das Widget selbst zeichnet. Eine Animation passt sich jeder Bühnengröße an, braucht kein Hochformat und lädt nichts nach. |
 | Muster | Nur bei Animation. Eckig: **Welle** (feine Quadrate, durch die eine Welle läuft und sie anhebt), **Raster** (ruhiges Raster mit wanderndem Lichtband), **Module** (locker verteilte Module, die pulsieren). Rund: **Punkte** (feine Punkte, die eine Kräuselung anhebt), **Linien** (fließende Höhenlinien, einzelne in Rot), **Ringe** (Punktringe, die sich ruhig von rechts ausbreiten), **Strömung** (Partikel, die kreisen und driften). Die Textseite links — auf dem Telefon unten — bleibt immer frei. |
 | Grund | Nur bei Animation. **Deckend**, **75 %**, **50 %**, **25 %** oder **Durchsichtig**: Darunter scheint der Abschnitt hinter der Bühne durch; Muster und Schrift bleiben kräftig. |
@@ -132,3 +133,28 @@ Folien, die er beisteuert.
 - Die **Vorschau** in Desktop, Tablet und Mobil rechnet bei News-Einträgen mit
   denselben Regeln wie die veröffentlichte Seite. Was dort nicht steht,
   erscheint auch auf der Bühne nicht.
+
+## Benutzerdefinierte Folie
+
+Bei **Aufbau: Benutzerdefiniert** ist die Bühne in der Mitte eine Arbeitsfläche
+mit neun Zonen — oben, Mitte, unten jeweils links, mittig, rechts auf der
+Fluchtlinie. Im Panel rechts steht der Katalog der Bausteine.
+
+| Baustein | Einstellungen |
+| --- | --- |
+| Überschrift | Text, Größe (**Display**, **H1**–**H3**), Farbe. Die erste Überschrift der Folie ist ihre Hauptüberschrift. |
+| Text | Text, Größe (**L**, **M**, **S**), Farbe. |
+| Label | Kurzer Text über einer Überschrift, Farbe. |
+| Buttons | Bis zu drei Buttons wie bei der festen Folie. |
+| Bild oder Logo | Aus der Mediathek oder per Adresse, Beschreibung, Größe (**S**, **M**, **L**). Freigestellte Bilder (PNG, SVG) wirken auf jedem Hintergrund. |
+| Icon | Symbol, Größe, Farbe. |
+
+Für jeden Baustein außerdem: **Zone** (eine 3×3-Auswahl wie die Bühne),
+**Mobil ausblenden** und oben **nach oben**, **nach unten**, **duplizieren**,
+**löschen**. **Farbe: Auto** folgt der Folie — weiß oder anthrazit, je nachdem,
+was auf dem Hintergrund besser lesbar ist.
+
+**Mobil** stehen die Zonen in Lesereihenfolge untereinander (oben links, oben
+Mitte, oben rechts, Mitte links …), rechte Zonen rücken nach links, Buttons
+bleiben Buttons. Was auf dem Telefon zu viel ist, blendet **Mobil ausblenden**
+aus; prüfen lässt sich das oben mit **Mobil**.

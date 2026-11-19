@@ -55,6 +55,8 @@ export interface EntryTab {
   label: string;
   content: ReactNode;
   badge?: ReactNode;
+  /** Ändert sich der Wert (ein Baustein auf der Bühne gewählt), springt das Panel auf diesen Reiter. */
+  focusKey?: string | null;
 }
 
 const HEIGHT_OPTIONS: readonly { id: HeroHeight; label: string }[] = [
@@ -295,6 +297,11 @@ export function WidgetSettingsPanel({
 }: WidgetSettingsPanelProps): ReactElement {
   const { issuesVisible } = useConfigShell();
   const [tab, setTab] = useTab(shownIssues, entryTab !== undefined);
+  const focusKey = entryTab?.focusKey ?? null;
+  useEffect(() => {
+    // Gemeint ist nur der Wechsel des Schlüssels; `setTab` ist je Rendern neu.
+    if (focusKey !== null) setTab("entry");
+  }, [focusKey]);
   const known: HeroSettings = { ...legacy, ...settings };
   const set: Set = (key, value) => {
     // Leer heißt „wie bisher“: dann fällt der Schlüssel weg, statt `undefined` zu tragen.
@@ -309,7 +316,7 @@ export function WidgetSettingsPanel({
       selectedTab={tab}
       onTabChange={setTab}
       tabs={[
-        ...(entryTab === undefined ? [] : [{ id: "entry", ...entryTab }]),
+        ...(entryTab === undefined ? [] : [{ id: "entry", label: entryTab.label, content: entryTab.content, badge: entryTab.badge }]),
         { id: "design", label: "Gestaltung", content: <DesignTab known={known} set={set} /> },
         {
           id: "behavior",

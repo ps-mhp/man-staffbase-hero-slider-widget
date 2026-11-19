@@ -211,3 +211,19 @@ denn sie wird bei jedem Seitenaufruf geladen.
 7. **Ein Kanal-Eintrag bringt weniger Folien als eingestellt.** Die Filter sind
    zu eng — meist **Nur Beiträge mit Bild** bei einem Kanal ohne Bilder — oder
    die Bühne ist mit acht Folien schon voll.
+
+## Eine Folie frei gestalten
+
+1. Wählen Sie links die Folie und rechts im Reiter **Folie** bei **Aufbau**
+   **Benutzerdefiniert**. Was die Folie schon hatte — Überschrift, Unterzeile,
+   Buttons — steht danach als Bausteine unten links.
+2. Ziehen Sie einen Baustein aus dem Katalog rechts auf eine Zone der Bühne.
+   Beim Ziehen hebt sich die Zone hervor, über der Sie loslassen. Ohne Ziehen:
+   den Baustein anklicken, er steht dann unten links.
+3. Ein Klick auf einen Baustein der Bühne öffnet seine Einstellungen rechts:
+   Text, Größe, Farbe, die **Zone** und **Mobil ausblenden**. **Zurück zur
+   Folie** führt zum Katalog. Bausteine lassen sich auch auf der Bühne in eine
+   andere Zone ziehen.
+4. Schalten Sie oben auf **Mobil** und prüfen Sie die Reihenfolge; blenden Sie
+   aus, was schmal zu viel ist.
+5. **Übernehmen**, speichern, in der Vorschau prüfen.

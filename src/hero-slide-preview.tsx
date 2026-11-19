@@ -35,6 +35,8 @@ import { entryKindName } from "./editor-entries";
 import { NewsSource } from "./editors/news-source";
 import { useResolvedSlides } from "./editors/use-resolved-slides";
 import { SlideMedia, SlideText, slideClassName, useBackdrop, useMediaQuery } from "./hero-slide-media";
+import { SlideZones } from "./slide-zones";
+import type { StageEditing } from "./editors/zone-stage";
 import { HeroItem, isNewsPostItem, isSlideItem } from "./hero-items";
 import { Slide, hasMedium, isAnimation } from "./slides-model";
 import heroSliderCss from "./styles/hero-slider.scss";
@@ -62,8 +64,14 @@ function forDevice(slide: Slide, mobile: boolean): Slide {
   return mobile && imagePortrait !== undefined ? { ...rest, image: imagePortrait } : rest;
 }
 
-/** Eine Folie im Markup der Bühne. Braucht {@link HeroStageStyle} darüber. */
-function SlideStage({ slide }: { slide: Slide }): ReactElement {
+/**
+ * Eine Folie im Markup der Bühne. Braucht {@link HeroStageStyle} darüber.
+ *
+ * Mit `editing` (benutzerdefinierte Folie im Editor) sind die Zonen
+ * Ablageflächen und die Bausteine wählbar — dann ist die Bühne nicht `inert`,
+ * aber kein Link führt aus dem Studio hinaus.
+ */
+function SlideStage({ slide, editing }: { slide: Slide; editing?: StageEditing }): ReactElement {
   const { view } = useConfigShell();
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const shown = forDevice(slide, view === "mobile");
@@ -71,10 +79,15 @@ function SlideStage({ slide }: { slide: Slide }): ReactElement {
   const [root, setRoot] = React.useState<HTMLDivElement | null>(null);
   const backdrop = useBackdrop(root);
 
+  const editable = editing !== undefined && shown.mode === "custom";
   return (
     // `inert`: Eine Schaltfläche der Vorschau führte sonst aus dem Studio
     // hinaus, und Tab wanderte durch Links, die hier nichts bedeuten.
-    <div inert>
+    <div
+      inert={editable ? undefined : true}
+      onClickCapture={editable ? (event) => (event.target as Element).closest("a") !== null && event.preventDefault() : undefined}
+      className={editable ? "man-se__stage" : undefined}
+    >
       <div className="man-hero man-hero--height-medium" data-testid="hero-slide-preview" ref={setRoot}>
         <div className="man-hero__frame">
           <div className="man-hero__slides">
@@ -82,7 +95,11 @@ function SlideStage({ slide }: { slide: Slide }): ReactElement {
               <div className="man-hero__media">
                 {hasImage && <SlideMedia slide={shown} eager play={!reducedMotion} portrait={false} />}
               </div>
-              <SlideText slide={shown} />
+              {editable && editing !== undefined ? (
+                <SlideZones layout={shown.layout} renderZone={editing.renderZone} renderBlock={editing.renderBlock} />
+              ) : (
+                <SlideText slide={shown} />
+              )}
             </div>
           </div>
           {!hasImage && (
@@ -133,9 +150,11 @@ export interface HeroEntryPreviewProps {
   item: HeroItem | undefined;
   /** Woher News-Einträge ihre Beiträge holen; ohne bleibt es beim Platzhalter. */
   source?: NewsSource;
+  /** Die Bühne als Arbeitsfläche einer benutzerdefinierten Folie (editors/zone-stage.tsx). */
+  editing?: StageEditing;
 }
 
-export function HeroEntryPreview({ item, source }: HeroEntryPreviewProps): ReactElement {
+export function HeroEntryPreview({ item, source, editing }: HeroEntryPreviewProps): ReactElement {
   if (item === undefined) {
     return <p className={`${STAGE_BOX} text-sm text-muted-foreground`}>Noch kein Eintrag gewählt</p>;
   }
@@ -143,7 +162,7 @@ export function HeroEntryPreview({ item, source }: HeroEntryPreviewProps): React
     return (
       <>
         <HeroStageStyle />
-        <SlideStage slide={item} />
+        <SlideStage slide={item} editing={editing} />
       </>
     );
   }

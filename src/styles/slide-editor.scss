@@ -14,6 +14,7 @@
 // sehen nur Redakteur:innen, und sie sollen sich in den umgebenden Dialog
 // einfügen statt daneben MAN-Rot zu behaupten.
 
+@use "sass:color";
 @use "@shared/stylings/editor-chrome" as chrome;
 
 .man-se {
@@ -37,3 +38,79 @@
 
 // Liste, Formular, Vorschau und Felder kommen aus `@man/config-ui` und tragen
 // dessen Tailwind-Klassen; hier steht nur noch die Hülle des Editors.
+
+// --- Die Bühne als Arbeitsfläche einer benutzerdefinierten Folie --------------
+//
+// Zonen und Bausteine bekommen hier nur ihre Bearbeitungsspuren: gestrichelte
+// Zonen mit Namen, ein Rahmen um den gewählten Baustein. Wie sie auf der Seite
+// aussehen, bestimmt allein das Stylesheet der Bühne. Die Spuren liegen auf
+// hellen wie dunklen Gründen, deshalb mit dunklem Schatten unter heller Linie.
+
+.man-se__stage {
+  // Die Bühne lässt Klicks sonst nur Bausteinen durch (`__inner`).
+  .man-hero__zone {
+    pointer-events: auto;
+  }
+}
+
+.man-se__zone {
+  position: relative;
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: inherit;
+  align-items: inherit;
+  gap: inherit;
+  min-height: 56px;
+  padding: 18px 6px 6px;
+  border-radius: 4px;
+  outline: 1px dashed color.change(chrome.$surface, $alpha: 0.55);
+  box-shadow: 0 0 0 1px color.change(chrome.$text-strong, $alpha: 0.18);
+  transition: background-color 120ms linear, outline-color 120ms linear;
+}
+
+.man-se__zone--over {
+  outline: 2px solid chrome.$accent;
+  background-color: color.change(chrome.$accent, $alpha: 0.18);
+}
+
+.man-se__zone-label {
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  font-size: 11px;
+  line-height: 1.2;
+  color: color.change(chrome.$surface, $alpha: 0.8);
+  text-shadow: 0 0 2px color.change(chrome.$text-strong, $alpha: 0.6);
+  pointer-events: none;
+}
+
+.man-se__block {
+  cursor: grab;
+  border-radius: 2px;
+  outline-offset: 4px;
+
+  &:hover {
+    outline: 1px solid color.change(chrome.$surface, $alpha: 0.7);
+  }
+
+  &:focus-visible,
+  &.man-se__block--selected {
+    outline: 2px solid chrome.$accent;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.man-se__block-placeholder {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 1px dashed color.change(chrome.$surface, $alpha: 0.7);
+  border-radius: 4px;
+  font-size: 13px;
+  color: color.change(chrome.$surface, $alpha: 0.85);
+  text-shadow: 0 0 2px color.change(chrome.$text-strong, $alpha: 0.6);
+}

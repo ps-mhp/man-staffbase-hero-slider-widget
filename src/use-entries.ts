@@ -63,6 +63,8 @@ export interface Entries {
    * haben.
    */
   patchItem: (id: string, changes: Partial<HeroItem>) => void;
+  /** Wie `patchItem`, die Änderung aber aus dem jüngsten Stand des Eintrags berechnet. */
+  patchWith: (id: string, changes: (entry: HeroItem) => Partial<HeroItem>) => void;
 }
 
 function resolveIndex(items: readonly HeroItem[], selection: Selection): number {
@@ -77,10 +79,12 @@ function useLatestValue(value: HeroItem[], onChange: (items: HeroItem[]) => void
   useLayoutEffect(() => {
     latest.current = { value, onChange };
   });
-  return useCallback((id: string, changes: Partial<HeroItem>): void => {
+  return useCallback((id: string, changes: Partial<HeroItem> | ((entry: HeroItem) => Partial<HeroItem>)): void => {
     const current = latest.current.value;
     if (!current.some((entry) => entry.id === id)) return;
-    const next = current.map((entry) => (entry.id === id ? ({ ...entry, ...changes } as HeroItem) : entry));
+    const next = current.map((entry) =>
+      entry.id === id ? ({ ...entry, ...(typeof changes === "function" ? changes(entry) : changes) } as HeroItem) : entry,
+    );
     // Gleich vormerken: ein zweites Ablegen vor dem nächsten Rendern baut
     // auf diesem auf, statt es zu überschreiben.
     latest.current = { ...latest.current, value: next };
@@ -121,6 +125,7 @@ export function useEntries(value: HeroItem[], onChange: (items: HeroItem[]) => v
       onChange(value.map((entry, at) => (at === index ? ({ ...entry, ...changes } as HeroItem) : entry)));
     },
     patchItem,
+    patchWith: patchItem,
   };
 }
 

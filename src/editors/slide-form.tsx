@@ -33,6 +33,9 @@ import { SegmentedField } from "@man/config-ui/form/segmented-field";
 import { DEFAULT_ANIMATION } from "../slide-animation";
 import { animationMedium, isAnimation, mediaFromUrl, withMediaKind } from "../slides-model";
 import { AnimationField } from "./animation-field";
+import { CustomSlideForm } from "./custom-slide-form";
+import { layoutFromFixed } from "../layout-ops";
+import { firstHeading } from "../slide-layout";
 import { CtaListForm } from "./cta-list-form";
 import { useFieldMedia } from "./editor-media";
 import { ImageField } from "./image-field";
@@ -47,6 +50,8 @@ export interface SlideFormProps {
   onPick: (target: SlidePickerTarget) => void;
   /** Für die Ziele der Buttons: Seiten und Beiträge aus Staffbase. */
   source: NewsSource;
+  /** Mediathek für das Bild eines Bausteins (benutzerdefinierte Folie). */
+  onPickBlockImage?: (blockId: string) => void;
 }
 
 type Background = "file" | "animation";
@@ -56,7 +61,7 @@ const BACKGROUND_OPTIONS = [
   { id: "animation", label: "Animation" },
 ] as const satisfies readonly { id: Background; label: string }[];
 
-function MediaSection(props: Omit<SlideFormProps, "source">): ReactElement {
+function MediaSection(props: Omit<SlideFormProps, "source" | "onPickBlockImage">): ReactElement {
   const { slide, onPatch } = props;
   const animated = isAnimation(slide.image);
   const choose = (background: Background): void => {
@@ -89,7 +94,7 @@ function MediaSection(props: Omit<SlideFormProps, "source">): ReactElement {
   );
 }
 
-function FileMedia({ slide, onPatch, onPick }: Omit<SlideFormProps, "source">): ReactElement {
+function FileMedia({ slide, onPatch, onPick }: Omit<SlideFormProps, "source" | "onPickBlockImage">): ReactElement {
   const { issuesVisible } = useConfigShell();
   // Das Hauptbild ist nie `undefined` — eine leere Folie trägt `url: ""`.
   // Für die Kachel und das Adressfeld heißt das dasselbe: noch kein Medium.
@@ -167,12 +172,48 @@ function TextSection({ slide, onPatch }: Pick<SlideFormProps, "slide" | "onPatch
   );
 }
 
-export function SlideForm({ slide, onPatch, onPick, source }: SlideFormProps): ReactElement {
+type Mode = "fixed" | "custom";
+
+const MODE_OPTIONS = [
+  { id: "fixed", label: "Fest" },
+  { id: "custom", label: "Benutzerdefiniert" },
+] as const satisfies readonly { id: Mode; label: string }[];
+
+/**
+ * „Fest“: Überschrift, Unterzeile und Buttons an ihrem Platz unten links.
+ * „Benutzerdefiniert“: Bausteine in neun Zonen, auf der Bühne angeordnet. Der
+ * Wechsel nimmt mit, was da ist — Text und Buttons werden Bausteine unten
+ * links, die erste Überschrift zurück die Überschrift.
+ */
+export function SlideForm({ slide, onPatch, onPick, source, onPickBlockImage = () => undefined }: SlideFormProps): ReactElement {
+  const custom = slide.mode === "custom";
+  const switchMode = (mode: Mode): void => {
+    if (mode === (custom ? "custom" : "fixed")) return;
+    if (mode === "custom") {
+      const kept = slide.layout !== undefined && Object.keys(slide.layout).length > 0;
+      onPatch({ mode: "custom", layout: kept ? slide.layout : layoutFromFixed(slide) });
+    } else {
+      onPatch({ mode: undefined, headline: firstHeading(slide.layout) || slide.headline });
+    }
+  };
   return (
     <>
+      <SegmentedField
+        label="Aufbau"
+        hint={custom ? "Bausteine frei in neun Zonen, mobil in Lesereihenfolge." : "Überschrift, Unterzeile und Buttons an festem Platz."}
+        options={MODE_OPTIONS}
+        value={custom ? "custom" : "fixed"}
+        onChange={switchMode}
+      />
       <MediaSection slide={slide} onPatch={onPatch} onPick={onPick} />
-      <TextSection slide={slide} onPatch={onPatch} />
-      <CtaListForm ctas={slide.ctas ?? []} onChange={(ctas) => onPatch({ ctas })} source={source} />
+      {custom ? (
+        <CustomSlideForm slide={slide} onPatch={onPatch} source={source} onPickBlockImage={onPickBlockImage} />
+      ) : (
+        <>
+          <TextSection slide={slide} onPatch={onPatch} />
+          <CtaListForm ctas={slide.ctas ?? []} onChange={(ctas) => onPatch({ ctas })} source={source} />
+        </>
+      )}
     </>
   );
 }

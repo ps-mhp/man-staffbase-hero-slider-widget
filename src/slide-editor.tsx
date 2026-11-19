@@ -40,7 +40,7 @@
  */
 
 import * as React from "react";
-import { ReactElement, useMemo } from "react";
+import { ReactElement, useMemo, useState } from "react";
 import { ConfigWorkspace } from "@man/config-ui/layout/config-workspace";
 import { ItemActions } from "@man/config-ui/sidebar/item-actions";
 import type { ShownIssues } from "@shared/config-modal";
@@ -61,6 +61,9 @@ import { NewsPostForm } from "./editors/news-post-form";
 import { NewsSource, cacheNewsSource, defaultNewsSource } from "./editors/news-source";
 import { SlideForm } from "./editors/slide-form";
 import { SETTINGS_PANEL_TITLE, WIDGET_PANEL_TITLE, WidgetSettingsPanel } from "./editors/widget-settings-panel";
+import { BlockSelection, BlockSelectionProvider, useStageEditing } from "./editors/zone-stage";
+import { updateBlock } from "./layout-ops";
+import type { SlideLayout } from "./slide-layout";
 import { Entries, PickerTarget, patchForPick, pickedImage, useEntries } from "./use-entries";
 import slideEditorCss from "./styles/slide-editor.scss";
 
@@ -103,10 +106,11 @@ interface EntryFormProps {
   entries: Entries;
   source: NewsSource;
   onPick: (target: PickerTarget) => void;
+  onPickBlockImage: (blockId: string) => void;
 }
 
 /** Die Abschnitte des Formulars je Sorte, aus `editors/`. */
-function EntryForm({ item, entries, source, onPick }: EntryFormProps): ReactElement | null {
+function EntryForm({ item, entries, source, onPick, onPickBlockImage }: EntryFormProps): ReactElement | null {
   if (isSlideItem(item)) {
     return (
       <SlideForm
@@ -117,6 +121,7 @@ function EntryForm({ item, entries, source, onPick }: EntryFormProps): ReactElem
         onPatch={entries.patch}
         onPick={onPick}
         source={source}
+        onPickBlockImage={onPickBlockImage}
       />
     );
   }
@@ -149,6 +154,8 @@ interface EntryMainProps {
  */
 function EntryMain({ entries, total, source }: EntryMainProps): ReactElement {
   const { item, index, full } = entries;
+  const layout = item !== undefined && isSlideItem(item) ? item.layout : undefined;
+  const editing = useStageEditing(layout, (next: SlideLayout) => entries.patch({ layout: next }));
   if (item === undefined) {
     return <p className="px-10 py-6 text-sm text-muted-foreground">Wähle links einen Eintrag oder lege einen neuen an.</p>;
   }
@@ -175,7 +182,7 @@ function EntryMain({ entries, total, source }: EntryMainProps): ReactElement {
           />
         </div>
         <div data-testid="entry-stage">
-          <HeroEntryPreview item={item} source={source} />
+          <HeroEntryPreview item={item} source={source} editing={editing} />
         </div>
       </div>
     </div>
@@ -189,10 +196,22 @@ function EntryMain({ entries, total, source }: EntryMainProps): ReactElement {
  */
 function useEditorMedia(client: MediaClient, entries: Entries) {
   const media = useMediaPanel(client);
-  const { item, index, patchItem } = entries;
+  const { item, index, patchItem, patchWith } = entries;
   const accept = acceptFor(item);
   const place = (itemId: string, target: PickerTarget, picked: PickedMedia): void =>
     patchItem(itemId, patchForPick(target, pickedImage(picked)));
+  const openBlockImage = (blockId: string): void => {
+    if (item === undefined) return;
+    const itemId = item.id;
+    media.openMedia({
+      title: "Bild für Baustein",
+      accept: ["image"],
+      onSelect: (picked) =>
+        patchWith(itemId, (entry) => ({
+          layout: updateBlock((entry as { layout?: SlideLayout }).layout, blockId, { image: pickedImage(picked) }),
+        })),
+    });
+  };
   const open = (target: PickerTarget): void => {
     if (item === undefined) return;
     const itemId = item.id;
@@ -208,7 +227,7 @@ function useEditorMedia(client: MediaClient, entries: Entries) {
     () => ({ client, accept, drop: (itemId, target, picked) => patchItem(itemId, patchForPick(target, pickedImage(picked))) }),
     [client, accept, patchItem],
   );
-  return { open, drop, overlay: media.overlay };
+  return { open, openBlockImage, drop, overlay: media.overlay };
 }
 
 export function SlideEditor({ value, onChange, shownIssues = null, mediaClient, newsSource }: SlideEditorProps): ReactElement {
@@ -222,11 +241,18 @@ export function SlideEditor({ value, onChange, shownIssues = null, mediaClient, 
   const labels = useItemLabels(items, source);
   const media = useEditorMedia(client, entries);
   const { item } = entries;
+  // Der gewählte Baustein gehört zu einer Folie; wechselt die Folie, ist keiner gewählt.
+  const [picked, setPicked] = useState<{ itemId: string; blockId: string } | null>(null);
+  const selection: BlockSelection = {
+    selectedId: picked !== null && picked.itemId === item?.id ? picked.blockId : null,
+    select: (blockId) => setPicked(blockId === null || item === undefined ? null : { itemId: item.id, blockId }),
+  };
 
   return (
     <div className="man-se" data-testid="slide-editor">
       <style>{css}</style>
       <EditorMediaContext.Provider value={media.drop}>
+        <BlockSelectionProvider value={selection}>
         <ConfigWorkspace
           className="flex-1"
           sidebar={
@@ -250,7 +276,10 @@ export function SlideEditor({ value, onChange, shownIssues = null, mediaClient, 
                   ? undefined
                   : {
                       label: entryTabLabel(item),
-                      content: <EntryForm item={item} entries={entries} source={source} onPick={media.open} />,
+                      content: (
+                        <EntryForm item={item} entries={entries} source={source} onPick={media.open} onPickBlockImage={media.openBlockImage} />
+                      ),
+                      focusKey: selection.selectedId,
                     }
               }
             />
@@ -260,6 +289,7 @@ export function SlideEditor({ value, onChange, shownIssues = null, mediaClient, 
         >
           <EntryMain entries={entries} total={items.length} source={source} />
         </ConfigWorkspace>
+        </BlockSelectionProvider>
       </EditorMediaContext.Provider>
       {media.overlay}
     </div>
