@@ -25,7 +25,7 @@
  */
 
 import * as React from "react";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { Field } from "@man/config-ui/form/field";
 import type { SegmentedOption } from "@man/config-ui/form/segmented";
 import { SegmentedField } from "@man/config-ui/form/segmented-field";
@@ -46,6 +46,16 @@ import { DEFAULT_AUTOPLAY_DELAY_MS } from "../use-slider";
 
 /** Der Titel des Panels; auch Ziel von „Zurück“ einer Leiste darüber. */
 export const WIDGET_PANEL_TITLE = "Widget";
+
+/** Der Titel, sobald das Panel auch den gewählten Eintrag einstellt. */
+export const SETTINGS_PANEL_TITLE = "Einstellungen";
+
+/** Der erste Reiter: die Felder des gewählten Eintrags (Folie, Beitrag, Kanal). */
+export interface EntryTab {
+  label: string;
+  content: ReactNode;
+  badge?: ReactNode;
+}
 
 const HEIGHT_OPTIONS: readonly { id: HeroHeight; label: string }[] = [
   { id: "small", label: "Klein (320–420 px)" },
@@ -247,15 +257,22 @@ function IssueBadge(): ReactElement {
   );
 }
 
-type TabId = "design" | "behavior";
+type TabId = "entry" | "design" | "behavior";
 
-/** Der offene Reiter; nach gescheitertem Übernehmen der mit dem ersten Fehler. */
-function useTab(shownIssues: ShownIssues | null): [TabId, (tab: string) => void] {
-  const [tab, setTab] = useState<TabId>("design");
+/**
+ * Der offene Reiter: anfangs der Eintrag (falls es einen gibt), nach
+ * gescheitertem Übernehmen der mit dem ersten Fehler.
+ */
+function useTab(shownIssues: ShownIssues | null, hasEntry: boolean): [TabId, (tab: string) => void] {
+  const [tab, setTab] = useState<TabId>(hasEntry ? "entry" : "design");
   useEffect(() => {
-    if (shownIssues?.issues[0]?.id === AUTOPLAY_DELAY_ISSUE) setTab("behavior");
-  }, [shownIssues]);
-  return [tab, (next) => setTab(next === "behavior" ? "behavior" : "design")];
+    const first = shownIssues?.issues[0]?.id;
+    if (first === AUTOPLAY_DELAY_ISSUE) setTab("behavior");
+    else if (first !== undefined && hasEntry) setTab("entry");
+  }, [shownIssues, hasEntry]);
+  // Verschwindet der Eintrag (letzter gelöscht), steht sonst ein leerer Reiter offen.
+  const current = tab === "entry" && !hasEntry ? "design" : tab;
+  return [current, (next) => setTab(next === "behavior" || next === "entry" ? next : "design")];
 }
 
 export interface WidgetSettingsPanelProps {
@@ -265,6 +282,8 @@ export interface WidgetSettingsPanelProps {
   onChange: (settings: HeroSettings) => void;
   /** Das letzte gescheiterte Übernehmen; siehe `@shared/config-modal`. */
   shownIssues?: ShownIssues | null;
+  /** Felder des gewählten Eintrags als erster Reiter; ohne Eintrag nur das Widget. */
+  entryTab?: EntryTab;
 }
 
 export function WidgetSettingsPanel({
@@ -272,9 +291,10 @@ export function WidgetSettingsPanel({
   legacy,
   onChange,
   shownIssues = null,
+  entryTab,
 }: WidgetSettingsPanelProps): ReactElement {
   const { issuesVisible } = useConfigShell();
-  const [tab, setTab] = useTab(shownIssues);
+  const [tab, setTab] = useTab(shownIssues, entryTab !== undefined);
   const known: HeroSettings = { ...legacy, ...settings };
   const set: Set = (key, value) => {
     // Leer heißt „wie bisher“: dann fällt der Schlüssel weg, statt `undefined` zu tragen.
@@ -285,10 +305,11 @@ export function WidgetSettingsPanel({
 
   return (
     <InspectorPanel
-      title={WIDGET_PANEL_TITLE}
+      title={entryTab === undefined ? WIDGET_PANEL_TITLE : SETTINGS_PANEL_TITLE}
       selectedTab={tab}
       onTabChange={setTab}
       tabs={[
+        ...(entryTab === undefined ? [] : [{ id: "entry", ...entryTab }]),
         { id: "design", label: "Gestaltung", content: <DesignTab known={known} set={set} /> },
         {
           id: "behavior",

@@ -1,8 +1,10 @@
 # Einstellungen
 
 Alles wird im Editor gepflegt, der sich beim Öffnen der Einstellungen von
-selbst zeigt: die Einträge links und in der Mitte, die Einstellungen der Bühne
-rechts im Panel **Widget**. Im Dialog von Staffbase bleibt nur das Textfeld
+selbst zeigt: die Einträge links, in der Mitte groß die Bühne des gewählten
+Eintrags, alle Einstellungen rechts im Panel **Einstellungen** — Reiter
+**Folie** (bzw. **Beitrag**, **Kanal**) für den Eintrag, **Gestaltung** und
+**Verhalten** für die ganze Bühne. Ohne Eintrag heißt das Panel **Widget**. Im Dialog von Staffbase bleibt nur das Textfeld
 „Einträge“ hinter dem Editor; es ist die Rohfassung und muss nicht angefasst
 werden.
 
@@ -10,7 +12,7 @@ werden.
 | --- | --- |
 | Einträge | Der Inhalt der Bühne: eigene Folien, einzelne News-Beiträge und ganze News-Kanäle. |
 
-### Panel „Widget“, Reiter „Gestaltung“
+### Panel „Einstellungen“, Reiter „Gestaltung“
 
 | Einstellung | Beschreibung |
 | --- | --- |
@@ -19,7 +21,7 @@ werden.
 | Lage | `Nach den Brotkrumen` ist voreingestellt: die Bühne beginnt unter der Brotkrumen-Zeile. `Vor den Brotkrumen` setzt sie bündig unter das Menü und rückt die Brotkrumen darunter. Greift nur, wenn die Bühne oben auf der Seite steht und die Seite überhaupt Brotkrumen hat. |
 | Abstand unten | `Standard` ist voreingestellt: unter der Bühne bleibt der Abstand, den die Seite zwischen ihre Blöcke setzt. `Keiner` lässt den folgenden Block direkt anschliessen — bei „Vor den Brotkrumen“ direkt unter den Brotkrumen. |
 
-### Panel „Widget“, Reiter „Verhalten“
+### Panel „Einstellungen“, Reiter „Verhalten“
 
 | Einstellung | Beschreibung |
 | --- | --- |

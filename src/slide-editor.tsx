@@ -50,7 +50,7 @@ import { MediaAccept, PickedMedia } from "@shared/media/media-picker";
 import { useMediaPanel } from "@shared/media/use-media-panel";
 
 import { HeroEntryPreview } from "./hero-slide-preview";
-import { HeroItem, isNewsChannelItem, isNewsPostItem, isSlideItem } from "./hero-items";
+import { HeroItem, heroItemType, isNewsChannelItem, isNewsPostItem, isSlideItem } from "./hero-items";
 import { MAX_ITEMS, entryKindName } from "./editor-entries";
 import type { HeroEditorValue } from "./editor-value";
 import { EditorMedia, EditorMediaContext } from "./editors/editor-media";
@@ -60,7 +60,7 @@ import { NewsChannelForm } from "./editors/news-channel-form";
 import { NewsPostForm } from "./editors/news-post-form";
 import { NewsSource, cacheNewsSource, defaultNewsSource } from "./editors/news-source";
 import { SlideForm } from "./editors/slide-form";
-import { WIDGET_PANEL_TITLE, WidgetSettingsPanel } from "./editors/widget-settings-panel";
+import { SETTINGS_PANEL_TITLE, WIDGET_PANEL_TITLE, WidgetSettingsPanel } from "./editors/widget-settings-panel";
 import { Entries, PickerTarget, patchForPick, pickedImage, useEntries } from "./use-entries";
 import slideEditorCss from "./styles/slide-editor.scss";
 
@@ -129,25 +129,32 @@ function EntryForm({ item, entries, source, onPick }: EntryFormProps): ReactElem
   return null;
 }
 
+/** Kurz genug für einen Reiter im Panel rechts. */
+const ENTRY_TAB_LABELS = { slide: "Folie", "news-post": "Beitrag", "news-channel": "Kanal" } as const;
+
+export function entryTabLabel(item: HeroItem): string {
+  return ENTRY_TAB_LABELS[heroItemType(item)];
+}
+
 interface EntryMainProps {
   entries: Entries;
   total: number;
   source: NewsSource;
-  onPick: (target: PickerTarget) => void;
 }
 
 /**
- * Die Hauptfläche wie im Screen: Kopf mit „Eintrag 1 von 4“, der Sorte und
- * den Aktionen, darunter die Abschnitte des Formulars auf Lesebreite (720 px).
+ * Die Hauptfläche: Kopf mit „Eintrag 1 von 4“, der Sorte und den Aktionen,
+ * darunter groß die Bühne der gewählten Folie, live — das Widget ist durch
+ * und durch visuell, eingestellt wird daneben im Panel (Reiter „Folie“).
  */
-function EntryMain({ entries, total, source, onPick }: EntryMainProps): ReactElement {
+function EntryMain({ entries, total, source }: EntryMainProps): ReactElement {
   const { item, index, full } = entries;
   if (item === undefined) {
     return <p className="px-10 py-6 text-sm text-muted-foreground">Wähle links einen Eintrag oder lege einen neuen an.</p>;
   }
   return (
     <div className="px-10 pt-6 pb-12 max-lg:px-6">
-      <div className="flex max-w-[720px] flex-col gap-8">
+      <div className="flex flex-col gap-6">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <h2 className="text-xl font-semibold text-foreground">{`Eintrag ${index + 1} von ${total}`}</h2>
           <span className="text-[13px] text-muted-foreground" data-testid="entry-kind">
@@ -167,7 +174,9 @@ function EntryMain({ entries, total, source, onPick }: EntryMainProps): ReactEle
             onDelete={entries.remove}
           />
         </div>
-        <EntryForm item={item} entries={entries} source={source} onPick={onPick} />
+        <div data-testid="entry-stage">
+          <HeroEntryPreview item={item} source={source} />
+        </div>
       </div>
     </div>
   );
@@ -236,12 +245,20 @@ export function SlideEditor({ value, onChange, shownIssues = null, mediaClient, 
               legacy={value.legacy}
               onChange={(settings) => onChange({ ...value, settings })}
               shownIssues={shownIssues}
+              entryTab={
+                item === undefined
+                  ? undefined
+                  : {
+                      label: entryTabLabel(item),
+                      content: <EntryForm item={item} entries={entries} source={source} onPick={media.open} />,
+                    }
+              }
             />
           }
-          inspectorTitle={WIDGET_PANEL_TITLE}
+          inspectorTitle={item === undefined ? WIDGET_PANEL_TITLE : SETTINGS_PANEL_TITLE}
           preview={<HeroEntryPreview item={item} source={source} />}
         >
-          <EntryMain entries={entries} total={items.length} source={source} onPick={media.open} />
+          <EntryMain entries={entries} total={items.length} source={source} />
         </ConfigWorkspace>
       </EditorMediaContext.Provider>
       {media.overlay}

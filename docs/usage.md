@@ -15,19 +15,22 @@ Fenster.
   ziehen Sie einen Eintrag an eine neue Stelle.
   Unter jedem Titel stehen Sorte und Erkennungszeichen, etwa **Folie · 2
   Buttons**, **News-Beitrag · Kanal Technik** oder **News-Kanal · 3 neueste**.
-- **Mitte:** über dem Formular **Eintrag 2 von 3** mit der Sorte und vier
-  Symbole: **nach oben**, **nach unten**, **duplizieren**, **löschen**. Ihr
-  Name erscheint, wenn Sie mit der Maus darauf zeigen. Darunter die Felder in
-  Abschnitten, bei einer Folie **Medium**, **Text** und **Buttons**.
-- **Rechts:** das Panel **Widget** mit den Einstellungen der ganzen Bühne.
-  Unter **Gestaltung** stehen **Höhe**, **Volle Breite**, **Lage** und
-  **Abstand unten**, unter **Verhalten** **Sekunden pro Folie** und
-  **Bedienelemente zeigen**. **Wie bisher** heißt: hier noch nicht
-  festgelegt, es gilt die bisherige Einstellung des Blocks.
+- **Mitte:** oben **Eintrag 2 von 3** mit der Sorte und vier Symbole:
+  **nach oben**, **nach unten**, **duplizieren**, **löschen**. Ihr Name
+  erscheint, wenn Sie mit der Maus darauf zeigen. Darunter groß die Bühne des
+  gewählten Eintrags, live — jede Änderung rechts ist sofort zu sehen,
+  Animationen laufen.
+- **Rechts:** das Panel **Einstellungen**. Der erste Reiter stellt den
+  gewählten Eintrag ein: **Folie** mit **Medium**, **Text** und **Buttons**,
+  **Beitrag** bzw. **Kanal** bei News-Einträgen. Unter **Gestaltung** stehen
+  **Höhe**, **Volle Breite**, **Lage** und **Abstand unten** der ganzen
+  Bühne, unter **Verhalten** **Sekunden pro Folie** und **Bedienelemente
+  zeigen**. **Wie bisher** heißt: hier noch nicht festgelegt, es gilt die
+  bisherige Einstellung des Blocks.
 - **Desktop**, **Tablet** und **Mobil** zeigen den gewählten Eintrag in der
   jeweiligen Breite, News-Einträge als die Folien, die aus den Beiträgen
-  werden; das Panel **Widget** bleibt daneben. **Editor** führt zurück zum
-  Formular.
+  werden; das Panel bleibt daneben. **Editor** führt zurück zur großen
+  Bühne.
 
 ## Bühne mit einem Bild einrichten
 
@@ -65,7 +68,7 @@ Fenster.
     und einmal in einem schmalen Fenster.
 
 **Mediathek als Leiste.** **Bild oder Video wählen** und **Ersetzen** öffnen
-die Mediathek rechts neben dem Formular; ihr Titel nennt das Ziel, etwa
+die Mediathek als Leiste neben dem Panel; ihr Titel nennt das Ziel, etwa
 „Bild für Folie 2“. Ein Klick auf ein Bild – oder Enter – übernimmt es
 dorthin. Sie können Bilder aus der Leiste auch direkt auf jedes Bildfeld
 ziehen, etwa auf die Zeile **Hochformat**: passende Felder werden

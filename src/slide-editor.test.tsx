@@ -391,18 +391,31 @@ describe("SlideEditor", () => {
       expect(screen.getByTestId("hero-slide-preview")).toHaveTextContent("Überschrift a");
       await userEvent.click(screen.getByText("Überschrift b"));
       expect(screen.getByTestId("hero-slide-preview")).toHaveTextContent("Überschrift b");
-      // Die Liste bleibt stehen, das Formular weicht der Vorschau, und das
-      // Panel „Widget“ bleibt daneben – dort stellt man ein, was man sieht.
-      expect(screen.queryByTestId("slide-headline")).toBeNull();
-      expect(screen.getByRole("complementary", { name: "Widget" })).toBeInTheDocument();
+      // Die Liste bleibt stehen, und das Panel daneben stellt weiter die
+      // gewählte Folie ein — dort stellt man ein, was man sieht.
+      const panel = screen.getByRole("complementary", { name: "Einstellungen" });
+      expect(within(panel).getByTestId("slide-headline")).toHaveValue("Überschrift b");
     });
 
-    it("zeigt im Editor rechts das Panel „Widget“, keine Vorschau", () => {
+    it("zeigt im Editor groß die Bühne und rechts Folie, Gestaltung und Verhalten", () => {
       setup([slide("a")]);
 
-      expect(screen.queryByTestId("hero-slide-preview")).toBeNull();
+      expect(within(screen.getByTestId("entry-stage")).getByTestId("hero-slide-preview")).toHaveTextContent("Überschrift a");
+      const panel = screen.getByRole("complementary", { name: "Einstellungen" });
+      expect(within(panel).getAllByRole("tab").map((tab) => tab.textContent)).toEqual(["Folie", "Gestaltung", "Verhalten"]);
+      expect(within(panel).getByRole("tab", { name: "Folie" })).toHaveAttribute("aria-selected", "true");
+      expect(within(panel).getByTestId("slide-headline")).toBeInTheDocument();
+    });
+
+    it("nennt den Reiter nach der Sorte des Eintrags und zeigt ohne Eintrag nur das Widget", async () => {
+      const h = setupLive([postItem("p")]);
+      expect(screen.getByRole("tab", { name: "Beitrag" })).toBeInTheDocument();
+
+      await userEvent.click(action("Eintrag löschen"));
+      expect(h.latest()).toEqual([]);
       const panel = screen.getByRole("complementary", { name: "Widget" });
       expect(within(panel).getAllByRole("tab").map((tab) => tab.textContent)).toEqual(["Gestaltung", "Verhalten"]);
+      expect(within(panel).getByRole("tab", { name: "Gestaltung" })).toHaveAttribute("aria-selected", "true");
     });
 
     it("zeigt in der Geräteansicht einen News-Beitrag als echte Folie", async () => {

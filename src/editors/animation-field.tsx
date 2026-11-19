@@ -13,8 +13,9 @@
 
 /**
  * Die Einstellungen einer Hintergrund-Animation: Muster als Kacheln mit
- * Standbild, darunter Grundton, Tempo und rote Akzente. Bewegt sieht man die
- * Animation in der Vorschau der Folie daneben.
+ * Standbild, darunter Grundton, Tempo, Deckkraft und rote Akzente — alles
+ * untereinander, für das schmale Panel rechts. Bewegt sieht man die
+ * Animation groß auf der Bühne in der Mitte.
  */
 
 import * as React from "react";
@@ -94,7 +95,7 @@ export function AnimationField({ animation, onChange }: AnimationFieldProps): Re
   return (
     <div className="flex flex-col gap-4" data-testid="animation-field">
       <Field label="Muster" hint="In MAN-Farben, die Textseite links bleibt ruhig.">
-        <div role="group" aria-label="Muster" className="grid grid-cols-3 gap-2">
+        <div role="group" aria-label="Muster" className="grid grid-cols-2 gap-2">
           {ANIMATION_PATTERNS.map((pattern) => (
             <PatternCard
               key={pattern}
@@ -106,7 +107,7 @@ export function AnimationField({ animation, onChange }: AnimationFieldProps): Re
           ))}
         </div>
       </Field>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="flex flex-col gap-4">
         <SegmentedField
           label="Grundton"
           hint="Auf hellem Grund steht die Schrift anthrazit."

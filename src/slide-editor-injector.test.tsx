@@ -119,7 +119,9 @@ describe("startSlideEditorInjector", () => {
   it("zeigt rechts die Einstellungen und blendet die alten Felder im Dialog aus", async () => {
     const { container, stop } = await open([slide("a")], { height: "large", controls: false });
 
-    expect(queryInModal('[aria-label="Widget"]')).not.toBeNull();
+    expect(queryInModal('[aria-label="Einstellungen"]')).not.toBeNull();
+    // Offen ist zuerst der Reiter der Folie; die Höhe steht unter „Gestaltung“.
+    await clickElement(queryInModal('[role="tab"][data-key="design"]'));
     expect(queryInModal('[data-testid="hero-setting-height"]')).toHaveTextContent("Groß");
     /** Ob eine Zeile um das Feld verborgen ist. */
     const hidden = (key: string): boolean => {
@@ -137,6 +139,7 @@ describe("startSlideEditorInjector", () => {
   it("schreibt eine bediente Einstellung ins Feld slides, die alten Felder bleiben", async () => {
     const { container, stop } = await open([slide("a")], { height: "large", controls: true });
 
+    await clickElement(queryInModal('[role="tab"][data-key="design"]'));
     await clickElement(queryInModal('[role="switch"][data-testid="hero-setting-full-bleed"]'));
     expect(queryInModal('[role="status"]')).toHaveTextContent("Einstellungen geändert");
     await clickElement(queryInModal('[data-testid="config-shell-apply"]'));
