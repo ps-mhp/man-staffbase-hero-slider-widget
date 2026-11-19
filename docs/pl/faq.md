@@ -7,7 +7,7 @@ pusta, ciemna powierzchnia nie dałaby się odróżnić od błędu na stronie.
 Otwórz edytor i w sekcji **Obraz lub wideo** wybierz obraz
 lub wprowadź adres.
 
-**Pytanie:** Wpisałem adres filmu, ale slajd wyświetla tylko
+**Pytanie:** Wpisałem adres wideo, ale slajd wyświetla tylko
 ciemny obszar.
 
 Odpowiedź: Najczęściej film jest niedostępny bez logowania lub **Typ** jest ustawiony
@@ -71,8 +71,8 @@ pozwala na dodanie obok niego tylko trzech kolejnych slajdów.
 **Pytanie:** Czy muszę aktualizować scenę, gdy w sekcji wiadomości pojawi się nowy wpis?
 Odpowiedź:
 
-Odpowiedź: W przypadku wpisu **kanału wiadomości** — nie — zawsze wyświetla on aktualne
-wpisy z kanału zgodnie z ustawionymi filtrami. Natomiast wpis **wpisu z wiadomości**
+Odpowiedź: W przypadku wpisu z **kanału wiadomości** — nie — zawsze wyświetla on aktualne
+wpisy z kanału zgodnie z ustawionymi filtrami. Natomiast wpis **„Wpis z wiadomości”**
 pozostaje przy wpisie, który wybrałeś.
 
 **Pytanie:** Slajd z aktualności nagle zniknął.
@@ -165,5 +165,5 @@ nie zmienisz.
 
 Odpowiedź: Ustawienie, które blok miał już wcześniej. Edytor nie mógł
 prawidłowo odczytać danych ze starego pola i dlatego nie wyświetla domyślnej wartości, która
-może w ogóle nie mieć zastosowania. Gdy tylko wybierzesz tam coś i zatwierdzisz, obowiązuje
+być może w ogóle nie ma zastosowania. Gdy tylko wybierzesz tam coś i zatwierdzisz, obowiązuje
 Twój wybór.

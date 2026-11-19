@@ -11,8 +11,8 @@ of voer een adres in.
 een donker vlak.
 
 Antwoord: Meestal is de video zonder aanmelding niet beschikbaar, of staat **Type** ingesteld
-op **Afbeelding** omdat het adres geen extensie heeft. Open het adres in
-een privévenster van je browser: als het daar niet werkt, zien de
+op **Afbeelding**, omdat het adres geen extensie heeft. Open het adres in
+een privé-browservenster: als het daar niet werkt, zien de
 lezers het ook niet. Een melding direct onder het veld geeft aan dat het adres
 niet is overgenomen — het moet beginnen met `https://`.
 
@@ -47,7 +47,7 @@ daarin zorgt ervoor dat alle dia’s verdwijnen.
 
 Antwoord: Drie mogelijke oorzaken: er is slechts één dia; **seconden per dia**
 (in de editor rechts onder **Gedrag**) staat op `0`; of in het besturingssysteem is „Beweging verminderen“ ingeschakeld.
-In het laatste geval is dit de bedoeling — je kunt nog steeds bladeren met pijltjes
+In het laatste geval is dit de bedoeling — je kunt nog steeds door de dia’s bladeren met pijltjes
 en streepjes.
 
 **Vraag:** Op de telefoon zie ik geen pijltjes.
@@ -71,9 +71,9 @@ laat naast zichzelf slechts drie extra dia’s toe.
 **Vraag:** Moet ik het podium bijwerken als er een nieuw bericht
 in het nieuws verschijnt?
 
-Antwoord: Bij een **nieuws-kanaal**-item niet — dit toont altijd de actuele
+Antwoord: Bij een **nieuws-kanaal**-vermelding niet — deze toont altijd de actuele
 berichten van het kanaal volgens de ingestelde filters. Een **nieuwsbericht**-
-item blijft daarentegen bij het bericht dat u hebt gekozen.
+vermelding blijft daarentegen bij het bericht dat u hebt gekozen.
 
 **Vraag:** Een dia uit het nieuws is plotseling verdwenen.
 
@@ -98,7 +98,7 @@ in het adres van het kanaal in het CMS.
 vreemd bijgesneden?
 
 Antwoord: Afbeeldingen bij berichten zijn bijgesneden voor het feed-formaat, niet voor een
-podium ter hoogte van het scherm. Voeg in het bericht onder **Podiumafbeelding
+podium dat de volledige schermhoogte beslaat. Voeg in het bericht onder **Podiumafbeelding
 overschrijven** een eigen afbeelding toe, in liggend formaat en minimaal 1920 px breed.
 
 **Vraag:** Wat gebeurt er met het podium bij de automatische vertaling van de
@@ -125,8 +125,8 @@ Antwoord: De instelling werkt alleen als aan drie voorwaarden is voldaan: de pag
 er staat geen andere inhoud boven. Als aan één van deze voorwaarden niet is voldaan, blijft de
 podium onder de broodkruimels — een broodkruimelbalk midden op de pagina zou
 erger zijn dan helemaal geen verandering. In de editor staat in dit geval een opmerking
-boven het podium. Op de gepubliceerde pagina verschijnt deze niet; daar kan
-de instelling niet worden gewijzigd.
+boven het podium. Op de gepubliceerde pagina verschijnt deze niet; daar
+kan de instelling niet worden gewijzigd.
 
 **Vraag:** Vroeger zat er een witte strook boven het podium. Waar is die gebleven?
 

@@ -1,7 +1,7 @@
 # Hero-Slider
 
 O Hero-Slider é o **palco** na parte superior de uma página: uma imagem grande que ocupa toda a
-largura da janela, com um título por cima, opcionalmente uma linha de subtítulo e
+largura da janela, com um título por cima, opcionalmente uma linha secundária e
 um botão. O modelo a seguir é o palco em man.eu.
 
 Quem criar vários slides terá um mecanismo de alternância: os slides
@@ -54,6 +54,5 @@ notícias de um canal.
 
 O editor mostra o palco dentro da coluna de conteúdo, ou seja, **mais estreito do que na
 página publicada**. A extensão real da imagem e a localização do texto
-só podem ser avaliadas na pré-visualização ou na página publicada
-. Verifique sempre, pelo menos uma vez, com a largura da janela reduzida
-— é aí que se aplica o recorte em formato vertical.
+só podem ser avaliadas na pré-visualização ou na página publicada. Verifique sempre, pelo menos uma vez, com a largura da janela reduzida
+— é aí que se aplica o recorte na orientação vertical.

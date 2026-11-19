@@ -11,67 +11,70 @@ window.
   **Redo**, and **Help**; on the far right: **Cancel** and
   **Apply**.
 - **List on the left:** all entries in the order of the stage, with
-  **+ New** and the number of entries (“3 of 8”). Drag an entry to a new location
-  by holding the handle on the left side of a row.
+  **+ New** and the number of entries (“3 of 8”). Drag an entry to a new location by holding the handle
+  on the left side of a row.
   Below each title are the category and identifier, such as **Slide · 2
   Buttons**, **News Article · Technology Channel**, or **News Channel · 3 Latest**.
-- **Center:** Above the form, **Entry 2 of 3** with the type and four
-  icons: **Up**, **down**, **duplicate**, **delete**. Their
-  names appear when you hover over them with the mouse. Below that are the fields in
-  sections; for a slide, these are **Medium**, **Text**, and **Buttons**.
-- **Right:** the **Widget** panel with settings for the entire stage.
-  Under **Design** are **Height**, **Full Width**, **Position**, and
-  **Bottom Spacing**; under **Behavior**, **Seconds per Slide** and
-  **Show Controls**. **As Before** means: not yet
-  specified here; the block’s previous setting applies.
+- **Center:** at the top, **Entry 2 of 3** with the category and four icons:
+  **Up**, **down**, **duplicate**, **delete**. Your name
+  appears when you hover over it with the mouse. Below that, in large view, is the stage for the
+  selected entry, live—any changes on the right are immediately visible,
+  and animations play.
+- **Right:** the **Settings** panel. The first tab configures the
+  selected entry: **Slide** with **Medium**, **Text**, and **Buttons**,
+  **Post** or **Channel** for news entries. Under **Design**, you’ll find
+  **Height**, **Full Width**, **Position**, and **Bottom Margin** for the entire
+  stage; under **Behavior**, **Seconds per Slide** and **Show Controls
+  **. **As before** means: not yet specified here; the
+  previous setting for the block applies.
 - **Desktop**, **Tablet**, and **Mobile** display the selected entry in the
-  respective width; news entries appear as the slides created from the posts;
-  the **Widget** panel remains next to them. **Editor** takes you back to the
-  form.
+  respective width; news entries appear as the slides generated from the posts
+ ; the panel remains next to them. **Editor** returns you to the large
+  stage.
 
-## Setting Up a Stage with an Image
+## Setting Up the Stage with an Image
 
 1. First, upload the image to the Staffbase media library. Landscape orientation, at least
-   1920 px wide; the stage will crop it to a 21:9 or
+   1920 px wide; depending on the window width, the stage will crop it to a 21:9 or
    4:3—so the image should not extend all the way to the edges.
 2. Place the **Hero Slider** widget at the top of the page, in a row
-   with no other widgets next to it. If it’s placed in a column next to other
-   content, it won’t display properly across the full width.
+   with no other widgets next to it. If it’s in a column next to other
+   content, it cannot run effectively across the full width.
 3. Open the widget’s settings. The editor will open
    automatically.
 4. Click **+ New** above the list and select **Slide**.
 5. Under **Medium**, click the dotted area labeled **Select Image or Video
   ** and select the image from the media library—or use
-   **Insert URL** to enter the URL of an image or video. Without an image,
+   **Paste URL** to enter the URL of an image or video. Without an image,
    the slide will not be displayed.
 6. Under **Image Description**, enter a description of what is shown. Leave the
    field blank only if the image is purely decorative.
 7. Enter the **Headline**. Keep it short: up to about
-   24 characters, and it will remain on one line.
-8. Optional: **Subheading** and up to three **Buttons** (**Add
-   Button**). The buttons appear as a list; clicking on a line
-   expands its fields. For each button, select the **Destination**—**Address**,
-   **Page**, or **News Article** from Staffbase—the **Style**, and, if
-   if needed, an **icon**. A button only appears if the label **and**
-   destination are filled in. On a phone, the stage does not display the subheading or the first
-   button: there, it shows the headline, and the entire slide leads
-   to the destination of the first button; additional buttons remain visible. Therefore, the text in the
-   subheading should not be anything that absolutely needs to be read
+   24 characters will keep it on one line.
+8. Optional: **Subtitle** and up to three **buttons** (**Add
+   Button**). The buttons appear as a list; clicking on a row
+   expands its fields. For each button, select the **Destination**—**address**,
+   **page**, or **news article** from Staffbase —, the **style**, and, if
+   needed, an **icon**. A button only appears if both the label **and**
+   the destination are filled in. On a phone, the stage does not display the subtitle or the first
+   button: instead, it shows the headline, and the entire slide leads
+   to the destination of the first button; additional buttons remain visible. Therefore, the
+   text in the subtitle should not contain anything that absolutely must be read
   .
 9. On the right, under **Behavior**, set **Seconds per Slide** to `0` —
    for a single slide, there’s nothing to change.
 10. Click **Apply** in the upper-right corner.
-11. Save the page and preview it, once in full-width
-    mode and once in a narrow window.
+11. Save the page and preview it, once in full width
+    and once in a narrow window.
 
-**Media Library as a bar.** Selecting **Image or Video** and clicking **Replace**
-opens the media library to the right of the form; its title indicates the destination, such as
-“Image for Slide 2.” Clicking on an image—or pressing Enter—places it
+**Media Library as a Bar.** Selecting **Image or Video** and clicking **Replace**
+opens the Media Library as a bar next to the panel; its title indicates the destination, such as
+“Image for Slide 2.” Clicking an image—or pressing Enter—places it
 there. You can also drag images from the bar directly onto any image field,
-such as the **Portrait** row: compatible fields are
-outlined as you drag, and “Drop here” appears above the target. Videos can only be placed
+such as the **Portrait** row: matching fields are
+highlighted as you drag, and “Drop here” appears above the destination. Videos can only be placed
 on slides, not in the image fields of a news post. Pressing Escape or the arrow
-at the top of the toolbar closes it without leaving the editor.
+at the top of the bar closes it without leaving the editor.
 
 ## Creating Multiple Slides
 
@@ -84,13 +87,13 @@ at the top of the toolbar closes it without leaving the editor.
    form. The first slide is the one that appears when the page loads.
 4. Under **Behavior** on the right, check that **Seconds per Slide** is empty
    or shows `5` (default).
-5. **Apply**, save, and check the preview.
+5. Click **Apply**, save, and check the preview.
 
 ## Bringing a Single News Post to the Stage
 
-1. Open the settings to access the editor.
+1. Open the settings to launch the editor.
 2. Click **+ New** above the list and select **News Post**.
-   An entry appears on the left with **News Article** added under the title.
+   An entry with **News Article** added to the title will appear on the left.
 3. Under **Channel**, select the news channel. Only then can you
    select the article.
 4. Under **Article**, select the desired article. You can choose from
@@ -104,14 +107,14 @@ at the top of the toolbar closes it without leaving the editor.
    cropped for the feed and doesn’t always display a large background image.
 8. **Apply**, save, and check the preview.
 
-## Show All Posts from a Channel
+## Show All Posts in a Channel
 
 1. Open the settings to access the editor.
 2. Click **+ New** above the list and select **News Channel**.
    An entry with **News Channel** added to the title will appear on the left.
 3. Under **Channel**, select the News Channel.
 4. Set the **Number of Posts** (default `3`, maximum of eight).
-5. Select the **Order**: `Newest First` or `Oldest First`.
+5. Select the **Order**: `Newest first` or `Oldest first`.
 6. Under **Selection**, enable the following as needed:
    - **Featured posts only** — limited to what is pinned in the News
      feed.
@@ -133,14 +136,14 @@ is omitted.
 1. Select the slide in the editor.
 2. Under **Image or Video**, click **Select Image or Video** and
    select the video from the media library. Videos there are labeled with
-   their format (such as `MP4`). The version converted by Staffbase is used—
-   it plays in any browser and is usually significantly smaller than the
+   their format (such as `MP4`). The version converted by Staffbase is used
+   version—it plays in any browser and is usually significantly smaller than the
    original.
-3. If the video is located elsewhere: Instead, use **Insert URL**
-   to enter its address. It must begin with `https://`,
-   and all readers must be able to access the video without logging in.
-   If it ends in `.mp4`, `.webm`, or `.mov`, **Type** automatically changes
-   to **Video**; otherwise, change it manually.
+3. If the video is located elsewhere: Instead, use **Insert URL** to
+   enter its address. It must begin with `https://`
+  , and all readers must be able to access the video without logging in
+  . If it ends in `.mp4`, `.webm`, or `.mov`, **Type** automatically changes
+  to **Video**; otherwise, change it manually.
 4. Under **Video Description**, enter a description of what’s shown, or leave
    the field blank if the video is purely decorative.
 5. **Apply**, save, and check the preview.
@@ -169,18 +172,18 @@ since it loads every time the page is viewed.
 2. Select the entry you want to edit on the left. The label below the title
    indicates the type: **Slide**, **News Article**, or
    **News Channel**.
-3. Edit the fields on the right. The **Duplicate** icon creates a
-   copy of the selected entry directly below it; **Delete** removes
+3. Edit the fields on the right. Clicking the **Duplicate** icon creates a
+   copy of the selected entry directly below it; clicking **Delete** removes
    it. Moving, duplicating, and deleting apply to all three types
-   equally. When there are eight entries, **+ New** and **Duplicate** are
+   equally. When there are eight entries, **+ New** and **Duplicate**
    are disabled.
-4. **Undo** and **Redo** in the header bar undo individual
-   steps or restore them.
-5. **Apply** saves the changes to the widget ��� Only then
-   is the page saved. If an image is missing from a slide, the editor
-   does nothing: the status indicates the slide, and the list highlights it.
-6. **Cancel** or **Close** will prompt you as long as nothing has been
-   applied: **Discard**, **Continue Editing**, or **Apply**.
+4. **Undo** and **Redo** In the header bar, you can undo or redo individual
+   steps.
+5. **Apply** saves the changes to the widget—only then does
+   saving the page take effect. If a slide is missing an image, the editor
+   does not apply any changes: the status indicates the slide, and the list highlights it.
+6. **Cancel** or **Close** prompt you to choose an action as long as nothing has
+   been applied: **Discard**, **Continue Editing**, or **Apply**.
 
 ## If something isn’t working
 
@@ -208,3 +211,21 @@ since it loads every time the page is viewed.
 7. **A channel entry displays fewer slides than configured.** The filters are
    too restrictive—usually **Only posts with images** for a channel without images—or
    the stage is already full with eight slides.
+
+## Customizing a Slide
+
+1. Select the slide on the left and, on the right in the **Slide** tab under **Layout**,
+   choose **Custom**. Whatever the slide already contained—heading, subheading,
+   buttons—will then appear as building blocks in the lower-left corner.
+2. Drag a building block from the catalog on the right onto a zone on the stage.
+   As you drag, the zone where you release the block is highlighted. Without dragging:
+   click the building block; it will then appear in the lower-left corner.
+3. Clicking a building block on the stage opens its settings on the right:
+   Text, Size, Color, the **Zone**, and **Hide on Mobile**. **Back to
+   Slide** takes you to the catalog. Building blocks can also be dragged to a
+   different zone on the stage.
+4. If you want a zone to be wider or taller—such as the entire top row—
+   click its name and select **Width** or **Height** on the right.
+5. Switch to **Mobile** at the top and check the order; hide
+   anything that’s too narrow.
+6. **Apply**, save, and check the preview.

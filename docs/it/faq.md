@@ -4,7 +4,7 @@
 
 Risposta: Alla diapositiva manca l'immagine. Le diapositive senza immagine non vengono visualizzate: una
 superficie vuota e scura non sarebbe distinguibile da un errore sulla pagina.
-Apri l’editor e seleziona un’immagine nella sezione **Immagine o video**
+Apri l’editor e seleziona un’immagine alla voce **Immagine o video**
 oppure inserisci un indirizzo.
 
 **Domanda:** Ho inserito l’indirizzo di un video, ma la diapositiva mostra solo
@@ -45,7 +45,7 @@ al suo interno fa scomparire tutte le diapositive.
 
 **Domanda:** La presentazione non passa automaticamente da una diapositiva all’altra.
 
-Risposta: Tre possibili cause: c’è una sola diapositiva; **Secondi per diapositiva**
+Risposta: Tre possibili cause: c’è una sola diapositiva; **secondi per diapositiva**
 (nell’editor, a destra sotto **Comportamento**) è impostato su `0`; oppure nel sistema operativo è attivata l’opzione «Riduci movimento».
 In quest’ultimo caso è intenzionale: è comunque possibile sfogliare le diapositive tramite le frecce
 e le linee.
@@ -122,7 +122,7 @@ lasciare lo spazio vuoto.
 
 Risposta: L’impostazione ha effetto solo se si verificano tre condizioni: la pagina ha
 effettivamente una barra di navigazione, la barra si trova nella parte superiore della pagina e
-non c’è altro contenuto sopra di essa. Se una di queste condizioni non è soddisfatta, la
+non vi è altro contenuto sopra di essa. Se una di queste condizioni non è soddisfatta, la
 palcoscenico sotto la barra di navigazione — una barra di navigazione al centro della pagina sarebbe
 peggiore che non avere alcuna modifica. Nell’editor, in questo caso, compare un avviso
 sopra il palcoscenico. Sulla pagina pubblicata non compare; lì
@@ -144,7 +144,7 @@ sezione. Se il palco è l’ultimo blocco della sua sezione, la
 sezione termina comunque con esso. Lo spazio che rimane è la distanza interna
 della sezione successiva — appartiene a quest’ultima e può essere modificata nelle sue
 impostazioni della sezione. Se il contenuto successivo si trova nella stessa sezione
-della diapositiva, con l’opzione “Nessuno” si collega direttamente ad essa.
+della diapositiva, con l’opzione «Nessuno» si collega direttamente ad essa.
 
 **Domanda:** Senza elementi di controllo — come si sfoglia allora?
 

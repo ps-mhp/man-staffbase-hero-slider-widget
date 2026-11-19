@@ -46,9 +46,9 @@ dans ce champ ferait disparaître toutes les diapositives.
 **Question :** La scène ne change pas d’elle-même.
 
 Réponse : Il existe trois causes possibles : il n’y a qu’une seule diapositive ; le paramètre **Secondes par diapositive**
-(dans l’éditeur, à droite sous **Comportement**) est réglé sur `0` ; ou bien l’option « Réduire les animations » est activée dans le système d’exploitation.
+(dans l’éditeur, à droite sous **Comportement**) est réglé sur `0` ; ou bien l’option « Réduire les mouvements » est activée dans le système d’exploitation.
 Dans ce dernier cas, c’est voulu — il est toujours possible de faire défiler les diapositives à l’aide des flèches
-et des traits.
+et des tirets.
 
 **Question :** Je ne vois pas de flèches sur mon téléphone.
 
@@ -87,11 +87,11 @@ sélectionnée par défaut — un canal sans images ne renvoie donc aucun résul
 aperçu dans l’éditeur (**Bureau**) : il affiche exactement ce qui apparaîtra sur la scène
 .
 
-**Question :** La liste des chaînes ne contient aucune chaîne, mais un
-champ de texte destiné à saisir un identifiant.
+**Question :** Dans la sélection des chaînes, il n’y a pas une seule chaîne, mais un
+champ de texte pour saisir un identifiant.
 
-Réponse : La liste des chaînes d’actualités n’était pas accessible. Rechargez la boîte de dialogue.
-Si cela ne résout pas le problème, saisissez manuellement l’identifiant de la chaîne ; il figure
+Réponse : La liste des chaînes d’actualités n’était pas accessible. Rechargez la boîte de dialogue
+. Si cela ne fonctionne pas, saisissez manuellement l’identifiant de la chaîne ; il figure
 dans l’adresse de la chaîne dans le CMS.
 
 **Question :** Pourquoi l’image d’un article d’actualité est-elle floue ou
@@ -155,7 +155,7 @@ scène elle-même devient sélectionnable dès que les éléments de commande so
 **Question :** Où sont passés la hauteur, la largeur totale et les secondes par diapositive ? Dans la
 boîte de dialogue de Staffbase, je ne les trouve plus.
 
-Réponse : Ils se trouvent dans l’éditeur, à droite dans le panneau **Widget** : hauteur, largeur totale,
+Réponse : Ils se trouvent dans l’éditeur, à droite, dans le panneau **Widget** : hauteur, largeur totale,
 position et espacement en bas sous **Mise en page**, les secondes par diapositive et
 les éléments de commande sous **Comportement**. Ainsi, **Annuler** les supprime avec les
 entrées. Les paramètres précédemment définis restent valables jusqu’à ce que vous les

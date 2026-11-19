@@ -13,73 +13,76 @@ finestra.
 - **Elenco a sinistra:** tutte le voci nell’ordine della fase, sopra
   **+ Nuovo** e il numero di voci (“3 di 8”). Trascinando la maniglia a sinistra di una riga
   è possibile spostare una voce in una nuova posizione.
-  Sotto ogni titolo sono indicati il tipo e l’identificativo, ad esempio **Diapositiva · 2
-  pulsanti**, **Articolo di attualità · Canale Tecnica** o **Canale di attualità · 3 più recenti**.
-- **Al centro:** sopra il modulo **Voce 2 di 3** con la categoria e quattro
-  icone: **su**, **verso il basso**, **duplica**, **elimina**. Il vostro
-  nome appare quando ci passate sopra con il mouse. Sotto ci sono i campi suddivisi in
-  sezioni; per una diapositiva: **Supporto**, **Testo** e **Pulsanti**.
-- **A destra:** il pannello **Widget** con le impostazioni dell’intero palcoscenico.
-  Sotto **Aspetto** si trovano **Altezza**, **Larghezza intera**, **Posizione** e
-  **Distanza dal basso**; sotto **Comportamento**: **Secondi per diapositiva** e
-  **Mostra controlli**. **Come prima** significa: non ancora
-  definito qui, si applica l’impostazione precedente del blocco.
+  Sotto ogni titolo sono riportati la categoria e l’identificativo, ad esempio **Diapositiva · 2
+  Pulsanti**, **Articolo di attualità · Canale Tecnica** o **Canale di attualità · 3 più recenti**.
+- **Al centro:** in alto **Voce 2 di 3** con la categoria e quattro icone:
+  **su**, **verso il basso**, **duplica**, **elimina**. Il vostro nome
+  appare quando ci passate sopra con il mouse. Sotto, in grande, l’area di visualizzazione della
+  voce selezionata, in tempo reale — ogni modifica a destra è immediatamente visibile,
+  le animazioni sono attive.
+- **A destra:** il pannello **Impostazioni**. La prima scheda configura la
+  voce selezionata: **Diapositiva** con **Mezzo**, **Testo** e **Pulsanti**,
+  **Articolo** o **Canale** per le voci delle notizie. Sotto **Aspetto** si trovano
+  **Altezza**, **Larghezza intera**, **Posizione** e **Distanza dal bordo inferiore** dell’intera
+  palcoscenico; sotto **Comportamento** si trovano **Secondi per diapositiva** e **Mostra elementi di controllo
+  **. **Come prima** significa: non ancora definito qui, si applica l’
+  impostazione precedente del blocco.
 - **Desktop**, **Tablet** e **Mobile** mostrano la voce selezionata nella
-  rispettiva larghezza; le notizie vengono visualizzate come diapositive ricavate dai contributi
- ; il pannello **Widget** rimane accanto. **Editor** riporta al
-  modulo.
+  rispettiva larghezza; le notizie vengono visualizzate come diapositive ricavate dai
+  contributi; il pannello rimane accanto. **Editor** riporta alla
+  scena grande.
 
-## Configurare il palco con un’immagine
+## Configurare la scena con un'immagine
 
-1. Caricare preventivamente l’immagine nella libreria multimediale di Staffbase. In formato orizzontale, con una larghezza minima
-   di 1920 px; il palco la ritaglia in formato 21:9 o
+1. Caricate prima l'immagine nella libreria multimediale di Staffbase. In formato orizzontale, con una larghezza minima di
+   1920 px; la scena la ritaglia in formato 21:9 o
    4:3 — il soggetto non dovrebbe quindi arrivare fino ai bordi.
 2. Posizionate il widget **Hero-Slider** all’inizio della pagina, in una riga
    senza altri widget accanto. Se si trova in una colonna accanto ad altri
-   contenuti, non potrà estendersi correttamente su tutta la larghezza.
+   contenuti, non potrà essere visualizzato correttamente a tutta larghezza.
 3. Aprite le impostazioni del widget. L’editor si aprirà
    automaticamente.
 4. Cliccate su **+ Nuovo** sopra l’elenco e selezionate **Diapositiva**.
-5. Sotto **Supporto**, clicca sull’area tratteggiata **Scegli immagine o video
-  ** e seleziona l’immagine dalla libreria — oppure inserisci tramite
+5. Sotto **Supporto**, clicchi sull’area tratteggiata **Scegli immagine o video
+  ** e selezioni l’immagine dalla libreria multimediale — oppure inserisca tramite
    **Inserisci indirizzo** l’indirizzo di un’immagine o di un video. Senza immagine
    la diapositiva non verrà visualizzata.
-6. Inserite sotto **Descrizione immagine** ciò che si vede. Lasciate il
+6. Inserisci sotto **Descrizione immagine** ciò che si vede. Lascia il
    campo vuoto solo se l’immagine è puramente decorativa.
-7. Inserite il **titolo**. Siate concisi: fino a circa
-   24 caratteri, il titolo rimarrà su una sola riga.
+7. Inserisci il **Titolo**. Sii conciso: fino a circa
+   24 caratteri rimarrà su una sola riga.
 8. Opzionale: **sottotitolo** e fino a tre **pulsanti** (**Aggiungi pulsante**).
-   I pulsanti sono visualizzati sotto forma di elenco; cliccando su una riga I pulsanti sono visualizzati sotto forma di elenco; cliccando su una riga
-   si aprono i relativi campi. Per ogni pulsante selezionate la **destinazione** — **indirizzo**,
-   **pagina** o **articolo della newsletter** su Staffbase —, lo **stile** e, se
-   necessità un **simbolo**. Un pulsante appare solo se l’etichetta **e**
+   I pulsanti sono visualizzati come elenco; cliccando su una riga
+   si aprono i relativi campi. Per ogni pulsante, selezionate la **destinazione** — **indirizzo**,
+   **pagina** o **articolo di notizie** da Staffbase —, lo **stile** e, se
+   necessario, un **simbolo**. Un pulsante appare solo se l’etichetta **e**
    la destinazione sono state compilate. Sul telefono, la diapositiva non mostra la riga inferiore e il primo
-   pulsante: lì viene visualizzato il titolo e l’intera diapositiva rimanda
-   alla destinazione del primo pulsante; gli altri pulsanti rimangono visibili. Ciò che è riportato nella
-   riga inferiore non dovrebbe quindi essere qualcosa che debba essere necessariamente letto
+   pulsante: lì compare solo il titolo, e l’intera diapositiva rimanda
+   alla destinazione del primo pulsante; gli altri pulsanti rimangono visibili. Ciò che è scritto nella
+   riga inferiore non dovrebbe quindi essere qualcosa che deve essere necessariamente letto
   .
 9. A destra, sotto **Comportamento**, impostare **Secondi per diapositiva** su `0` —
    nel caso di una singola diapositiva non c’è nulla da modificare.
-10. Clicchi in alto a destra su **Applica**.
-11. Salvi la pagina e la controlli nell’anteprima, una volta a schermo intero
+10. Fare clic in alto a destra su **Applica**.
+11. Salvate la pagina e controllatela nell’anteprima, una volta a schermo intero
     e una volta in una finestra stretta.
 
 **Libreria come barra.** **Seleziona immagine o video** e **Sostituisci** aprono
-la libreria a destra del modulo; il titolo indica la destinazione, ad esempio
-«Immagine per diapositiva 2». Un clic su un’immagine – o il tasto Invio – la inserisce
+la libreria come barra accanto al pannello; il titolo indica la destinazione, ad esempio
+«Immagine per diapositiva 2». Cliccando su un’immagine – o premendo Invio – questa viene inserita
 in quella posizione. È anche possibile trascinare le immagini dalla barra direttamente su qualsiasi campo immagine,
 ad esempio sulla riga **Formato verticale**: i campi compatibili vengono
-evidenziati durante il trascinamento e sopra la destinazione compare la scritta «Rilascia qui». I video possono essere inseriti solo
+evidenziati durante il trascinamento, mentre sopra la destinazione compare la scritta «Rilascia qui». I video possono essere inseriti solo
 nelle diapositive, non nei campi immagine di un articolo di notizie. Il tasto Esc o la freccia
-in alto nella barra li chiude senza uscire dall’editor.
+in alto nella barra la chiude senza uscire dall’editor.
 
 ## Creare più diapositive
 
 1. Aprite le impostazioni e quindi l’editor.
-2. Per ogni diapositiva aggiuntiva, sotto **+ Nuovo** selezionate la voce **Diapositiva** e
-   compilatela come indicato sopra. Non è possibile inserire più di otto diapositive: nessuno scorre
-   così in basso.
-3. Ordinate le diapositive trascinandone una dal maniglia a sinistra nella nuova posizione
+2. Per ogni diapositiva aggiuntiva, selezionate **+ Nuovo**, poi **Diapositiva** e
+   compilatela come descritto sopra. Non è possibile inserire più di otto diapositive: nessuno
+   scorre così in basso.
+3. Ordinate le diapositive trascinandone una dal manico a sinistra nella nuova posizione
    oppure utilizzando le icone **su** e **giù** sopra il
    modulo. La prima diapositiva è quella che si vede al caricamento della pagina.
 4. Verificate a destra sotto **Comportamento** che **Secondi per diapositiva** sia vuoto
@@ -104,21 +107,21 @@ in alto nella barra li chiude senza uscire dall’editor.
    ritagliata per il feed e non sempre supporta un’immagine di copertina di grandi dimensioni.
 8. **Applica**, salva, verifica nell’anteprima.
 
-## Mostra tutti i post di un canale
+## Mostrare tutti i post di un canale
 
-1. Apri le impostazioni e quindi l’editor.
-2. Clicca su **+ Nuovo** sopra l’elenco e seleziona **Canale notizie**.
+1. Aprite le impostazioni e quindi l’editor.
+2. Cliccate su **+ Nuovo** sopra l’elenco e selezionate **Canale notizie**.
    A sinistra apparirà una voce con l’aggiunta **Canale notizie** sotto il titolo.
 3. Sotto **Canale**, selezionate il canale di notizie.
 4. Impostate il **Numero di post** (impostazione predefinita `3`, massimo otto).
-5. Scegliete l’**Ordine**: `Più recenti prima` o `Più vecchi prima`.
-6. Se necessario, attiva le seguenti opzioni sotto **Selezione**:
+5. Selezionare l’**Ordine**: `Più recenti prima` o `Più vecchi prima`.
+6. Se necessario, attivare le opzioni sotto **Selezione**:
    - **Solo post in evidenza** — limitato a ciò che è
      fissato in primo piano nelle notizie.
    - **Solo post con immagine** — attivato per impostazione predefinita. Senza immagine,
      la diapositiva risulterebbe solo una superficie scura con del testo.
    - **Hashtag** — separare più hashtag con una virgola; è sufficiente un post se
-     ne contiene almeno uno.
+     ne contiene uno.
 7. Selezionate **Desktop** in alto: l’anteprima mostra esattamente i post
    che i filtri lasciano passare, una diapositiva per ogni post. Se rimane vuota,
    i filtri sono troppo restrittivi.
@@ -131,11 +134,11 @@ viene tralasciato.
 ## Mostrare un video come palcoscenico
 
 1. Selezionate la diapositiva nell’editor.
-2. Sotto **Immagine o video**, clicca su **Seleziona immagine o video** e
-   seleziona il video dalla libreria multimediale. I video sono contrassegnati con
-   il loro formato (ad esempio `MP4`). Viene applicata la versione convertita da Staffbase
+2. Sotto **Immagine o video**, clicchi su **Seleziona immagine o video** e
+   selezioni il video dalla libreria multimediale. I video sono contrassegnati con
+   il loro formato (ad esempio `MP4`). Verrà applicata la versione convertita da Staffbase
    — funziona su qualsiasi browser ed è solitamente molto più piccola dell’
-   originale.
+  originale.
 3. Se il video si trova altrove: inserite invece il suo indirizzo tramite **Inserisci indirizzo**
   . Deve iniziare con `https://`
    e tutti i lettori devono poter visualizzare il video senza effettuare il login
@@ -157,7 +160,7 @@ poiché verrà caricato ad ogni visualizzazione della pagina.
 2. Selezionate la diapositiva in questione nell’editor.
 3. Nella riga **Formato verticale (opzionale)**, cliccate su **Scegli immagine o video
   ** oppure su un indirizzo tramite **Inserisci indirizzo**.
-4. La vista **Mobile** nella barra di intestazione mostra il ritaglio in formato verticale
+4. La vista **Mobile** nella barra superiore mostra il ritaglio in formato verticale
   già nell’editor.
 5. **Applica**, salva e verifica in una finestra stretta o sul
    telefono.
@@ -167,30 +170,30 @@ poiché verrà caricato ad ogni visualizzazione della pagina.
 1. Apri le impostazioni del widget; l’editor si aprirà con le
    voci esistenti.
 2. Selezionare a sinistra la voce da modificare. La dicitura sotto il titolo
-   indica di quale tipo si tratta: **Diapositiva**, **Articolo di attualità** o
+   indica di quale tipo si tratta: **Presentazione**, **Articolo di attualità** o
    **Canale di attualità**.
-3. Modificare i campi a destra. Tramite l’icona **duplica** si crea una
+3. Modifica i campi a destra. Tramite l’icona **duplica** si crea una
    copia della voce selezionata direttamente dietro di essa, mentre con **elimina** questa
    scompare. Sposta, Duplica ed Elimina valgono allo stesso modo per tutti e tre i tipi
-  . Con otto voci, **+ Nuovo** e **duplica**
+  . Quando le voci sono otto, **+ Nuovo** e **Duplica**
    sono disabilitati.
-4. **Annulla** e **Ripeti** nella barra superiore consentono di annullare singoli
-   passaggi o di ripristinarli.
-5. **Applica** salva le modifiche nel widget ��� Solo dopo
-   viene salvata la pagina. Se in una diapositiva manca l’immagine, l’editor
+4. **Annulla** e **Ripeti** Nella barra superiore è possibile
+   annullare o ripristinare i singoli passaggi.
+5. **Applica** salva le modifiche nel widget — solo dopo viene
+   salvata la pagina. Se in una diapositiva manca l’immagine, l’editor
    non applica alcuna modifica: lo stato indica la diapositiva e l’elenco la evidenzia.
-6. **Annulla** o **Chiudi** richiedono una conferma finché non viene
-   applicata alcuna modifica: **Elimina**, **Continua a modificare** o **Applica**.
+6. **Annulla** o **Chiudi** richiedono una conferma finché non è stato
+   applicato nulla: **Elimina**, **Continua a modificare** o **Applica**.
 
 ## Se qualcosa non funziona
 
 1. **Il palco rimane vuoto.** Manca almeno un'immagine: le diapositive senza immagine
-   non vengono visualizzate. Aprite l'editor e controllate che ogni voce contenga
-   un'immagine — per le notizie nell'anteprima (**Desktop**).
+   non vengono visualizzate. Aprite l’editor e controllate che ogni voce contenga
+   un’immagine — per le notizie nell’anteprima (**Desktop**).
 2. **L’immagine non occupa l’intera larghezza.** Il widget si trova in una
    colonna accanto ad altri contenuti? In tal caso, inseritelo in una riga a sé stante.
-   Altrimenti, verificate se a destra, sotto **Impostazioni**, l’opzione **Larghezza intera**
-   è attivata.
+   Altrimenti, verificate che a destra, sotto **Impostazioni**, l’opzione **Larghezza intera**
+   sia attivata.
 3. **Il testo non è allineato alla linea di riferimento.** Ciò può essere dovuto a una
    larghezza del contenuto della pagina non corrispondente. Segnalate il caso indicando l’
    indirizzo della pagina: la piattaforma si basa sulla larghezza che la pagina stessa
@@ -207,4 +210,22 @@ poiché verrà caricato ad ogni visualizzazione della pagina.
    non ne risentono. Verificate la voce nell’anteprima dell’editor.
 7. **Una voce del canale contiene meno diapositive di quelle impostate.** I filtri sono
    troppo restrittivi — solitamente **Solo contributi con immagine** in un canale senza immagini — oppure
-   la pagina è già piena con otto diapositive.
+   il palco è già pieno con otto diapositive.
+
+## Personalizzare una diapositiva
+
+1. Selezionate la diapositiva a sinistra e, a destra nella scheda **Diapositiva**, alla voce **Struttura**,
+   **Personalizzata**. Ciò che la diapositiva conteneva già — titolo, sottotitolo,
+   pulsanti — apparirà quindi come elementi in basso a sinistra.
+2. Trascinate un elemento dal catalogo a destra su una zona dell’area di lavoro.
+   Durante il trascinamento, la zona su cui rilasciate il mouse viene evidenziata. Senza trascinare:
+   cliccate sull’elemento, che apparirà in basso a sinistra.
+3. Cliccando su un elemento della scena si aprono le relative impostazioni a destra:
+   Testo, Dimensione, Colore, la **zona** e **Nascondi su dispositivi mobili**. **Torna alla
+   diapositiva** riporta al catalogo. Gli elementi possono anche essere trascinati sulla scena in un’
+   altra zona.
+4. Se si desidera che una zona sia più larga o più alta — ad esempio l’intera riga superiore —,
+   cliccare sul suo nome e selezionare a destra **Larghezza** o **Altezza**.
+5. Attivare **Dispositivi mobili** in alto e verificare l’ordine; nascondere
+   ciò che risulta superfluo nelle versioni per dispositivi mobili.
+6. **Applica**, salva, verifica nell’anteprima.

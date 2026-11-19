@@ -10,7 +10,7 @@ o introduce una dirección.
 **Pregunta:** He introducido una dirección de vídeo, pero la diapositiva solo muestra
 un área oscura.
 
-Respuesta: Normalmente, el vídeo no se puede reproducir sin iniciar sesión, o bien **Tipo** aparece
+Respuesta: Por lo general, el vídeo no se puede reproducir sin iniciar sesión, o bien **Tipo** aparece
 como **Imagen** porque la dirección no tiene extensión. Abre la dirección en
 una ventana privada del navegador: si allí no se reproduce, los
 lectores tampoco lo verán. Un mensaje justo debajo del campo indica que la dirección
@@ -33,7 +33,7 @@ Colóquelo en una línea propia en la parte superior de la página.
 **Pregunta:** El texto no aparece donde comienza el resto del contenido de la página.
 
 Respuesta: El área de trabajo se ajusta al ancho de contenido que indica la página.
-Si difiere, notifique el caso indicando la dirección de la página.
+Si difiere, comunique el caso indicando la dirección de la página.
 
 **Pregunta:** En lugar del editor, veo un campo de texto «Entradas» con
 llaves en su interior.
@@ -120,10 +120,10 @@ dejar la diapositiva en blanco.
 **Pregunta:** He seleccionado «Antes de la ruta de navegación», pero no cambia nada.
 
 Respuesta: La configuración solo se aplica si se cumplen tres condiciones: la página tiene
-una barra de navegación, el escenario se encuentra en la parte superior de la página y
-no hay ningún otro contenido por encima de él. Si no se cumple alguna de estas condiciones, el
+una barra de navegación, la barra está situada en la parte superior de la página y
+no hay ningún otro contenido por encima de ella. Si no se cumple alguna de estas condiciones, la
 escena debajo de la ruta de navegación; una ruta de navegación en el centro de la página sería
-peor que no haber realizado ningún cambio. En el editor, en este caso, aparece una nota
+peor que no haber realizado ningún cambio. En el editor, en este caso aparece una nota
 encima de la escena. En la página publicada no aparece; allí
 no se puede modificar la configuración.
 
@@ -155,8 +155,8 @@ propia escena se puede seleccionar en cuanto faltan los controles.
 cuadro de diálogo de Staffbase ya no los encuentro.
 
 Respuesta: Se encuentran en el editor, a la derecha, en el panel **Widget**: Altura, Ancho completo,
-Posición y Distancia inferior en **Diseño**, los segundos por diapositiva y
-los elementos de control, en **Comportamiento**. Así, al pulsar **Cancelar**, se
+Posición y Distancia inferior en **Diseño**, segundos por diapositiva y
+elementos de control, en **Comportamiento**. Así, al pulsar **Cancelar**, se
 deshacen los cambios. Lo que estaba configurado anteriormente sigue vigente hasta que lo
 modifique allí.
 

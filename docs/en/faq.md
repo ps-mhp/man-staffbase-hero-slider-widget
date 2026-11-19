@@ -13,7 +13,7 @@ a dark area.
 Answer: Usually, the video isn’t accessible without logging in, or **Type** is set
 to **Image** because the URL lacks an extension. Open the URL in
 a private browser window: if it doesn’t play there, the
-readers won’t see it either. A message directly below the field indicates that the address
+readers won’t be able to see it either. A message directly below the field indicates that the address
 was not accepted—it must begin with `https://`.
 
 **Question:** I entered a label for the button, but
@@ -26,7 +26,7 @@ form will warn you if an address isn’t accepted.
 
 **Question:** The image doesn’t span the full width of the window.
 
-Answer: There are two possible causes. Either **Full Width** (in the editor
+Answer: There are two possible causes. Either **Full Width** (in the editor,
 on the right under **Design**) is turned off, or the widget is in a column next to other content.
 Place it on its own line at the top of the page.
 
@@ -99,7 +99,7 @@ strangely cropped?
 
 Answer: Article images are cropped for the feed format, not for a
 full-screen stage. In the entry, under **Override Stage Image**,
-upload your own image that is landscape orientation and at least 1920 px wide.
+upload your own image that is landscape and at least 1920 px wide.
 
 **Question:** What happens to the stage when the
 page is automatically translated?
@@ -146,7 +146,7 @@ of the following section—it belongs to that section and can be adjusted in its
 section settings. If the following content is in the same section
 as the slide, it will connect directly to it with “None.”
 
-**Question:** Without controls—how do you navigate then?
+**Question:** Without controls—how do you navigate through the slides?
 
 Answer: Swipe with your finger, use the arrow keys to turn the pages, or let it happen automatically:
 the set time per slide runs unchanged. For the keyboard, the
@@ -155,7 +155,7 @@ stage itself becomes selectable as soon as the controls are missing.
 **Question:** Where did the height, full width, and seconds per slide go? I
 can’t find them in the Staffbase dialog anymore.
 
-Answer: They’re in the **Widget** panel on the right side of the editor: Height, Full Width,
+Answer: They’re located in the **Widget** panel on the right side of the editor: Height, Full Width,
 Position, and Spacing at the bottom under **Design**, seconds per slide and
 controls under **Behavior**. Clicking **Cancel** resets them to their
 previous settings. The previous settings remain in effect until you

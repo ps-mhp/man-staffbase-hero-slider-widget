@@ -27,7 +27,7 @@ formulário avisa se um endereço não for aceite.
 **Pergunta:** A imagem não ocupa toda a largura da janela.
 
 Resposta: Existem duas causas possíveis. Ou a opção **Largura total** (no editor,
-à direita, em **Formato**) está desativada, ou o widget está numa coluna ao lado de outros conteúdos.
+à direita, em **Apresentação**) está desativada, ou o widget está numa coluna ao lado de outros conteúdos.
 Coloque-o numa linha própria no topo da página.
 
 **Pergunta:** O texto não está onde começa o resto do conteúdo da página.
@@ -64,7 +64,7 @@ formato vertical**, um recorte próprio, cortado na vertical.
 **Pergunta:** Posso criar mais de oito diapositivos?
 
 Resposta: Não. A cinco segundos por diapositivo, uma rotação completa demora, mesmo com
-apenas oito diapositivos, quarenta segundos — ninguém fica tanto tempo num palco.
+oito diapositivos, quarenta segundos — ninguém fica tanto tempo num palco.
 O limite de oito aplica-se ao conjunto de todos os slides: uma entrada de canal com cinco publicações
 só permite mais três slides adicionais.
 
@@ -131,8 +131,8 @@ não é possível alterar a configuração.
 **Pergunta:** Antes, havia uma faixa branca por cima do palco. Para onde foi?
 
 Resposta: A secção onde se encontra o palco mantém um
-espaço interno acima do seu primeiro bloco. Acima de um texto, isso é correto; acima de um palco,
-isso cria uma faixa branca entre o menu ou o caminho de navegação e a imagem. O palco
+espaço interno acima do seu primeiro bloco. Acima de um texto, isso é correto; acima de um palco, isso
+cria uma faixa branca entre o menu ou o caminho de navegação e a imagem. O palco
 compensa essa distância por si próprio, assim que se encontra na parte superior. Se houver
 outro bloco acima dele, a distância mantém-se tal como definida na página.
 
@@ -157,13 +157,13 @@ caixa de diálogo do Staffbase já não os encontro.
 
 Resposta: Encontram-se no editor, à direita, no painel **Widget**: Altura, Largura total,
 Posição e Distância, na secção inferior **Design**, segundos por slide e
-elementos de controlo em **Comportamento**. Assim, **Anular** reverte as
+elementos de controlo em **Comportamento**. Assim, **Cancelar** reverte as
 configurações. O que estava definido anteriormente continua válido até que o
 altere nesse local.
 
 **Pergunta:** No painel **Widget** aparece «Como antes». O que se aplica?
 
 Resposta: A configuração que o bloco já tinha. O editor não conseguiu ler com
-segurança a informação do campo antigo e, por isso, não apresenta qualquer valor predefinido que
+segurança a informação do campo antigo e, por isso, não apresenta nenhuma predefinição que
 talvez nem sequer se aplique. Assim que selecionar algo nesse local e confirmar, aplica-se
 a sua escolha.

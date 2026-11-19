@@ -11,28 +11,31 @@ venster.
   **Opnieuw** en **Help**, helemaal rechts **Annuleren** en
   **Toepassen**.
 - **Lijst links:** alle items in de volgorde van de fase, daarboven
-  **+ Nieuw** en het aantal vermeldingen („3 van 8“). Door aan het handvat links van een regel
-  te slepen, verplaats je een vermelding naar een nieuwe plek.
-  Onder elke titel staan het type en het herkenningsteken, bijvoorbeeld **Dia · 2
-  knoppen**, **Nieuwsbericht · Kanaal Techniek** of **Nieuws-kanaal · 3 nieuwste**.
-- **Midden:** boven het formulier **Vermelding 2 van 3** met het type en vier
-  symbolen: **naar boven**, **naar beneden**, **dupliceren**, **verwijderen**. Uw
-  naam verschijnt wanneer u er met de muis op wijst. Daaronder de velden in
-  secties, bij een dia **Medium**, **Tekst** en **Knoppen**.
-- **Rechts:** het paneel **Widget** met de instellingen voor het hele podium.
-  Onder **Ontwerp** staan **Hoogte**, **Volledige breedte**, **Positie** en
-  **Afstand onderaan**, onder **Gedrag** **Seconden per dia** en
-  **Bedieningselementen weergeven**. **Zoals voorheen** betekent: hier nog niet
-  vastgelegd, de huidige instelling van het blok geldt.
-- **Desktop**, **Tablet** en **Mobiel** tonen het geselecteerde item in de
+  **+ Nieuw** en het aantal items („3 van 8“). Door aan het handvat links van een regel
+  te slepen, verplaats je een item naar een nieuwe plek.
+  Onder elke titel staan het type en het identificatieteken, bijvoorbeeld **Dia · 2
+  knoppen**, **nieuwsbericht · kanaal Techniek** of **nieuwskanaal · 3 nieuwste**.
+- **Midden:** bovenaan **item 2 van 3** met het type en vier symbolen:
+  **naar boven**, **naar beneden**, **dupliceren**, **verwijderen**. Uw naam
+  verschijnt wanneer u er met de muis op wijst. Daaronder in het groot het podium van het
+  geselecteerde item, live — elke wijziging aan de rechterkant is direct te zien,
+  animaties worden afgespeeld.
+- **Rechts:** het paneel **Instellingen**. Het eerste tabblad stelt het
+  geselecteerde item in: **dia** met **medium**, **tekst** en **knoppen**,
+  **Bericht** of **Kanaal** bij nieuwsberichten. Onder **Ontwerp** staan
+  **Hoogte**, **Volledige breedte**, **Positie** en **Afstand onderaan** van het gehele
+  podium, onder **Gedrag** **Seconden per dia** en **Bedieningselementen
+  weergeven**. **Zoals voorheen** betekent: hier nog niet vastgelegd, de
+  huidige instelling van het blok geldt.
+- **Desktop**, **tablet** en **mobiel** tonen het geselecteerde item in de
   bijbehorende breedte; nieuwsberichten worden weergegeven als de dia’s die uit de bijdragen
-  worden samengesteld; het paneel **Widget** blijft ernaast staan. **Editor** brengt u terug naar het
-  formulier.
+  worden gevormd; het paneel blijft ernaast staan. **Editor** brengt je terug naar het grote
+  podium.
 
-## Een podium met een afbeelding instellen
+## Podium met een afbeelding instellen
 
 1. Sla de afbeelding eerst op in de Staffbase-mediatheek. Liggend, minimaal
-   1920 px breed; het podium snijdt deze, afhankelijk van de vensterbreedte, bij tot 21:9 of
+   1920 px breed; het podium snijdt deze af naar 21:9 of
    4:3 — de afbeelding mag daarom niet tot aan de randen reiken.
 2. Plaats de widget **Hero-Slider** bovenaan de pagina, in een rij
    zonder andere widgets ernaast. Als deze in een kolom naast andere
@@ -46,32 +49,32 @@ venster.
    wordt de dia niet weergegeven.
 6. Vul onder **Afbeeldingsbeschrijving** in wat er te zien is. Laat het
    veld alleen leeg als de afbeelding puur decoratief is.
-7. Voer de **kop** in. Houd deze kort: tot ongeveer
+7. Voer de **Kop** in. Houd deze kort: tot ongeveer
    24 tekens blijft deze op één regel staan.
-8. Optioneel: **ondertitel** en maximaal drie **knoppen** (**knop
+8. Optioneel: **ondertitel** en maximaal drie **knoppen** (**Knop
    toevoegen**). De knoppen staan in een lijst; als je op een regel klikt,
-   worden de velden ervan weergegeven. Per knop kies je de **bestemming** — **adres**,
-   **pagina** of **nieuwsbericht** uit Staffbase —, de **stijl** en, indien
-   indien nodig een **symbool**. Een knop verschijnt alleen als de tekst **en**
-   de bestemming zijn ingevuld. Op de telefoon toont het scherm de ondertitel en de eerste
-   knop niet: daar wordt de kop weergegeven en leidt de hele dia
-   naar de bestemming van de eerste knop; verdere knoppen blijven zichtbaar. Wat er in de
-   onderregel staat, mag daarom niets zijn dat absoluut gelezen
+   worden de velden ervan uitgevouwen. Kies per knop de **bestemming** — **adres**,
+   **pagina** of **nieuwsbericht** uit Staffbase —, de **stijl** en indien
+   nodig een **symbool**. Een knop verschijnt alleen als de tekst **en**
+   de bestemming zijn ingevuld. Op de telefoon geeft het scherm de ondertitel en de eerste
+   knop niet weer: daar staat de kop, en de hele dia leidt
+   naar de bestemming van de eerste knop; verdere knoppen blijven zichtbaar. Wat in de
+   ondertitel staat, mag daarom niets zijn dat absoluut gelezen
    moet worden.
 9. Stel rechts onder **Gedrag** **Seconden per dia** in op `0` —
    bij een enkele dia hoeft u niets te wijzigen.
 10. Klik rechtsboven op **Toepassen**.
-11. Sla de pagina op en bekijk deze in het voorbeeld, één keer breed
+11. Sla de pagina op en bekijk deze in het voorbeeld, één keer in breed formaat
     en één keer in een smal venster.
 
 **Mediabibliotheek als balk.** **Afbeelding of video selecteren** en **Vervangen** openen
-de mediabibliotheek rechts naast het formulier; de titel geeft de bestemming aan, bijvoorbeeld
+de mediabibliotheek als balk naast het paneel; de titel geeft de bestemming aan, bijvoorbeeld
 „Afbeelding voor dia 2“. Een klik op een afbeelding – of op Enter – plaatst deze
 daar. U kunt afbeeldingen uit de balk ook rechtstreeks naar elk afbeeldingsveld
 slepen, bijvoorbeeld naar de regel **Staand formaat**: geschikte velden worden
-tijdens het slepen omkaderd, boven de bestemming staat „Hier neerzetten“. Video’s kunnen alleen
+tijdens het slepen omkaderd; boven de bestemming staat „Hier neerzetten“. Video’s kunnen alleen
 op dia’s worden geplaatst, niet in de afbeeldingsvelden van een nieuwsbericht. Met Escape of de pijl
-bovenaan in de balk sluit u deze, zonder de editor te verlaten.
+bovenaan de balk sluit u deze, zonder de editor te verlaten.
 
 ## Meerdere dia’s aanmaken
 
@@ -134,12 +137,12 @@ wordt achterwege gelaten.
 2. Klik onder **Afbeelding of video** op **Afbeelding of video selecteren** en
    selecteer de video uit de mediabibliotheek. Video’s zijn daar gemarkeerd met
    hun formaat (bijvoorbeeld `MP4`). De door Staffbase geconverteerde
-   versie wordt overgenomen — deze speelt af in elke browser en is meestal aanzienlijk kleiner dan het
+   versie overgenomen — deze werkt in elke browser en is meestal aanzienlijk kleiner dan het
    origineel.
 3. Staat de video ergens anders: voeg dan in plaats daarvan via **Adres invoegen**
    het adres ervan in. Het adres moet beginnen met `https://`
-   en alle lezers moeten de video zonder aanmelding kunnen bekijken
-  . Eindigt het op `.mp4`, `.webm` of `.mov`, dan springt **Type** van
+   en alle lezers moeten de video kunnen bekijken zonder zich aan te melden
+  . Als het eindigt op `.mp4`, `.webm` of `.mov`, springt **Type** van
   zelf naar **Video**; anders moet u dit daar handmatig aanpassen.
 4. Vul onder **Videobeschrijving** in wat er te zien is, of laat
    het veld leeg als de video puur decoratief is.
@@ -169,23 +172,23 @@ want het wordt bij elke paginaweergave geladen.
 2. Selecteer links het item dat u wilt wijzigen. De toevoeging onder de titel
    geeft aan om welk type het gaat: **dia**, **nieuwsbericht** of
    **nieuwskanaal**.
-3. Wijzig de velden aan de rechterkant. Via het pictogram **dupliceren** wordt er een
-   kopie van het geselecteerde item direct erachter gemaakt; via **verwijderen** verdwijnt
+3. Wijzig de velden aan de rechterkant. Via het pictogram **dupliceren** wordt een
+   kopie van het geselecteerde item direct erachter aangemaakt; via **verwijderen** verdwijnt
    het. Verplaatsen, dupliceren en verwijderen gelden voor alle drie de soorten
-   op dezelfde manier. Bij acht items zijn **+ Nieuw** en **dupliceren**
-   vergrendeld.
-4. Met **Ongedaan maken** en **Opnieuw** in de kopbalk kunt u afzonderlijke
+   op dezelfde manier. Bij acht vermeldingen zijn **+ Nieuw** en **dupliceren**
+   geblokkeerd.
+4. **Ongedaan maken** en **Herhalen** In de kopbalk kunt u afzonderlijke
    stappen ongedaan maken of herstellen.
-5. Met **Toepassen** worden de wijzigingen in de widget opgeslagen ��� pas daarna wordt
-   de pagina opgeslagen. Als er op een dia een afbeelding ontbreekt, neemt de editor
-   niets over: de status vermeldt de dia en de lijst markeert deze.
-6. **Annuleren** of **Sluiten** vragen om bevestiging zolang er nog niets
-   is opgeslagen: **Verwerpen**, **Bewerken** of **Opslaan**.
+5. **Toepassen** slaat de wijzigingen op in de widget — pas daarna wordt
+   de pagina opgeslagen. Als er bij een dia een afbeelding ontbreekt, past de editor
+   niets toe: de status vermeldt de dia en de lijst markeert deze.
+6. **Annuleren** of **Sluiten** vragen om een keuze zolang er nog niets
+   is toegepast: **Verwerpen**, **Verder bewerken** of **Toepassen**.
 
 ## Als iets niet werkt
 
 1. **Het podium blijft leeg.** Er ontbreekt ten minste één afbeelding: dia’s zonder afbeelding
-   worden niet weergegeven. Open de editor en controleer elk bericht op
+   worden niet weergegeven. Open de editor en controleer elk item op
    een afbeelding — bij nieuwsberichten in het voorbeeld (**Desktop**).
 2. **De afbeelding beslaat niet de volledige breedte.** Staat de widget in een
    kolom naast andere inhoud? Plaats hem dan in een aparte regel.
@@ -206,5 +209,23 @@ want het wordt bij elke paginaweergave geladen.
    verplaatst of niet zichtbaar voor de lezer. De overige dia’s
    blijven hierdoor onaangetast. Controleer de invoer in het voorbeeld van de editor.
 7. **Een kanaalvermelding bevat minder dia’s dan is ingesteld.** De filters zijn
-   te streng ingesteld — meestal **Alleen berichten met afbeelding** bij een kanaal zonder afbeeldingen — of
+   te streng — meestal **Alleen berichten met afbeelding** bij een kanaal zonder afbeeldingen — of
    het podium is met acht dia’s al vol.
+
+## Een dia vrij vormgeven
+
+1. Selecteer links de dia en kies rechts in het tabblad **Dia** bij **Opbouw**
+   **Aangepast**. Wat de dia al bevatte — koptekst, ondertitel,
+   knoppen — staat daarna als bouwstenen linksonder.
+2. Sleep een bouwsteen uit de catalogus rechts naar een zone op het podium.
+   Tijdens het slepen wordt de zone gemarkeerd waarboven u loslaat. Zonder te slepen:
+   klik op de bouwsteen, deze verschijnt dan linksonder.
+3. Als je op een bouwsteen op het podium klikt, worden de instellingen rechts geopend:
+   tekst, grootte, kleur, de **zone** en **mobiel verbergen**. **Terug naar de
+   dia** brengt je naar de catalogus. Bouwstenen kunnen op het podium ook naar een
+   andere zone worden gesleept.
+4. Als een zone breder of hoger moet zijn — bijvoorbeeld de hele bovenste rij —,
+   klik dan op de naam ervan en selecteer rechts **Breedte** of **Hoogte**.
+5. Schakel bovenaan **Mobiel** in en controleer de volgorde; verberg
+   wat te smal is.
+6. **Toepassen**, opslaan, controleren in het voorbeeld.

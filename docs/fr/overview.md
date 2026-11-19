@@ -7,13 +7,13 @@ d'un bouton. Il s'inspire de la scène du site man.eu.
 Si vous créez plusieurs diapositives, vous obtenez un diaporama : les diapositives s’affichent
 les unes après les autres, et on peut les faire défiler à l’aide des flèches et des traits situés en bas à gauche.
 
-Il n’est pas nécessaire de gérer manuellement une diapositive. Outre vos propres diapositives, la
+Il n’est pas nécessaire de mettre à jour une diapositive manuellement. Outre vos propres diapositives, la
 page d’accueil peut également afficher des **articles issus de l’actualité** :
 
 - **Article d’actualité** — un article spécifique sous forme de diapositive. L’image, le titre
   et le teaser proviennent de l’article, le bouton renvoie vers celui-ci.
-- **Chaîne d'actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
-  ordre et les filtres applicables sont paramétrables. Lorsqu’un nouvel article paraît dans la
+- **Chaîne d’actualités** — une chaîne entière, une diapositive par article. Le nombre, l’
+  ordre et les filtres sont paramétrables. Lorsqu’un nouvel article paraît dans la
   chaîne, il s’affiche automatiquement sur la scène.
 
 Ces trois types figurent dans la même liste et peuvent être librement combinés et
@@ -25,8 +25,8 @@ articles d’une rubrique.
 - L’image s’étend sur toute la largeur de la fenêtre — même si la page
   elle-même dispose d’une colonne de contenu plus étroite.
 - La scène est **alignée en haut** : si la page comporte un fil d’Ariane,
-  la scène se trouve juste en dessous ; si elle n’en a pas, elle se raccorde directement au
-  menu. La bande blanche vide que la page laisse habituellement au-dessus du premier
+  la scène se trouve immédiatement en dessous ; si elle n’en a pas, elle se raccorde directement au
+  menu. La bande blanche vide que la page réserve habituellement au-dessus du premier
   contenu est supprimée.
 - Le **texte reste aligné sur la ligne de repère de la page** : il commence sur la même
   ligne verticale que l’en-tête, le menu et le texte situé sous la zone d’affichage. Il
@@ -36,7 +36,7 @@ articles d’une rubrique.
   afin que le texte clair reste lisible sur un fond clair.
 - En cas de plusieurs diapositives : des flèches à gauche et à droite, avec un trait entre chacune d’elles.
   Le trait de la diapositive actuelle est rouge.
-- Le changement se poursuit tant que la souris survole la scène ou que le focus se trouve
+- Le changement persiste tant que la souris survole la scène ou que le focus se trouve
   sur celle-ci. Sur le téléphone, on fait glisser le doigt ; les flèches y sont masquées.
 - **Sur le téléphone** (largeur inférieure à 768 pixels), seul le titre apparaît
   sur l’image, sur quatre lignes au maximum ; tout ce qui dépasse est tronqué par « … ».

@@ -11,7 +11,7 @@ No es necesario actualizar una diapositiva manualmente. Además de las diapositi
 página de inicio también puede mostrar **artículos de las noticias**:
 
 - **Artículo de noticias**: un artículo concreto como diapositiva. La imagen, el título
-  y el resumen provienen del artículo, y el botón lleva a él.
+  y el resumen proceden del artículo, y el botón lleva a él.
 - **Canal de noticias**: un canal completo, con una diapositiva por artículo. Se puede configurar el número de diapositivas,
   el orden y los filtros. Cuando aparece un nuevo artículo en
   el canal, se muestra automáticamente en el escenario sin necesidad de intervención alguna.
@@ -26,7 +26,7 @@ noticias de un canal.
   tiene una columna de contenido más estrecha.
 - El escenario queda **alineado en la parte superior**: si la página tiene una barra de navegación,
   el escenario se sitúa justo debajo; si no la tiene, se une directamente al
-  menú. Se suprime la franja blanca vacía que la página suele dejar sobre el primer
+  menú. Se elimina la franja blanca vacía que la página suele dejar sobre el primer
   contenido.
 - El **texto se mantiene en la línea de alineación de la página**: comienza en la misma
   línea vertical que el encabezado, el menú y el texto situado debajo del escenario. No
@@ -47,8 +47,8 @@ noticias de un canal.
   tampoco se puede pulsar.
 - Quien tenga configurada la opción «Reducir movimiento» en el sistema operativo no verá
   ningún cambio por sí mismo ni ninguna transición; solo verá los elementos de control.
-- Las diapositivas de las noticias tienen el mismo aspecto que cualquier otra diapositiva. Desde fuera no se puede
-  distinguir que el contenido provenga de una noticia.
+- Las diapositivas de las noticias tienen el mismo aspecto que cualquier otra diapositiva. Desde fuera no se aprecia
+  que el contenido proceda de una noticia.
 
 ## Lo que ves en el editor del CMS
 
