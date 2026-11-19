@@ -33,7 +33,8 @@ import type { HeroEditorValue } from "./editor-value";
 import type { Post as NewsPost } from "@shared/staffbase/posts";
 import { NewsChannel } from "@shared/staffbase/channels";
 import { NewsSource } from "./editors/news-source";
-import { Slide } from "./slides-model";
+import { Slide, animationMedium } from "./slides-model";
+import { DEFAULT_ANIMATION } from "./slide-animation";
 
 const mediaItem = (id: string): MediaItem => ({
   id,
@@ -1213,6 +1214,43 @@ describe("SlideEditor", () => {
       });
 
       await waitFor(() => expect(screen.getByTestId("hero-news-preview")).toHaveTextContent("Dazu gibt es nichts zu zeigen"));
+    });
+  });
+  describe("Animation als Hintergrund", () => {
+    // Die Kacheln malen ein Standbild; jsdom hat keine Leinwand.
+    beforeEach(() => {
+      jest.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+    });
+
+    const option = (name: string): HTMLElement => screen.getByRole("radio", { name });
+
+    it("wechselt von Bild oder Video zur Animation und wirft das Hochformat weg", async () => {
+      const h = setupLive([slide("a", { imagePortrait: { url: "https://cdn.example.test/p.jpg", alt: "" } })]);
+      await userEvent.click(option("Animation"));
+
+      expect(h.latestSlides()[0]!.image).toEqual(animationMedium(DEFAULT_ANIMATION));
+      expect(h.latestSlides()[0]!.imagePortrait).toBeUndefined();
+      expect(screen.getByTestId("animation-field")).toBeInTheDocument();
+      expect(screen.queryByTestId("slide-image-pick")).toBeNull();
+    });
+
+    it("stellt Muster, Grundton, Tempo und Akzente ein", async () => {
+      const h = setupLive([slide("a", { image: animationMedium(DEFAULT_ANIMATION) })]);
+      await userEvent.click(screen.getByTestId("animation-pattern-grid"));
+      await userEvent.click(option("Hell"));
+      await userEvent.click(option("Lebhaft"));
+      await userEvent.click(screen.getByRole("switch", { name: /Rote Akzente/ }));
+
+      expect(h.latestSlides()[0]!.image.animation).toEqual({ pattern: "grid", theme: "light", speed: "lively", accent: false });
+      expect(screen.getByTestId("animation-pattern-grid")).toHaveAttribute("aria-pressed", "true");
+    });
+
+    it("geht zurück zu einer leeren Datei", async () => {
+      const h = setupLive([slide("a", { image: animationMedium(DEFAULT_ANIMATION) })]);
+      await userEvent.click(option("Bild oder Video"));
+
+      expect(h.latestSlides()[0]!.image).toEqual({ url: "", alt: "" });
+      expect(screen.getByTestId("slide-image-pick")).toBeInTheDocument();
     });
   });
 });

@@ -29,7 +29,10 @@ import { Textarea } from "@man/config-ui/primitives/textarea";
 import { useConfigShell } from "@man/config-ui/shell/shell-context";
 
 import { SlideItem } from "../hero-items";
-import { mediaFromUrl, withMediaKind } from "../slides-model";
+import { SegmentedField } from "@man/config-ui/form/segmented-field";
+import { DEFAULT_ANIMATION } from "../slide-animation";
+import { animationMedium, isAnimation, mediaFromUrl, withMediaKind } from "../slides-model";
+import { AnimationField } from "./animation-field";
 import { CtaListForm } from "./cta-list-form";
 import { useFieldMedia } from "./editor-media";
 import { ImageField } from "./image-field";
@@ -46,7 +49,47 @@ export interface SlideFormProps {
   source: NewsSource;
 }
 
-function MediaSection({ slide, onPatch, onPick }: Omit<SlideFormProps, "source">): ReactElement {
+type Background = "file" | "animation";
+
+const BACKGROUND_OPTIONS = [
+  { id: "file", label: "Bild oder Video" },
+  { id: "animation", label: "Animation" },
+] as const satisfies readonly { id: Background; label: string }[];
+
+function MediaSection(props: Omit<SlideFormProps, "source">): ReactElement {
+  const { slide, onPatch } = props;
+  const animated = isAnimation(slide.image);
+  const choose = (background: Background): void => {
+    if (background === (animated ? "animation" : "file")) return;
+    // Ein Hochformat gehört zu einer Datei; die Animation passt sich selbst an.
+    onPatch(
+      background === "animation"
+        ? { image: animationMedium(DEFAULT_ANIMATION), imagePortrait: undefined }
+        : { image: { url: "", alt: "" } },
+    );
+  };
+
+  return (
+    <FormSection title="Medium">
+      <SegmentedField
+        label="Hintergrund"
+        options={BACKGROUND_OPTIONS}
+        value={animated ? "animation" : "file"}
+        onChange={choose}
+      />
+      {isAnimation(slide.image) ? (
+        <AnimationField
+          animation={slide.image.animation}
+          onChange={(animation) => onPatch({ image: animationMedium(animation) })}
+        />
+      ) : (
+        <FileMedia {...props} />
+      )}
+    </FormSection>
+  );
+}
+
+function FileMedia({ slide, onPatch, onPick }: Omit<SlideFormProps, "source">): ReactElement {
   const { issuesVisible } = useConfigShell();
   // Das Hauptbild ist nie `undefined` — eine leere Folie trägt `url: ""`.
   // Für die Kachel und das Adressfeld heißt das dasselbe: noch kein Medium.
@@ -56,7 +99,7 @@ function MediaSection({ slide, onPatch, onPick }: Omit<SlideFormProps, "source">
   const portraitMedia = useFieldMedia(slide.id, "imagePortrait");
 
   return (
-    <FormSection title="Medium">
+    <>
       <ImageField
         label="Bild oder Video"
         hint="Quer, mindestens 1920 px breit. Ohne Bild oder Video wird die Folie nicht gezeigt."
@@ -95,7 +138,7 @@ function MediaSection({ slide, onPatch, onPick }: Omit<SlideFormProps, "source">
         media={portraitMedia}
         testId="slide-portrait"
       />
-    </FormSection>
+    </>
   );
 }
 

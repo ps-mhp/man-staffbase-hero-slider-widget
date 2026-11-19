@@ -42,7 +42,8 @@ import { documentLocales } from "@shared/staffbase/posts";
 import type { NewsChannel } from "@shared/staffbase/channels";
 import { entryKindName } from "../editor-entries";
 import { pickPostContent, pickPostImage } from "../news-slides";
-import { isVideo } from "../slides-model";
+import { isAnimation, isVideo } from "../slides-model";
+import { animationThumbnail } from "../slide-animation-canvas";
 import { NewsSource, useNewsChannels } from "./news-source";
 
 export interface ItemLabel {
@@ -71,7 +72,7 @@ function slideLabel(item: SlideItem, kind: string): Omit<ItemLabel, "type"> {
     kind,
     title: item.headline.trim() === "" ? "Ohne Überschrift" : item.headline,
     description: buttons > 0 ? `${kind} · ${buttonCount(buttons)}` : kind,
-    thumbUrl: item.image.url === "" ? undefined : item.image.url,
+    thumbUrl: isAnimation(item.image) ? animationThumbnail(item.image.animation) : item.image.url === "" ? undefined : item.image.url,
     thumbVideo: isVideo(item.image),
   };
 }
