@@ -872,11 +872,28 @@
 // ihrer Anker untereinander, unten auf der Bühne wie die feste Folie; rechte
 // Zonen rücken dabei nach links, mittlere bleiben mittig.
 
+// Die Bühne ist Maß für die Höhe der Bausteine (`cqb`), die Zone für ihre
+// Breite (`cqi`). `__inner` liegt absolut auf der Folie, seine Größe hängt
+// nie am Inhalt — `size` ist dort sicher. Die Zone misst nur ihre Breite:
+// schmal wächst sie mit ihrem Inhalt in die Höhe.
+.man-hero__inner--zones {
+  container-type: size;
+}
+
 .man-hero__zones {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  // Drittel, solange der Inhalt passt; eine volle Zeile bekommt, was sie
+  // braucht, die anderen teilen den Rest. Vorher wuchs das Raster als
+  // Flex-Kind (`min-height: auto`) auf dreimal die höchste Zeile — ein großes
+  // Bild in der Mitte (392px) machte es 1288px hoch und schob die Überschrift
+  // aus der 560px hohen Bühne (gemessen 19.11.2026). `min-height: 0` hält es
+  // auf Bühnenhöhe; passt der Inhalt wirklich nicht, läuft er wie bisher nach
+  // oben über (`align-content: end`), die Unterkante bleibt.
+  grid-template-rows: repeat(3, minmax(min-content, 1fr));
+  align-content: end;
+  min-height: 0;
   gap: man("space-5");
   padding-block: man("space-6");
 }
@@ -886,6 +903,7 @@
 }
 
 .man-hero__zone {
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   gap: man("space-3");
@@ -1073,25 +1091,42 @@
   height: 48px;
 }
 
-.man-hero__block-image--s {
+// Bild oder Logo: die Breite ein Anteil der Zone, die Höhe gedeckelt auf
+// einen Anteil der Bühne. Feste 96/160/240px gingen auf breiten Bühnen unter
+// — „L“ sah aus wie ein Vorschaubild (19.11.2026). Stößt ein Bild an den
+// Deckel, bleibt es ganz (`contain`) und steht, wie die Zone ausrichtet.
+.man-hero__block-image {
   display: block !important;
-  width: 96px !important;
   max-width: 100% !important;
   height: auto !important;
+  object-fit: contain;
+}
+
+.man-hero__block-image--s {
+  width: 33cqi !important;
+  max-height: 20cqb !important;
 }
 
 .man-hero__block-image--m {
-  display: block !important;
-  width: 160px !important;
-  max-width: 100% !important;
-  height: auto !important;
+  width: 66cqi !important;
+  max-height: 40cqb !important;
 }
 
 .man-hero__block-image--l {
-  display: block !important;
-  width: 240px !important;
-  max-width: 100% !important;
-  height: auto !important;
+  width: 100cqi !important;
+  max-height: 60cqb !important;
+}
+
+.man-hero__zone--x-start .man-hero__block-image {
+  object-position: left center;
+}
+
+.man-hero__zone--x-center .man-hero__block-image {
+  object-position: center;
+}
+
+.man-hero__zone--x-end .man-hero__block-image {
+  object-position: right center;
 }
 
 // Ausdrückliche Farben schlagen die der Folie.
@@ -1135,6 +1170,16 @@
   .man-hero__zone--x-end {
     align-items: flex-start;
     text-align: left;
+  }
+
+  .man-hero__zone--x-end .man-hero__block-image {
+    object-position: left center;
+  }
+
+  // Hochkant stehen alle Zonen unten übereinander; ein großes Bild ließe für
+  // Überschrift und Text sonst keinen Platz.
+  .man-hero__block-image--l {
+    max-height: 45cqb !important;
   }
 
   .man-hero__block--hide-mobile {

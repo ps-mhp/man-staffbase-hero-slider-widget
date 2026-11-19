@@ -166,6 +166,23 @@ describe("Stylesheets", () => {
       );
     });
 
+    it("misst Bild-Bausteine an Zone und Bühne, nicht in festen Pixeln", () => {
+      // 96/160/240px waren auf einer 2200px breiten Bühne kaum zu
+      // unterscheiden (Nutzer, 19.11.2026): „L“ sah aus wie ein Vorschaubild.
+      // Breite als Anteil der Zone, Höhe als Anteil der Bühne.
+      const css = read("hero-slider.scss");
+      for (const size of ["s", "m", "l"]) {
+        const rule = new RegExp(`\\.man-hero__block-image--${size}\\s*\\{([^}]*)\\}`).exec(css)?.[1] ?? "";
+        expect(rule).toMatch(/width:\s*\d+cqi/);
+        expect(rule).toMatch(/max-height:\s*\d+cqb/);
+        expect(rule).not.toMatch(/\d+px/);
+      }
+      expect(css).toMatch(/\.man-hero__inner--zones\s*\{[^}]*container-type:\s*size/);
+      expect(css).toMatch(/\.man-hero__zone\s*\{[^}]*container-type:\s*inline-size/);
+      // Ein großes Bild darf seine Zeile füllen, ohne das Raster über die Bühne zu treiben.
+      expect(css).toMatch(/\.man-hero__zones\s*\{[^}]*grid-template-rows:\s*repeat\(3, minmax\(min-content, 1fr\)\)/);
+    });
+
     it("nimmt der Bühne die Luft nach unten, wenn sie den Abschnitt füllt", () => {
       // Die Luft von oben ist genau die Lücke, um die es bei der
       // Abschnittshöhe geht; der Abstand zum nächsten Abschnitt gehört dort

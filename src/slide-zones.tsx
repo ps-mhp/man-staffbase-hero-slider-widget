@@ -163,7 +163,7 @@ export function SlideZones({ layout, zoneAlign, zoneSpan, renderBlock, renderZon
   const folded = foldLayout(layout, zoneSpan);
   const first = blocksInReadingOrder(folded).find(({ block }) => block.type === "heading")?.block.id;
   return (
-    <div className="man-hero__inner">
+    <div className="man-hero__inner man-hero__inner--zones">
       <div className="man-hero__zones" data-testid="hero-zones">
         {visibleZones(zoneSpan).map((zone) => {
           const blocks = folded[zone] ?? [];

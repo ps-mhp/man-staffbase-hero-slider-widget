@@ -146,7 +146,7 @@ Fluchtlinie. Im Panel rechts steht der Katalog der Bausteine.
 | Text | Text, Größe (**L**, **M**, **S**), Farbe. |
 | Label | Kurzer Text über einer Überschrift, Farbe. |
 | Buttons | Bis zu drei Buttons wie bei der festen Folie. |
-| Bild oder Logo | Aus der Mediathek oder per Adresse, Beschreibung, Größe (**S**, **M**, **L**). Freigestellte Bilder (PNG, SVG) wirken auf jedem Hintergrund. |
+| Bild oder Logo | Aus der Mediathek oder per Adresse, Beschreibung, Größe: **S** ein Drittel, **M** zwei Drittel, **L** die ganze Breite der Zone — höchstens ein Fünftel, zwei Fünftel bzw. drei Fünftel der Bühnenhöhe (mobil bei **L** knapp die Hälfte). Für ein großes Bild die Zone breiter machen (**Breite**). Freigestellte Bilder (PNG, SVG) wirken auf jedem Hintergrund. |
 | Icon | Symbol, Größe, Farbe. |
 
 Für jeden Baustein außerdem: **Zone** (eine 3×3-Auswahl wie die Bühne),
