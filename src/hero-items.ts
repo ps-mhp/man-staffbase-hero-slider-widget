@@ -48,6 +48,7 @@ import {
 } from "./slides-model";
 import { encodeAnimation, parseAnimation } from "./slide-animation";
 import { BlockCodec, encodeLayout, firstHeading, parseLayout, parseZoneAlign } from "./slide-layout";
+import { foldLayout, parseZoneSpan } from "./zone-spans";
 
 export type HeroItemType = "slide" | "news-post" | "news-channel";
 
@@ -143,6 +144,7 @@ const KNOWN_SLIDE_KEYS = new Set([
   "mode",
   "layout",
   "zoneAlign",
+  "zoneSpan",
 ]);
 
 const KNOWN_POST_KEYS = new Set([
@@ -290,9 +292,12 @@ const parseSlideItem = (value: Record<string, unknown>): SlideItem | null => {
 
   if (value.mode === "custom") {
     item.mode = "custom";
-    item.layout = parseLayout(value.layout, blockCodec());
+    const zoneSpan = parseZoneSpan(value.zoneSpan);
+    // Bausteine in Zellen, die eine zusammengefasste Zone überdeckt, gehören in sie.
+    item.layout = foldLayout(parseLayout(value.layout, blockCodec()), zoneSpan);
     const zoneAlign = parseZoneAlign(value.zoneAlign);
     if (Object.keys(zoneAlign).length > 0) item.zoneAlign = zoneAlign;
+    if (Object.keys(zoneSpan).length > 0) item.zoneSpan = zoneSpan;
   }
 
   const unknown = collectUnknown(value, KNOWN_SLIDE_KEYS);
@@ -535,6 +540,8 @@ const encodeSlideItem = (item: SlideItem): Record<string, unknown> => {
     out.layout = encodeLayout(item.layout ?? {}, blockCodec());
     const zoneAlign = parseZoneAlign(item.zoneAlign);
     if (Object.keys(zoneAlign).length > 0) out.zoneAlign = zoneAlign;
+    const zoneSpan = parseZoneSpan(item.zoneSpan);
+    if (Object.keys(zoneSpan).length > 0) out.zoneSpan = zoneSpan;
     // Ältere Fassungen kennen keine Zonen; sie zeigen wenigstens die erste
     // Überschrift. Auch die Liste im Editor nimmt sie als Titel.
     out.headline = firstHeading(item.layout) || item.headline;

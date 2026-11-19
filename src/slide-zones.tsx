@@ -14,7 +14,9 @@
 /**
  * Die Bausteine einer benutzerdefinierten Folie in ihren Zonen
  * (slide-layout.ts). Die Zonen sind ein 3×3-Raster auf der Fluchtlinie;
- * schmal stehen sie in Lesereihenfolge untereinander (hero-slider.scss).
+ * zusammengefasste Zonen reichen über mehrere Spalten oder Zeilen
+ * (zone-spans.ts). Schmal stehen die Zonen in Lesereihenfolge ihrer Anker
+ * untereinander (hero-slider.scss).
  *
  * Die erste Überschrift ist ein `<h2>` wie die feste Folie, weitere sind
  * `<h3>` — ihre Größe kommt aus `size`, nicht aus der Ebene.
@@ -34,12 +36,12 @@ import {
   HeadingSize,
   SlideBlock,
   SlideLayout,
-  ZONES,
   ZoneAlignments,
   ZoneId,
   alignOf,
   blocksInReadingOrder,
 } from "./slide-layout";
+import { SpanSize, ZoneSpans, foldLayout, spanOf, visibleZones } from "./zone-spans";
 
 /** Ausgeschrieben statt zusammengesetzt, damit jede Klasse im Quelltext auffindbar bleibt. */
 const COLOR_CLASS: Record<BlockColor, string | undefined> = {
@@ -90,6 +92,16 @@ const ALIGN_Y_CLASS: Record<Align, string> = {
   center: "man-hero__zone--y-center",
   end: "man-hero__zone--y-end",
 };
+const COLS_CLASS: Record<SpanSize, string | undefined> = {
+  1: undefined,
+  2: "man-hero__zone--cols-2",
+  3: "man-hero__zone--cols-3",
+};
+const ROWS_CLASS: Record<SpanSize, string | undefined> = {
+  1: undefined,
+  2: "man-hero__zone--rows-2",
+  3: "man-hero__zone--rows-3",
+};
 const colorClass = (color: BlockColor): string | undefined => COLOR_CLASS[color];
 
 const join = (...classes: (string | false | undefined)[]): string => classes.filter(Boolean).join(" ");
@@ -139,19 +151,24 @@ export interface SlideZonesProps {
   layout: SlideLayout | undefined;
   /** Ausrichtung je Zone; ohne folgt sie der Lage der Zone. */
   zoneAlign?: ZoneAlignments;
+  /** Zusammengefasste Zonen; ohne steht jede Zone in ihrer Zelle. */
+  zoneSpan?: ZoneSpans;
   /** Der Editor umhüllt jeden Baustein; ohne steht er so, wie er ist. */
   renderBlock?: (block: SlideBlock, zone: ZoneId, content: ReactNode) => ReactNode;
   /** Der Editor füllt jede Zone, auch leere (Ablagefläche). */
   renderZone?: (zone: ZoneId, children: ReactNode) => ReactNode;
 }
 
-export function SlideZones({ layout, zoneAlign, renderBlock, renderZone }: SlideZonesProps): ReactElement {
-  const first = blocksInReadingOrder(layout).find(({ block }) => block.type === "heading")?.block.id;
+export function SlideZones({ layout, zoneAlign, zoneSpan, renderBlock, renderZone }: SlideZonesProps): ReactElement {
+  const folded = foldLayout(layout, zoneSpan);
+  const first = blocksInReadingOrder(folded).find(({ block }) => block.type === "heading")?.block.id;
   return (
     <div className="man-hero__inner">
       <div className="man-hero__zones" data-testid="hero-zones">
-        {ZONES.map((zone) => {
-          const blocks = layout?.[zone] ?? [];
+        {visibleZones(zoneSpan).map((zone) => {
+          const blocks = folded[zone] ?? [];
+          const span = spanOf(zoneSpan, zone);
+          const align = alignOf(zoneAlign, zone);
           if (blocks.length === 0 && renderZone === undefined) return null;
           const children = blocks.map((block) => {
             const content = <BlockContent block={block} firstHeading={block.id === first} />;
@@ -168,7 +185,14 @@ export function SlideZones({ layout, zoneAlign, renderBlock, renderZone }: Slide
           return (
             <div
               key={zone}
-              className={join("man-hero__zone", ZONE_CLASS[zone], ALIGN_X_CLASS[alignOf(zoneAlign, zone).x], ALIGN_Y_CLASS[alignOf(zoneAlign, zone).y])}
+              className={join(
+                "man-hero__zone",
+                ZONE_CLASS[zone],
+                COLS_CLASS[span.cols],
+                ROWS_CLASS[span.rows],
+                ALIGN_X_CLASS[align.x],
+                ALIGN_Y_CLASS[align.y],
+              )}
               data-zone={zone}
             >
               {renderZone === undefined ? children : renderZone(zone, children)}

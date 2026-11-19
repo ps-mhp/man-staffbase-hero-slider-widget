@@ -161,7 +161,18 @@ gelten für alle Bausteine der Zone; dieselben Felder stehen auch in den
 Einstellungen jedes Bausteins. Vorgabe ist die Lage der Zone — „unten links“
 steht unten links.
 
+**Zonen zusammenfassen:** Unter der Ausrichtung stehen **Breite** (**1 Spalte**,
+**2 Spalten**, **3 Spalten**) und **Höhe** (**1 Zeile**, **2 Zeilen**,
+**3 Zeilen**). So wird etwa die obere Reihe zu einer Zone („oben, ganze
+Breite“) oder die linke Spalte („links, ganze Höhe“). Die Zone wächst zuerst
+nach rechts bzw. unten, am Rand nach links bzw. oben; die Bausteine der
+überdeckten Zonen kommen hinter ihre eigenen, die Ausrichtung bleibt. Beim
+Verkleinern bleibt die Zone auf der Seite, an der ihre Bausteine stehen. Eine
+Größe, die eine andere zusammengefasste Zone nur zum Teil träfe, wird nicht
+angeboten.
+
 **Mobil** stehen die Zonen in Lesereihenfolge untereinander (oben links, oben
-Mitte, oben rechts, Mitte links …); rechts Ausgerichtetes rückt nach links,
+Mitte, oben rechts, Mitte links …; eine zusammengefasste Zone an der Stelle
+ihrer oberen linken Ecke); rechts Ausgerichtetes rückt nach links,
 Mittiges bleibt mittig, Buttons bleiben Buttons. Was auf dem Telefon zu viel ist, blendet **Mobil ausblenden**
 aus; prüfen lässt sich das oben mit **Mobil**.

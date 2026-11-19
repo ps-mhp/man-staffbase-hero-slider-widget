@@ -28,6 +28,7 @@
 
 import { DEFAULT_ANIMATION, SlideAnimation } from "./slide-animation";
 import type { SlideLayout, ZoneAlignments } from "./slide-layout";
+import type { ZoneSpans } from "./zone-spans";
 
 /** Was hinter einer Medienadresse steckt. */
 export type MediaKind = "image" | "video";
@@ -284,6 +285,8 @@ export interface Slide {
   layout?: SlideLayout;
   /** Ausrichtung je Zone, nur Abweichungen von der Lage der Zone. */
   zoneAlign?: ZoneAlignments;
+  /** Zusammengefasste Zonen (zone-spans.ts): Anker mit Spalten und Zeilen. */
+  zoneSpan?: ZoneSpans;
   /**
    * Alles, was eine spätere Version geschrieben hat und diese nicht kennt.
    * Ohne diesen Beutel würde ein Redakteur, der eine alte Bundle-Version

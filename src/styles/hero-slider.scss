@@ -867,9 +867,10 @@
 //
 // Ein 3×3-Raster auf der Fluchtlinie (slide-layout.ts): Zeilen oben/Mitte/
 // unten, Spalten links/Mitte/rechts. Die Bausteine einer Zone stehen
-// untereinander und nach ihrer Spalte ausgerichtet. Schmal stehen die Zonen
-// in Lesereihenfolge untereinander, unten auf der Bühne wie die feste Folie;
-// rechte Zonen rücken dabei nach links, mittlere bleiben mittig.
+// untereinander und nach ihrer Spalte ausgerichtet; zusammengefasste Zonen
+// spannen über mehrere Zellen. Schmal stehen die Zonen in Lesereihenfolge
+// ihrer Anker untereinander, unten auf der Bühne wie die feste Folie; rechte
+// Zonen rücken dabei nach links, mittlere bleiben mittig.
 
 .man-hero__zones {
   flex: 1;
@@ -938,6 +939,24 @@
 .man-hero__zone--bottom-right {
   grid-row: 3;
   grid-column: 3;
+}
+
+// Zusammengefasste Zonen (zone-spans.ts) reichen von ihrem Anker aus über
+// mehrere Spalten oder Zeilen. Nach den Plätzen, damit das Ende gewinnt.
+.man-hero__zone--cols-2 {
+  grid-column-end: span 2;
+}
+
+.man-hero__zone--cols-3 {
+  grid-column-end: span 3;
+}
+
+.man-hero__zone--rows-2 {
+  grid-row-end: span 2;
+}
+
+.man-hero__zone--rows-3 {
+  grid-row-end: span 3;
 }
 
 .man-hero__zone--x-start {

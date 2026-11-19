@@ -40,13 +40,12 @@ import {
   HeadingSize,
   SlideBlock,
   SlideLayout,
-  ZONES,
-  ZONE_LABELS,
   ZoneAlignments,
   ZoneId,
   alignOf,
   withAlign,
 } from "../slide-layout";
+import { ZoneSpans, spanOf, visibleZones, zoneCell, zoneName } from "../zone-spans";
 import { CTA_ICONS } from "../slides-model";
 import { CtaListForm } from "./cta-list-form";
 import { NewsSource } from "./news-source";
@@ -91,10 +90,12 @@ const Y_OPTIONS = [
 export function ZoneAlignFields({
   zone,
   zoneAlign,
+  zoneSpan,
   onZoneAlign,
 }: {
   zone: ZoneId;
   zoneAlign: ZoneAlignments | undefined;
+  zoneSpan: ZoneSpans | undefined;
   onZoneAlign: (next: ZoneAlignments) => void;
 }): ReactElement {
   const align = alignOf(zoneAlign, zone);
@@ -102,7 +103,7 @@ export function ZoneAlignFields({
     <>
       <SegmentedField
         label="Waagerecht in der Zone"
-        hint={`Gilt für alle Bausteine der Zone „${ZONE_LABELS[zone]}“. Mobil: rechts wird links, Mitte bleibt.`}
+        hint={`Gilt für alle Bausteine der Zone „${zoneName(zoneSpan, zone)}“. Mobil: rechts wird links, Mitte bleibt.`}
         options={X_OPTIONS}
         value={align.x}
         onChange={(x) => onZoneAlign(withAlign(zoneAlign, zone, "x", x))}
@@ -117,26 +118,34 @@ export function ZoneAlignFields({
   );
 }
 
-/** Neun Felder wie die Zonen der Bühne. */
-function ZonePicker({ value, onChange }: { value: ZoneId; onChange: (zone: ZoneId) => void }): ReactElement {
+/**
+ * Die Zonen wie auf der Bühne: neun Felder, zusammengefasste über mehrere.
+ * Raster und Spannweite als Inline-Stil — die Zahlen kommen aus den Daten.
+ */
+function ZonePicker({ value, zoneSpan, onChange }: { value: ZoneId; zoneSpan: ZoneSpans | undefined; onChange: (zone: ZoneId) => void }): ReactElement {
   return (
     <Field label="Zone" hint="Mobil stehen die Zonen in Lesereihenfolge untereinander.">
-      <div role="group" aria-label="Zone" className="grid w-36 grid-cols-3 gap-1">
-        {ZONES.map((zone) => (
-          <button
-            key={zone}
-            type="button"
-            aria-pressed={zone === value}
-            aria-label={ZONE_LABELS[zone]}
-            title={ZONE_LABELS[zone]}
-            data-testid={`zone-pick-${zone}`}
-            onClick={() => onChange(zone)}
-            className={cn(
-              "h-8 rounded-sm border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
-              zone === value ? "border-primary bg-primary" : "border-border bg-background hover:border-foreground/40",
-            )}
-          />
-        ))}
+      <div role="group" aria-label="Zone" className="grid w-36 grid-cols-3 gap-1" style={{ gridTemplateRows: "repeat(3, 2rem)" }}>
+        {visibleZones(zoneSpan).map((zone) => {
+          const { row, col } = zoneCell(zone);
+          const span = spanOf(zoneSpan, zone);
+          return (
+            <button
+              key={zone}
+              type="button"
+              aria-pressed={zone === value}
+              aria-label={zoneName(zoneSpan, zone)}
+              title={zoneName(zoneSpan, zone)}
+              data-testid={`zone-pick-${zone}`}
+              onClick={() => onChange(zone)}
+              style={{ gridRow: `${row + 1} / span ${span.rows}`, gridColumn: `${col + 1} / span ${span.cols}` }}
+              className={cn(
+                "rounded-sm border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                zone === value ? "border-primary bg-primary" : "border-border bg-background hover:border-foreground/40",
+              )}
+            />
+          );
+        })}
       </div>
     </Field>
   );
@@ -256,12 +265,13 @@ export interface BlockFormProps {
   blockId: string;
   onLayout: (layout: SlideLayout) => void;
   zoneAlign: ZoneAlignments | undefined;
+  zoneSpan: ZoneSpans | undefined;
   onZoneAlign: (next: ZoneAlignments) => void;
   source: NewsSource;
   onPickImage: (blockId: string) => void;
 }
 
-export function BlockForm({ layout, blockId, onLayout, zoneAlign, onZoneAlign, source, onPickImage }: BlockFormProps): ReactElement | null {
+export function BlockForm({ layout, blockId, onLayout, zoneAlign, zoneSpan, onZoneAlign, source, onPickImage }: BlockFormProps): ReactElement | null {
   const { select } = useBlockSelection();
   const found = findBlock(layout, blockId);
   if (found === undefined) return null;
@@ -299,8 +309,8 @@ export function BlockForm({ layout, blockId, onLayout, zoneAlign, onZoneAlign, s
         />
       </div>
       <FormSection title={BLOCK_LABELS[block.type]}>
-        <ZonePicker value={zone} onChange={(next) => onLayout(moveBlock(layout, block.id, next))} />
-        <ZoneAlignFields zone={zone} zoneAlign={zoneAlign} onZoneAlign={onZoneAlign} />
+        <ZonePicker value={zone} zoneSpan={zoneSpan} onChange={(next) => onLayout(moveBlock(layout, block.id, next))} />
+        <ZoneAlignFields zone={zone} zoneAlign={zoneAlign} zoneSpan={zoneSpan} onZoneAlign={onZoneAlign} />
         <TypeFields block={block} set={set} source={source} onPickImage={() => onPickImage(block.id)} />
         <SwitchRow
           label="Mobil ausblenden"

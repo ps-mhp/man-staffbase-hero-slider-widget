@@ -224,6 +224,8 @@ denn sie wird bei jedem Seitenaufruf geladen.
    Text, Größe, Farbe, die **Zone** und **Mobil ausblenden**. **Zurück zur
    Folie** führt zum Katalog. Bausteine lassen sich auch auf der Bühne in eine
    andere Zone ziehen.
-4. Schalten Sie oben auf **Mobil** und prüfen Sie die Reihenfolge; blenden Sie
+4. Soll eine Zone breiter oder höher sein — etwa die ganze obere Reihe —,
+   klicken Sie auf ihren Namen und wählen rechts **Breite** oder **Höhe**.
+5. Schalten Sie oben auf **Mobil** und prüfen Sie die Reihenfolge; blenden Sie
    aus, was schmal zu viel ist.
-5. **Übernehmen**, speichern, in der Vorschau prüfen.
+6. **Übernehmen**, speichern, in der Vorschau prüfen.

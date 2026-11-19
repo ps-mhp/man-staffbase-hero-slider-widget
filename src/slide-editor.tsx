@@ -154,8 +154,8 @@ interface EntryMainProps {
  */
 function EntryMain({ entries, total, source }: EntryMainProps): ReactElement {
   const { item, index, full } = entries;
-  const layout = item !== undefined && isSlideItem(item) ? item.layout : undefined;
-  const editing = useStageEditing(layout, (next: SlideLayout) => entries.patch({ layout: next }));
+  const slide = item !== undefined && isSlideItem(item) ? item : undefined;
+  const editing = useStageEditing(slide?.layout, slide?.zoneSpan, (next: SlideLayout) => entries.patch({ layout: next }));
   if (item === undefined) {
     return <p className="px-10 py-6 text-sm text-muted-foreground">Wähle links einen Eintrag oder lege einen neuen an.</p>;
   }

@@ -26,11 +26,13 @@ import { FormSection } from "@man/config-ui/form/form-section";
 
 import { findBlock, insertBlock } from "../layout-ops";
 import { SlideItem } from "../hero-items";
-import { BLOCK_LABELS, BLOCK_TYPES, BlockType, SlideBlock, SlideLayout, ZONES, ZONE_LABELS, ZoneId, newBlock } from "../slide-layout";
+import { BLOCK_LABELS, BLOCK_TYPES, BlockType, SlideBlock, SlideLayout, ZoneId, newBlock } from "../slide-layout";
 import { ArrowLeft } from "lucide-react";
 import { BlockForm, ZoneAlignFields } from "./block-form";
 import type { ZoneAlignments } from "../slide-layout";
+import { Resized, ZoneSpans, ownerOf, visibleZones, zoneName } from "../zone-spans";
 import { NewsSource } from "./news-source";
+import { ZoneSpanFields } from "./zone-span-fields";
 import { CatalogTile, useBlockSelection } from "./zone-stage";
 
 const TILE_ICONS: Record<BlockType, ReactElement> = {
@@ -42,7 +44,10 @@ const TILE_ICONS: Record<BlockType, ReactElement> = {
   icon: <Shapes className="size-5" />,
 };
 
-/** Wohin ein angeklickter Baustein kommt: dorthin, wo die feste Folie ihren Text hat. */
+/**
+ * Wohin ein angeklickter Baustein kommt: dorthin, wo die feste Folie ihren
+ * Text hat — oder in die Zone, die diese Stelle zusammenfasst.
+ */
 const CLICK_ZONE: ZoneId = "bottom-left";
 
 /** Was ein Eintrag der Liste zeigt: der Text, sonst die Sorte. */
@@ -53,15 +58,15 @@ function blockSummary(block: SlideBlock): string {
   return `${BLOCK_LABELS.icon}: ${block.icon}`;
 }
 
-function BlockList({ layout }: { layout: SlideLayout | undefined }): ReactElement {
+function BlockList({ layout, zoneSpan }: { layout: SlideLayout | undefined; zoneSpan: ZoneSpans | undefined }): ReactElement {
   const { select } = useBlockSelection();
-  const zones = ZONES.filter((zone) => (layout?.[zone] ?? []).length > 0);
+  const zones = visibleZones(zoneSpan).filter((zone) => (layout?.[zone] ?? []).length > 0);
   if (zones.length === 0) return <p className="text-sm text-muted-foreground">Noch keine Bausteine.</p>;
   return (
     <ul className="flex flex-col gap-3" data-testid="block-list">
       {zones.map((zone) => (
         <li key={zone}>
-          <p className="mb-1 text-xs font-semibold text-muted-foreground">{ZONE_LABELS[zone]}</p>
+          <p className="mb-1 text-xs font-semibold text-muted-foreground">{zoneName(zoneSpan, zone)}</p>
           <ul className="flex flex-col gap-1">
             {(layout?.[zone] ?? []).map((block) => (
               <li key={block.id}>
@@ -82,17 +87,21 @@ function BlockList({ layout }: { layout: SlideLayout | undefined }): ReactElemen
   );
 }
 
-/** Eine gewählte Zone: ihre Ausrichtung und was in ihr steht. */
+/** Eine gewählte Zone: ihre Ausrichtung, ihre Größe und was in ihr steht. */
 function ZoneForm({
   zone,
   layout,
   zoneAlign,
+  zoneSpan,
   onZoneAlign,
+  onResize,
 }: {
   zone: ZoneId;
   layout: SlideLayout | undefined;
   zoneAlign: ZoneAlignments | undefined;
+  zoneSpan: ZoneSpans | undefined;
   onZoneAlign: (next: ZoneAlignments) => void;
+  onResize: (next: Resized) => void;
 }): ReactElement {
   const { select, selectZone } = useBlockSelection();
   const blocks = layout?.[zone] ?? [];
@@ -106,8 +115,9 @@ function ZoneForm({
         <ArrowLeft className="size-4" aria-hidden />
         Zurück zur Folie
       </button>
-      <FormSection title={`Zone ${ZONE_LABELS[zone]}`}>
-        <ZoneAlignFields zone={zone} zoneAlign={zoneAlign} onZoneAlign={onZoneAlign} />
+      <FormSection title={`Zone ${zoneName(zoneSpan, zone)}`}>
+        <ZoneAlignFields zone={zone} zoneAlign={zoneAlign} zoneSpan={zoneSpan} onZoneAlign={onZoneAlign} />
+        <ZoneSpanFields zone={zone} state={{ layout, zoneAlign, zoneSpan }} onResize={onResize} />
         {blocks.length === 0 ? (
           <p className="text-sm text-muted-foreground">Noch leer — Bausteine aus dem Katalog hierher ziehen.</p>
         ) : (
@@ -139,12 +149,28 @@ export interface CustomSlideFormProps {
 }
 
 export function CustomSlideForm({ slide, onPatch, source, onPickBlockImage }: CustomSlideFormProps): ReactElement {
-  const { selectedId, select, selectedZone } = useBlockSelection();
+  const { selectedId, select, selectedZone, selectZone } = useBlockSelection();
   const onLayout = (layout: SlideLayout): void => onPatch({ layout });
   const onZoneAlign = (zoneAlign: ZoneAlignments): void => onPatch({ zoneAlign });
+  const onResize = (next: Resized): void => {
+    const filled = <T extends object>(value: T): T | undefined => (Object.keys(value).length > 0 ? value : undefined);
+    onPatch({ layout: next.layout, zoneAlign: filled(next.zoneAlign), zoneSpan: filled(next.zoneSpan) });
+    // Wächst die Zone nach links oder oben, wandert ihr Anker — die Wahl geht mit.
+    selectZone(next.zone);
+  };
 
   if (selectedZone !== null) {
-    return <ZoneForm zone={selectedZone} layout={slide.layout} zoneAlign={slide.zoneAlign} onZoneAlign={onZoneAlign} />;
+    return (
+      <ZoneForm
+        // Eine Zelle, die inzwischen überdeckt ist (Rückgängig), steht für ihre Zone.
+        zone={ownerOf(slide.zoneSpan, selectedZone)}
+        layout={slide.layout}
+        zoneAlign={slide.zoneAlign}
+        zoneSpan={slide.zoneSpan}
+        onZoneAlign={onZoneAlign}
+        onResize={onResize}
+      />
+    );
   }
 
   // Ein gewählter Baustein, den es nicht mehr gibt (Rückgängig), führt zurück zur Folie.
@@ -155,6 +181,7 @@ export function CustomSlideForm({ slide, onPatch, source, onPickBlockImage }: Cu
         blockId={selectedId}
         onLayout={onLayout}
         zoneAlign={slide.zoneAlign}
+        zoneSpan={slide.zoneSpan}
         onZoneAlign={onZoneAlign}
         source={source}
         onPickImage={onPickBlockImage}
@@ -166,7 +193,7 @@ export function CustomSlideForm({ slide, onPatch, source, onPickBlockImage }: Cu
     <>
       <FormSection title="Bausteine">
         <p className="text-[13px] text-muted-foreground">
-          Auf eine Zone der Bühne ziehen — oder anklicken, dann steht er unten links. Ein Klick auf einen Baustein der Bühne öffnet seine Einstellungen, ein Klick auf den Namen einer Zone ihre Ausrichtung.
+          Auf eine Zone der Bühne ziehen — oder anklicken, dann steht er unten links. Ein Klick auf einen Baustein der Bühne öffnet seine Einstellungen, ein Klick auf den Namen einer Zone ihre Ausrichtung und Größe.
         </p>
         <div className="grid grid-cols-3 gap-2" data-testid="block-catalog">
           {BLOCK_TYPES.map((type) => (
@@ -176,7 +203,7 @@ export function CustomSlideForm({ slide, onPatch, source, onPickBlockImage }: Cu
               icon={TILE_ICONS[type]}
               onAdd={() => {
                 const block = newBlock(type);
-                onLayout(insertBlock(slide.layout, CLICK_ZONE, block));
+                onLayout(insertBlock(slide.layout, ownerOf(slide.zoneSpan, CLICK_ZONE), block));
                 select(block.id);
               }}
             />
@@ -184,7 +211,7 @@ export function CustomSlideForm({ slide, onPatch, source, onPickBlockImage }: Cu
         </div>
       </FormSection>
       <FormSection title="Auf der Folie">
-        <BlockList layout={slide.layout} />
+        <BlockList layout={slide.layout} zoneSpan={slide.zoneSpan} />
       </FormSection>
     </>
   );

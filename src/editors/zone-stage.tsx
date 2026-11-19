@@ -27,7 +27,8 @@ import { ReactElement, ReactNode, createContext, useContext, useState } from "re
 import { cn } from "@man/config-ui/primitives/utils";
 
 import { insertBlock, moveBlock } from "../layout-ops";
-import { BLOCK_LABELS, BlockType, SlideBlock, SlideLayout, ZONE_LABELS, ZoneId, newBlock } from "../slide-layout";
+import { BLOCK_LABELS, BlockType, SlideBlock, SlideLayout, ZoneId, newBlock } from "../slide-layout";
+import { ZoneSpans, zoneName } from "../zone-spans";
 
 // --- Auswahl -----------------------------------------------------------------
 
@@ -99,7 +100,11 @@ export interface StageEditing {
 }
 
 /** Was die Bühne zum Bearbeiten braucht; `onLayout` schreibt in die Folie. */
-export function useStageEditing(layout: SlideLayout | undefined, onLayout: (layout: SlideLayout) => void): StageEditing {
+export function useStageEditing(
+  layout: SlideLayout | undefined,
+  zoneSpan: ZoneSpans | undefined,
+  onLayout: (layout: SlideLayout) => void,
+): StageEditing {
   const { selectedId, select, selectedZone, selectZone } = useBlockSelection();
   const [over, setOver] = useState<ZoneId | null>(null);
 
@@ -118,7 +123,7 @@ export function useStageEditing(layout: SlideLayout | undefined, onLayout: (layo
       <div
         className={cn("man-se__zone", over === zone && "man-se__zone--over", selectedZone === zone && "man-se__zone--selected")}
         data-testid={`stage-zone-${zone}`}
-        aria-label={`Zone ${ZONE_LABELS[zone]}`}
+        aria-label={`Zone ${zoneName(zoneSpan, zone)}`}
         role="group"
         onDragOver={(event) => {
           if (!carriesBlock(event)) return;
@@ -136,7 +141,7 @@ export function useStageEditing(layout: SlideLayout | undefined, onLayout: (layo
           drop(zone, dropIndex(event.currentTarget, event.clientY), drag);
         }}
         onClick={(event) => {
-          // Die leere Fläche einer Zone wählt die Zone: rechts steht dann ihre Ausrichtung.
+          // Die leere Fläche einer Zone wählt die Zone: rechts stehen dann Ausrichtung und Größe.
           if (event.target === event.currentTarget) selectZone(zone);
         }}
       >
@@ -144,14 +149,14 @@ export function useStageEditing(layout: SlideLayout | undefined, onLayout: (layo
           type="button"
           className="man-se__zone-label"
           aria-pressed={selectedZone === zone}
-          aria-label={`Zone ${ZONE_LABELS[zone]} ausrichten`}
+          aria-label={`Zone ${zoneName(zoneSpan, zone)} einstellen`}
           data-testid={`stage-zone-label-${zone}`}
           onClick={(event) => {
             event.stopPropagation();
             selectZone(zone);
           }}
         >
-          {ZONE_LABELS[zone]}
+          {zoneName(zoneSpan, zone)}
         </button>
         {children}
       </div>

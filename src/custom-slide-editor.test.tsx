@@ -194,6 +194,51 @@ describe("Benutzerdefinierte Folie im Editor", () => {
     expect(h.latest().zoneAlign).toEqual({ "bottom-left": { x: "end" } });
   });
 
+  it("fasst die obere Reihe zu einer Zone zusammen und trennt sie wieder", async () => {
+    const label = (id: string) => ({ id, type: "label" as const, text: id, color: "auto" as const });
+    const h = setup([{ ...fixed, mode: "custom", layout: { "top-left": [label("a")], "top-right": [label("b")] } }]);
+    await userEvent.click(screen.getByTestId("stage-zone-label-top-left"));
+    await userEvent.click(within(within(panel()).getByTestId("zone-form")).getByRole("radio", { name: "3 Spalten" }));
+
+    expect(h.latest().zoneSpan).toEqual({ "top-left": { cols: 3 } });
+    expect(blocks(h.latest())).toEqual([
+      { zone: "top-left", type: "label" },
+      { zone: "top-left", type: "label" },
+    ]);
+    // Die Bühne folgt: sieben Zonen, die obere über die ganze Breite.
+    expect(screen.getAllByTestId(/^stage-zone-(?!label)/)).toHaveLength(7);
+    expect(screen.getByTestId("stage-zone-top-left").closest(".man-hero__zone")).toHaveClass("man-hero__zone--cols-3");
+    expect(screen.getByTestId("stage-zone-label-top-left")).toHaveTextContent("oben, ganze Breite");
+    expect(within(panel()).getByTestId("zone-form")).toHaveTextContent("Zone oben, ganze Breite");
+
+    await userEvent.click(within(within(panel()).getByTestId("zone-form")).getByRole("radio", { name: "1 Spalte" }));
+    expect(h.latest().zoneSpan).toBeUndefined();
+    expect(screen.getAllByTestId(/^stage-zone-(?!label)/)).toHaveLength(9);
+  });
+
+  it("wächst von rechts nach links, die Wahl folgt dem Anker; was eine Zone anschnitte, fehlt", async () => {
+    const h = setup([{ ...fixed, mode: "custom", layout: {}, zoneSpan: { "top-left": { cols: 2 } } }]);
+    await userEvent.click(screen.getByTestId("stage-zone-label-bottom-right"));
+    await userEvent.click(within(within(panel()).getByTestId("zone-form")).getByRole("radio", { name: "3 Zeilen" }));
+    // Oben rechts liegt außerhalb von „oben, links bis Mitte“ — die Spalte rechts geht ganz.
+    expect(h.latest().zoneSpan).toEqual({ "top-left": { cols: 2 }, "top-right": { rows: 3 } });
+    expect(within(panel()).getByTestId("zone-form")).toHaveTextContent("Zone rechts, ganze Höhe");
+
+    // Mitte Mitte kann nicht nach oben: dort läge die halbe zusammengefasste Zone.
+    await userEvent.click(screen.getByTestId("stage-zone-label-middle-center"));
+    const form = within(within(panel()).getByTestId("zone-form"));
+    expect(form.getByRole("radio", { name: "2 Zeilen" })).toBeInTheDocument();
+    expect(form.queryByRole("radio", { name: "3 Zeilen" })).toBeNull();
+  });
+
+  it("bietet im Baustein nur die Zonen an, die es gibt", async () => {
+    setup([{ ...fixed, mode: "custom", layout: { "top-left": [{ id: "x", type: "label", text: "Hallo", color: "auto" }] }, zoneSpan: { "top-left": { rows: 3 } } }]);
+    await userEvent.click(screen.getByTestId("stage-block-x"));
+    const form = within(within(panel()).getByTestId("block-form"));
+    expect(form.getByRole("button", { name: "links, ganze Höhe" })).toHaveAttribute("aria-pressed", "true");
+    expect(form.queryByRole("button", { name: "unten links" })).toBeNull();
+  });
+
   it("macht beim Wechsel zurück zu „Fest“ die erste Überschrift zur Überschrift", async () => {
     const h = setup([
       { ...fixed, headline: "Alt", mode: "custom", layout: { "top-left": [{ id: "h", type: "heading", text: "Neu gestaltet", size: "h1", color: "auto" }] } },

@@ -228,7 +228,7 @@ export function useBackdrop(element: HTMLElement | null): Rgb {
  * einer benutzerdefinierten Folie ihre Bausteine in Zonen.
  */
 export function SlideText({ slide }: { slide: Slide }): ReactElement {
-  if (slide.mode === "custom") return <SlideZones layout={slide.layout} zoneAlign={slide.zoneAlign} />;
+  if (slide.mode === "custom") return <SlideZones layout={slide.layout} zoneAlign={slide.zoneAlign} zoneSpan={slide.zoneSpan} />;
   return (
     <div className="man-hero__inner">
       <div className="man-hero__body">
