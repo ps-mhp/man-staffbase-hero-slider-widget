@@ -41,7 +41,7 @@ nichts. Die alten Felder sind im Dialog ausgeblendet.
 
 | Sorte | Beschreibung |
 | --- | --- |
-| Folie | Eine von Hand gepflegte Folie: Bild oder Video, Überschrift, Unterzeile, Buttons. |
+| Folie | Eine von Hand gepflegte Folie: Bild, Video oder Animation, Überschrift, Unterzeile, Buttons. |
 | News-Beitrag | Ein bestimmter Beitrag als eine Folie. Inhalt und Ziel kommen aus dem Beitrag. |
 | News-Kanal | Ein ganzer Kanal, eine Folie je Beitrag. Neue Beiträge erscheinen ohne weiteres Zutun. |
 
@@ -54,7 +54,12 @@ Folien, die er beisteuert.
 
 | Feld | Beschreibung |
 | --- | --- |
-| Bild oder Video | Pflicht. Aus der Mediathek oder über eine Adresse (`https://…`). Quer, mindestens 1920 px breit. Ohne Bild oder Video wird die Folie nicht gezeigt. |
+| Hintergrund | **Bild oder Video** (eine Datei, siehe unten) oder **Animation**: ein bewegtes Muster aus Quadraten in MAN-Farben, das das Widget selbst zeichnet. Eine Animation passt sich jeder Bühnengröße an, braucht kein Hochformat und lädt nichts nach. |
+| Muster | Nur bei Animation. **Welle** (feine Quadrate, durch die eine Welle läuft und sie anhebt), **Raster** (ruhiges Raster mit wanderndem Lichtband) oder **Module** (locker verteilte Module, die pulsieren). Die Textseite links — auf dem Telefon unten — bleibt immer frei. |
+| Grundton | Nur bei Animation. **Dunkel** (Anthrazit, Schrift weiß) oder **Hell** (weiß, Schrift anthrazit). |
+| Tempo | Nur bei Animation. **Ruhig** (ein Durchlauf in 20 Sekunden) oder **Lebhaft** (12 Sekunden). Bei eingeschalteter Einstellung „Bewegung reduzieren“ des Geräts steht die Animation still. |
+| Rote Akzente | Nur bei Animation. Schalter: einige rote Quadrate laufen mit. |
+| Bild oder Video | Pflicht, wenn der Hintergrund **Bild oder Video** ist. Aus der Mediathek oder über eine Adresse (`https://…`). Quer, mindestens 1920 px breit. Ohne Bild oder Video wird die Folie nicht gezeigt. |
 | Adresse | Hinter **Adresse einfügen**, statt der Mediathek: die `https`-Adresse eines Bildes oder Videos. Andere Adressen werden nicht übernommen. |
 | Art | Bild oder Video. Stellt sich an der Endung der Adresse selbst ein (`.mp4`, `.webm`, `.mov` sind Videos); nur bei Adressen ohne Endung von Hand wählen. |
 | Bild- bzw. Videobeschreibung | Was zu sehen ist. Nur bei rein schmückenden Bildern und Videos leer lassen — Screenreader lesen dieses Feld vor. |
