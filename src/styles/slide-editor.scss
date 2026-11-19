@@ -114,3 +114,23 @@
   color: color.change(chrome.$surface, $alpha: 0.85);
   text-shadow: 0 0 2px color.change(chrome.$text-strong, $alpha: 0.6);
 }
+
+// Der Name einer Zone ist ihr Knopf: er wählt die Zone (Ausrichtung im Panel).
+button.man-se__zone-label {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  pointer-events: auto;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+.man-se__zone--selected {
+  outline: 2px solid chrome.$accent;
+}

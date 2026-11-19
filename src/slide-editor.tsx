@@ -63,7 +63,7 @@ import { SlideForm } from "./editors/slide-form";
 import { SETTINGS_PANEL_TITLE, WIDGET_PANEL_TITLE, WidgetSettingsPanel } from "./editors/widget-settings-panel";
 import { BlockSelection, BlockSelectionProvider, useStageEditing } from "./editors/zone-stage";
 import { updateBlock } from "./layout-ops";
-import type { SlideLayout } from "./slide-layout";
+import type { SlideLayout, ZoneId } from "./slide-layout";
 import { Entries, PickerTarget, patchForPick, pickedImage, useEntries } from "./use-entries";
 import slideEditorCss from "./styles/slide-editor.scss";
 
@@ -242,10 +242,13 @@ export function SlideEditor({ value, onChange, shownIssues = null, mediaClient, 
   const media = useEditorMedia(client, entries);
   const { item } = entries;
   // Der gewählte Baustein gehört zu einer Folie; wechselt die Folie, ist keiner gewählt.
-  const [picked, setPicked] = useState<{ itemId: string; blockId: string } | null>(null);
+  const [picked, setPicked] = useState<{ itemId: string; blockId?: string; zone?: ZoneId } | null>(null);
+  const current = picked !== null && picked.itemId === item?.id ? picked : null;
   const selection: BlockSelection = {
-    selectedId: picked !== null && picked.itemId === item?.id ? picked.blockId : null,
+    selectedId: current?.blockId ?? null,
     select: (blockId) => setPicked(blockId === null || item === undefined ? null : { itemId: item.id, blockId }),
+    selectedZone: current?.zone ?? null,
+    selectZone: (zone) => setPicked(zone === null || item === undefined ? null : { itemId: item.id, zone }),
   };
 
   return (
@@ -279,7 +282,7 @@ export function SlideEditor({ value, onChange, shownIssues = null, mediaClient, 
                       content: (
                         <EntryForm item={item} entries={entries} source={source} onPick={media.open} onPickBlockImage={media.openBlockImage} />
                       ),
-                      focusKey: selection.selectedId,
+                      focusKey: selection.selectedId ?? selection.selectedZone,
                     }
               }
             />

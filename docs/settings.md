@@ -154,7 +154,14 @@ Für jeden Baustein außerdem: **Zone** (eine 3×3-Auswahl wie die Bühne),
 **löschen**. **Farbe: Auto** folgt der Folie — weiß oder anthrazit, je nachdem,
 was auf dem Hintergrund besser lesbar ist.
 
+**Ausrichtung je Zone:** Ein Klick auf den Namen einer Zone (oder ihre leere
+Fläche) zeigt rechts **Waagerecht in der Zone** (**Links**, **Mitte**,
+**Rechts**) und **Senkrecht in der Zone** (**Oben**, **Mitte**, **Unten**). Sie
+gelten für alle Bausteine der Zone; dieselben Felder stehen auch in den
+Einstellungen jedes Bausteins. Vorgabe ist die Lage der Zone — „unten links“
+steht unten links.
+
 **Mobil** stehen die Zonen in Lesereihenfolge untereinander (oben links, oben
-Mitte, oben rechts, Mitte links …), rechte Zonen rücken nach links, Buttons
-bleiben Buttons. Was auf dem Telefon zu viel ist, blendet **Mobil ausblenden**
+Mitte, oben rechts, Mitte links …); rechts Ausgerichtetes rückt nach links,
+Mittiges bleibt mittig, Buttons bleiben Buttons. Was auf dem Telefon zu viel ist, blendet **Mobil ausblenden**
 aus; prüfen lässt sich das oben mit **Mobil**.

@@ -27,7 +27,7 @@
  */
 
 import { DEFAULT_ANIMATION, SlideAnimation } from "./slide-animation";
-import type { SlideLayout } from "./slide-layout";
+import type { SlideLayout, ZoneAlignments } from "./slide-layout";
 
 /** Was hinter einer Medienadresse steckt. */
 export type MediaKind = "image" | "video";
@@ -282,6 +282,8 @@ export interface Slide {
    */
   mode?: "custom";
   layout?: SlideLayout;
+  /** Ausrichtung je Zone, nur Abweichungen von der Lage der Zone. */
+  zoneAlign?: ZoneAlignments;
   /**
    * Alles, was eine spätere Version geschrieben hat und diese nicht kennt.
    * Ohne diesen Beutel würde ein Redakteur, der eine alte Bundle-Version

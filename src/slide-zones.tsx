@@ -27,7 +27,19 @@ import * as React from "react";
 import { ReactElement, ReactNode } from "react";
 
 import { CTA_ICON_COMPONENTS, SlideCtas } from "./slide-ctas";
-import { BlockColor, BlockSize, HeadingSize, SlideBlock, SlideLayout, ZONES, ZoneId, blocksInReadingOrder } from "./slide-layout";
+import {
+  Align,
+  BlockColor,
+  BlockSize,
+  HeadingSize,
+  SlideBlock,
+  SlideLayout,
+  ZONES,
+  ZoneAlignments,
+  ZoneId,
+  alignOf,
+  blocksInReadingOrder,
+} from "./slide-layout";
 
 /** Ausgeschrieben statt zusammengesetzt, damit jede Klasse im Quelltext auffindbar bleibt. */
 const COLOR_CLASS: Record<BlockColor, string | undefined> = {
@@ -67,6 +79,16 @@ const ZONE_CLASS: Record<ZoneId, string> = {
   "bottom-left": "man-hero__zone--bottom-left",
   "bottom-center": "man-hero__zone--bottom-center",
   "bottom-right": "man-hero__zone--bottom-right",
+};
+const ALIGN_X_CLASS: Record<Align, string> = {
+  start: "man-hero__zone--x-start",
+  center: "man-hero__zone--x-center",
+  end: "man-hero__zone--x-end",
+};
+const ALIGN_Y_CLASS: Record<Align, string> = {
+  start: "man-hero__zone--y-start",
+  center: "man-hero__zone--y-center",
+  end: "man-hero__zone--y-end",
 };
 const colorClass = (color: BlockColor): string | undefined => COLOR_CLASS[color];
 
@@ -115,13 +137,15 @@ function BlockContent({ block, firstHeading }: { block: SlideBlock; firstHeading
 
 export interface SlideZonesProps {
   layout: SlideLayout | undefined;
+  /** Ausrichtung je Zone; ohne folgt sie der Lage der Zone. */
+  zoneAlign?: ZoneAlignments;
   /** Der Editor umhüllt jeden Baustein; ohne steht er so, wie er ist. */
   renderBlock?: (block: SlideBlock, zone: ZoneId, content: ReactNode) => ReactNode;
   /** Der Editor füllt jede Zone, auch leere (Ablagefläche). */
   renderZone?: (zone: ZoneId, children: ReactNode) => ReactNode;
 }
 
-export function SlideZones({ layout, renderBlock, renderZone }: SlideZonesProps): ReactElement {
+export function SlideZones({ layout, zoneAlign, renderBlock, renderZone }: SlideZonesProps): ReactElement {
   const first = blocksInReadingOrder(layout).find(({ block }) => block.type === "heading")?.block.id;
   return (
     <div className="man-hero__inner">
@@ -142,7 +166,11 @@ export function SlideZones({ layout, renderBlock, renderZone }: SlideZonesProps)
             );
           });
           return (
-            <div key={zone} className={`man-hero__zone ${ZONE_CLASS[zone]}`} data-zone={zone}>
+            <div
+              key={zone}
+              className={join("man-hero__zone", ZONE_CLASS[zone], ALIGN_X_CLASS[alignOf(zoneAlign, zone).x], ALIGN_Y_CLASS[alignOf(zoneAlign, zone).y])}
+              data-zone={zone}
+            >
               {renderZone === undefined ? children : renderZone(zone, children)}
             </div>
           );

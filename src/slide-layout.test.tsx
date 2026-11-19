@@ -16,7 +16,7 @@ import { render, screen } from "@testing-library/react";
 import { decodePayload } from "@shared/payload";
 import { HeroSlider } from "./hero-slider";
 import { SlideItem, parseHeroItems, serializeHeroItems } from "./hero-items";
-import { SlideLayout, blocksInReadingOrder, firstHeading, newBlock } from "./slide-layout";
+import { SlideLayout, alignOf, blocksInReadingOrder, defaultAlign, firstHeading, newBlock, parseZoneAlign, withAlign } from "./slide-layout";
 import { applyTranslatedFields, heroItemsToTranslatableHtml, readTranslatedFields } from "./translation-payload";
 
 const LAYOUT: SlideLayout = {
@@ -57,6 +57,34 @@ describe("slide-layout", () => {
     expect(newBlock("heading")).toMatchObject({ type: "heading", size: "h1", color: "auto" });
     expect(newBlock("buttons")).toMatchObject({ type: "buttons", ctas: [] });
     expect(newBlock("image")).toMatchObject({ type: "image", image: { url: "", alt: "" }, size: "m" });
+  });
+});
+
+describe("Ausrichtung je Zone", () => {
+  it("folgt als Vorgabe der Lage der Zone", () => {
+    expect(defaultAlign("bottom-left")).toEqual({ x: "start", y: "end" });
+    expect(defaultAlign("middle-center")).toEqual({ x: "center", y: "center" });
+    expect(defaultAlign("top-right")).toEqual({ x: "end", y: "start" });
+  });
+
+  it("merkt nur Abweichungen und vergisst, was zur Vorgabe zurückkehrt", () => {
+    const changed = withAlign(undefined, "bottom-left", "x", "center");
+    expect(changed).toEqual({ "bottom-left": { x: "center" } });
+    expect(alignOf(changed, "bottom-left")).toEqual({ x: "center", y: "end" });
+    expect(withAlign(changed, "bottom-left", "x", "start")).toEqual({});
+  });
+
+  it("liest nur gültige Werte", () => {
+    expect(parseZoneAlign({ "top-left": { x: "center", y: "quer" }, nirgends: { x: "end" } })).toEqual({ "top-left": { x: "center" } });
+  });
+
+  it("übersteht Speichern und Laden und steht als Klassen an der Zone", () => {
+    const items = [custom({ headline: "Zweite", zoneAlign: { "bottom-left": { x: "center", y: "center" } } })];
+    expect(parseHeroItems(serializeHeroItems(items))).toEqual(items);
+    const { container } = render(<HeroSlider slides={items} />);
+    const zone = container.querySelector(".man-hero__zone--bottom-left")!;
+    expect(zone).toHaveClass("man-hero__zone--x-center", "man-hero__zone--y-center");
+    expect(container.querySelector(".man-hero__zone--top-left")).toHaveClass("man-hero__zone--x-start", "man-hero__zone--y-start");
   });
 });
 

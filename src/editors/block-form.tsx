@@ -33,6 +33,7 @@ import { ItemActions } from "@man/config-ui/sidebar/item-actions";
 import { duplicateBlock, findBlock, moveBlock, nudgeBlock, removeBlock, updateBlock } from "../layout-ops";
 import { CTA_ICON_COMPONENTS } from "../slide-ctas";
 import {
+  Align,
   BLOCK_LABELS,
   BlockColor,
   BlockSize,
@@ -41,7 +42,10 @@ import {
   SlideLayout,
   ZONES,
   ZONE_LABELS,
+  ZoneAlignments,
   ZoneId,
+  alignOf,
+  withAlign,
 } from "../slide-layout";
 import { CTA_ICONS } from "../slides-model";
 import { CtaListForm } from "./cta-list-form";
@@ -67,6 +71,51 @@ const SIZE_OPTIONS = [
   { id: "m", label: "M" },
   { id: "l", label: "L" },
 ] as const satisfies readonly { id: BlockSize; label: string }[];
+
+const X_OPTIONS = [
+  { id: "start", label: "Links" },
+  { id: "center", label: "Mitte" },
+  { id: "end", label: "Rechts" },
+] as const satisfies readonly { id: Align; label: string }[];
+
+const Y_OPTIONS = [
+  { id: "start", label: "Oben" },
+  { id: "center", label: "Mitte" },
+  { id: "end", label: "Unten" },
+] as const satisfies readonly { id: Align; label: string }[];
+
+/**
+ * Wie die Bausteine einer Zone darin stehen — für die ganze Zone, nicht nur
+ * einen Baustein. Vorgabe ist die Lage der Zone.
+ */
+export function ZoneAlignFields({
+  zone,
+  zoneAlign,
+  onZoneAlign,
+}: {
+  zone: ZoneId;
+  zoneAlign: ZoneAlignments | undefined;
+  onZoneAlign: (next: ZoneAlignments) => void;
+}): ReactElement {
+  const align = alignOf(zoneAlign, zone);
+  return (
+    <>
+      <SegmentedField
+        label="Waagerecht in der Zone"
+        hint={`Gilt für alle Bausteine der Zone „${ZONE_LABELS[zone]}“. Mobil: rechts wird links, Mitte bleibt.`}
+        options={X_OPTIONS}
+        value={align.x}
+        onChange={(x) => onZoneAlign(withAlign(zoneAlign, zone, "x", x))}
+      />
+      <SegmentedField
+        label="Senkrecht in der Zone"
+        options={Y_OPTIONS}
+        value={align.y}
+        onChange={(y) => onZoneAlign(withAlign(zoneAlign, zone, "y", y))}
+      />
+    </>
+  );
+}
 
 /** Neun Felder wie die Zonen der Bühne. */
 function ZonePicker({ value, onChange }: { value: ZoneId; onChange: (zone: ZoneId) => void }): ReactElement {
@@ -206,11 +255,13 @@ export interface BlockFormProps {
   layout: SlideLayout | undefined;
   blockId: string;
   onLayout: (layout: SlideLayout) => void;
+  zoneAlign: ZoneAlignments | undefined;
+  onZoneAlign: (next: ZoneAlignments) => void;
   source: NewsSource;
   onPickImage: (blockId: string) => void;
 }
 
-export function BlockForm({ layout, blockId, onLayout, source, onPickImage }: BlockFormProps): ReactElement | null {
+export function BlockForm({ layout, blockId, onLayout, zoneAlign, onZoneAlign, source, onPickImage }: BlockFormProps): ReactElement | null {
   const { select } = useBlockSelection();
   const found = findBlock(layout, blockId);
   if (found === undefined) return null;
@@ -249,6 +300,7 @@ export function BlockForm({ layout, blockId, onLayout, source, onPickImage }: Bl
       </div>
       <FormSection title={BLOCK_LABELS[block.type]}>
         <ZonePicker value={zone} onChange={(next) => onLayout(moveBlock(layout, block.id, next))} />
+        <ZoneAlignFields zone={zone} zoneAlign={zoneAlign} onZoneAlign={onZoneAlign} />
         <TypeFields block={block} set={set} source={source} onPickImage={() => onPickImage(block.id)} />
         <SwitchRow
           label="Mobil ausblenden"

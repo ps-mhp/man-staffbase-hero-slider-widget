@@ -96,7 +96,7 @@ function SlideStage({ slide, editing }: { slide: Slide; editing?: StageEditing }
                 {hasImage && <SlideMedia slide={shown} eager play={!reducedMotion} portrait={false} />}
               </div>
               {editable && editing !== undefined ? (
-                <SlideZones layout={shown.layout} renderZone={editing.renderZone} renderBlock={editing.renderBlock} />
+                <SlideZones layout={shown.layout} zoneAlign={shown.zoneAlign} renderZone={editing.renderZone} renderBlock={editing.renderBlock} />
               ) : (
                 <SlideText slide={shown} />
               )}

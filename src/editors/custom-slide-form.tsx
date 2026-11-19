@@ -27,7 +27,9 @@ import { FormSection } from "@man/config-ui/form/form-section";
 import { findBlock, insertBlock } from "../layout-ops";
 import { SlideItem } from "../hero-items";
 import { BLOCK_LABELS, BLOCK_TYPES, BlockType, SlideBlock, SlideLayout, ZONES, ZONE_LABELS, ZoneId, newBlock } from "../slide-layout";
-import { BlockForm } from "./block-form";
+import { ArrowLeft } from "lucide-react";
+import { BlockForm, ZoneAlignFields } from "./block-form";
+import type { ZoneAlignments } from "../slide-layout";
 import { NewsSource } from "./news-source";
 import { CatalogTile, useBlockSelection } from "./zone-stage";
 
@@ -80,6 +82,55 @@ function BlockList({ layout }: { layout: SlideLayout | undefined }): ReactElemen
   );
 }
 
+/** Eine gewählte Zone: ihre Ausrichtung und was in ihr steht. */
+function ZoneForm({
+  zone,
+  layout,
+  zoneAlign,
+  onZoneAlign,
+}: {
+  zone: ZoneId;
+  layout: SlideLayout | undefined;
+  zoneAlign: ZoneAlignments | undefined;
+  onZoneAlign: (next: ZoneAlignments) => void;
+}): ReactElement {
+  const { select, selectZone } = useBlockSelection();
+  const blocks = layout?.[zone] ?? [];
+  return (
+    <div className="flex flex-col gap-6" data-testid="zone-form">
+      <button
+        type="button"
+        onClick={() => selectZone(null)}
+        className="inline-flex items-center gap-1 self-start rounded-md px-1.5 py-1 text-[13px] font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+      >
+        <ArrowLeft className="size-4" aria-hidden />
+        Zurück zur Folie
+      </button>
+      <FormSection title={`Zone ${ZONE_LABELS[zone]}`}>
+        <ZoneAlignFields zone={zone} zoneAlign={zoneAlign} onZoneAlign={onZoneAlign} />
+        {blocks.length === 0 ? (
+          <p className="text-sm text-muted-foreground">Noch leer — Bausteine aus dem Katalog hierher ziehen.</p>
+        ) : (
+          <ul className="flex flex-col gap-1">
+            {blocks.map((block) => (
+              <li key={block.id}>
+                <button
+                  type="button"
+                  onClick={() => select(block.id)}
+                  className="flex w-full items-baseline gap-2 rounded-md border border-border px-2.5 py-1.5 text-left text-[13px] hover:border-foreground/40 focus-visible:outline-2 focus-visible:outline-ring"
+                >
+                  <span className="shrink-0 font-semibold text-foreground">{BLOCK_LABELS[block.type]}</span>
+                  <span className="min-w-0 truncate text-muted-foreground">{blockSummary(block)}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </FormSection>
+    </div>
+  );
+}
+
 export interface CustomSlideFormProps {
   slide: SlideItem;
   onPatch: (changes: Partial<SlideItem>) => void;
@@ -88,19 +139,34 @@ export interface CustomSlideFormProps {
 }
 
 export function CustomSlideForm({ slide, onPatch, source, onPickBlockImage }: CustomSlideFormProps): ReactElement {
-  const { selectedId, select } = useBlockSelection();
+  const { selectedId, select, selectedZone } = useBlockSelection();
   const onLayout = (layout: SlideLayout): void => onPatch({ layout });
+  const onZoneAlign = (zoneAlign: ZoneAlignments): void => onPatch({ zoneAlign });
+
+  if (selectedZone !== null) {
+    return <ZoneForm zone={selectedZone} layout={slide.layout} zoneAlign={slide.zoneAlign} onZoneAlign={onZoneAlign} />;
+  }
 
   // Ein gewählter Baustein, den es nicht mehr gibt (Rückgängig), führt zurück zur Folie.
   if (selectedId !== null && findBlock(slide.layout, selectedId) !== undefined) {
-    return <BlockForm layout={slide.layout} blockId={selectedId} onLayout={onLayout} source={source} onPickImage={onPickBlockImage} />;
+    return (
+      <BlockForm
+        layout={slide.layout}
+        blockId={selectedId}
+        onLayout={onLayout}
+        zoneAlign={slide.zoneAlign}
+        onZoneAlign={onZoneAlign}
+        source={source}
+        onPickImage={onPickBlockImage}
+      />
+    );
   }
 
   return (
     <>
       <FormSection title="Bausteine">
         <p className="text-[13px] text-muted-foreground">
-          Auf eine Zone der Bühne ziehen — oder anklicken, dann steht er unten links. Ein Klick auf einen Baustein der Bühne öffnet seine Einstellungen.
+          Auf eine Zone der Bühne ziehen — oder anklicken, dann steht er unten links. Ein Klick auf einen Baustein der Bühne öffnet seine Einstellungen, ein Klick auf den Namen einer Zone ihre Ausrichtung.
         </p>
         <div className="grid grid-cols-3 gap-2" data-testid="block-catalog">
           {BLOCK_TYPES.map((type) => (

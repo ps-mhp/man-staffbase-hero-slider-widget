@@ -31,12 +31,20 @@ import { BLOCK_LABELS, BlockType, SlideBlock, SlideLayout, ZONE_LABELS, ZoneId, 
 
 // --- Auswahl -----------------------------------------------------------------
 
+/** Gewählt ist ein Baustein oder eine Zone — nie beides. */
 export interface BlockSelection {
   selectedId: string | null;
   select: (id: string | null) => void;
+  selectedZone: ZoneId | null;
+  selectZone: (zone: ZoneId | null) => void;
 }
 
-const SelectionContext = createContext<BlockSelection>({ selectedId: null, select: () => undefined });
+const SelectionContext = createContext<BlockSelection>({
+  selectedId: null,
+  select: () => undefined,
+  selectedZone: null,
+  selectZone: () => undefined,
+});
 
 export const BlockSelectionProvider = SelectionContext.Provider;
 
@@ -92,7 +100,7 @@ export interface StageEditing {
 
 /** Was die Bühne zum Bearbeiten braucht; `onLayout` schreibt in die Folie. */
 export function useStageEditing(layout: SlideLayout | undefined, onLayout: (layout: SlideLayout) => void): StageEditing {
-  const { selectedId, select } = useBlockSelection();
+  const { selectedId, select, selectedZone, selectZone } = useBlockSelection();
   const [over, setOver] = useState<ZoneId | null>(null);
 
   const drop = (zone: ZoneId, at: number, drag: BlockDrag): void => {
@@ -108,7 +116,7 @@ export function useStageEditing(layout: SlideLayout | undefined, onLayout: (layo
   return {
     renderZone: (zone, children) => (
       <div
-        className={cn("man-se__zone", over === zone && "man-se__zone--over")}
+        className={cn("man-se__zone", over === zone && "man-se__zone--over", selectedZone === zone && "man-se__zone--selected")}
         data-testid={`stage-zone-${zone}`}
         aria-label={`Zone ${ZONE_LABELS[zone]}`}
         role="group"
@@ -128,12 +136,23 @@ export function useStageEditing(layout: SlideLayout | undefined, onLayout: (layo
           drop(zone, dropIndex(event.currentTarget, event.clientY), drag);
         }}
         onClick={(event) => {
-          if (event.target === event.currentTarget) select(null);
+          // Die leere Fläche einer Zone wählt die Zone: rechts steht dann ihre Ausrichtung.
+          if (event.target === event.currentTarget) selectZone(zone);
         }}
       >
-        <span className="man-se__zone-label" aria-hidden>
+        <button
+          type="button"
+          className="man-se__zone-label"
+          aria-pressed={selectedZone === zone}
+          aria-label={`Zone ${ZONE_LABELS[zone]} ausrichten`}
+          data-testid={`stage-zone-label-${zone}`}
+          onClick={(event) => {
+            event.stopPropagation();
+            selectZone(zone);
+          }}
+        >
           {ZONE_LABELS[zone]}
-        </span>
+        </button>
         {children}
       </div>
     ),

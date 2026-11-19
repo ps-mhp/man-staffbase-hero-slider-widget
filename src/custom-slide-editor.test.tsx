@@ -12,7 +12,7 @@
  */
 
 import * as React from "react";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ConfigShellProvider, type ConfigShellState } from "@man/config-ui/shell/shell-context";
 import { fakeDataTransfer } from "@man/config-ui/drop/drag-testing";
@@ -94,7 +94,7 @@ describe("Benutzerdefinierte Folie im Editor", () => {
       { zone: "bottom-left", type: "buttons" },
     ]);
     // Die Bühne ist Arbeitsfläche: neun Zonen, der Inhalt in seiner.
-    expect(screen.getAllByTestId(/^stage-zone-/)).toHaveLength(9);
+    expect(screen.getAllByTestId(/^stage-zone-(?!label)/)).toHaveLength(9);
     expect(within(screen.getByTestId("stage-zone-bottom-left")).getByText("Willkommen")).toBeInTheDocument();
     expect(within(panel()).getByTestId("block-catalog")).toBeInTheDocument();
   });
@@ -159,10 +159,39 @@ describe("Benutzerdefinierte Folie im Editor", () => {
     setup([{ ...fixed, mode: "custom", layout: { "bottom-left": [{ id: "b", type: "buttons", ctas: [{ label: "Los", href: "https://example.test/los" }] }] } }]);
     const link = within(screen.getByTestId("stage-block-b")).getByRole("link", { name: "Los" });
     const click = new MouseEvent("click", { bubbles: true, cancelable: true });
-    link.dispatchEvent(click);
+    act(() => {
+      link.dispatchEvent(click);
+    });
 
     expect(click.defaultPrevented).toBe(true);
     expect(await within(panel()).findByTestId("block-form")).toBeInTheDocument();
+  });
+
+  it("richtet eine Zone aus: Klick auf ihren Namen, x und y im Panel", async () => {
+    const h = setup([{ ...fixed, mode: "custom", layout: { "top-left": [{ id: "x", type: "label", text: "Hallo", color: "auto" }] } }]);
+    await userEvent.click(screen.getByTestId("stage-zone-label-top-left"));
+
+    const form = within(panel()).getByTestId("zone-form");
+    expect(within(form).getByRole("radio", { name: "Links" })).toBeChecked();
+    await userEvent.click(within(form).getByRole("radio", { name: "Rechts" }));
+    await userEvent.click(within(form).getAllByRole("radio", { name: "Mitte" })[1]!);
+
+    expect(h.latest().zoneAlign).toEqual({ "top-left": { x: "end", y: "center" } });
+    const zone = screen.getByTestId("stage-zone-top-left").closest(".man-hero__zone")!;
+    expect(zone).toHaveClass("man-hero__zone--x-end", "man-hero__zone--y-center");
+    // Aus der Zone direkt zu ihrem Baustein.
+    await userEvent.click(within(form).getByRole("button", { name: /^Label/ }));
+    expect(within(panel()).getByTestId("block-form")).toBeInTheDocument();
+  });
+
+  it("wählt die Zone auch über ihre leere Fläche und richtet sie aus dem Baustein heraus aus", async () => {
+    const h = setup([{ ...fixed, mode: "custom", layout: { "bottom-left": [{ id: "x", type: "label", text: "Hallo", color: "auto" }] } }]);
+    await userEvent.click(screen.getByTestId("stage-zone-middle-center"));
+    expect(within(panel()).getByTestId("zone-form")).toHaveTextContent("Zone Mitte");
+
+    await userEvent.click(screen.getByTestId("stage-block-x"));
+    await userEvent.click(within(within(panel()).getByTestId("block-form")).getByRole("radio", { name: "Rechts" }));
+    expect(h.latest().zoneAlign).toEqual({ "bottom-left": { x: "end" } });
   });
 
   it("macht beim Wechsel zurück zu „Fest“ die erste Überschrift zur Überschrift", async () => {

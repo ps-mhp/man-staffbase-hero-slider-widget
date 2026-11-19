@@ -254,3 +254,59 @@ export function encodeLayout(layout: SlideLayout, codec: BlockCodec): Record<str
   }
   return out;
 }
+
+// --- Ausrichtung je Zone ---------------------------------------------------------
+
+/** Ausrichtung in einer Zone: waagerecht (x) links/Mitte/rechts, senkrecht (y) oben/Mitte/unten. */
+export const ALIGNS = ["start", "center", "end"] as const;
+export type Align = (typeof ALIGNS)[number];
+
+export interface ZoneAlign {
+  x: Align;
+  y: Align;
+}
+
+/** Abweichungen von der Vorgabe je Zone; was fehlt, folgt der Lage der Zone. */
+export type ZoneAlignments = Partial<Record<ZoneId, Partial<ZoneAlign>>>;
+
+/** Die Vorgabe: so, wie die Zone liegt — „unten links“ steht unten links. */
+export function defaultAlign(zone: ZoneId): ZoneAlign {
+  const [row, col] = zone.split("-") as [string, string];
+  return {
+    x: col === "left" ? "start" : col === "center" ? "center" : "end",
+    y: row === "top" ? "start" : row === "middle" ? "center" : "end",
+  };
+}
+
+export function alignOf(alignments: ZoneAlignments | undefined, zone: ZoneId): ZoneAlign {
+  return { ...defaultAlign(zone), ...(alignments?.[zone] ?? {}) };
+}
+
+/**
+ * Setzt eine Achse; was danach der Vorgabe entspricht, fällt weg — so bleibt
+ * gespeichert nur, was die Redaktion wirklich geändert hat.
+ */
+export function withAlign(alignments: ZoneAlignments | undefined, zone: ZoneId, axis: keyof ZoneAlign, value: Align): ZoneAlignments {
+  const fallback = defaultAlign(zone);
+  const next: Partial<ZoneAlign> = { ...(alignments?.[zone] ?? {}), [axis]: value };
+  for (const key of ["x", "y"] as const) if (next[key] === fallback[key]) delete next[key];
+  const out: ZoneAlignments = { ...alignments };
+  if (Object.keys(next).length > 0) out[zone] = next;
+  else delete out[zone];
+  return out;
+}
+
+export function parseZoneAlign(value: unknown): ZoneAlignments {
+  if (!isRecord(value)) return {};
+  let out: ZoneAlignments = {};
+  for (const zone of ZONES) {
+    const entry = value[zone];
+    if (!isRecord(entry)) continue;
+    for (const axis of ["x", "y"] as const) {
+      if (typeof entry[axis] === "string" && (ALIGNS as readonly string[]).includes(entry[axis] as string)) {
+        out = withAlign(out, zone, axis, entry[axis] as Align);
+      }
+    }
+  }
+  return out;
+}
