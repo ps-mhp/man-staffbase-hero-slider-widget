@@ -128,8 +128,6 @@ export function colorFor(theme: AnimationTheme, level: number, mask: number): st
   return value;
 }
 
-export const backgroundWithOpacity = (hex: string, opacity: number): string => `rgba(${hexRgb(hex).join(",")},${opacity})`;
-
 /**
  * Sammelt Kreise je Farbe und füllt jede Farbe in einem Pfad — tausende
  * einzelne `fill()` kosteten ein Vielfaches.

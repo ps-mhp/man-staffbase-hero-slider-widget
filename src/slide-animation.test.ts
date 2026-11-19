@@ -42,9 +42,10 @@ describe("parseAnimation", () => {
     expect(parseAnimation(undefined)).toEqual(DEFAULT_ANIMATION);
   });
 
-  it("begrenzt die Deckkraft auf 0…1 in 5-%-Schritten", () => {
+  it("begrenzt die Deckkraft auf 0,1…1 in 5-%-Schritten — unsichtbar wäre keine Animation", () => {
     expect(parseAnimation({ opacity: 1.7 }).opacity).toBe(1);
-    expect(parseAnimation({ opacity: -1 }).opacity).toBe(0);
+    expect(parseAnimation({ opacity: -1 }).opacity).toBe(0.1);
+    expect(parseAnimation({ opacity: 0 }).opacity).toBe(0.1);
     expect(parseAnimation({ opacity: 0.333 }).opacity).toBe(0.35);
     expect(parseAnimation({ opacity: "halb" }).opacity).toBe(1);
   });

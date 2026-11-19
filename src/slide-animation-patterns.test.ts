@@ -132,17 +132,11 @@ describe("drawAnimation", () => {
     expect(draw(DEFAULT_ANIMATION, 0, 0, 0)).toHaveLength(1);
   });
 
-  it("leert die Leinwand vor jedem Bild und malt den Grund durchscheinend", () => {
+  it("leert die Leinwand vor jedem Bild und malt deckend — die Deckkraft setzt die Leinwand", () => {
     const paint = recorder();
     drawAnimation(paint, 1920, 600, { ...DEFAULT_ANIMATION, opacity: 0.5 }, 2);
     expect(paint.clears).toBe(1);
-    expect(paint.marks[0]!.color).toBe("rgba(18,27,35,0.5)");
-  });
-
-  it("malt ohne Grund, wenn er durchsichtig ist — die Elemente bleiben", () => {
-    const marks = draw({ ...DEFAULT_ANIMATION, opacity: 0 }, 2);
-    expect(marks.some((mark) => mark.kind === "rect" && mark.size === 1920)).toBe(false);
-    expect(marks.length).toBeGreaterThan(100);
+    expect(paint.marks[0]!.color).toBe(LOOKS.dark.background);
   });
 });
 

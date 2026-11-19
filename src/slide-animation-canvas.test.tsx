@@ -113,6 +113,8 @@ describe("Animation auf der Bühne", () => {
   it("legt bei durchscheinendem Grund keine eigene Fläche unter die Folie", () => {
     render(<HeroSlider slides={[slide({ image: animationMedium({ ...DEFAULT_ANIMATION, opacity: 0.5 }) })]} />);
     expect(screen.getByTestId("hero-slide-a")).toHaveClass("man-hero__slide--see-through");
+    // Die ganze Animation wird durchscheinend, nicht nur ihr Grund.
+    expect(screen.getByTestId("hero-animation")).toHaveStyle({ opacity: "0.5" });
   });
 
   it("ignoriert ein übrig gebliebenes Hochformat", () => {
