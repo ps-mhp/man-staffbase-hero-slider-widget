@@ -32,6 +32,7 @@ beforeEach(() => {
         fillRect: () => {
           fills += 1;
         },
+        clearRect: () => undefined,
       }) as unknown as CanvasRenderingContext2D,
   );
   jest.spyOn(globalThis, "requestAnimationFrame").mockImplementation((callback) => {
@@ -101,6 +102,11 @@ describe("Animation auf der Bühne", () => {
     const stage = screen.getByTestId("hero-slide-a");
     expect(stage).toHaveClass("man-hero__slide--animation");
     expect(stage).not.toHaveClass("man-hero__slide--light");
+  });
+
+  it("legt bei durchscheinendem Grund keine eigene Fläche unter die Folie", () => {
+    render(<HeroSlider slides={[slide({ image: animationMedium({ ...DEFAULT_ANIMATION, opacity: 0.5 }) })]} />);
+    expect(screen.getByTestId("hero-slide-a")).toHaveClass("man-hero__slide--see-through");
   });
 
   it("ignoriert ein übrig gebliebenes Hochformat", () => {

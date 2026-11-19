@@ -19,7 +19,7 @@ import { animationMedium, hasMedium, isAnimation, withMediaKind } from "./slides
 
 const animated = (extra: Partial<SlideItem> = {}): SlideItem => ({
   id: "a",
-  image: animationMedium({ pattern: "grid", theme: "light", speed: "lively", accent: false }),
+  image: animationMedium({ pattern: "grid", theme: "light", speed: "lively", accent: false, opacity: 0.5 }),
   headline: "Mit Animation",
   ...extra,
 });
@@ -31,14 +31,22 @@ const stored = (items: SlideItem[]): unknown[] => {
 
 describe("parseAnimation", () => {
   it("nimmt bekannte Werte und fällt sonst auf die Vorgabe zurück", () => {
-    expect(parseAnimation({ pattern: "pulse", theme: "light", speed: "lively", accent: false })).toEqual({
+    expect(parseAnimation({ pattern: "pulse", theme: "light", speed: "lively", accent: false, opacity: 0.25 })).toEqual({
       pattern: "pulse",
       theme: "light",
       speed: "lively",
       accent: false,
+      opacity: 0.25,
     });
     expect(parseAnimation({ pattern: "laser", theme: 3 })).toEqual(DEFAULT_ANIMATION);
     expect(parseAnimation(undefined)).toEqual(DEFAULT_ANIMATION);
+  });
+
+  it("begrenzt die Deckkraft auf 0…1 in 5-%-Schritten", () => {
+    expect(parseAnimation({ opacity: 1.7 }).opacity).toBe(1);
+    expect(parseAnimation({ opacity: -1 }).opacity).toBe(0);
+    expect(parseAnimation({ opacity: 0.333 }).opacity).toBe(0.35);
+    expect(parseAnimation({ opacity: "halb" }).opacity).toBe(1);
   });
 });
 
@@ -66,7 +74,7 @@ describe("Animation als Medium", () => {
     const items = [animated()];
     const entries = stored(items);
     expect(entries[0]).toMatchObject({
-      image: { url: "", alt: "", kind: "animation", animation: { pattern: "grid", theme: "light", speed: "lively", accent: false } },
+      image: { url: "", alt: "", kind: "animation", animation: { pattern: "grid", theme: "light", speed: "lively", accent: false, opacity: 0.5 } },
     });
     expect(parseHeroItems(serializeHeroItems(items))).toEqual(items);
   });

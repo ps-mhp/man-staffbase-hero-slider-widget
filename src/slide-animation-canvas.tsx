@@ -30,6 +30,13 @@ import { STILL_TIME_RATIO, drawAnimation } from "./slide-animation-patterns";
 /** Mehr Bildpunkte als doppelte Dichte sieht niemand, kosten aber Zeit je Bild. */
 const MAX_PIXEL_RATIO = 2;
 
+/**
+ * Braucht ein Bild im Mittel länger (ms), zeichnet die Animation nur jedes
+ * zweite — 30 statt 60 Bilder je Sekunde, aber ohne Ruckeln durch verpasste
+ * Bilder. Die Zeit läuft trotzdem nach der Uhr weiter.
+ */
+const SLOW_FRAME_MS = 9;
+
 export interface SlideAnimationCanvasProps {
   animation: SlideAnimation;
   play: boolean;
@@ -39,6 +46,9 @@ interface Clock {
   /** Gezeigte Zeit in Sekunden; läuft nur, solange gespielt wird. */
   elapsed: number;
   last: number | null;
+  /** Gleitender Mittelwert der Zeichenzeit je Bild. */
+  cost: number;
+  frame: number;
 }
 
 /** Sichtbar im Fenster und Tab im Vordergrund. */
@@ -66,7 +76,7 @@ function useVisibility(ref: React.RefObject<HTMLElement | null>, onChange: (visi
 
 export function SlideAnimationCanvas({ animation, play }: SlideAnimationCanvasProps): ReactElement {
   const ref = useRef<HTMLCanvasElement>(null);
-  const clock = useRef<Clock>({ elapsed: ANIMATION_PERIOD[animation.speed] * STILL_TIME_RATIO, last: null });
+  const clock = useRef<Clock>({ elapsed: ANIMATION_PERIOD[animation.speed] * STILL_TIME_RATIO, last: null, cost: 0, frame: 0 });
   const visible = useRef(true);
   const frame = useRef<number | null>(null);
   const settings = useRef(animation);
@@ -84,7 +94,12 @@ export function SlideAnimationCanvas({ animation, play }: SlideAnimationCanvasPr
       const state = clock.current;
       state.elapsed = (state.elapsed + (state.last === null ? 0 : (now - state.last) / 1000)) % ANIMATION_PERIOD[settings.current.speed];
       state.last = now;
-      paint();
+      state.frame += 1;
+      if (state.cost <= SLOW_FRAME_MS || state.frame % 2 === 0) {
+        const started = performance.now();
+        paint();
+        state.cost = state.cost * 0.9 + (performance.now() - started) * 0.1;
+      }
       frame.current = requestAnimationFrame(loop);
     },
     [paint],
@@ -148,7 +163,7 @@ export function SlideAnimationCanvas({ animation, play }: SlideAnimationCanvasPr
   }, [play, paint, stop, sync]);
 
   // Neue Einstellungen (im Editor) sofort zeigen, auch im Stillstand.
-  useEffect(() => paint(), [animation.pattern, animation.theme, animation.speed, animation.accent, paint]);
+  useEffect(() => paint(), [animation.pattern, animation.theme, animation.speed, animation.accent, animation.opacity, paint]);
 
   return (
     <canvas
@@ -170,7 +185,7 @@ const thumbnails = new Map<string, string>();
  * der Liste der Einträge. Ohne Canvas (Tests, alte Umgebungen) keins.
  */
 export function animationThumbnail(animation: SlideAnimation, width = 192, height = 108): string | undefined {
-  const key = `${animation.pattern}:${animation.theme}:${animation.accent}:${width}x${height}`;
+  const key = `${animation.pattern}:${animation.theme}:${animation.accent}:${animation.opacity}:${width}x${height}`;
   const cached = thumbnails.get(key);
   if (cached !== undefined) return cached;
   if (typeof document === "undefined") return undefined;

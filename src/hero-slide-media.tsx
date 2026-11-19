@@ -179,6 +179,7 @@ export function slideClassName(slide: Slide, active: boolean): string {
   if (isAnimation(slide.image)) {
     classes.push("man-hero__slide--animation");
     if (slide.image.animation.theme === "light") classes.push("man-hero__slide--light");
+    if (slide.image.animation.opacity < 1) classes.push("man-hero__slide--see-through");
   }
   return classes.join(" ");
 }

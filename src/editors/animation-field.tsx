@@ -26,6 +26,7 @@ import { cn } from "@man/config-ui/primitives/utils";
 
 import {
   ANIMATION_DESCRIPTIONS,
+  ANIMATION_OPACITIES,
   ANIMATION_LABELS,
   ANIMATION_PATTERNS,
   AnimationPattern,
@@ -49,6 +50,12 @@ const SPEED_OPTIONS = [
   { id: "calm", label: "Ruhig" },
   { id: "lively", label: "Lebhaft" },
 ] as const satisfies readonly { id: AnimationSpeed; label: string }[];
+
+/** „Deckend“, „75 %“ … „Durchsichtig“ — die Kennung ist der Wert als Text. */
+const OPACITY_OPTIONS = ANIMATION_OPACITIES.map((value) => ({
+  id: String(value),
+  label: value === 1 ? "Deckend" : value === 0 ? "Durchsichtig" : `${Math.round(value * 100)} %`,
+}));
 
 function PatternCard({
   pattern,
@@ -118,6 +125,13 @@ export function AnimationField({ animation, onChange }: AnimationFieldProps): Re
           onChange={(speed) => set("speed", speed)}
         />
       </div>
+      <SegmentedField
+        label="Grund"
+        hint="Unter „Deckend“ scheint der Abschnitt hinter der Bühne durch. Die Schriftfarbe folgt dem Grundton — passend zum Hintergrund wählen."
+        options={OPACITY_OPTIONS}
+        value={String(animation.opacity)}
+        onChange={(value) => set("opacity", Number(value))}
+      />
       <SwitchRow
         label="Rote Akzente"
         hint="Einige rote Quadrate laufen mit."

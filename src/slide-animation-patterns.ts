@@ -26,6 +26,11 @@
  * Frequenzen), die Schleife also nahtlos. Rot bleibt immer voll deckend —
  * mit Transparenz über Anthrazit würde es Weinrot und verließe die CI.
  *
+ * Ausgeblendet wird über die Deckkraft der Quadrate, nicht über eine
+ * Mischung mit der Grundfarbe: auf deckendem Grund sieht beides gleich aus,
+ * auf durchscheinendem (`opacity` < 1) zeigen die Ränder sonst den Grund als
+ * Saum.
+ *
  * Frei von DOM und React; gezeichnet wird auf alles mit `fillStyle` und
  * `fillRect` (in Tests ein Zähler).
  */
@@ -58,6 +63,7 @@ export const LOOKS: Record<AnimationTheme, Look> = {
 export interface Paint {
   fillStyle: string | CanvasGradient | CanvasPattern;
   fillRect(x: number, y: number, width: number, height: number): void;
+  clearRect(x: number, y: number, width: number, height: number): void;
 }
 
 /** Bühnenmaße in Pixeln, auf die sich alle Größen beziehen (Höhe 600 = Faktor 1). */
@@ -121,11 +127,11 @@ const SPECS: Record<AnimationPattern, Spec> = {
   // Welle mit Hebung: zwei überlagerte Wellen — diagonal einmal je Durchlauf,
   // kreisförmig von rechts unten zweimal.
   wave: {
-    pitch: 14,
-    size: 8,
-    lift: 22,
+    pitch: 8,
+    size: 4.6,
+    lift: 15,
     grow: [0.6, 0.6],
-    reds: 8,
+    reds: 12,
     seed: 23,
     height: (cell, phi, aspect) => {
       const a = Math.sin(phi - (cell.nx * 2.4 + cell.ny * 1.1) * Math.PI);
@@ -137,21 +143,21 @@ const SPECS: Record<AnimationPattern, Spec> = {
   },
   // Raster: ruhend, ein schmales Lichtband zieht diagonal hindurch.
   grid: {
-    pitch: 32,
-    size: 20,
+    pitch: 12,
+    size: 7.5,
     lift: 0,
     grow: [0.92, 0.08],
-    reds: 3,
+    reds: 6,
     seed: 11,
     height: (cell, phi) => Math.pow(0.5 + 0.5 * Math.sin(phi - (cell.nx * 0.7 + cell.ny * 0.9) * 2 * Math.PI), 3),
   },
   // Module: locker verteilt, nach rechts dichter; jedes pulsiert in eigener Phase.
   pulse: {
-    pitch: 56,
-    size: 48,
+    pitch: 20,
+    size: 16,
     lift: 0,
     grow: [0.9, 0.1],
-    reds: 3,
+    reds: 6,
     seed: 7,
     occupied: (u, v, roll) => roll < Math.pow(u, 1.15) * (0.55 + 0.45 * v),
     height: (cell, phi) => (0.25 + 0.75 * cell.jitter) * (0.5 + 0.5 * Math.sin(phi + cell.phase)),
@@ -197,6 +203,7 @@ const hexRgb = (hex: string): number[] => [1, 3, 5].map((at) => parseInt(hex.sli
 const LEVELS = 48;
 const palettes = new Map<AnimationTheme, Map<number, string>>();
 
+/** Farbe der Stufe `level` (0 ruhend … 1 gehoben), Deckkraft `mask`. */
 export function colorFor(theme: AnimationTheme, level: number, mask: number): string {
   let cache = palettes.get(theme);
   if (!cache) {
@@ -213,15 +220,13 @@ export function colorFor(theme: AnimationTheme, level: number, mask: number): st
   const at = Math.min(look.stops.length - 2, Math.floor(x));
   const from = hexRgb(look.stops[at]);
   const to = hexRgb(look.stops[at + 1]);
-  const background = hexRgb(look.background);
-  const color = from.map((v, n) => {
-    const tone = v + (to[n] - v) * (x - at);
-    return Math.round(background[n] + (tone - background[n]) * (m / 23));
-  });
-  const value = `rgb(${color.join(",")})`;
+  const color = from.map((v, n) => Math.round(v + (to[n] - v) * (x - at)));
+  const value = `rgba(${color.join(",")},${Math.round((m / 23) * 1000) / 1000})`;
   cache.set(key, value);
   return value;
 }
+
+const backgroundWithOpacity = (hex: string, opacity: number): string => `rgba(${hexRgb(hex).join(",")},${opacity})`;
 
 const layouts = new Map<string, Cell[]>();
 
@@ -243,8 +248,13 @@ function cellsFor(animation: SlideAnimation, width: number, height: number): Cel
 export function drawAnimation(paint: Paint, width: number, height: number, animation: SlideAnimation, t: number): number {
   const spec = SPECS[animation.pattern];
   const look = LOOKS[animation.theme];
-  paint.fillStyle = look.background;
-  paint.fillRect(0, 0, width, height);
+  // Jedes Bild auf leerer Leinwand: bei durchscheinendem Grund bliebe sonst
+  // das vorige stehen.
+  paint.clearRect(0, 0, width, height);
+  if (animation.opacity > 0) {
+    paint.fillStyle = animation.opacity >= 1 ? look.background : backgroundWithOpacity(look.background, animation.opacity);
+    paint.fillRect(0, 0, width, height);
+  }
   if (width <= 0 || height <= 0) return 0;
 
   const scale = height / REFERENCE_HEIGHT;

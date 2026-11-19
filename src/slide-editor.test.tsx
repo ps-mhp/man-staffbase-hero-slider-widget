@@ -1234,14 +1234,16 @@ describe("SlideEditor", () => {
       expect(screen.queryByTestId("slide-image-pick")).toBeNull();
     });
 
-    it("stellt Muster, Grundton, Tempo und Akzente ein", async () => {
+    it("stellt Muster, Grundton, Tempo, Akzente und Grund ein", async () => {
       const h = setupLive([slide("a", { image: animationMedium(DEFAULT_ANIMATION) })]);
       await userEvent.click(screen.getByTestId("animation-pattern-grid"));
       await userEvent.click(option("Hell"));
       await userEvent.click(option("Lebhaft"));
       await userEvent.click(screen.getByRole("switch", { name: /Rote Akzente/ }));
 
-      expect(h.latestSlides()[0]!.image.animation).toEqual({ pattern: "grid", theme: "light", speed: "lively", accent: false });
+      await userEvent.click(option("50 %"));
+
+      expect(h.latestSlides()[0]!.image.animation).toEqual({ pattern: "grid", theme: "light", speed: "lively", accent: false, opacity: 0.5 });
       expect(screen.getByTestId("animation-pattern-grid")).toHaveAttribute("aria-pressed", "true");
     });
 

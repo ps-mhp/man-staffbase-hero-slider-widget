@@ -23,13 +23,17 @@ interface Rect {
 }
 
 /** Schreibt jedes Rechteck mit seiner Farbe mit — statt einer Leinwand. */
-function recorder(): Paint & { rects: Rect[] } {
+function recorder(): Paint & { rects: Rect[]; clears: number } {
   const rects: Rect[] = [];
   const paint = {
     fillStyle: "" as Paint["fillStyle"],
     rects,
+    clears: 0,
     fillRect(x: number, y: number, w: number, h: number) {
       rects.push({ color: String(paint.fillStyle), x, y, w, h });
+    },
+    clearRect() {
+      paint.clears += 1;
     },
   };
   return paint;
@@ -93,6 +97,26 @@ describe("drawAnimation", () => {
   it("malt bei leerer Fläche nur den Grund", () => {
     expect(frame(DEFAULT_ANIMATION, 0, 0, 0)).toHaveLength(1);
   });
+
+  it("leert die Leinwand vor jedem Bild und malt den Grund durchscheinend", () => {
+    const paint = recorder();
+    drawAnimation(paint, 1920, 600, { ...DEFAULT_ANIMATION, opacity: 0.5 }, 2);
+    expect(paint.clears).toBe(1);
+    expect(paint.rects[0]!.color).toBe("rgba(18,27,35,0.5)");
+  });
+
+  it("malt ohne Grund, wenn er durchsichtig ist — die Quadrate bleiben", () => {
+    const rects = frame({ ...DEFAULT_ANIMATION, opacity: 0 }, 2);
+    expect(rects.some((rect) => rect.w === 1920 && rect.h === 600)).toBe(false);
+    expect(rects.length).toBeGreaterThan(100);
+  });
+
+  it("ist bei allen Mustern deutlich feiner als ein Bühnenpixel-Raster von 12 px", () => {
+    for (const pattern of ANIMATION_PATTERNS) {
+      const sizes = frame({ ...DEFAULT_ANIMATION, pattern }, 2).slice(1).map((rect) => rect.w);
+      expect(Math.max(...sizes)).toBeLessThanOrEqual(18);
+    }
+  });
 });
 
 describe("maskAt", () => {
@@ -107,10 +131,10 @@ describe("maskAt", () => {
 });
 
 describe("colorFor", () => {
-  it("geht vom Grund (unsichtbar) zur ersten Stufe (voll sichtbar)", () => {
-    expect(colorFor("dark", 0, 0)).toBe("rgb(18,27,35)");
-    expect(colorFor("dark", 0, 1)).toBe("rgb(30,40,50)");
-    expect(colorFor("light", 1, 1)).toBe("rgb(48,60,73)");
+  it("blendet über die Deckkraft aus, nicht über die Grundfarbe", () => {
+    expect(colorFor("dark", 0, 0)).toBe("rgba(30,40,50,0)");
+    expect(colorFor("dark", 0, 1)).toBe("rgba(30,40,50,1)");
+    expect(colorFor("light", 1, 1)).toBe("rgba(48,60,73,1)");
   });
 });
 
@@ -118,7 +142,7 @@ describe("buildCells", () => {
   it("setzt je Muster einige rote Quadrate, nur dort, wo das Feld voll da ist", () => {
     const cells = buildCells("wave", 1920, 600, true);
     const reds = cells.filter((cell) => cell.red);
-    expect(reds).toHaveLength(8);
+    expect(reds).toHaveLength(12);
     expect(reds.every((cell) => cell.mask > 0.7)).toBe(true);
   });
 });

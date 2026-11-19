@@ -326,6 +326,17 @@
   background: man("white");
 }
 
+// Durchscheinender Grund der Animation: weder Folie noch Bühne dürfen eine
+// eigene Fläche darunterlegen, sonst schiene nur das Anthrazit der Bühne
+// durch statt des Abschnitts. Die Bühne folgt der vorderen Folie.
+.man-hero__slide--see-through {
+  background: transparent;
+}
+
+.man-hero:has(.man-hero__slide--active.man-hero__slide--see-through) {
+  background: transparent;
+}
+
 // --- 2. Die Fluchtlinie ------------------------------------------------------
 // Bricht die Bühne aus, liegt die Linie genau dort, wo die Inhaltsspalte der
 // Seite steht — gemessen, nicht gerechnet (`--man-hero-inset-*`, siehe
