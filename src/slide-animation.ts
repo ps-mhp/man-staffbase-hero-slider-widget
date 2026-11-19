@@ -41,17 +41,15 @@ export interface SlideAnimation {
   /** Wenige rote Quadrate, die mitlaufen. */
   accent: boolean;
   /**
-   * Deckkraft der ganzen Animation — Grund und Muster —, 0.1…1. Unter 1
-   * scheint durch, was hinter der Bühne liegt (Abschnittsfarbe, Seite).
+   * Deckkraft des Grundes, 0…1. Unter 1 scheint durch, was hinter der Bühne
+   * liegt (Abschnittsfarbe, Seite); Muster und Schrift bleiben voll — die
+   * Schriftfarbe richtet sich dann nach dem, was durchscheint.
    */
   opacity: number;
 }
 
 /** Die Stufen, die der Editor anbietet. */
-export const ANIMATION_OPACITIES = [1, 0.75, 0.5, 0.25] as const;
-
-/** Unsichtbar wäre keine Animation mehr; so blass darf sie höchstens werden. */
-const MIN_OPACITY = 0.1;
+export const ANIMATION_OPACITIES = [1, 0.75, 0.5, 0.25, 0] as const;
 
 export const DEFAULT_ANIMATION: SlideAnimation = {
   pattern: "wave",
@@ -61,10 +59,10 @@ export const DEFAULT_ANIMATION: SlideAnimation = {
   opacity: 1,
 };
 
-/** Auf 5 % gerundet und auf 0.1…1 begrenzt; alles andere ist deckend. */
+/** Auf 5 % gerundet und auf 0…1 begrenzt; alles andere ist deckend. */
 export function parseOpacity(value: unknown): number {
   if (typeof value !== "number" || !Number.isFinite(value)) return 1;
-  return Math.round(Math.min(1, Math.max(MIN_OPACITY, value)) * 20) / 20;
+  return Math.round(Math.min(1, Math.max(0, value)) * 20) / 20;
 }
 
 /** Sekunden je Durchlauf; jedes Muster ist darin periodisch, die Schleife nahtlos. */

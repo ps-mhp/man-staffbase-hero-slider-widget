@@ -26,6 +26,7 @@ import * as React from "react";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import { SlideCtas } from "./slide-ctas";
 import { SlideAnimationCanvas } from "./slide-animation-canvas";
+import { Rgb, WHITE_RGB, prefersDarkInk, visibleBackground } from "./slide-animation-paint";
 import { Slide, SlideImage, firstFrameUrl, isAnimation, isVideo } from "./slides-model";
 
 /** Unterhalb dieser Breite zeigt das `<picture>` den Hochkant-Zuschnitt. */
@@ -171,17 +172,54 @@ export function SlideMedia({ slide, eager, play, portrait }: SlideMediaProps): R
 
 /**
  * Die Klassen einer Folie. Eine Animation braucht keinen Verlauf darüber
- * (ihre Textseite ist ruhig); auf hellem Grund steht die Schrift anthrazit.
+ * (ihre Textseite ist ruhig). Die Schrift wird anthrazit (`--ink-dark`), wenn
+ * das auf dem sichtbaren Grund besser lesbar ist — bei durchscheinendem Grund
+ * gemischt aus Grundton und dem, was hinter der Bühne liegt (`backdrop`).
  */
-export function slideClassName(slide: Slide, active: boolean): string {
+export function slideClassName(slide: Slide, active: boolean, backdrop: Rgb = WHITE_RGB): string {
   const classes = ["man-hero__slide"];
   if (active) classes.push("man-hero__slide--active");
   if (isAnimation(slide.image)) {
+    const { theme, opacity } = slide.image.animation;
     classes.push("man-hero__slide--animation");
-    if (slide.image.animation.theme === "light") classes.push("man-hero__slide--light");
-    if (slide.image.animation.opacity < 1) classes.push("man-hero__slide--see-through");
+    if (theme === "light" && opacity >= 1) classes.push("man-hero__slide--light");
+    if (opacity < 1) classes.push("man-hero__slide--see-through");
+    if (prefersDarkInk(visibleBackground(theme, opacity, backdrop))) classes.push("man-hero__slide--ink-dark");
   }
   return classes.join(" ");
+}
+
+/** `rgb(…)`/`rgba(…)` → Kanäle und Deckkraft; sonst nichts. */
+function parseCssColor(value: string): { rgb: Rgb; alpha: number } | null {
+  const parts = /rgba?\(([^)]+)\)/.exec(value)?.[1]?.split(/[\s,/]+/).filter(Boolean).map(Number);
+  if (!parts || parts.length < 3 || parts.some((part) => Number.isNaN(part))) return null;
+  return { rgb: [parts[0]!, parts[1]!, parts[2]!], alpha: parts[3] ?? 1 };
+}
+
+/**
+ * Die Farbe hinter der Bühne: der erste Vorfahr mit eigener Fläche, auch über
+ * die Grenze eines Shadow Root hinweg. Ohne einen gilt Weiß (die Seite).
+ */
+export function backdropOf(element: Element | null): Rgb {
+  let node: Element | null = element;
+  while (node !== null) {
+    const color = parseCssColor(getComputedStyle(node).backgroundColor);
+    if (color !== null && color.alpha >= 0.5) return color.rgb;
+    const parent: Element | null = node.parentElement;
+    node = parent ?? ((node.getRootNode() as ShadowRoot).host ?? null);
+  }
+  return WHITE_RGB;
+}
+
+/** {@link backdropOf} als Zustand: gemessen, sobald es das Element gibt. */
+export function useBackdrop(element: HTMLElement | null): Rgb {
+  const [backdrop, setBackdrop] = useState<Rgb>(WHITE_RGB);
+  useEffect(() => {
+    if (element === null) return;
+    const next = backdropOf(element.parentElement ?? element);
+    setBackdrop((current) => (current.every((value, at) => value === next[at]) ? current : next));
+  }, [element]);
+  return backdrop;
 }
 
 /** Überschrift, Unterzeile und Schaltflächen über dem Bühnenbild. */

@@ -29,7 +29,7 @@ import { BottomSpacing, useBottomSpacing } from "./bottom-spacing";
 import { useSectionHug } from "./section-hug";
 import type { HeroPosition } from "./attributes";
 import { isEditor } from "./editor-context";
-import { PORTRAIT_MEDIA, SlideMedia, SlideText, slideClassName, useMediaQuery } from "./hero-slide-media";
+import { PORTRAIT_MEDIA, SlideMedia, SlideText, slideClassName, useBackdrop, useMediaQuery } from "./hero-slide-media";
 import { Slide } from "./slides-model";
 import { DEFAULT_AUTOPLAY_DELAY_MS, useSlider } from "./use-slider";
 import heroSliderCss from "./styles/hero-slider.scss";
@@ -90,6 +90,8 @@ export function HeroSlider({
 
   const { metrics: bleed, filled } = useFullBleed(anchor, fullBleed, height === "section");
   const portrait = useMediaQuery(PORTRAIT_MEDIA);
+  // Was hinter der Bühne liegt — für die Schriftfarbe über durchscheinenden Animationen.
+  const backdrop = useBackdrop(anchor);
 
   const [layout, setLayout] = useState<PageTopLayout>({
     applied: true,
@@ -275,7 +277,7 @@ export function HeroSlider({
             return (
               <div
                 key={slide.id}
-                className={slideClassName(slide, active)}
+                className={slideClassName(slide, active, backdrop)}
                 data-testid={`hero-slide-${slide.id}`}
                 // Ohne Tabliste wäre ein `tabpanel` verwaist; dann ist die
                 // Folie eine Gruppe wie jede andere.

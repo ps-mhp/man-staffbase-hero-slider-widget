@@ -52,8 +52,11 @@ const SPEED_OPTIONS = [
   { id: "lively", label: "Lebhaft" },
 ] as const satisfies readonly { id: AnimationSpeed; label: string }[];
 
-/** „100 %“ … „25 %“ — die Kennung ist der Wert als Text. */
-const OPACITY_OPTIONS = ANIMATION_OPACITIES.map((value) => ({ id: String(value), label: `${Math.round(value * 100)} %` }));
+/** „Deckend“, „75 %“ … „Durchsichtig“ — die Kennung ist der Wert als Text. */
+const OPACITY_OPTIONS = ANIMATION_OPACITIES.map((value) => ({
+  id: String(value),
+  label: value === 1 ? "Deckend" : value === 0 ? "Durchsichtig" : `${Math.round(value * 100)} %`,
+}));
 
 function PatternCard({
   pattern,
@@ -110,7 +113,7 @@ export function AnimationField({ animation, onChange }: AnimationFieldProps): Re
       <div className="flex flex-col gap-4">
         <SegmentedField
           label="Grundton"
-          hint="Auf hellem Grund steht die Schrift anthrazit."
+          hint="Farben der Animation. Die Schrift richtet sich nach dem, was zu sehen ist."
           options={THEME_OPTIONS}
           value={animation.theme}
           onChange={(theme) => set("theme", theme)}
@@ -124,8 +127,8 @@ export function AnimationField({ animation, onChange }: AnimationFieldProps): Re
         />
       </div>
       <SegmentedField
-        label="Deckkraft"
-        hint="Unter 100 % wird die ganze Animation durchscheinend, auch das Rot; dahinter liegt der Abschnitt. Die Schriftfarbe folgt dem Grundton — passend zum Hintergrund wählen."
+        label="Grund"
+        hint="Unter „Deckend“ scheint der Abschnitt hinter der Bühne durch; Muster und Schrift bleiben kräftig. Die Schrift wird von selbst weiß oder anthrazit — je nachdem, was auf dem Hintergrund besser lesbar ist."
         options={OPACITY_OPTIONS}
         value={String(animation.opacity)}
         onChange={(value) => set("opacity", Number(value))}

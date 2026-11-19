@@ -95,7 +95,40 @@ export function maskAt(xn: number, yn: number, aspect: number): number {
   return (1 - smooth(0.32, 0.62, yn)) * smooth(0, 0.05, yn) * edgeX;
 }
 
-const hexRgb = (hex: string): number[] => [1, 3, 5].map((at) => parseInt(hex.slice(at, at + 2), 16));
+export const hexRgb = (hex: string): number[] => [1, 3, 5].map((at) => parseInt(hex.slice(at, at + 2), 16));
+
+export const backgroundWithOpacity = (hex: string, opacity: number): string => `rgba(${hexRgb(hex).join(",")},${opacity})`;
+
+/** Eine Farbe als Kanäle 0…255. */
+export type Rgb = readonly [number, number, number];
+
+export const WHITE_RGB: Rgb = [255, 255, 255];
+
+/** Relative Leuchtdichte nach WCAG. */
+function luminance([r, g, b]: Rgb): number {
+  const channel = (value: number): number => {
+    const c = value / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+}
+
+export function contrast(a: Rgb, b: Rgb): number {
+  const [light, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x) as [number, number];
+  return (light + 0.05) / (dark + 0.05);
+}
+
+/** Was hinter der Schrift zu sehen ist: Grund der Animation über dem, was dahinter liegt. */
+export function visibleBackground(theme: AnimationTheme, opacity: number, backdrop: Rgb): Rgb {
+  const ground = hexRgb(LOOKS[theme].background);
+  return backdrop.map((value, at) => Math.round(value + (ground[at]! - value) * opacity)) as unknown as Rgb;
+}
+
+/** Anthrazit statt Weiß, wenn es auf diesem Grund besser lesbar ist. */
+export function prefersDarkInk(background: Rgb): boolean {
+  const slate = hexRgb(TOKENS.slate) as unknown as Rgb;
+  return contrast(slate, background) > contrast(WHITE_RGB, background);
+}
 
 /** Farben auf Stufen gerundet und zwischengespeichert — sonst je Element ein neuer String. */
 const LEVELS = 48;

@@ -317,12 +317,16 @@
   content: none;
 }
 
+// Anthrazit statt Weiß, wo es besser lesbar ist — das entscheidet
+// slideClassName() aus Grundton, Deckkraft und dem, was hinter der Bühne liegt.
+.man-hero__slide--ink-dark {
+  --man-hero-ink: #{man("slate")};
+  --man-hero-ink-invert: #{man("white")};
+}
+
 // Der helle Grund auch, bevor die Leinwand ihr erstes Bild gemalt hat —
 // sonst blitzte das Anthrazit der Bühne kurz durch.
 .man-hero__slide--light {
-  --man-hero-ink: #{man("slate")};
-  --man-hero-ink-invert: #{man("white")};
-
   background: man("white");
 }
 

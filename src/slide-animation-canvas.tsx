@@ -174,9 +174,6 @@ export function SlideAnimationCanvas({ animation, play }: SlideAnimationCanvasPr
       data-testid="hero-animation"
       data-pattern={animation.pattern}
       data-theme={animation.theme}
-      // Die Deckkraft gilt für die ganze Animation, Grund und Muster; dahinter
-      // liegt keine Fläche der Bühne (slideClassName → --see-through).
-      style={animation.opacity < 1 ? { opacity: animation.opacity } : undefined}
     />
   );
 }

@@ -34,7 +34,7 @@ import { useHotStyle } from "@shared/hot-style";
 import { entryKindName } from "./editor-entries";
 import { NewsSource } from "./editors/news-source";
 import { useResolvedSlides } from "./editors/use-resolved-slides";
-import { SlideMedia, SlideText, slideClassName, useMediaQuery } from "./hero-slide-media";
+import { SlideMedia, SlideText, slideClassName, useBackdrop, useMediaQuery } from "./hero-slide-media";
 import { HeroItem, isNewsPostItem, isSlideItem } from "./hero-items";
 import { Slide, hasMedium, isAnimation } from "./slides-model";
 import heroSliderCss from "./styles/hero-slider.scss";
@@ -68,15 +68,17 @@ function SlideStage({ slide }: { slide: Slide }): ReactElement {
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const shown = forDevice(slide, view === "mobile");
   const hasImage = hasMedium(shown.image);
+  const [root, setRoot] = React.useState<HTMLDivElement | null>(null);
+  const backdrop = useBackdrop(root);
 
   return (
     // `inert`: Eine Schaltfläche der Vorschau führte sonst aus dem Studio
     // hinaus, und Tab wanderte durch Links, die hier nichts bedeuten.
     <div inert>
-      <div className="man-hero man-hero--height-medium" data-testid="hero-slide-preview">
+      <div className="man-hero man-hero--height-medium" data-testid="hero-slide-preview" ref={setRoot}>
         <div className="man-hero__frame">
           <div className="man-hero__slides">
-            <div className={slideClassName(shown, true)}>
+            <div className={slideClassName(shown, true, backdrop)}>
               <div className="man-hero__media">
                 {hasImage && <SlideMedia slide={shown} eager play={!reducedMotion} portrait={false} />}
               </div>

@@ -113,8 +113,27 @@ describe("Animation auf der Bühne", () => {
   it("legt bei durchscheinendem Grund keine eigene Fläche unter die Folie", () => {
     render(<HeroSlider slides={[slide({ image: animationMedium({ ...DEFAULT_ANIMATION, opacity: 0.5 }) })]} />);
     expect(screen.getByTestId("hero-slide-a")).toHaveClass("man-hero__slide--see-through");
-    // Die ganze Animation wird durchscheinend, nicht nur ihr Grund.
-    expect(screen.getByTestId("hero-animation")).toHaveStyle({ opacity: "0.5" });
+    // Nur der Grund wird durchscheinend; die Leinwand selbst bleibt deckend.
+    expect(screen.getByTestId("hero-animation")).not.toHaveStyle({ opacity: "0.5" });
+  });
+
+  it.each([
+    ["dunkel, deckend", "dark", 1, false],
+    ["dunkel, 25 % auf weißer Seite", "dark", 0.25, true],
+    ["hell, deckend", "light", 1, true],
+    ["hell, durchsichtig auf weißer Seite", "light", 0, true],
+  ] as const)("wählt die Schrift nach dem sichtbaren Grund: %s", (_, theme, opacity, dark) => {
+    render(<HeroSlider slides={[slide({ image: animationMedium({ ...DEFAULT_ANIMATION, theme, opacity }) })]} />);
+    expect(screen.getByTestId("hero-slide-a").classList.contains("man-hero__slide--ink-dark")).toBe(dark);
+  });
+
+  it("misst den Hintergrund hinter der Bühne — dunkler Abschnitt, weiße Schrift", () => {
+    const section = document.createElement("div");
+    section.style.backgroundColor = "rgb(30, 40, 50)";
+    document.body.appendChild(section);
+    render(<HeroSlider slides={[slide({ image: animationMedium({ ...DEFAULT_ANIMATION, opacity: 0 }) })]} />, { container: section });
+    expect(screen.getByTestId("hero-slide-a")).not.toHaveClass("man-hero__slide--ink-dark");
+    section.remove();
   });
 
   it("ignoriert ein übrig gebliebenes Hochformat", () => {

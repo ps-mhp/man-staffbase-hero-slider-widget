@@ -35,6 +35,7 @@ import {
   REFERENCE_HEIGHT,
   RED_SHARE,
   TOKENS,
+  backgroundWithOpacity,
   colorFor,
   maskAt,
   rng,
@@ -245,11 +246,13 @@ function flushSquares(paint: Paint, squares: Map<string, number[]>): number {
  */
 export function drawAnimation(paint: Paint, width: number, height: number, animation: SlideAnimation, t: number): number {
   const look = LOOKS[animation.theme];
-  // Die Deckkraft (`animation.opacity`) setzt die Leinwand als Ganzes
-  // (slide-animation-canvas.tsx) — gemalt wird hier immer deckend.
+  // Jedes Bild auf leerer Leinwand: bei durchscheinendem Grund bliebe sonst
+  // das vorige stehen. Die Deckkraft gilt nur dem Grund — Muster bleiben voll.
   paint.clearRect(0, 0, width, height);
-  paint.fillStyle = look.background;
-  paint.fillRect(0, 0, width, height);
+  if (animation.opacity > 0) {
+    paint.fillStyle = animation.opacity >= 1 ? look.background : backgroundWithOpacity(look.background, animation.opacity);
+    paint.fillRect(0, 0, width, height);
+  }
   if (width <= 0 || height <= 0) return 0;
   // Erst auf die Periode zurückführen: sonst weicht `t + T` im Fließkomma-Rest
   // von `t` ab, und Größen, die gerundet werden (Perlen je Ring), springen.
