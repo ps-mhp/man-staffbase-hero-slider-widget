@@ -26,6 +26,7 @@ import * as React from "react";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import { SlideCtas } from "./slide-ctas";
 import { SlideAnimationCanvas } from "./slide-animation-canvas";
+import { SlideZones } from "./slide-zones";
 import { Rgb, WHITE_RGB, prefersDarkInk, visibleBackground } from "./slide-animation-paint";
 import { Slide, SlideImage, firstFrameUrl, isAnimation, isVideo } from "./slides-model";
 
@@ -222,8 +223,12 @@ export function useBackdrop(element: HTMLElement | null): Rgb {
   return backdrop;
 }
 
-/** Überschrift, Unterzeile und Schaltflächen über dem Bühnenbild. */
+/**
+ * Überschrift, Unterzeile und Schaltflächen über dem Bühnenbild — oder bei
+ * einer benutzerdefinierten Folie ihre Bausteine in Zonen.
+ */
 export function SlideText({ slide }: { slide: Slide }): ReactElement {
+  if (slide.mode === "custom") return <SlideZones layout={slide.layout} />;
   return (
     <div className="man-hero__inner">
       <div className="man-hero__body">

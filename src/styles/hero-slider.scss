@@ -862,3 +862,266 @@
   font-size: 0.875rem;
   line-height: 1.4;
 }
+
+// --- Benutzerdefinierte Folie: Bausteine in Zonen ------------------------------
+//
+// Ein 3×3-Raster auf der Fluchtlinie (slide-layout.ts): Zeilen oben/Mitte/
+// unten, Spalten links/Mitte/rechts. Die Bausteine einer Zone stehen
+// untereinander und nach ihrer Spalte ausgerichtet. Schmal stehen die Zonen
+// in Lesereihenfolge untereinander, unten auf der Bühne wie die feste Folie;
+// rechte Zonen rücken dabei nach links, mittlere bleiben mittig.
+
+.man-hero__zones {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: man("space-5");
+  padding-block: man("space-6");
+}
+
+.man-hero--many .man-hero__zones {
+  padding-bottom: 120px;
+}
+
+.man-hero__zone {
+  display: flex;
+  flex-direction: column;
+  gap: man("space-3");
+  min-width: 0;
+}
+
+// Je Zone ausgeschrieben, damit jede Klasse im Quelltext auffindbar bleibt.
+.man-hero__zone--top-left {
+  grid-row: 1;
+  grid-column: 1;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.man-hero__zone--top-center {
+  grid-row: 1;
+  grid-column: 2;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+.man-hero__zone--top-right {
+  grid-row: 1;
+  grid-column: 3;
+  justify-content: flex-start;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.man-hero__zone--middle-left {
+  grid-row: 2;
+  grid-column: 1;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.man-hero__zone--middle-center {
+  grid-row: 2;
+  grid-column: 2;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.man-hero__zone--middle-right {
+  grid-row: 2;
+  grid-column: 3;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.man-hero__zone--bottom-left {
+  grid-row: 3;
+  grid-column: 1;
+  justify-content: flex-end;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.man-hero__zone--bottom-center {
+  grid-row: 3;
+  grid-column: 2;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+}
+
+.man-hero__zone--bottom-right {
+  grid-row: 3;
+  grid-column: 3;
+  justify-content: flex-end;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.man-hero__block {
+  // `__inner` lässt Klicks durch auf die Folie; Bausteine nehmen sie an.
+  pointer-events: auto;
+  max-width: 100%;
+}
+
+.man-hero__block-heading,
+.man-hero__block-text,
+.man-hero__block-label {
+  @include man-outshine-host {
+    margin: 0 !important;
+    color: var(--man-hero-ink, #{man("white")}) !important;
+  }
+}
+
+.man-hero__block-heading {
+  text-wrap: balance;
+}
+
+.man-hero__block-heading--display {
+  @include man-outshine-host {
+    @include man-type("display-l", $important: true);
+  }
+}
+
+.man-hero__block-heading--h1 {
+  @include man-outshine-host {
+    @include man-type("h1", $important: true);
+  }
+}
+
+.man-hero__block-heading--h2 {
+  @include man-outshine-host {
+    @include man-type("h2", $important: true);
+  }
+}
+
+.man-hero__block-heading--h3 {
+  @include man-outshine-host {
+    @include man-type("h3", $important: true);
+  }
+}
+
+.man-hero__block-text--l {
+  @include man-outshine-host {
+    @include man-type("body-l", $important: true);
+  }
+}
+
+.man-hero__block-text--m {
+  @include man-outshine-host {
+    @include man-type("body", $important: true);
+  }
+}
+
+.man-hero__block-text--s {
+  @include man-outshine-host {
+    @include man-type("body-s", $important: true);
+  }
+}
+
+.man-hero__block-label {
+  @include man-outshine-host {
+    @include man-type("eyebrow", $important: true);
+  }
+}
+
+.man-hero__block-icon {
+  display: block;
+  color: var(--man-hero-ink, #{man("white")});
+}
+
+.man-hero__block-icon--s {
+  width: 24px;
+  height: 24px;
+}
+
+.man-hero__block-icon--m {
+  width: 32px;
+  height: 32px;
+}
+
+.man-hero__block-icon--l {
+  width: 48px;
+  height: 48px;
+}
+
+.man-hero__block-image--s {
+  display: block !important;
+  width: 96px !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.man-hero__block-image--m {
+  display: block !important;
+  width: 160px !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.man-hero__block-image--l {
+  display: block !important;
+  width: 240px !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+// Ausdrückliche Farben schlagen die der Folie.
+.man-hero__block--color-white {
+  @include man-outshine-host {
+    color: man("white") !important;
+  }
+}
+
+.man-hero__block--color-slate {
+  @include man-outshine-host {
+    color: man("slate") !important;
+  }
+}
+
+.man-hero__block--color-red {
+  @include man-outshine-host {
+    color: man("red") !important;
+  }
+}
+
+.man-hero__ctas--inline {
+  margin-top: 0;
+}
+
+@media (max-width: 767px) {
+  .man-hero__zones {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: man("space-3");
+    padding-block: man("space-5");
+  }
+
+  .man-hero--many .man-hero__zones {
+    padding-bottom: 96px;
+  }
+
+  // Lesereihenfolge: Zeile für Zeile. Rechts wird links, Mitte bleibt Mitte.
+  .man-hero__zone[class*="-right"],
+  .man-hero__zone[class*="-left"] {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .man-hero__block--hide-mobile {
+    display: none;
+  }
+
+  .man-hero__block-heading--display {
+    @include man-outshine-host {
+      @include man-type("display-s", $important: true);
+    }
+  }
+}

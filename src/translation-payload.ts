@@ -35,6 +35,7 @@ import {
   isNewsChannelItem,
   isNewsPostItem,
 } from "./hero-items";
+import { SlideBlock, SlideLayout, ZONES, blocksInReadingOrder } from "./slide-layout";
 import { SlideImage } from "./slides-model";
 
 /** Markiert den Behälter, damit die Antwort in jeder Form auffindbar bleibt. */
@@ -47,7 +48,14 @@ export const FIELD_ATTRIBUTE = "data-hs-field";
  * jede weitere `cta-2`, `cta-3` — so bleibt der Schlüssel einer Folie mit nur
  * einer Schaltfläche derselbe wie vor den mehreren.
  */
-type FieldName = "headline" | "subline" | "cta" | `cta-${number}` | "alt" | "alt-portrait";
+type FieldName = "headline" | "subline" | "cta" | `cta-${number}` | "alt" | "alt-portrait" | BlockField;
+
+/**
+ * Bausteine einer benutzerdefinierten Folie: `block-<id>` für ihren Text,
+ * `block-<id>-cta-<n>` für Schaltflächen, `block-<id>-alt` für Bilder. Die
+ * Kennung des Bausteins hält die Zuordnung auch, wenn Bausteine wandern.
+ */
+type BlockField = `block-${string}`;
 
 const ctaField = (position: number): FieldName => (position === 0 ? "cta" : `cta-${position + 1}`);
 
@@ -95,6 +103,17 @@ const imageFields = (
 const textField = (index: number, name: FieldName, text: string | undefined): Field[] =>
   text !== undefined && text.trim() !== "" ? [{ key: key(index, name), name, text }] : [];
 
+/** Die Felder der Bausteine, in Lesereihenfolge der Zonen. */
+function blockFields(index: number, layout: SlideLayout | undefined): Field[] {
+  return blocksInReadingOrder(layout).flatMap(({ block }): Field[] => {
+    const base = `block-${block.id}` as const;
+    if (block.type === "heading" || block.type === "text" || block.type === "label") return textField(index, base, block.text);
+    if (block.type === "buttons") return block.ctas.flatMap((cta, position) => textField(index, `${base}-cta-${position}`, cta.label));
+    if (block.type === "image") return imageFields(index, block.image, `${base}-alt`);
+    return [];
+  });
+}
+
 /** Alle übersetzbaren Felder eines Eintrags, in Lesereihenfolge. */
 function itemFields(item: HeroItem, index: number): Field[] {
   if (isNewsPostItem(item)) {
@@ -116,6 +135,7 @@ function itemFields(item: HeroItem, index: number): Field[] {
     ...(slide.ctas ?? []).flatMap((cta, position) => textField(index, ctaField(position), cta.label)),
     ...imageFields(index, slide.image, "alt"),
     ...imageFields(index, slide.imagePortrait, "alt-portrait"),
+    ...(slide.mode === "custom" ? blockFields(index, slide.layout) : []),
   ];
 }
 
@@ -126,13 +146,24 @@ function itemFields(item: HeroItem, index: number): Field[] {
  * übersetzen, und eine leere Anfrage wäre nur eine Quelle für Fehlermeldungen.
  */
 export function heroItemsToTranslatableHtml(items: HeroItem[]): string | null {
+  const headingFields = new Set(
+    items.flatMap((item, index) =>
+      isNewsPostItem(item) || isNewsChannelItem(item) || item.mode !== "custom"
+        ? []
+        : blocksInReadingOrder(item.layout)
+            .filter(({ block }) => block.type === "heading")
+            .map(({ block }) => key(index, `block-${block.id}`)),
+    ),
+  );
   const sections = items
     .map((item, index) => {
       const fields = itemFields(item, index);
       if (fields.length === 0) return "";
       const nodes = fields
         .map(({ key: fieldKey, name, text }) => {
-          const tag = name === "headline" ? "h2" : "p";
+          // Überschriften auch als Überschrift: eine Maschinenübersetzung
+          // behandelt sie anders als Fließtext.
+          const tag = name === "headline" || headingFields.has(fieldKey) ? "h2" : "p";
           return `<${tag} ${FIELD_ATTRIBUTE}="${fieldKey}">${escapeHtml(text)}</${tag}>`;
         })
         .join("");
@@ -236,6 +267,32 @@ export function applyTranslatedFields(
           }),
       image: withAlt(slide.image, fields, index, "alt") as SlideImage,
       imagePortrait: withAlt(slide.imagePortrait, fields, index, "alt-portrait"),
+      ...(slide.mode === "custom" ? { layout: translatedLayout(slide.layout, fields, index) } : {}),
     };
   });
+}
+
+function translatedBlock(block: SlideBlock, fields: ReadonlyMap<string, string>, index: number): SlideBlock {
+  const base = `block-${block.id}` as const;
+  switch (block.type) {
+    case "heading":
+    case "text":
+    case "label":
+      return { ...block, text: pick(fields, index, base, block.text) };
+    case "buttons":
+      return { ...block, ctas: block.ctas.map((cta, position) => ({ ...cta, label: pick(fields, index, `${base}-cta-${position}`, cta.label) })) };
+    case "image":
+      return { ...block, image: withAlt(block.image, fields, index, `${base}-alt`) as SlideImage };
+    default:
+      return block;
+  }
+}
+
+function translatedLayout(layout: SlideLayout | undefined, fields: ReadonlyMap<string, string>, index: number): SlideLayout {
+  const out: SlideLayout = {};
+  for (const zone of ZONES) {
+    const blocks = layout?.[zone];
+    if (blocks !== undefined) out[zone] = blocks.map((block) => translatedBlock(block, fields, index));
+  }
+  return out;
 }

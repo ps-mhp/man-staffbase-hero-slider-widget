@@ -27,6 +27,7 @@
  */
 
 import { DEFAULT_ANIMATION, SlideAnimation } from "./slide-animation";
+import type { SlideLayout } from "./slide-layout";
 
 /** Was hinter einer Medienadresse steckt. */
 export type MediaKind = "image" | "video";
@@ -274,6 +275,13 @@ export interface Slide {
   subline?: string;
   /** Die Schaltflächen in Anzeigereihenfolge; fehlt das Feld, gibt es keine. */
   ctas?: SlideCta[];
+  /**
+   * `"custom"`: Bausteine in Zonen (`layout`, siehe slide-layout.ts) statt
+   * Überschrift, Unterzeile und Buttons an fester Stelle. Fehlt das Feld,
+   * ist die Folie „fest“ wie bisher.
+   */
+  mode?: "custom";
+  layout?: SlideLayout;
   /**
    * Alles, was eine spätere Version geschrieben hat und diese nicht kennt.
    * Ohne diesen Beutel würde ein Redakteur, der eine alte Bundle-Version

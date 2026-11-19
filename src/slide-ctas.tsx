@@ -67,22 +67,29 @@ const VARIANT_CLASS: Record<CtaVariant, string> = {
   link: "man-hero__cta--link",
 };
 
-const ctaClassName = (cta: SlideCta, first: boolean): string =>
+/** `--lead`/`--extra` steuern das Verhalten schmal (Fläche bzw. ausgeblendet) — inline gibt es das nicht. */
+const ctaClassName = (cta: SlideCta, first: boolean, inline: boolean): string =>
   [
     "man-hero__cta",
     VARIANT_CLASS[cta.variant ?? "primary"],
-    first ? "man-hero__cta--lead" : "man-hero__cta--extra",
+    ...(inline ? [] : [first ? "man-hero__cta--lead" : "man-hero__cta--extra"]),
   ].join(" ");
 
 export interface SlideCtasProps {
   ctas: SlideCta[] | undefined;
+  /**
+   * In einer Zone der benutzerdefinierten Folie: Schaltflächen bleiben auch
+   * schmal Schaltflächen — die erste wird dort nicht zur Fläche der Folie,
+   * weitere verschwinden nicht. Die Redaktion hat das Mobile selbst gebaut.
+   */
+  inline?: boolean;
 }
 
-export function SlideCtas({ ctas }: SlideCtasProps): ReactElement | null {
+export function SlideCtas({ ctas, inline = false }: SlideCtasProps): ReactElement | null {
   if (ctas === undefined || ctas.length === 0) return null;
 
   return (
-    <div className="man-hero__ctas">
+    <div className={inline ? "man-hero__ctas man-hero__ctas--inline" : "man-hero__ctas"}>
       {ctas.map((cta, position) => {
         const iconAtStart = cta.icon !== undefined && cta.iconPosition === "start";
         const iconAtEnd = cta.icon !== undefined && !iconAtStart;
@@ -90,7 +97,7 @@ export function SlideCtas({ ctas }: SlideCtasProps): ReactElement | null {
           <a
             // Beschriftung und Ziel können doppelt vorkommen; die Stelle nicht.
             key={position}
-            className={ctaClassName(cta, position === 0)}
+            className={ctaClassName(cta, position === 0, inline)}
             href={cta.href}
             data-testid={`hero-cta-${position}`}
             target={cta.newTab === true ? "_blank" : undefined}

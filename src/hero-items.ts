@@ -47,6 +47,7 @@ import {
   newSlideId,
 } from "./slides-model";
 import { encodeAnimation, parseAnimation } from "./slide-animation";
+import { BlockCodec, encodeLayout, firstHeading, parseLayout } from "./slide-layout";
 
 export type HeroItemType = "slide" | "news-post" | "news-channel";
 
@@ -139,6 +140,8 @@ const KNOWN_SLIDE_KEYS = new Set([
   "subline",
   "cta",
   "ctas",
+  "mode",
+  "layout",
 ]);
 
 const KNOWN_POST_KEYS = new Set([
@@ -283,6 +286,11 @@ const parseSlideItem = (value: Record<string, unknown>): SlideItem | null => {
 
   const ctas = parseCtas(value);
   if (ctas.length > 0) item.ctas = ctas;
+
+  if (value.mode === "custom") {
+    item.mode = "custom";
+    item.layout = parseLayout(value.layout, blockCodec());
+  }
 
   const unknown = collectUnknown(value, KNOWN_SLIDE_KEYS);
   if (unknown !== undefined) item.unknown = unknown;
@@ -519,8 +527,20 @@ const encodeSlideItem = (item: SlideItem): Record<string, unknown> => {
     out.cta = encodeLegacyCta(ctas[0]!);
     out.ctas = ctas.map(encodeCta);
   }
+  if (item.mode === "custom") {
+    out.mode = "custom";
+    out.layout = encodeLayout(item.layout ?? {}, blockCodec());
+    // Ältere Fassungen kennen keine Zonen; sie zeigen wenigstens die erste
+    // Überschrift. Auch die Liste im Editor nimmt sie als Titel.
+    out.headline = firstHeading(item.layout) || item.headline;
+  }
   return out;
 };
+
+/** Wie Bausteine Schaltflächen und Bilder lesen und schreiben — dieselben Regeln wie die Folie. */
+function blockCodec(): BlockCodec {
+  return { parseCta, encodeCta, parseImage, encodeImage };
+}
 
 const encodeNewsPostItem = (item: NewsPostItem): Record<string, unknown> => {
   const out: Record<string, unknown> = {
