@@ -33,7 +33,7 @@ import {
   isNewsPostItem,
   serializeHeroItems,
 } from "./hero-items";
-import { newSlideId } from "./slides-model";
+import { hasMedium, newSlideId } from "./slides-model";
 
 /**
  * Mehr Einträge trägt keine Bühne: sie werden nur nacheinander gezeigt, und
@@ -64,7 +64,7 @@ export function entryKindName(item: HeroItem): string {
 export function missingPart(item: HeroItem): string | undefined {
   if (isNewsPostItem(item)) return item.postId.trim() === "" ? "Beitrag fehlt" : undefined;
   if (isNewsChannelItem(item)) return item.channelId.trim() === "" ? "Kanal fehlt" : undefined;
-  return item.image.url.trim() === "" ? "Bild fehlt" : undefined;
+  return hasMedium(item.image) ? undefined : "Bild fehlt";
 }
 
 /** Die Fehler des Entwurfs, gezählt wie die Liste: „Folie 3: Bild fehlt“. */

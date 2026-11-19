@@ -29,7 +29,7 @@ import { BottomSpacing, useBottomSpacing } from "./bottom-spacing";
 import { useSectionHug } from "./section-hug";
 import type { HeroPosition } from "./attributes";
 import { isEditor } from "./editor-context";
-import { PORTRAIT_MEDIA, SlideMedia, SlideText, useMediaQuery } from "./hero-slide-media";
+import { PORTRAIT_MEDIA, SlideMedia, SlideText, slideClassName, useMediaQuery } from "./hero-slide-media";
 import { Slide } from "./slides-model";
 import { DEFAULT_AUTOPLAY_DELAY_MS, useSlider } from "./use-slider";
 import heroSliderCss from "./styles/hero-slider.scss";
@@ -275,7 +275,7 @@ export function HeroSlider({
             return (
               <div
                 key={slide.id}
-                className={`man-hero__slide${active ? " man-hero__slide--active" : ""}`}
+                className={slideClassName(slide, active)}
                 data-testid={`hero-slide-${slide.id}`}
                 // Ohne Tabliste wäre ein `tabpanel` verwaist; dann ist die
                 // Folie eine Gruppe wie jede andere.

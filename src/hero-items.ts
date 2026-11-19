@@ -40,10 +40,13 @@ import {
   Slide,
   SlideCta,
   SlideImage,
+  animationMedium,
+  isAnimation,
   isExecutableHref,
   isVideo,
   newSlideId,
 } from "./slides-model";
+import { encodeAnimation, parseAnimation } from "./slide-animation";
 
 export type HeroItemType = "slide" | "news-post" | "news-channel";
 
@@ -185,6 +188,8 @@ const collectUnknown = (
 
 export const parseImage = (value: unknown): SlideImage | undefined => {
   if (!isRecord(value)) return undefined;
+  // Eine Animation hat keine Datei — sie steht auch ohne Adresse.
+  if (value.kind === "animation") return animationMedium(parseAnimation(value.animation));
   const url = asTrimmedString(value.url);
   if (url === "") return undefined;
   const image: SlideImage = { url, alt: asTrimmedString(value.alt) };
@@ -463,6 +468,9 @@ export function parseHeroEntries(entries: readonly unknown[]): HeroItem[] {
 }
 
 const encodeImage = (image: SlideImage): Record<string, unknown> => {
+  // `url` bleibt als leeres Feld stehen: ältere Fassungen lesen es als
+  // „kein Bild“ und lassen die Folie weg, statt eine kaputte Adresse zu laden.
+  if (isAnimation(image)) return { url: "", alt: "", kind: "animation", animation: encodeAnimation(image.animation) };
   const out: Record<string, unknown> = { url: image.url, alt: image.alt };
   if (image.width !== undefined) out.width = image.width;
   if (image.height !== undefined) out.height = image.height;

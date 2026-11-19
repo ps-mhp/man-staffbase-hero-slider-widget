@@ -33,7 +33,7 @@ import {
 } from "./hero-items";
 import type { Post as NewsPost } from "@shared/staffbase/posts";
 import { postToSlide } from "./news-slides";
-import { Slide } from "./slides-model";
+import { Slide, hasMedium } from "./slides-model";
 
 /**
  * Mehr Folien trägt die Bühne nicht: sie werden nur nacheinander gezeigt, und
@@ -158,7 +158,7 @@ export async function resolveHeroItems(
     items.map(async (item): Promise<Slide[]> => {
       if (isNewsPostItem(item)) return resolveNewsPost(item, deps);
       if (isNewsChannelItem(item)) return resolveNewsChannel(item, deps);
-      return item.image.url === "" ? [] : [item];
+      return hasMedium(item.image) ? [item] : [];
     }),
   );
 

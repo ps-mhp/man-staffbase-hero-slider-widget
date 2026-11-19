@@ -34,9 +34,9 @@ import { useHotStyle } from "@shared/hot-style";
 import { entryKindName } from "./editor-entries";
 import { NewsSource } from "./editors/news-source";
 import { useResolvedSlides } from "./editors/use-resolved-slides";
-import { SlideMedia, SlideText, useMediaQuery } from "./hero-slide-media";
+import { SlideMedia, SlideText, slideClassName, useMediaQuery } from "./hero-slide-media";
 import { HeroItem, isNewsPostItem, isSlideItem } from "./hero-items";
-import { Slide } from "./slides-model";
+import { Slide, hasMedium, isAnimation } from "./slides-model";
 import heroSliderCss from "./styles/hero-slider.scss";
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
@@ -57,6 +57,8 @@ function HeroStageStyle(): ReactElement {
  */
 function forDevice(slide: Slide, mobile: boolean): Slide {
   const { imagePortrait, ...rest } = slide;
+  // Eine Animation passt sich selbst an — ein Hochformat-Medium gibt es dafür nicht.
+  if (isAnimation(slide.image)) return rest;
   return mobile && imagePortrait !== undefined ? { ...rest, image: imagePortrait } : rest;
 }
 
@@ -65,7 +67,7 @@ function SlideStage({ slide }: { slide: Slide }): ReactElement {
   const { view } = useConfigShell();
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const shown = forDevice(slide, view === "mobile");
-  const hasImage = shown.image.url.trim() !== "";
+  const hasImage = hasMedium(shown.image);
 
   return (
     // `inert`: Eine Schaltfläche der Vorschau führte sonst aus dem Studio
@@ -74,7 +76,7 @@ function SlideStage({ slide }: { slide: Slide }): ReactElement {
       <div className="man-hero man-hero--height-medium" data-testid="hero-slide-preview">
         <div className="man-hero__frame">
           <div className="man-hero__slides">
-            <div className="man-hero__slide man-hero__slide--active">
+            <div className={slideClassName(shown, true)}>
               <div className="man-hero__media">
                 {hasImage && <SlideMedia slide={shown} eager play={!reducedMotion} portrait={false} />}
               </div>

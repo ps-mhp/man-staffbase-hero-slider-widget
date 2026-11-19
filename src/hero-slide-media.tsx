@@ -25,7 +25,8 @@
 import * as React from "react";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import { SlideCtas } from "./slide-ctas";
-import { Slide, SlideImage, firstFrameUrl, isVideo } from "./slides-model";
+import { SlideAnimationCanvas } from "./slide-animation-canvas";
+import { Slide, SlideImage, firstFrameUrl, isAnimation, isVideo } from "./slides-model";
 
 /** Unterhalb dieser Breite zeigt das `<picture>` den Hochkant-Zuschnitt. */
 export const PORTRAIT_MEDIA = "(orientation: portrait) and (max-width: 767px)";
@@ -154,6 +155,8 @@ interface SlideMediaProps {
  */
 export function SlideMedia({ slide, eager, play, portrait }: SlideMediaProps): ReactElement {
   const { image, imagePortrait } = slide;
+  // Die Animation zeichnet in jeder Größe selbst — kein Hochformat nötig.
+  if (isAnimation(image)) return <SlideAnimationCanvas animation={image.animation} play={play} />;
   if (!isVideo(image) && (imagePortrait === undefined || !isVideo(imagePortrait))) {
     return <SlidePicture slide={slide} eager={eager} />;
   }
@@ -164,6 +167,20 @@ export function SlideMedia({ slide, eager, play, portrait }: SlideMediaProps): R
   ) : (
     <SlideImg image={shown} eager={eager} />
   );
+}
+
+/**
+ * Die Klassen einer Folie. Eine Animation braucht keinen Verlauf darüber
+ * (ihre Textseite ist ruhig); auf hellem Grund steht die Schrift anthrazit.
+ */
+export function slideClassName(slide: Slide, active: boolean): string {
+  const classes = ["man-hero__slide"];
+  if (active) classes.push("man-hero__slide--active");
+  if (isAnimation(slide.image)) {
+    classes.push("man-hero__slide--animation");
+    if (slide.image.animation.theme === "light") classes.push("man-hero__slide--light");
+  }
+  return classes.join(" ");
 }
 
 /** Überschrift, Unterzeile und Schaltflächen über dem Bühnenbild. */

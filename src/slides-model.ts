@@ -26,6 +26,8 @@
  * Frei von DOM und React.
  */
 
+import { DEFAULT_ANIMATION, SlideAnimation } from "./slide-animation";
+
 /** Was hinter einer Medienadresse steckt. */
 export type MediaKind = "image" | "video";
 
@@ -45,8 +47,13 @@ export interface SlideImage {
    * `"video"` bei Videos; bei Bildern fehlt das Feld. Es steht ausdrücklich da,
    * statt bei jedem Zeigen aus der Endung gelesen zu werden: viele Adressen —
    * Mediendienste, CDNs mit Parametern — tragen gar keine.
+   *
+   * `"animation"`: kein Datei-Medium, das Widget zeichnet selbst
+   * (slide-animation.ts). `url` und `alt` sind dann leer.
    */
-  kind?: "video";
+  kind?: "video" | "animation";
+  /** Nur bei `kind: "animation"`. */
+  animation?: SlideAnimation;
 }
 
 /** Endungen, an denen eine Adresse sicher als Video gilt. */
@@ -57,6 +64,21 @@ const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "gif", "webp", "avif", "
 
 export function isVideo(image: SlideImage): boolean {
   return image.kind === "video";
+}
+
+export function isAnimation(image: SlideImage): image is SlideImage & { kind: "animation"; animation: SlideAnimation } {
+  return image.kind === "animation" && image.animation !== undefined;
+}
+
+/** Ob die Folie etwas zu zeigen hat: eine Datei oder eine Animation. */
+export function hasMedium(image: SlideImage | undefined): boolean {
+  if (image === undefined) return false;
+  return isAnimation(image) || image.url.trim() !== "";
+}
+
+/** Eine Animation als Medium; ohne Vorgabe die Standard-Welle. */
+export function animationMedium(animation: SlideAnimation = DEFAULT_ANIMATION): SlideImage {
+  return { url: "", alt: "", kind: "animation", animation };
 }
 
 /**
@@ -120,6 +142,7 @@ export function firstFrameUrl(url: string): string {
 export function withMediaKind(image: SlideImage, kind: MediaKind): SlideImage {
   const next: SlideImage = { ...image };
   delete next.kind;
+  delete next.animation;
   return kind === "video" ? { ...next, kind: "video" } : next;
 }
 

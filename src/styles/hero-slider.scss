@@ -307,6 +307,25 @@
   }
 }
 
+// Eine Animation als Hintergrund hält ihre Textseite selbst ruhig (siehe
+// slide-animation-patterns.ts) — der Verlauf würde sie nur grau überziehen,
+// auf hellem Grund als sichtbare Fläche. Auf hellem Grund steht die Schrift
+// anthrazit: `--man-hero-ink` färbt Überschrift, Unterzeile und die
+// durchsichtigen Schaltflächen (`outline`, `link`); die rote Hauptschaltfläche
+// bleibt, wie sie ist.
+.man-hero__slide--animation .man-hero__media::after {
+  content: none;
+}
+
+// Der helle Grund auch, bevor die Leinwand ihr erstes Bild gemalt hat —
+// sonst blitzte das Anthrazit der Bühne kurz durch.
+.man-hero__slide--light {
+  --man-hero-ink: #{man("slate")};
+  --man-hero-ink-invert: #{man("white")};
+
+  background: man("white");
+}
+
 // --- 2. Die Fluchtlinie ------------------------------------------------------
 // Bricht die Bühne aus, liegt die Linie genau dort, wo die Inhaltsspalte der
 // Seite steht — gemessen, nicht gerechnet (`--man-hero-inset-*`, siehe
@@ -400,7 +419,7 @@
   @include man-outshine-host {
     @include man-type("display-l", $important: true);
 
-    color: man("white") !important;
+    color: var(--man-hero-ink, #{man("white")}) !important;
   }
 
   // Schmal Craft `display-s` (40/1.3). Craft selbst kennt keine Mobilstufen;
@@ -442,7 +461,7 @@
   // Bild ist nichts zu lesen, und eine einzelne Klasse verliert dagegen —
   // auch mit `!important`.
   @include man-outshine-host {
-    color: man("white") !important;
+    color: var(--man-hero-ink, #{man("white")}) !important;
   }
 }
 
@@ -495,13 +514,13 @@
 .man-hero__cta--outline {
   @include man-outshine-host {
     background-color: transparent !important;
-    border-color: man("white") !important;
-    color: man("white") !important;
+    border-color: var(--man-hero-ink, #{man("white")}) !important;
+    color: var(--man-hero-ink, #{man("white")}) !important;
 
     &:hover {
-      background-color: man("white") !important;
-      border-color: man("white") !important;
-      color: man("slate") !important;
+      background-color: var(--man-hero-ink, #{man("white")}) !important;
+      border-color: var(--man-hero-ink, #{man("white")}) !important;
+      color: var(--man-hero-ink-invert, #{man("slate")}) !important;
     }
 
     &:active {
@@ -519,13 +538,13 @@
     padding-right: 0 !important;
     background-color: transparent !important;
     border-color: transparent !important;
-    color: man("white") !important;
+    color: var(--man-hero-ink, #{man("white")}) !important;
 
     &:hover,
     &:active {
       background-color: transparent !important;
       border-color: transparent !important;
-      color: man("white") !important;
+      color: var(--man-hero-ink, #{man("white")}) !important;
       text-decoration: underline !important;
       text-underline-offset: 4px !important;
     }
