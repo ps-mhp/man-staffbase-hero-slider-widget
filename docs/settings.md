@@ -55,10 +55,11 @@ Folien, die er beisteuert.
 | Feld | Beschreibung |
 | --- | --- |
 | Hintergrund | **Bild oder Video** (eine Datei, siehe unten) oder **Animation**: ein bewegtes Muster aus Quadraten in MAN-Farben, das das Widget selbst zeichnet. Eine Animation passt sich jeder Bühnengröße an, braucht kein Hochformat und lädt nichts nach. |
-| Muster | Nur bei Animation. **Welle** (feine Quadrate, durch die eine Welle läuft und sie anhebt), **Raster** (ruhiges Raster mit wanderndem Lichtband) oder **Module** (locker verteilte Module, die pulsieren). Die Textseite links — auf dem Telefon unten — bleibt immer frei. |
+| Muster | Nur bei Animation. Eckig: **Welle** (feine Quadrate, durch die eine Welle läuft und sie anhebt), **Raster** (ruhiges Raster mit wanderndem Lichtband), **Module** (locker verteilte Module, die pulsieren). Rund: **Punkte** (feine Punkte, die eine Kräuselung anhebt), **Linien** (fließende Höhenlinien, einzelne in Rot), **Ringe** (Punktringe, die sich ruhig von rechts ausbreiten), **Strömung** (Partikel, die kreisen und driften). Die Textseite links — auf dem Telefon unten — bleibt immer frei. |
+| Grund | Nur bei Animation. **Deckend**, **75 %**, **50 %**, **25 %** oder **Durchsichtig**: Unter „Deckend“ scheint der Abschnitt hinter der Bühne durch. Die Schriftfarbe folgt dem Grundton — passend zum Hintergrund wählen. |
 | Grundton | Nur bei Animation. **Dunkel** (Anthrazit, Schrift weiß) oder **Hell** (weiß, Schrift anthrazit). |
 | Tempo | Nur bei Animation. **Ruhig** (ein Durchlauf in 20 Sekunden) oder **Lebhaft** (12 Sekunden). Bei eingeschalteter Einstellung „Bewegung reduzieren“ des Geräts steht die Animation still. |
-| Rote Akzente | Nur bei Animation. Schalter: einige rote Quadrate laufen mit. |
+| Rote Akzente | Nur bei Animation. Schalter: rote Elemente laufen mit — etwa jedes hundertste im Feld, bei Linien und Ringen einzelne ganze Linien bzw. Ringe. |
 | Bild oder Video | Pflicht, wenn der Hintergrund **Bild oder Video** ist. Aus der Mediathek oder über eine Adresse (`https://…`). Quer, mindestens 1920 px breit. Ohne Bild oder Video wird die Folie nicht gezeigt. |
 | Adresse | Hinter **Adresse einfügen**, statt der Mediathek: die `https`-Adresse eines Bildes oder Videos. Andere Adressen werden nicht übernommen. |
 | Art | Bild oder Video. Stellt sich an der Endung der Adresse selbst ein (`.mp4`, `.webm`, `.mov` sind Videos); nur bei Adressen ohne Endung von Hand wählen. |
