@@ -25,7 +25,7 @@
  */
 
 import * as React from "react";
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import { Field } from "@man/config-ui/form/field";
 import type { SegmentedOption } from "@man/config-ui/form/segmented";
 import { SegmentedField } from "@man/config-ui/form/segmented-field";
@@ -272,6 +272,13 @@ function useTab(shownIssues: ShownIssues | null, hasEntry: boolean): [TabId, (ta
     if (first === AUTOPLAY_DELAY_ISSUE) setTab("behavior");
     else if (first !== undefined && hasEntry) setTab("entry");
   }, [shownIssues, hasEntry]);
+  // Kommt der erste Eintrag hinzu (Dialog leer geöffnet, dann „Neu“), will man
+  // ihn einstellen — nicht weiter die Gestaltung sehen.
+  const hadEntry = useRef(hasEntry);
+  useEffect(() => {
+    if (hasEntry && !hadEntry.current) setTab("entry");
+    hadEntry.current = hasEntry;
+  }, [hasEntry]);
   // Verschwindet der Eintrag (letzter gelöscht), steht sonst ein leerer Reiter offen.
   const current = tab === "entry" && !hasEntry ? "design" : tab;
   return [current, (next) => setTab(next === "behavior" || next === "entry" ? next : "design")];

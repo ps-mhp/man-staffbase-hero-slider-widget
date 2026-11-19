@@ -407,6 +407,13 @@ describe("SlideEditor", () => {
       expect(within(panel).getByTestId("slide-headline")).toBeInTheDocument();
     });
 
+    it("öffnet nach dem ersten „Neu“ den Reiter der Folie", async () => {
+      setupLive([]);
+      expect(screen.getByRole("tab", { name: "Gestaltung" })).toHaveAttribute("aria-selected", "true");
+      await addVia(/^Folie/);
+      expect(screen.getByRole("tab", { name: "Folie" })).toHaveAttribute("aria-selected", "true");
+    });
+
     it("nennt den Reiter nach der Sorte des Eintrags und zeigt ohne Eintrag nur das Widget", async () => {
       const h = setupLive([postItem("p")]);
       expect(screen.getByRole("tab", { name: "Beitrag" })).toBeInTheDocument();
